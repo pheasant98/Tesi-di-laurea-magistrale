@@ -18,14 +18,14 @@ L'analisi che è stata effettuata ha preso in considerazione le partite della Se
 Le squadre di calcio sono classificate in base all'ordine dei punti che hanno totalizzato al termine della stagione. In un torneo calcistico, per ogni partita vinta la squadra vincente guadagna 3 punti, per ogni pareggio le due squadre avversarie guadagnano entrambe un punto, mentre per ogni sconfitta la squadra perdente non guadagna punti. Nel torneo della Serie A chi guadagna più punti vince il campionato, mentre chi si classifica tra le ultime tre retrocede alla lega inferiore, la Serie B, dove il posto delle tre squadre retrocesse verrà presso da tre squadre della Serie B che hanno guadagnato la promozione alla Serie A.\\ 
 La classifica della stagione 2021/2022 è mostrata nella Tabella \ref{tab:ranking}.
 
-	\begin{table}[!h]%
-	\rowcolors{2}{grigetto}{white}
+	\begin{table}[!ht]%
+
 	\renewcommand{\arraystretch}{1.7}
 	\centering
 	\begin{tabular}{c c c c}
 		\hline	
-		\rowcolor{SchoolColor}
-		\intest{Posizione} & \intest{Squadra} & \intest{Punti} & \intest{ \% casa}  \\	
+
+		\textbf{Posizione} & \textbf{Squadra} & \textbf{Punti} & \textbf{ \% casa}  \\	
 		\hline			
 		1 & Milan & 86 & 0.47\\
 		2 & Inter & 84 & 0.54\\
@@ -67,14 +67,14 @@ Quindi per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A si
 \subsection{Struttura dataset}
 Il dataset risultate dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga perciò contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezioni per la data della partita (\textsf{Date}), il turno (\textsf{Round}), e gli spettatori (\textsf{Spec}). Quindi per ogni partita esistono due righe, una per ognuna delle due squadre coinvolte. Perciò ogni squadra appare nella colonna \textsf{Team} 38 e dato che si hanno 20 squadre si hanno perciò 760 righe totali. Per quanto riguarda le colonne se ne discuterà nella prossima sotto sezione. \\
 La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime tre partite della stagione. 
-	\begin{table}[!h]%
-	\rowcolors{2}{grigetto}{white}
+	\begin{table}[!ht]%
+
 	\renewcommand{\arraystretch}{1.7}
 	\centering
 	\begin{tabular}{c c c c c c c c c  }
 		\hline	
-		\rowcolor{SchoolColor}
-		\intest{Date} & \intest{AtHome} & \intest{Res} & \intest{GF} & \intest{GA} & \intest{Team} & \intest{Vs} & \intest{Poss} & \intest{...}   \\	
+
+		\textbf{Date} & \textbf{AtHome} & \textbf{Res} & \textbf{GF} & \textbf{GA} & \textbf{Team} & \textbf{Vs} & \textbf{Poss} & \textbf{...}   \\	
 		\hline	
 		21/08/2021 & TRUE & 1 & 4 & 0 & Inter & Genoa & 0,59 & ... \\
 		... & ... & ... & ... & ... & ... & ... & ... & ... \\
@@ -152,7 +152,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	
 	Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
 	\item \textsf{MPAtt}: Tale variabile indica il numero di passaggi medi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi medi si intendono quelli effettuati all'interno di una lunghezza tra i 13 e 27 metri. Questi passaggi possono essere considerati come passaggi filtranti cioè un tipo di passaggio non diretto direttamente al proprio compagno di squadra ma verso un area del campo dove il compagno di squadra deve andare a prendere la palla, spesso questi passaggi vengono fatti per sorprendere la difesa avversaria e evitare che intercettino la palla. Nella Figura \ref{fig:filt} viene mostrato l'esecuzione di un passaggio filtrante.
-	\begin{figure}[h]
+	\begin{figure}[ht]
 		\begin{center}
 			\includegraphics[scale=0.51]{filtrante2.jpg}
 			\caption{Esecuzione di un passaggio filtrante} \label{fig:filt}
@@ -163,7 +163,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 
 	\item \textsf{MPCmp\%}: Tale variabile indica la percentuale di passaggi medi riusciti ai giocatori della squadra indicata sulla variabile \textsf{Team}. Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
 	\item \textsf{LPAtt}: Tale variabile indica il numero di passaggi lunghi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi corti si intendono quelli effettuati all'interno di una lunghezza superiore ai 27 metri. Questi passaggi possono essere considerati come lanci lunghi per cambi di gioco o per lanciare le punte, cioè i giocatori che giocano come attaccanti, in profondità. Una rappresentazione di passaggio lungo è mostrata nella Figura \ref{fig:cambio}.
-	\begin{figure}[h]
+	\begin{figure}[ht]
 		\begin{center}
 			\includegraphics[scale=0.53]{cambio-di-gioco.png}
 			\caption{Esecuzione di un cambio di gioco} \label{fig:cambio}
@@ -179,7 +179,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	
 	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra subisce molto la pressione della squadra avversaria, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria area di rigore la cui area nel campo da calcio è indicata nella Figura \ref{fig:penalty}.
 	
-	\begin{figure}[!h]
+	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.60]{rigore.jpg}
 			\caption{In rosso l'area di rigore in un campo da calcio.} 
@@ -192,7 +192,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	
 	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla creando poche azioni offensive, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria mediana la cui area nel campo da calcio è indicata nella Figura \ref{fig:def}.
 	
-		\begin{figure}[!h]
+		\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.60]{mid.jpg}
 			\caption{In rosso la mediana nel campo da calcio.} 
@@ -203,7 +203,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	
 	Questa variabile è stata inserita perché può essere utile per capire come il possesso palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla cercando di creare delle azioni offensive, viceversa cerca di fare un gioco più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto dalla squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi a centrocampo la cui area nel campo da calcio è indicata nella Figura \ref{fig:cen}.
 	
-		\begin{figure}[!h]
+		\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.60]{cen.jpg}
 			\caption{In rosso il centrocampo nel campo da calcio.} 
@@ -215,7 +215,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	
 	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla per effettuare una pressione sulla squadra avversaria affinché si possano creare degli spazi per delle azioni offensive, viceversa cerca di fare un gioco molto più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella trequarti dell'avversario la cui area nel campo da calcio è indicata nella Figura \ref{fig:treq}.
 	
-		\begin{figure}[!h]
+		\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.60]{treq.jpg}
 			\caption{In rosso la trequarti dell'avversario nel campo da calcio.} 
@@ -238,7 +238,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	Si è deciso di inserire questa covariata perché un alto numero di falli può portare a molte interruzione della manovra di gioco e quindi permettere alla squadra avversaria di riorganizzarsi. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita.
 	\item \textsf{Off}: Tale variabile indica il numero di volte che la squadra indicata sulla variabile \textsf{Team} è finita in fuorigioco. Un calciatore si trova in posizione di fuorigioco quando una qualsiasi parte del suo corpo, fatta eccezione per braccia e mani perché non possono essere usate per controllare il pallone; si trova nella nella metà campo avversaria ed è più vicina alla linea di porta avversaria sia rispetto al pallone e sia rispetto al penultimo giocatore difendente avversario; tale penultimo avversario può essere anche il portiere, se un compagno di questi è più vicino di lui alla linea di porta. Una rappresentazione grafica del fuorigioco è mostrata nell'immagine \ref{fig:offside}.
 	
-	\begin{figure}[!h]
+	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.55]{var.png}
 			\caption{Rappresentazione del fuorigioco} \label{fig:offside}
@@ -250,7 +250,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	
 	\item \textsf{Crs}: Tale variabile indica il numero di cross effettuati dalla squadra indicata sulla variabile \textsf{Team}. Un cross in italiano traversone, è un tipo di passaggio medio o lungo, solitamente effettuato sulle fasce laterali dell'area avversaria o comunque vicino all'area avversaria, che se eseguito permette al compagno di squadra posizionato vicino alla porta avversaria, di colpire la palla al volo di testa oppure di piede per segnare un possibile gol. Quindi se eseguito correttamente, il cross può diventare un assist, cioè l'ultimo passaggio per la realizzazione del gol. 
 	
-	\begin{figure}[!h]
+	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.43]{cross.jpg}
 			\caption{Rappresentazione di un cross} \label{fig:cross}
@@ -263,7 +263,7 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	Quindi si è deciso di inserire questa variabile perché indica quante volte si è tolto il possesso della palla all'avversario interrompendone il suo gioco.
 	\item \textsf{TklWin}: Tale variabile indica il numero di contrasti vinti dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per contrasto si intende il tentativo da parte di un giocatore difendente di sottrarre il possesso della palla all'avversario. Quindi chi ha in possesso la palla viene attaccato da chi ne è privo. Se si riesce a prendere il pallone all'avversario allora si avrà vinto il contrasto. Si sottolinea che i contrasti vengono anche effettuati per allontanare dalle zone pericolose l'avversario. La Figura \ref{fig:tackle} mostra un contrasto di gioco.
 	
-	\begin{figure}[!h]
+	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.40]{tackle.jpg}
 			\caption{Rappresentazione di un contrasto in scivolata} \label{fig:tackle}
@@ -282,7 +282,8 @@ Nella sezione precedente si è descritto come si è costruito il dataset che ver
 
 Innanzitutto il modello richiede per il suo funzionamento che le due variabili che indicano quali delle due squadra hanno partecipato alla partita in esame e quindi alla comparazione che si sta analizzando; devono essere o di tipo fattore oppure un \textsf{data.frame}. Una variabile fattore è un variabile non numerica, espressa in termini verbali ad esempio una categoria. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali (fattori), variabili cardinali (vettori numerici); un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ Dato che le due variabili in questione \textsf{Team} e \textsf{Vs} erano solo di tipo \texttt{character} e si voleva trovare un modo per far capire al modello quelli valori erano legati alla squadra indicata in \textsf{Team} e quali in \textsf{Vs} nella stessa partita; si è deciso perciò di trasformare \textsf{Team} e \textsf{Vs} in \texttt{data.frame} inserendo al loro interno tutte le covariate descritte nella sezione precedente, ad esempio \textsf{Poss}, \textsf{Int} ecc..
 
-Si sottolinea inoltre che sono state necessarie ulteriore modifiche per quanto riguarda la variabile \textsf{AtHome}, che sebbene si possa pensare che i valori scritti siano di tipo logico in realtà essi venivano interpretati come stringhe, quindi si sono subito trasformati in valori logici con il commando \textsf{as.logical(soccern\$AtHome)}. Ciononostante pero il valore logico non era accettato dal modello ma era accettato un valore numerico per indicare se la squadra giocava in casa o no; si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0. 
+Si sottolinea inoltre che sono state necessarie ulteriore modifiche per quanto riguarda la variabile \textsf{AtHome}; dato che al momento dell'importazione del dataset, i valori venivano interpretati come stringhe, quindi è stato necessario trasformarli in valori logici con il commando \textsf{as.logical(soccern\$AtHome)}. Ciononostante pero il valore logico non era accettato dal modello ma era accettato un valore numerico per indicare se la squadra giocava in casa o no; si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0. 
+
 \subsection{Codice per l'adattamento del dataset}
 Di seguito viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.
 
@@ -349,38 +350,41 @@ for(i in 1:nrow(soccern)){
 		k <- k + 1
 	   }      
 	}
-   }
-   else{
+   }else{
 	del[z] <- i
 	z <- z + 1
    }
 }
 \end{lstlisting}
-
+\bigskip
 Con il codice precedente si ha l'obbiettivo di prendere tutti i dati delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} per poi unirli con i dati delle righe che contengono i dati delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team}. Le righe che contengono solo i dati delle partite fuori casa saranno eliminate.\\
 Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato pe per inserire un nuovo elemento nel vettore \texttt{del}.\\
 Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} vi è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
 
 Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
-
+\bigskip
 \begin{lstlisting}
 > soccern3 <- soccern2[-del,]
 \end{lstlisting}
-
+\bigskip
 Con il precedente commando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. 
-
+\bigskip
 \begin{lstlisting}
 > soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, Saves = soccern3$Saves, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDefPen = soccern3$ToDefPen, ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Off = soccern3$Off, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
 
 \end{lstlisting}
-Con il precedente commando si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.
 
+\bigskip
+Con il precedente commando si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.
+\bigskip
+\bigskip
 \begin{lstlisting}
 > soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, Saves = SavesVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDefPen = ToDefPenVs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Off = OffVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
 
 \end{lstlisting}
+\bigskip
 Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati vengo riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.
-\newpage
+
 
 %\label{cap:obbiettivi}
 \begin{comment}

@@ -39,6 +39,46 @@
 
 \newcommand{\paginavuota}{\newpage\null\thispagestyle{empty}}
 
+\newcommand\textbox[1]{%
+	\parbox{.333\textwidth}{#1}%
+}
+
+%Numerazione equazione
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+%Argmin
+\DeclareMathOperator*{\argminA}{arg\,min} % Jan Hlavacek
+\DeclareMathOperator*{\argminB}{argmin}   % Jan Hlavacek
+\DeclareMathOperator*{\argminC}{\arg\min}   % rbp
+
+\newcommand{\argminD}{\arg\!\min} % AlfC
+
+\newcommand{\argminE}{\mathop{\mathrm{argmin}}}          % ASdeL
+\newcommand{\argminF}{\mathop{\mathrm{argmin}}\limits}   % ASdeL
+
+% limits on side
+\DeclareMathOperator{\argminG}{arg\,min} % Jan Hlavacek
+\DeclareMathOperator{\argminH}{argmin}   % Jan Hlavacek
+\newcommand{\argminI}{\mathop{\mathrm{argmin}}\nolimits} % ASdeL
+
+%Argmax
+\DeclareMathOperator*{\argmaxA}{arg\,max} % Jan Hlavacek
+\DeclareMathOperator*{\argmaxB}{argmax}   % Jan Hlavacek
+\DeclareMathOperator*{\argmaxC}{\arg\max}   % rbp
+
+\newcommand{\argmaxD}{\arg\!\max} % AlfC
+
+\newcommand{\argmaxE}{\mathop{\mathrm{argmax}}}          % ASdeL
+\newcommand{\argmaxF}{\mathop{\mathrm{argmax}}\limits}   % ASdeL
+
+% limits on side
+\DeclareMathOperator{\argmaxG}{arg\,max} % Jan Hlavacek
+\DeclareMathOperator{\argmaxH}{argmax}   % Jan Hlavacek
+\newcommand{\argmaxI}{\mathop{\mathrm{argmax}}\nolimits} % ASdeL
+
+\newcommand{\cs}[1]{\texttt{\symbol{`\\}#1}}
+
+
 %**************************************************************
 % Impostazioni di impaginazione
 % see: http://wwwcdf.pd.infn.it/AppuntiLinux/a2547.htm
@@ -51,59 +91,52 @@
 %**************************************************************
 % Impostazioni di biblatex
 %**************************************************************
-\bibliography{bibliografia} % database di biblatex 
+
+
+
+\bibliography{bibliografia.bib} % database di biblatex 
+
 
 \defbibheading{bibliography} {
-    \cleardoublepage
-    \phantomsection 
-    \addcontentsline{toc}{chapter}{\bibname}
-    \chapter*{\bibname\markboth{\bibname}{\bibname}}
+	\cleardoublepage
+	\phantomsection 
+	\addcontentsline{toc}{chapter}{\bibname}
+	\chapter*{\bibname\markboth{\bibname}{\bibname}}
 }
 
 \setlength\bibitemsep{1.5\itemsep} % spazio tra entry
 
-\DeclareBibliographyCategory{opere}
+\DeclareBibliographyCategory{paper}
 \DeclareBibliographyCategory{web}
 
-%\addtocategory{opere}{womak:lean-thinking}
-\addtocategory{web}{site:agile-manifesto}
-\addtocategory{web}{site:css}
-\addtocategory{web}{site:html}
-\addtocategory{web}{site:typescript}
-\addtocategory{web}{site:webstorm}
-\addtocategory{web}{site:jiras}
-\addtocategory{web}{site:confluence}
-\addtocategory{web}{site:selenium}
-\addtocategory{web}{site:appium}
-\addtocategory{web}{site:protractor}
-\addtocategory{web}{site:cucumber}
-\addtocategory{web}{site:handlebars}
-\addtocategory{web}{site:gitlab}
-\addtocategory{web}{site:angula}
-\addtocategory{web}{site:ionic}
-\addtocategory{web}{site:cordova}
-\addtocategory{web}{site:webstorm}
+\addtocategory{paper}{bradley1952rank}
+\addtocategory{paper}{agresti1992analysis}
+\addtocategory{paper}{tutz1986bradley}
+\addtocategory{paper}{davidson1970extending}
+\addtocategory{paper}{springall1973response}
 
-\defbibheading{opere}{\section*{Riferimenti bibliografici}}
+
+\defbibheading{paper}{\section*{Riferimenti bibliografici}}
 \defbibheading{web}{\section*{Siti Web consultati}}
+
 
 
 %**************************************************************
 % Impostazioni di caption
 %**************************************************************
 \captionsetup{
-    tableposition=top,
-    figureposition=bottom,
-    font=small,
-    format=hang,
-    labelfont=bf
+	tableposition=top,
+	figureposition=bottom,
+	font=small,
+	format=hang,
+	labelfont=bf
 }
 
 %**************************************************************
 % Impostazioni di glossaries
 %**************************************************************
-\input{glossario} % database di termini
 \makeglossaries
+\input{glossario} % database di termini
 
 
 %**************************************************************
@@ -116,37 +149,41 @@
 % Impostazioni di hyperref
 %**************************************************************
 \hypersetup{
-    %hyperfootnotes=false,
-    %pdfpagelabels,
-    %draft,	% = elimina tutti i link (utile per stampe in bianco e nero)
-    %colorlinks=true,
-    %linktocpage=true,
-    pdfstartpage=1,
-    pdfstartview=FitV,
-    % decommenta la riga seguente per avere link in nero (per esempio per la stampa in bianco e nero)
-    colorlinks=true, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=1, pdfstartview=FitV,
-    breaklinks=true,
-    pdfpagemode=UseNone,
-    pageanchor=true,
-    pdfpagemode=UseOutlines,
-    plainpages=false,
-    bookmarksnumbered,
-    bookmarksopen=true,
-    bookmarksopenlevel=1,
-    hypertexnames=true,
-    pdfhighlight=/O,
-    %nesting=true,
-    %frenchlinks,
-    urlcolor=SchoolColor,
-    linkcolor=black,
-    citecolor=webgreen,
-    %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,
-    pdftitle={\myTitle},
-    pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},
-    pdfsubject={},
-    pdfkeywords={},
-    pdfcreator={pdfLaTeX},
-    pdfproducer={LaTeX}
+	%hyperfootnotes=false,
+	%pdfpagelabels,
+	%draft,	% = elimina tutti i link (utile per stampe in bianco e nero)
+	colorlinks=true,
+	linktocpage=true,
+	pdfstartpage=1,
+	pdfstartview=FitV,
+	% decommenta la riga seguente per avere link in nero (per esempio per la stampa in bianco e nero)
+	%colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=1, pdfstartview=FitV,
+	breaklinks=true,
+	pdfpagemode=UseNone,
+	pageanchor=true,
+	pdfpagemode=UseOutlines,
+	plainpages=false,
+	bookmarksnumbered,
+	bookmarksopen=true,
+	bookmarksopenlevel=1,
+	hypertexnames=true,
+	pdfhighlight=/O,
+	%nesting=true,
+	%frenchlinks,
+	%urlcolor=webbrown,
+	%linkcolor=RoyalBlue,
+	citecolor=RoyalBlue,
+	urlcolor=Black,
+	linkcolor=Black,
+	%citecolor=Black, 
+	%pagecolor=RoyalBlue,
+	%urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,
+	pdftitle={\myTitle},
+	pdfauthor={\textcopyright\ \myName, \myUni, \myFaculty},
+	pdfsubject={},
+	pdfkeywords={},
+	pdfcreator={pdfLaTeX},
+	pdfproducer={LaTeX}
 }
 
 %**************************************************************
@@ -165,10 +202,10 @@
 %**************************************************************
 \lstset{
 	language=[LaTeX]Tex,%C++,
-	keywordstyle=\color{RoyalBlue}, %\bfseries,
+	keywordstyle=\color{Black}, %\bfseries, %colore RoyalBlue nel template
 	basicstyle=\small\ttfamily,
 	%identifierstyle=\color{NavyBlue},
-	commentstyle=\color{Green}\ttfamily,
+	commentstyle=\color{Black}\ttfamily,
 	stringstyle=\rmfamily,
 	numbers=none, %left,%
 	numberstyle=\scriptsize, %\tiny
@@ -186,21 +223,7 @@
 %**************************************************************
 \definecolor{webgreen}{rgb}{0,.5,0}
 \definecolor{webbrown}{rgb}{.6,0,0}
-\definecolor{SchoolColor}{rgb}{0.71, 0, 0.106}
-%%Colori per le tabelle
-\definecolor{grigetto}{RGB}{234, 234, 234}
-\definecolor{rossoep}{RGB}{164,60,59}
-\definecolor{darkblue}{RGB}{59,77,95}
-\definecolor{heavenly}{RGB}{74,199,253}
-\definecolor{giallo}{RGB}{251,168,11}
-\definecolor{verde}{RGB}{87,180,0}
-\definecolor{grigio}{gray}{.7}
-\definecolor{grigioChiaro}{gray}{.9}
 
-\newcommand{\classdesc}[2]{\item[\textbf{#1:}] #2}
-\newcommand{\intest}[1]{\multicolumn{1}{>{\columncolor{rossoep}}c}{\textbf{#1}}}
-\newcolumntype{Z}{>{\centering\arraybackslash}X}
-\renewcommand{\tabularxcolumn}[1]{>{\arraybackslash}m{#1}}
 
 %**************************************************************
 % Altro
@@ -211,17 +234,16 @@
 % eccezioni all'algoritmo di sillabazione
 \hyphenation
 {
-    ma-cro-istru-zio-ne
-    gi-ral-din
+	ma-cro-istru-zio-ne
+	gi-ral-din
 }
 
 \newcommand{\sectionname}{sezione}
 \addto\captionsitalian{\renewcommand{\figurename}{Figura}
-                       \renewcommand{\tablename}{Tabella}}
+	\renewcommand{\tablename}{Tabella}}
 
 \newcommand{\glsfirstoccur}{\ap{{[g]}}}
-\newcommand{\g}[1]{\gls{#1}\textcolor{SchoolColor}{\ap{[g]}}} %parola da glossario
-\newcommand{\acr}[1]{\texttt{\gls{#1}}}
+
 \newcommand{\intro}[1]{\emph{\textsf{#1}}}
 
 %**************************************************************
@@ -233,19 +255,19 @@
 %%%% Parameters
 % #1: Title
 \newenvironment{risk}[1]{
-    \refstepcounter{riskcounter}        % increment counter
-    \par \noindent                      % start new paragraph
-    \textbf{\arabic{riskcounter} #1}   % display the title before the 
-                                        % content of the environment is displayed 
+	\refstepcounter{riskcounter}        % increment counter
+	\par \noindent                      % start new paragraph
+	\textbf{\arabic{riskcounter}. #1}   % display the title before the 
+	% content of the environment is displayed 
 }{
-    \par\medskip
+	\par\medskip
 }
 
 \newcommand{\riskname}{Rischio}
 
-\newcommand{\riskdescription}[1]{\textbf{\\Descrizione:} #1}
+\newcommand{\riskdescription}[1]{\textbf{\\Descrizione:} #1.}
 
-\newcommand{\risksolution}[1]{\textbf{\\Soluzione:} #1}
+\newcommand{\risksolution}[1]{\textbf{\\Soluzione:} #1.}
 
 %**************************************************************
 % Environment per ``use case''
@@ -257,83 +279,38 @@
 % #1: ID
 % #2: Nome
 \newenvironment{usecase}[2]{
-    \renewcommand{\theusecasecounter}{\usecasename #1}  % this is where the display of 
-                                                        % the counter is overwritten/modified
-    \refstepcounter{usecasecounter}             % increment counter
-    \vspace{10pt}
-    \par \noindent                              % start new paragraph
-    {\large \textbf{\usecasename #1: #2}}       % display the title before the 
-                                                % content of the environment is displayed 
-    \medskip
+	\renewcommand{\theusecasecounter}{\usecasename #1}  % this is where the display of 
+	% the counter is overwritten/modified
+	\refstepcounter{usecasecounter}             % increment counter
+	\vspace{10pt}
+	\par \noindent                              % start new paragraph
+	{\large \textbf{\usecasename #1: #2}}       % display the title before the 
+	% content of the environment is displayed 
+	\medskip
 }{
-    \medskip
+	\medskip
 }
-%**************************************USE CASE**********************************************
+
 \newcommand{\usecasename}{UC}
 
 \newcommand{\usecaseactors}[1]{\textbf{\\Attori Principali:} #1. \vspace{4pt}}
 \newcommand{\usecasepre}[1]{\textbf{\\Precondizioni:} #1. \vspace{4pt}}
-\newcommand{\usecasedesc}[1]{\textbf{\\Scenario Principale:} #1 \vspace{4pt}}
+\newcommand{\usecasedesc}[1]{\textbf{\\Descrizione:} #1. \vspace{4pt}}
 \newcommand{\usecasepost}[1]{\textbf{\\Postcondizioni:} #1. \vspace{4pt}}
 \newcommand{\usecasealt}[1]{\textbf{\\Scenario Alternativo:} #1. \vspace{4pt}}
-\newcommand{\usecaseest}[1]{\textbf{\\Estensioni:} #1 \vspace{4pt}}
-\newcommand{\usecaseflow}[1]{\textbf{\\Flusso di Eventi:} #1 \vspace{4pt}}
-\newcommand{\usecasegen}[1]{\textbf{\\Generalizzazione:} #1 \vspace{4pt}}
 
 %**************************************************************
 % Environment per ``namespace description''
 %**************************************************************
 
 \newenvironment{namespacedesc}{
-    \vspace{10pt}
-    \par \noindent                              % start new paragraph
-    \begin{description} 
-}{
-    \end{description}
-   % \medskip
+	\vspace{10pt}
+	\par \noindent                              % start new paragraph
+	\begin{description} 
+	}{
+	\end{description}
+	\medskip
 }
 
-
-%*****************************************Chapter Style*************************************
-
-\titleformat{\chapter}[display]
-{\normalfont\scshape\Huge}
-{\hspace*{-70pt}\textcolor{SchoolColor}{\textbf{\thechapter}} \textbf{\textcolor{SchoolColor}{ |}} ~#1}
-{-15pt}
-{\hspace*{-110pt}{\color{SchoolColor}\rule{\dimexpr\textwidth+80pt\relax}{3pt}}\Huge}
-\titleformat{name=\chapter,numberless}[display]
-{\normalfont\scshape\Huge}
-{\hspace*{-70pt}#1}
-{-15pt}
-{\hspace*{-110pt}{\color{SchoolColor}\rule{\dimexpr\textwidth+80pt\relax}{3pt}}\Huge}
-\titlespacing*{\chapter}{0pt}{0pt}{30pt}
-
-\makeatletter
-\renewcommand\@seccntformat[1]{\color{SchoolColor} {\csname the#1\endcsname}\hspace{0.5em}}
-\makeatother
-
-%***************************************Tree Directory***************************************
-
-
-\definecolor{foldercolor}{RGB}{124,166,198}
-
-\tikzset{pics/folder/.style={code={%
-			\node[inner sep=0pt, minimum size=#1](-foldericon){};
-			\node[folder style, inner sep=0pt, minimum width=0.3*#1, minimum height=0.6*#1, above right, xshift=0.05*#1] at (-foldericon.west){};
-			\node[folder style, inner sep=0pt, minimum size=#1] at (-foldericon.center){};}
-	},
-	pics/folder/.default={20pt},
-	folder style/.style={draw=foldercolor!80!black,top color=foldercolor!40,bottom color=foldercolor}
-}
-
-\forestset{is file/.style={edge path'/.expanded={%
-			([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor)},
-		inner sep=1pt},
-	this folder size/.style={edge path'/.expanded={%
-			([xshift=\forestregister{folder indent}]!u.parent anchor) |- (.child anchor) pic[solid]{folder=#1}}, inner xsep=0.6*#1},
-	folder tree indent/.style={before computing xy={l=#1}},
-	folder icons/.style={folder, this folder size=#1, folder tree indent=3*#1},
-	folder icons/.default={12pt},
-}
-%********************************************************************************************
+\newcommand{\classdesc}[2]{\item[\textbf{#1:}] #2}
 

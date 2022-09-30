@@ -5,14 +5,28 @@
 %**************************************************************
 % Bibliografia
 %**************************************************************
+% Bibliografia
+%**************************************************************
 
 \cleardoublepage
 \chapter{Bibliografia}
-
 \nocite{*}
+\DeclareFieldFormat[article]{volume}{\mkbibbold{#1}}
+\DeclareFieldFormat[article]{pages}{#1}
+\DeclareFieldFormat[article]{number}{\mkbibparens{#1}}
+\DeclareFieldFormat[article]{title}{#1} 
+
+\defbibfilter{papers}{
+	type=article or
+	type=book or
+	type=manual
+}
+
 % Stampa i riferimenti bibliografici
-\printbibliography[heading=subbibliography,title={Riferimenti bibliografici},type=book]
+%\printbibliography[heading=subbibliography,title={Bibliographical references},type=article]
+\printbibliography[heading=subbibliography,filter=papers]
+\chapter{Sitography}
 
 % Stampa i siti web consultati
-\printbibliography[heading=subbibliography,title={Siti web consultati},type=online]
-
+%\printbibliography[heading=subbibliography,title={Websites consulted},type=online]
+\printbibliography[heading=subbibliography,type=online]

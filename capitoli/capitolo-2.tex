@@ -12,13 +12,15 @@
 %**************************************************************
 \section{Serie A 2021/2022}
 
-L'analisi che è stata effettuata ha preso in considerazione le partite della Serie A italiana della stagione 2021/2022. La Serie A è un torneo che comprende 20 squadre sparse per tutta l'Italia, alcune anche della stessa città ad esempio, Milan e Inter sono due squadre di Milano. Tale torneo è organizzato con una struttura Double-Round-Robin, dove ogni squadra affronta due volte le altre 19 avversarie del torneo. Vi è quindi una partita di andata e una di ritorno che in base al sorteggio della creazione del calendario delle partite decide quale delle due partite sarà giocata in casa oppure fuori casa (in casa dell'avversario). Tale torneo nella stagione 2021/2022 è iniziato il 22 Agosto con Inter - Genoa e si è concluso il 22 Maggio con le partite Salernitana - Udinese e Venezia - Cagliari, per un totale 380 partite giocate suddivise in 38 turni dove ogni turno è composto da 10 partite.
+L'analisi che è stata effettuata ha preso in considerazione le partite della Serie A italiana della stagione 2021/2022. La Serie A è un torneo che comprende 20 squadre sparse per tutta l'Italia, alcune anche della stessa città ad esempio, Milan e Inter sono due squadre di Milano. \\
+Tale torneo è organizzato con una struttura Double-Round-Robin, dove ogni squadra affronta due volte le altre 19 avversarie del torneo. Vi è quindi una partita di andata e una di ritorno che in base al sorteggio della creazione del calendario delle partite decide quale delle due partite sarà giocata in casa oppure fuori casa (in casa dell'avversario). \\
+Tale torneo nella stagione 2021/2022 è iniziato il 22 Agosto con Inter - Genoa e si è concluso il 22 Maggio con le partite Salernitana - Udinese e Venezia - Cagliari, per un totale 380 partite giocate suddivise in 38 turni dove ogni turno è composto da 10 partite.
 
 \subsection{Ranking}
 Le squadre di calcio sono classificate in base all'ordine dei punti che hanno totalizzato al termine della stagione. In un torneo calcistico, per ogni partita vinta la squadra vincente guadagna 3 punti, per ogni pareggio le due squadre avversarie guadagnano entrambe un punto, mentre per ogni sconfitta la squadra perdente non guadagna punti. Nel torneo della Serie A chi guadagna più punti vince il campionato, mentre chi si classifica tra le ultime tre retrocede alla lega inferiore, la Serie B, dove il posto delle tre squadre retrocesse verrà presso da tre squadre della Serie B che hanno guadagnato la promozione alla Serie A.\\ 
 La classifica della stagione 2021/2022 è mostrata nella Tabella \ref{tab:ranking}.
 
-	\begin{table}[!ht]%
+	\begin{table}[!htb]%
 
 	\renewcommand{\arraystretch}{1.7}
 	\centering
@@ -58,9 +60,17 @@ La classifica della stagione 2021/2022 è mostrata nella Tabella \ref{tab:rankin
 %**************************************************************
 \section{Costruzione del dataset}
 
-Al giorno d'oggi, nelle partite di calcio professionistico viene raccolta un'enorme quantità di variabili. Ad esempio, per ogni squadra è noto il tempo in percentuale del possesso della palla o il numero di tiri in porta prodotto dalla squadra in una determinata partita. L'obiettivo principale di questo lavoro è determinare l'influenza di queste variabili specifiche della partita. Per creare il dataset per tale scopo, sono state raccolte un gran numero di variabili che a primo avviso possono essere significative, tali dati sono stati offerti dal sito web FBref (https://fbref.com/).\\ FBref è un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. \\
+Al giorno d'oggi, nelle partite di calcio professionistico viene raccolta un'enorme quantità di variabili. Ad esempio, per ogni squadra è noto il tempo in percentuale del possesso della palla o il numero di tiri in porta prodotto dalla squadra in una determinata partita. L'obiettivo principale di questo lavoro è determinare l'influenza di queste variabili specifiche della partita. \\
+Per creare il dataset per tale scopo, sono state raccolte un gran numero di variabili che a primo avviso possono essere significative, tali dati sono stati offerti dal sito web FBref.\\
+FBref è un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. FBref mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse, in più per rendere più facile l'esportazione, tali tabelle possono essere convertite in formato di CSV per poter essere poi trasportate in un file Excel.\\
+\begin{figure}[!htb]
+	\begin{center}
+		\includegraphics[scale=0.40]{logo.png}
+		\caption{Logo di FBref. link: \url{https://fbref.com}} \label{fig:filt}
+	\end{center}
+\end{figure}
 
-FBref mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse, in più per rendere più facile l'esportazione, tali tabelle possono essere convertite in formato di CSV per poter essere poi trasportate in un file Excel. 
+
 
 Quindi per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A si è esportato per ogni partita giocata alcune variabili che ci interessavano, selezionando per prima cosa la macro aree dove si trovavano le variabili d'interesse e poi, modificando le tabelle per ottenere solo i dati di tali variabili. Ogni tabella generata veniva poi riconvertita in CSV per essere poi unita con tutte le altre in un file Excel che una volta completato, divenne il dataset per le nostre analisi. Per rendere più leggibile il file Excel, dato che le stringhe in CSV separavano i dati con il carattere separatore virgola, si è utilizzata la funzione di Excel "trasforma testo in colonne" per inserire tutti i dati in modo ordinato nelle celle del foglio Excel.
 
@@ -99,11 +109,12 @@ La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime t
 \end{table}
 
 
-
-
 \subsection{Covariate}
 
-Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. Oltre alle già citate \textsf{Date}, \textsf{Round} e \textsf{Spec} che hanno solo un valore di completezza dei dati, le restanti 32 colonne saranno le possibili candidate a essere le covariate che costituiranno il modello. Ovviamente non è detto che tutte queste variabili saranno inserite nel modello perché prima di costruire un modello, ci sarà un analisi per verificare se sia sensato o no l'utilizzo di ognuna delle variabili verificando attraverso grafici (analisi grafica) e individuando possibili problemi di multicollinearità o di bassa significatività delle variabili.\\ Le possibili cavariate sono le seguenti:
+Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. Oltre alle già citate \textsf{Date}, \textsf{Round} e \textsf{Spec} che hanno solo un valore di completezza dei dati, le restanti 32 colonne saranno le possibili candidate a essere le covariate che costituiranno il modello. Ovviamente non è detto che tutte queste variabili saranno inserite nel modello perché prima di costruire un modello, ci sarà un analisi per verificare se sia sensato o no l'utilizzo di ognuna delle variabili verificando attraverso grafici (analisi grafica) e individuando possibili problemi di multicollinearità o di bassa significatività delle variabili.\\
+%\pagebreak
+
+Le possibili covariate sono le seguenti:
 \begin{itemize}
 	\item \textsf{AtHome}: Tale variabile indica se la squadra indicata sulla variabile \textsf{Team} gioca nel suo stadio, quindi in casa oppure fuori casa. Per indicare se la squadra gioca in casa viene messo come valore \texttt{TRUE} altrimenti \texttt{FALSE}. 
 	
@@ -277,12 +288,12 @@ Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. O
 	Dato che questa variabile sembra essere legata al possesso del pallone sembra essere interessante per l'analisi.
 	
 \end{itemize}
-\section{Adattamento del dataset al modello Bradley-Terry}
+\section{Preprocessing dei dati}
 Nella sezione precedente si è descritto come si è costruito il dataset che verrà utilizzato per l'analisi e come esso è stato strutturato. Tale struttura ha il vantaggio di essere di facile interpretazione per un essere umano ma vi sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ Dopo aver importato il dataset sul software R, sono state perciò necessarie apportare alcune modifiche attraverso la scrittura di codice che andasse a modificare la struttura del dataset per poi essere correttamente utilizzabile nel modello. \\
 
-Innanzitutto il modello richiede per il suo funzionamento che le due variabili che indicano quali delle due squadra hanno partecipato alla partita in esame e quindi alla comparazione che si sta analizzando; devono essere o di tipo fattore oppure un \textsf{data.frame}. Una variabile fattore è un variabile non numerica, espressa in termini verbali ad esempio una categoria. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali (fattori), variabili cardinali (vettori numerici); un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ Dato che le due variabili in questione \textsf{Team} e \textsf{Vs} erano solo di tipo \texttt{character} e si voleva trovare un modo per far capire al modello quelli valori erano legati alla squadra indicata in \textsf{Team} e quali in \textsf{Vs} nella stessa partita; si è deciso perciò di trasformare \textsf{Team} e \textsf{Vs} in \texttt{data.frame} inserendo al loro interno tutte le covariate descritte nella sezione precedente, ad esempio \textsf{Poss}, \textsf{Int} ecc..
+Innanzitutto il modello richiede per il suo funzionamento che le due variabili che indicano quali delle due squadra hanno partecipato alla partita in esame; devono essere o di tipo fattore oppure un \textsf{data.frame}. Una variabile fattore è un variabile non numerica, espressa in termini verbali ad esempio una categoria. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali cioè fattori, variabili cardinali cioè vettori numerici; un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ Dato che le due variabili in questione \textsf{Team} e \textsf{Vs} erano solo di tipo \texttt{character} e si voleva inserire un collegamento che faccia capire al modello, quali valori sono legati alla squadra indicata in \textsf{Team} e quali in \textsf{Vs} nella stessa partita; si è deciso perciò di trasformare \textsf{Team} e \textsf{Vs} in \texttt{data.frame} inserendo al loro interno tutte le covariate descritte nella sezione precedente, ad esempio \textsf{Poss}, \textsf{Int} ecc..\\
 
-Si sottolinea inoltre che sono state necessarie ulteriore modifiche per quanto riguarda la variabile \textsf{AtHome}; dato che al momento dell'importazione del dataset, i valori venivano interpretati come stringhe, quindi è stato necessario trasformarli in valori logici con il commando \textsf{as.logical(soccern\$AtHome)}. Ciononostante pero il valore logico non era accettato dal modello ma era accettato un valore numerico per indicare se la squadra giocava in casa o no; si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0. 
+Si sottolinea inoltre che sono state necessarie ulteriore modifiche per quanto riguarda la variabile \textsf{AtHome}; dato che al momento dell'importazione del dataset, i valori venivano interpretati come stringhe, è stato necessario trasformarli in valori logici con il commando \textsf{as.logical(soccern\$AtHome)}. Ciononostante pero il valore logico non era accettato dal modello ma era accettato un valore numerico per indicare se la squadra giocava in casa o no; si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0. 
 
 \subsection{Codice per l'adattamento del dataset}
 Di seguito viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.
@@ -357,9 +368,9 @@ for(i in 1:nrow(soccern)){
 }
 \end{lstlisting}
 \bigskip
-Con il codice precedente si ha l'obbiettivo di prendere tutti i dati delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} per poi unirli con i dati delle righe che contengono i dati delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team}. Le righe che contengono solo i dati delle partite fuori casa saranno eliminate.\\
-Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato pe per inserire un nuovo elemento nel vettore \texttt{del}.\\
-Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} vi è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
+Con il codice precedente si ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
+Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}.\\
+Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} vi è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
 
 Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
 \bigskip
@@ -383,7 +394,11 @@ Con il precedente commando si va a modificare \textsf{Team} rendendolo un \textt
 
 \end{lstlisting}
 \bigskip
-Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati vengo riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.
+Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati vengo riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\
+
+Si segnala inoltre che il dataset non contiene valori mancati dato che, in quei rari casi in cui venivano individui valori mancanti durante la raccolta, veniva ricercato il dato da altre fonti attendibili.
+
+\section{Analisi grafica dei dati}
 
 
 %\label{cap:obbiettivi}

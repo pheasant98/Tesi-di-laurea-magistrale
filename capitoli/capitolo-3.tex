@@ -10,7 +10,7 @@
 TO DO
 
 \section{Il Bradley-Terry Model}
-Il Bradley-Terry model \autocite{bradley1952rank}(Bradley and Terry 1952) asserisce che in una competizione tra due qualsiasi giocatori, detti player \textit{i} e player \textit{j} (i,j $\in$ \{1,...,n\}), la probabilità che \textit{i} sia preferito a \textit{j} è data dal rapporto tra $\alpha_{i}$ e $\alpha_{j}$, dove $\alpha_{i}$ e $\alpha_{j}$ sono parametri che rappresentano la cosiddetta abilità dei due giocatori. Il modello standard non considera covariate e in generale, non presta nessuna attenzione all'eterogeneità causata dai soggetti dei confronti.\\
+Il Bradley-Terry model \autocite{bradley1952rank} asserisce che in una competizione tra due qualsiasi giocatori, detti player \textit{i} e player \textit{j} (i,j $\in$ \{1,...,n\}), la probabilità che \textit{i} sia preferito a \textit{j} è data dal rapporto tra $\alpha_{i}$ e $\alpha_{j}$, dove $\alpha_{i}$ e $\alpha_{j}$ sono parametri che rappresentano la cosiddetta abilità dei due giocatori. Il modello standard non considera covariate e in generale, non presta nessuna attenzione all'eterogeneità causata dai soggetti dei confronti.\\
 
 Formalmente, sia Y$_{i,j}$ la variabile casuale associata al risultato della \emph{paired comparison} tra oggetti \textit{i} e \textit{j}, con \textit{j} > \textit{i} $\in$ \{1,...,n\}, dove nella forma più semplice, il modello dato è il seguente:
 \begin{align} 
@@ -33,7 +33,7 @@ Si sottolinea inoltre che il modello precedentemente descritto è chiamato model
 In molti contesti di comparazione tra oggetti, è possibile che sia richiesto di dare una scala di preferenza tra un oggetto e un altro. Supponiamo che due oggetti \textit{i} e \textit{j} siano confrontati e che la preferenza ora non sia più espressa i termini di: preferisco \textit{i} al posto di \textit{j} o viceversa ma, attraverso una scala di preferenza ad esempio, dando una forte preferenza a \textit{i} rispetto a \textit{j} o una leggera preferenza a \textit{i} rispetto a \textit{j} o non dando nessuna preferenza o preferendo leggermente \textit{j} rispetto a \textit{i} oppure preferire fortemente \textit{j} rispetto a \textit{i}. Dal modello descritto nella precedente sezione si passa da due classi di preferenza a cinque classi di preferenza.\\
 Ovviamente il caso descritto è di interesse per le comparazioni calcistiche dato che non è sufficiente stimare la probabilità di vittoria o sconfitta ma deve essere obbligantemente preso in considerazione anche il pareggio come risultato. Si necessità perciò di un estensione del classico Bradley-Terry model descritto precedentemente.\\
 
-Modelli che consentono un numero generale di categorie K, sono stati proposti da Tutz (1986) e da Agresti (1992), in particolare quest'ultimo mostrò come due modelli per l'analisi di dati ordinati possono essere adattati per le \emph{ordinal paired comparisons}.\\
+Modelli che consentono un numero generale di categorie K, sono stati proposti da \autocite{tutz1986bradley} e da \autocite{bradley1952rank}, in particolare quest'ultimo mostrò come due modelli per l'analisi di dati ordinati possono essere adattati per le \emph{ordinal paired comparisons}.\\
 
 Il primo modello è il \emph{cumulative link model} che sfrutta la rappresentazione della variabile casuale latente. In generale, sia H il numero di gradi della scala di preferenza e sia $Z_{i,j}$ una variabile continua casuale latente e siano $\theta_{1} $ < $\theta_{2}$ < .... < $\theta_{H-1}$ le soglie tale che Y$_{i,j} = h$ quando $\theta_{h-1} < Z_{i,j} < \theta_{h}$. Allora:
 \begin{align}
@@ -51,10 +51,10 @@ Il modello delle \emph{adjacent categories model}, così come il modello Bradley
 	logit(Y_{i,j}\leq h) =  \theta_{h} + \alpha_i - \alpha_j 
 \end{align}
 
-Il secondo modello invece proposto da Agresti(1992) è il \emph{adjacent categories model}. In questo caso il collegamento è applicato alle probabilità di risposte adiacenti, piuttosto che alle probabilità cumulative riducendosi così al modello Bradley-Terry quando sono consentite solo due categorie e al modello proposto da Davidson (1970) quando sono consentite solo tre categorie.\\
-Il modello proposto da Davidson (1970) risulta essere adatto per l'analisi sulle partite di calcio.\\
+Il secondo modello invece proposto da \autocite{agresti1992analysis} è il \emph{adjacent categories model}. In questo caso il collegamento è applicato alle probabilità di risposte adiacenti, piuttosto che alle probabilità cumulative riducendosi così al modello Bradley-Terry quando sono consentite solo due categorie e al modello proposto da \autocite{davidson1970extending} quando sono consentite solo tre categorie.\\
+Il modello proposto da \autocite{davidson1970extending} risulta essere adatto per l'analisi sulle partite di calcio.\\
 Il \emph{adjacent categories model} è più semplice da interpretare rispetto ai \emph{cumulative link models} poiché l'odds ratio si riferisce a un determinato risultato anziché a raggruppamenti di risultati. \\
-Perciò dal modello proposto da Davidson (1970), sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la non preferenza, nel nostro caso il pareggio, allora:
+Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la non preferenza, nel nostro caso il pareggio, allora:
 
 \begin{align}
 	P(Y_{i,j} = 2 | Y_{i,j} \not = 0) =  \frac{exp(\alpha_{i} - \alpha_{j})}{1 + exp(\alpha_{i} - \alpha_{j})}, 
@@ -82,12 +82,12 @@ Sia x$_{i}$=($x_{i1},....x_{iK}$) il vettore di K variabili esplicative per un c
 \end{center}
 
 Si ha quindi che il parametro abilità $\alpha_{i}$ per un certo oggetto \textit{i} è una combinazione lineare di variabili.\\
-Il modello è stato presentato per la prima volta da Springall(1973); tale modello viene chiamato modello strutturato.\\
+Il modello è stato presentato per la prima volta da \autocite{springall1973response}; tale modello viene chiamato modello strutturato.\\
  
 Grazie a questo modello se vi sono covariate che hanno un legame con la variabile risposta, tanto da influenzarne l'esito con quest'ultima allora, sarà possibile inserirle nel modello. Nel caso calcistico tali covariate possono essere il possesso della palla o il numero di falli fatti.
 
 
-\subsection{Il Bradley–Terry Model con la gestione delle partite in casa}
+\subsection{Il Bradley–Terry Model con effetto partite in casa}
 Nel modello descritto nella sezione 2.2, si era scritto che, era necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti, tra questi vi è anche il calcio; poiché l'ordine dei oggetti conta. Infatti nel calcio la prima squadra che viene indicata tra le due squadre, è quella che gioca in casa, dove teoricamente dovrebbe avere un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
 Un possibile modello riadattato al problema esposto è il seguente:
 

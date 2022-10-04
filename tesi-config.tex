@@ -92,32 +92,34 @@
 % Impostazioni di biblatex
 %**************************************************************
 
+\begin{comment}
+	\bibliography{bibliografia.bib} % database di biblatex 
+	
+	
+	\defbibheading{bibliography} {
+		\cleardoublepage
+		\phantomsection 
+		\addcontentsline{toc}{chapter}{\bibname}
+		\chapter*{\bibname\markboth{\bibname}{\bibname}}
+	}
+	
+	\setlength\bibitemsep{1.5\itemsep} % spazio tra entry
+	
+	\DeclareBibliographyCategory{paper}
+	\DeclareBibliographyCategory{web}
+	
+	\addtocategory{paper}{bradley1952rank}
+	\addtocategory{paper}{agresti1992analysis}
+	\addtocategory{paper}{tutz1986bradley}
+	\addtocategory{paper}{davidson1970extending}
+	\addtocategory{paper}{springall1973response}
+	
+	
+	\defbibheading{paper}{\section*{Riferimenti bibliografici}}
+	\defbibheading{web}{\section*{Siti Web consultati}}
+\end{comment}
 
 
-\bibliography{bibliografia.bib} % database di biblatex 
-
-
-\defbibheading{bibliography} {
-	\cleardoublepage
-	\phantomsection 
-	\addcontentsline{toc}{chapter}{\bibname}
-	\chapter*{\bibname\markboth{\bibname}{\bibname}}
-}
-
-\setlength\bibitemsep{1.5\itemsep} % spazio tra entry
-
-\DeclareBibliographyCategory{paper}
-\DeclareBibliographyCategory{web}
-
-\addtocategory{paper}{bradley1952rank}
-\addtocategory{paper}{agresti1992analysis}
-\addtocategory{paper}{tutz1986bradley}
-\addtocategory{paper}{davidson1970extending}
-\addtocategory{paper}{springall1973response}
-
-
-\defbibheading{paper}{\section*{Riferimenti bibliografici}}
-\defbibheading{web}{\section*{Siti Web consultati}}
 
 
 

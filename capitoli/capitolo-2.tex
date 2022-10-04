@@ -399,39 +399,99 @@ Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{
 Si segnala inoltre che il dataset non contiene valori mancati dato che, in quei rari casi in cui venivano individui valori mancanti durante la raccolta, veniva ricercato il dato da altre fonti attendibili.
 
 \section{Analisi grafica dei dati}
+In questa sezione attraverso il supporto di grafici, si analizzerà graficamente i dati disponibili e le loro relazione per avere una prima visione dati raccolti. Si cercherà di: individuare possibili outliers o anomalie, quali distribuzioni hanno i dati ma soprattutto valutare le relazione tra covariate e variabile di risposta e tra due covariate, con lo scopo di individuare quali covariate possono essere significative per la variabile risposta e quali interazioni tra covariate emergono dall'analisi grafica.\\
+
+Come primo passo dell'analisi, viene valutata la distribuzione delle classi della variabile risposta \texttt{Res} all'interno delle osservazioni disponibili. Tale distribuzione è mostrata nella Figura \ref{fig:res}.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.28]{barRes.png}
+		\caption{Barplot della distribuzione della variabile di risposta \texttt{Res}} \label{fig:res}
+	\end{center}
+\end{figure}
+
+Come si può notare le classi sembrano ben distribuite dato che abbiamo 196 pareggi e 282 vittorie e altrettante sconfitte. Si ha quindi un campione abbastanza ampio e distribuito per le nostre analisi e dai risultati ottenuti si affermare che i dati sono corretti.\\
+
+Aumentando il livello di dettaglio è di interessante analizzare come queste classificazione sono distribuite tra le varie squadre.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[height=8cm,width=15cm]{ResTeam.png}
+		\caption{Barplot della distribuzione della variabile di risposta per squadra\texttt{Res}} \label{fig:team}
+	\end{center}
+\end{figure}
+
+Nella Figura \ref{fig:team} si può notare come la distribuzione di vittorie, pareggi e sconfitte non è omogenea tra le squadre. Ovviamente è un risultato che ci si aspettava ma che sottolinea prima di tutto la correttezza dei dati ma soprattutto che vi è qualche elemento nascosto che ha determinato tale distribuzione.\\
 
 
-%\label{cap:obbiettivi}
-\begin{comment}
-	\begin{table}[h]%
-		\rowcolors{2}{grigetto}{white}
-		\renewcommand{\arraystretch}{1.7}
-		\centering
-		\begin{tabularx}{\textwidth}{c c X}
-			\hline	
-			\rowcolor{heavenly}
-			\intest{Durata in ore} & \intest{Date (inizio - fine)} & \intest{Attività} \\	
-			\hline			
-			24 &  01/07/2020 - 03/07/2020 & Studio delle tecnologie Angular 2+ e Ionic, da utilizzare durante lo stage.\\
-			
-			40 &  06/07/2020 - 10/07/2020 & Studio di componenti dell'architettura di sistema di Azzurra, creazione di \emph{test} per la \emph{dashboard} di \gls{AWMS} e per l'applicazione \emph{mobile}. \\
-			
-			40 &  13/07/2020 - 17/07/2020 & Continuazione studio delle componenti del sistema di Azzurra, analisi, progettazione e implementazione di flussi conversazionali.\\
-			
-			40 &  20/07/2020 - 24/07/2020 & Documentazione per le componenti di Azzurra.\\
-			
-			40 &  27/07/2020 - 31/07/2020 & Continuazione studio di altre componenti di \gls{AWMS}.\\
-			
-			40 &  03/08/2020 - 07/08/2020 & Documentazione delle componenti \gls{AWMS} e implementazione \glslink{notifica push}{notifiche push}\textcolor{SchoolColor}{\ap{[g]}}.\\
-			
-			40 &  17/08/2020 - 21/08/2020 & Progettazione, implementazione e documentazione di \emph{template engine} multi-lingua.\\
-			
-			40 &  24/08/2020 - 28/08/2020 & Studio della gestione dei comportamenti \emph{mobile} \emph{application} in condizioni di mancanza di connettività.\\
-			
-			16 &  31/08/2020 - 01/09/2020 & Continuazione ottava settimana. \\
-			\hline
-		\end{tabularx} \hbox{}
-		
-		\caption{Tabella riassuntiva delle attività pianificate per il progetto di stage}
-	\end{table}
-\end{comment}
+Come secondo step si analizzerà le relazione tra variabile di risposta con alcune covariate.\\
+
+La prima relazione che si analizza è quella con la variabile categorica \texttt{AtHome}. Nella Figura \ref{fig:AtHome} si può vedere che c'è una leggera variazione dei risultati tra la squadra che gioca in casa oppure no. Infatti c'è una leggera tendenza a favorire la vittoria per la squadra che gioca in casa piuttosto che la vittoria per la squadra fuori casa. Naturalmente non deve esserci alcuna variazione per quanto riguarda il pareggio dato che entrambe le squadre lo ottengono. Risulta perciò significativa la variabile \texttt{AtHome}.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{AtHomeRes.png}
+		\caption{Mosaicplot che mostra la distribuzione degli esiti rispetto alle partite giocate in casa e fuori casa} \label{fig:AtHome}
+	\end{center}
+\end{figure}
+
+Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica; si segnala solo che la mediana della sconfitta è più vicina al 3 quantile mentre quella della vittoria è più vicina al primo quantile. Inoltre non vi sono presenti outliers.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{Poss.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Poss} } \label{fig:Poss}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:sot} mostra come si comporta la relazione con \texttt{SoT}. Come ci si aspetta si hanno valori più alti nella vittoria e valori molto più bassi nella sconfitta, si ha una buona distribuzione dei valori nella vittoria dato che le code sono simmetrici, per le altre due classi non c'è simmetria dato che ci sono valori più bassi rispetto a valori più alti. Vi sono inoltre alcuni outliners che si discostano dalla distribuzione di tutte e tre le classi dovuti al fatto che ci sono state squadre che hanno tirato molto in porta. Le mediane dei box pareggio e vittoria non sono equidistanti dai quantili ma è più vicini al 1 quantile. Il box della sconfitta ha una bassa varianza. In conclusione avere un valore alto di tiri in porta sembra essere significativo ai fini della vittoria. Si segnala inoltre che si ottengono i stessi risultati anche con \texttt{Sh} solo con valori meno alti per la vittoria rispetto a \texttt{SoT}.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{SoT.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{SoT} } \label{fig:sot}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si nota che vi sono valori molto bassi ma leggermente più alti per la vittoria. La distribuzione non è buona perché le code sono asimmetriche infatti tutti i valori sono concentrati in basso e pochi verso la coda in alto, per di più c'è una bassa varianza tra i valori. Vi è la presenza di outliners dovuti a partite dove le squadre sono riuscite a ottenere il massimo da ogni tiro. I risultati mostrati nonostante la pessima distribuzione, sono comunque coerenti dato che non ci si aspetta dal rapporto tiri gol un numero alto ma comunque una tendenza che favorisca la vittoria.\\
+ 
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{g.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{G/Sh} } \label{fig:g}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves}. Come si può notare sembra che tale variabile sia poco significativa ai fini del risultato. Infatti c'è poca variazione tra una classe è in altra dato che avere un alto numero di parate non è determinante a fini del risultato.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{saves.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Saves} } \label{fig:saves}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'alto numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto ai altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1${^\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita dato che maggior numero di passaggi si prova ad effettuare maggiori sono le possibilità di vittoria, occorre pero sapere quanto è precisa la squadra.\\
+Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti dati alti, infatti la coda in alto e molto meno lunga rispetto alla coda in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non da la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
+Per quanto riguarda le variabili delle altre tipologie di passaggi si discostano di poco dai boxplot in Figura \ref{fig:pass}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.50]{pass.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{PAtt} e \texttt{PCmp\%}  } \label{fig:pass}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{def.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToDefPen} } \label{fig:def}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{att.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToAttPen} } \label{fig:att}
+	\end{center}
+\end{figure}

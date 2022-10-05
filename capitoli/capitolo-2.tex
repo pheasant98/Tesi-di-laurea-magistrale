@@ -399,7 +399,7 @@ Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{
 Si segnala inoltre che il dataset non contiene valori mancati dato che, in quei rari casi in cui venivano individui valori mancanti durante la raccolta, veniva ricercato il dato da altre fonti attendibili.
 
 \section{Analisi grafica dei dati}
-In questa sezione attraverso il supporto di grafici, si analizzerà graficamente i dati disponibili e le loro relazione per avere una prima visione dati raccolti. Si cercherà di: individuare possibili outliers o anomalie, quali distribuzioni hanno i dati ma soprattutto valutare le relazione tra covariate e variabile di risposta e tra due covariate, con lo scopo di individuare quali covariate possono essere significative per la variabile risposta e quali interazioni tra covariate emergono dall'analisi grafica.\\
+In questa sezione attraverso il supporto di grafici, si analizzerà graficamente i dati disponibili e le loro relazione per avere una prima visione dei dati raccolti. Si cercherà di: individuare possibili outliers o anomalie, quali distribuzioni hanno i dati ma soprattutto valutare le relazione tra covariate e variabile di risposta e tra due covariate, con lo scopo di individuare quali covariate possono essere significative per la variabile risposta e quali interazioni tra covariate emergono dall'analisi grafica.\\
 
 Come primo passo dell'analisi, viene valutata la distribuzione delle classi della variabile risposta \texttt{Res} all'interno delle osservazioni disponibili. Tale distribuzione è mostrata nella Figura \ref{fig:res}.
 
@@ -410,7 +410,7 @@ Come primo passo dell'analisi, viene valutata la distribuzione delle classi dell
 	\end{center}
 \end{figure}
 
-Come si può notare le classi sembrano ben distribuite dato che abbiamo 196 pareggi e 282 vittorie e altrettante sconfitte. Si ha quindi un campione abbastanza ampio e distribuito per le nostre analisi e dai risultati ottenuti si affermare che i dati sono corretti.\\
+Come si può notare le classi sembrano ben distribuite dato che abbiamo 196 pareggi e 282 vittorie e altrettante sconfitte. Si ha quindi un campione abbastanza ampio e distribuito e corretto per le nostre analisi.\\
 
 Aumentando il livello di dettaglio è di interessante analizzare come queste classificazione sono distribuite tra le varie squadre.
 
@@ -435,7 +435,7 @@ La prima relazione che si analizza è quella con la variabile categorica \texttt
 	\end{center}
 \end{figure}
 
-Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica; si segnala solo che la mediana della sconfitta è più vicina al 3 quantile mentre quella della vittoria è più vicina al primo quantile. Inoltre non vi sono presenti outliers.
+Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica; si segnala solo che la mediana della sconfitta è più vicina al 3$^{\circ}$ quantile mentre quella della vittoria è più vicina al 1$^{\circ}$ quantile. Inoltre non vi sono presenti outliers.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -444,7 +444,7 @@ Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:sot} mostra come si comporta la relazione con \texttt{SoT}. Come ci si aspetta si hanno valori più alti nella vittoria e valori molto più bassi nella sconfitta, si ha una buona distribuzione dei valori nella vittoria dato che le code sono simmetrici, per le altre due classi non c'è simmetria dato che ci sono valori più bassi rispetto a valori più alti. Vi sono inoltre alcuni outliners che si discostano dalla distribuzione di tutte e tre le classi dovuti al fatto che ci sono state squadre che hanno tirato molto in porta. Le mediane dei box pareggio e vittoria non sono equidistanti dai quantili ma è più vicini al 1 quantile. Il box della sconfitta ha una bassa varianza. In conclusione avere un valore alto di tiri in porta sembra essere significativo ai fini della vittoria. Si segnala inoltre che si ottengono i stessi risultati anche con \texttt{Sh} solo con valori meno alti per la vittoria rispetto a \texttt{SoT}.\\
+La Figura \ref{fig:sot} mostra come si comporta la relazione con \texttt{SoT}. Come ci si aspetta si hanno valori più alti nella vittoria e valori molto più bassi nella sconfitta, si ha una buona distribuzione dei valori nella vittoria dato che le code sono simmetriche, per le altre due classi non c'è simmetria dato che ci sono valori più bassi rispetto a valori più alti. Vi sono inoltre alcuni outliners che si discostano dalla distribuzione di tutte e tre le classi dovuti al fatto che ci sono state squadre che hanno tirato molto in porta. Le mediane dei box pareggio e vittoria non sono equidistanti dai quantili ma più vicine al 1$^{\circ}$ quantile. Il box della sconfitta ha una bassa varianza. In conclusione avere un valore alto di tiri in porta sembra essere significativo ai fini della vittoria. Si segnala inoltre che si ottengono i stessi risultati anche con \texttt{Sh} solo con valori meno alti per la vittoria rispetto a \texttt{SoT}.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -462,7 +462,7 @@ La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves}. Come si può notare sembra che tale variabile sia poco significativa ai fini del risultato. Infatti c'è poca variazione tra una classe è in altra dato che avere un alto numero di parate non è determinante a fini del risultato.\\
+La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves}. Come si può notare sembra che tale variabile sia poco significativa ai fini del risultato. Infatti c'è poca variazione tra una classe e l'altra dato che avere un alto numero di parate non è determinante a fini del risultato.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -472,7 +472,7 @@ La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves
 \end{figure}
 
 La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'alto numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto ai altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1${^\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita dato che maggior numero di passaggi si prova ad effettuare maggiori sono le possibilità di vittoria, occorre pero sapere quanto è precisa la squadra.\\
-Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti dati alti, infatti la coda in alto e molto meno lunga rispetto alla coda in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non da la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
+Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti valori alti, infatti la coda in alto e molto meno lunga rispetto alla coda in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non da la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
 Per quanto riguarda le variabili delle altre tipologie di passaggi si discostano di poco dai boxplot in Figura \ref{fig:pass}
 
 \begin{figure}[htbp]
@@ -481,17 +481,63 @@ Per quanto riguarda le variabili delle altre tipologie di passaggi si discostano
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{PAtt} e \texttt{PCmp\%}  } \label{fig:pass}
 	\end{center}
 \end{figure}
+\bigskip
+La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefPen}. Come si può notare questa non è per nulla significativa per la variabile risposta, infatti non c'è una minima variazione e i box hanno tutti la stessa varianza. Tale esito può essere giustificato dal fatto che le squadre cercano di rimane fuori il più possibile dalla propria area di rigore per non portare troppo vicino alla porta l'avversario. Da ciò quindi tale variabile non sarà inserita nel modello.\\
 
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[scale=0.40]{def.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToDefPen} } \label{fig:def}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToDefPen} } \label{fig:defp}
 	\end{center}
 \end{figure}
 
+La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToAttPen}. Contrariamente quanto visto con la Figura \ref{fig:defp} qui si nota una certa variazione da una un box e l'altro, infatti vi è una tendenza positiva che porta ad aver valori più alti in caso di vittoria. Si ha una maggior varianza per quanto riguarda la vittoria rispetto ai altri due esiti e la distribuzione di tutti e tre è abbastanza bilanciata se non che la coda più bassa è leggermente meno lunga rispetto all'altra coda; la mediana invece è equilibrata. Si nota inoltre che vi sono alcuni outliners segno che alcune squadre in qualche partite, si sono particolarmente rese note nel produrre un quantitativo di tocchi maggiore rispetto alla distribuzione, ciò pero non sembra influenzare l'esito.\\
+
+Per quanto riguarda \texttt{ToDef3rd}, \texttt{ToMid3rd} e \texttt{ToAtt3rd}, esse si comportano come \texttt{ToAttPen}. Perciò è stato omesso il loro grafico.\\
+ 
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[scale=0.40]{att.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToAttPen} } \label{fig:att}
 	\end{center}
 \end{figure}
+
+Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei falli, \texttt{Fls} e \texttt{Fld}. Nel boxplot a sinistra si può notare che i valori più alti sono nel box del pareggio mentre sono presenti valori più bassi nel box vittoria. Ciò fa pensare che subire molti falli può impedire la vittoria alla squadra che li subisce. Per quanto riguarda la distribuzione sembra essere buona; c'è minor varianza per quanto riguarda la sconfitta. \\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{falli.png}
+		\caption{A sinistra il boxplot della variabile risposta e della variabile numerica \texttt{Fls} e a destra il boxplot della variabile risposta e della variabile numerica \texttt{Fld} } \label{fig:falli}
+	\end{center}
+\end{figure}
+
+Nel secondo boxplot si può notare che i valori più alti sono presenti sia sul pareggio e sia sulla vittoria e sempre qui si ha una maggior distribuzione rispetto alla sconfitta. Sembra perciò che dal grafico si può intuire che se la squadra non commette dei falli allora sarà più soggetta a perdere.\\
+
+La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. Sorprendentemente valori più alti sono registrati nella sconfitta, anche se la mediana risulta essere più vicina al 1 $^{\circ}$ quantile sottolineando che vi è un maggior numero di valori bassi piuttosto che alti. La mediana dei restanti esiti invece e ben equilibrata ma il pareggio risulta avere meno variabilità. Sembra perciò che effettuare troppi intercettazioni dei passaggi avversari contrariamente da quanto si pensi sembra essere controproducente per la vittoria. Si segnala inoltre la presenza di alcuni outliners con valori alti di intercettazioni, che si discostano dalle distribuzioni.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{int.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Int}} \label{fig:int}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}. Come si può notare, vincere più contrasti possibili evita di subire una sconfitta. Infatti vi sono valori più alti in pareggio e vittoria oltre a una maggiore varianza rispetto alla sconfitta. Nello specifico pero si nota che, nella distribuzione dei valori vi sono maggior valori alti nella vittoria rispetto al pareggio, graficamente lo si vede dalla mediana che nel pareggio è più vicina al 1$^{\circ}$ quindi a valori più bassi e lo si nota anche dalla coda più bassa che è meno lunga rispetto a quella in alto; invece la mediana della vittoria risulta più vicina al 3$^{\circ}$ oltre ad avere la coda in alto più corta rispetto a quella in basso. Vi è inoltre qualche outliners con valori più alti di contrasti vinti ma sembrano non influenzare la classificazione.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{tklwin.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{TklWin}} \label{fig:tkl}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{recov.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Recov}} \label{fig:recov}
+	\end{center}
+\end{figure} 
+
+Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra per entrambe le classi equidistante dai quantili. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria oltre ad averne anche di più rispetto alle altre classi. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che vi sono numerosi outliners sopratutto per il pareggio.
+
+

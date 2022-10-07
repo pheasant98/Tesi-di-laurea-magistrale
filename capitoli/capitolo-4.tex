@@ -1,399 +1,119 @@
 % !TEX encoding = UTF-8
 % !TEX TS-program = pdflatex
 % !TEX root = ../tesi.tex
-
 %**************************************************************
-\chapter{Azzurra Flow Engine}
-\label{cap:flow engine}
+\chapter{Modeling Paired Comparisons}
+%\label{cap:archittettura del sistema AWMS}
 %**************************************************************
-\intro{Nel seguente capitolo verrà illustrata la struttura di un flusso conversazionale ed il funzionamento del Azzurra Flow Engine con la conseguente generazione dei messaggi da parte del \g{bot} Azzurra e dell'utente umano. Infine verrà trattata la gestione dell'internazionalizzazione}\\
 
-%*************************************************************
+\intro{Nel seguente capitolo verranno introdotti differenti modelli per la \textit{paired comparisons}, iniziando con il Bradley-Terry model versione standard fino a presentare tutte le sue estensioni usate per l'analisi trattata. }
+TO DO
 
-\section{Cos'è}
-Un elemento cardine dell'\g{architettura} del sistema \gls{AWMS} è Azzurra Flow Engine. Esso è un motore conversazionale in grado di ricevere in input flussi conversazionali, implementati attraverso configurazioni \g{JSON}, che risiedono nel \g{database} di Azzurra.io. Essi vengono mandati in input ad Azzurra Flow Engine quando il \g{bot} Azzurra ne fa richiesta. Questi file sono codificati secondo una certa struttura fatta dai cosiddetti blocchi conversazionali e da altri campi illustrati in seguito. Tornando su Azzurra Flow Engine, esso riceve in input la configurazione \g{JSON} e grazie ai metodi che ha disposizione è in grado di interpretare le configurazioni \g{JSON} ricevute e di generare i messaggi che il \g{bot} Azzurra deve far visualizzare all'utente nella \emph{chat}.
+\section{Il Bradley-Terry Model}
+Il Bradley-Terry model \autocite{bradley1952rank} asserisce che in una competizione tra due qualsiasi giocatori, detti player \textit{i} e player \textit{j} (i,j $\in$ \{1,...,n\}), la probabilità che \textit{i} sia preferito a \textit{j} è data dal rapporto tra $\alpha_{i}$ e $\alpha_{j}$, dove $\alpha_{i}$ e $\alpha_{j}$ sono parametri che rappresentano la cosiddetta abilità dei due giocatori. Il modello standard non considera covariate e in generale, non presta nessuna attenzione all'eterogeneità causata dai soggetti dei confronti.\\
 
-\section{Flussi conversazionali}
-I flussi di conversazione o conversazionali sono degli elementi fondamentali per la conversazione tra il \g{bot} e l'utente umano. Essi sono delle configurazioni in \g{JSON} dove ogni configurazione contiene un flusso di conversazione e ogni flusso è un possibile ramo di conversazione che può essere fatto tra il \g{bot} Azzurra e l'utente umano. Ogni configurazione contiene perciò dei particolari comandi che permettono al \g{bot} di sapere quali messaggi deve mostrare all'utente umano e come comportarsi in base alle sue scelte. Ogni configurazione ha un id che contiene un codice univoco in modo tale da poter identificare ogni flusso di conversazione. Inoltre, l'esecuzione dei flussi di conversazione prevede che all'inizio ci sia l'esecuzione di un cosiddetto \emph{main flow}, in modo simile ai programmi \emph{software}, cioè una funzione detta \emph{main} eseguita per prima all'avvio del programma. Per indicare quale tra l'insieme dei flussi sia il \emph{main} si utilizza il campo isMainFlow dandogli il valore \emph{true}.
-Oltre a questi campi ci sono:\\
-\begin{itemize}
-	\item \textbf{Shortcuts "shortcuts"};
-	\item \textbf{Configurazione "config"};
-	\item \textbf{Blocchi per la conversazione "blocks"}.
-\end{itemize}
+Formalmente, sia Y$_{i,j}$ la variabile casuale associata al risultato della \emph{paired comparison} tra oggetti \textit{i} e \textit{j}, con \textit{j} > \textit{i} $\in$ \{1,...,n\}, dove nella forma più semplice, il modello dato è il seguente:
+\begin{align} 
+	P(i\succ j) = P(Y_{i,j} = 1) = \frac{exp(\alpha_{i} - \alpha_{j})}{1 + exp(\alpha_{i} - \alpha_{j})} \label{for:3.1} 
+\end{align}
 
-\subsection{Shortcuts “shortcuts”}
-Il campo shortcuts è dedicato alle cosiddette "scorciatoie" ovvero la possibilità di visualizzare un menu dove vengono visualizzate tutte le funzionalità offerte dal \g{bot} e scegliere direttamente quelle eseguire in ogni momento.
+Il modello può essere alternativamente espresso in forma di logit lineare:
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale=0.18]{shortcuts.png}
-	\caption{Menu contenente le shortcuts disponibili}
-\end{figure}
+\begin{align}
+		logit(i \succ j) =  log( \frac{P( i \succ j)}{P( j \succ i))} ) = log(\frac{exp(\alpha_{i})}{exp(\alpha_{j})}) = \alpha_i - \alpha_j 
+	\end{align}
 
-Il campo shortcuts viene indicato nel file con la \emph{keyword} shortcuts
-e al suo interno contiene i seguenti campi:
-\begin{itemize}
-	\item text: Campo che può essere di tipo \emph{string} e contenere il testo da far visualizzare nel bottone della scorciatoia all'utente, oppure un oggetto che contiene un attributo per ogni lingua disponibile dove ogni attributo ha il testo nella lingua straniera rappresentato. Il testo nella lingua, di default italiano, è contenuto nell’attributo “default” ;
-	\item flowId: Contiene l'identificativo del flusso che la scorciatoia permette di far eseguire;
-	\item icon: Per rendere la \emph{User Interface} più accattivante è possibile aggiungere al bottone dedicato alla scorciatoia, delle icone per ogni scorciatoia.
-\end{itemize}
+La risposta del modello rappresenta la probabilità che un certo oggetto \textit{i} è preferito rispetto su un altro oggetto \textit{j}, $i \succ j$. La variabile Y$_{i,j}$ essendo binaria può assumere solo due valori, Y$_{i,j}$ = 1 se l'oggetto \textit{i} è preferito sull'oggetto j e Y$_{i,j}$ = 0 viceversa. I parametri $\alpha_{n}$ come scritto precedentemente rappresentano l'attrattiva o la forza del loro corrispondente oggetto. Chiaramente questi parametri di abilità devono essere stimati dal modello attraverso la massima verosimiglianza. Infine si noti che vi è necessario un vincolo per identificare i parametri, ad esempio: il vincolo di somma $ \sum_{i=1}^{n} \alpha_{i} = 0 $ oppure il vincolo dell'oggetto di riferimento, $\alpha_{i} = 0$ per un oggetto \textit{i} $\in$ \{1, ..., n\}. Se il vincolo dell'oggetto di riferimento è usato, allora il valore dei parametri abilità degli altri oggetti \textit{j} sarà la differenza rispetto all'oggetto di riferimento \textit{i}.
+\\
 
-\subsection{Configurazione "config"}
-Il campo config permette di indicare attraverso il campo startBlockId quale blocco di conversazione del flusso deve essere eseguito per primo; per tale campo ci sarà il codice identificativo del primo blocco da eseguire. Il campo configurazione viene indicato nel file con la \emph{keyword} config.
-
-\subsection{Blocchi per la conversazione "blocks"}
-Il campo blocchi per la conversazione indicato nel file con la \emph{keyword} blocks contiene tutti i blocchi per la conversazione i quali indicano i messaggi che devono essere mostrati e i passi da eseguire a seconda delle scelte inserite dell'utente umano.
-I blocchi utilizzati per la conversazione si differenziano tra lo loro dal tipo di blocco a cui appartengono. Ogni tipo ha caratteristiche uniche ma anche comuni in quanto tutti i tipi ereditano da un tipo padre detto BLOCK. I tipi figli di Block sono i seguenti:
-\begin{itemize}
-	\item\textbf{ASK};
-	\item\textbf{SAY};
-	\item\textbf{IF};
-	\item\textbf{PROC};
-	\item\textbf{JUMP};
-	\item\textbf{CALLFUNC}.
-\end{itemize}
-Di seguito verrà illustrata la struttura e il ruolo di BLOCK e dei suoi figli.
-\subsubsection{BLOCK}
-
-BLOCK è il blocco di conversazione attraverso il quale tutti blocchi ereditano delle caratteristiche comuni della sua struttura. Di fatto BLOCK non può essere utilizzato e, quindi, può essere paragonato a una classe astratta nell’ambito della programmazione ad oggetti in cui vengono definite delle caratteristiche della classe ma non può essere istanziata, perciò può essere solo ereditata dai suoi figli, che diventano classi concrete istanziabili.
-
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[height=5cm]{img/block.png}
-%	\caption{Definizione della classe BLOCK}
-%\end{figure}
-
-Ha la seguente struttura:
-
-\begin{itemize}
-	\item \textbf{id}: È un campo di tipo \emph{string} che identifica univocamente il blocco tra un insieme di blocchi di conversazione;
-	\item \textbf{type}: Questo campo indica il tipo di blocco che come scritto può essere di tipo ASK o SAY o IF o PROC o JUMP oppure CALLFUNC;        
-	\item \textbf{text}: È un campo che può essere di tipo \emph{string} contenente il testo da far visualizzare all'utente, oppure un oggetto che contiene un attributo per ogni lingua disponibile contente del testo nella corrispondente lingua, e un attributo default che contiene il testo di default;
-	\item \textbf{variations}: Anch'esso è un tipo \emph{string} che contiene uno o più testi alternati al principale rappresentato dal campo text. Il funzionamento prevede in modo random che il testo da mostrare all'utente non sarà quello principale ma uno delle alternative contenuto all'interno di variations. Verrà perciò scelto in modo casuale, uno dei testi a disposizione; 
-	\item \textbf{target}: Questo campo contiene l'id del prossimo blocco di conversazione da eseguire;
-	\item \textbf{variable}: Questo campo indica il nome della variabile “conversazionale” su cui salvare eventuali valori di input inseriti dall’utente: il Flow Engine quindi, attraverso dei metodi specifici, ha la capacità di salvare tutte le scelte fatte dell’utente, memorizzandole nelle variabili indicate nel campo variable.
-	\item \textbf{widget}: Indica il tipo di oggetto grafico detto Widget che deve essere utilizzato a supporto del blocco, esistono i seguenti tipi di Widget che verranno descritti successivamente:
-	\begin{itemize}
-		\item \textbf{BUTTONS};
-		\item \textbf{ITEMS};
-		\item \textbf{PICKER};
-		\item \textbf{TIMEPICKER};
-		\item \textbf{DATEPICKER};
-		\item \textbf{CALENDAR};
-		\item \textbf{QRSCANNER}.
-	\end{itemize}
-	\item \textbf{widgetOptions}: Permette di aggiungere delle opzioni in più al Widget, per esempio permette di indicare del testo all'interno dei Widget oppure indicare il valore minimo accettabile.
-\end{itemize} 
-
-\subsubsection{ASK}
-Il blocco di conversazione ASK ha la funzione di mostrare all’utente una serie di opzioni disponibili e chiedere quali tra queste vuole eseguire. Quindi mostra le possibili scelte rimanendo in attesa di una risposta dell’utente. Infine esegue il comando collegato alla scelta effettuata dall’utente dirottando la conversazione al blocco successivo. 
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale=0.25] {blockItems.jpg}
-	\caption{Esempio di messaggio prodotto da un blocco di tipo ASK}
-\end{figure}
-
-Oltre a campi del tipo BLOCK ha i seguenti campi in più:
-
-\begin{itemize}
-	\item \textbf{category}: Il blocco ASK è ulteriormente distinguibile in ASK o in MENU che si differenziano nel seguente aspetto:\\
-	nel caso sia di categoria ASK tutte le opzioni disponibili portano a un blocco di conversazione successivo diverso mentre per MENU tutte le opzioni portano tutte allo stesso blocco;
-	\item \textbf{sourceType}: Parametro che indica la modalità di utilizzo della variabile contenuta nel campo source.
-	Sono previste due modalità:
-	\begin{itemize}
-		\item \textbf{LIST}: In questo caso la variabile contenuta in source viene ignorata e vengono presi tutti gli oggetti di tipo BlockItem contenuti nel campo items che vengono trasformati in bottoni da far visualizzare a video. Il tipo LIST viene usato quando il campo category ha il valore ASK in modo da poter creare per ogni scelta il giusto campo target attraverso l'oggetto di tipo BlockItem;
-		\item \textbf{VARIABLE}: In questo caso tutto ciò che è contenuto nella variabile del campo source viene trasformato in bottoni da far visualizzare a video, per poterlo fare i dati contenuti nella variabile devono essere formattati in una struttura del tipo chiave valore. Il tipo VARIABLE viene usato quando il campo category ha il valore MENU e quando i dati da utilizzare per creare i bottoni sono stati ricevuti come risposta a una richiesta al \g{back-end} quindi, sono memorizzati in una variabile, la stessa indicata nel campo source. Un possibile esempio di utilizzo è il seguente; viene richiesto quali posti a sedere sono liberi per una prenotazione, attraverso una richiesta al \g{back-end} viene ricavato tale dato e salvato in una variabile indicata in source, viene poi per ogni posto libero creato un bottone che l'utente può cliccare per indicare la sua scelta. Tutte le scelte possibili porteranno al blocco che si occuperà di comunicare la scelta al \g{back-end}.
-	\end{itemize}	
-	\item \textbf{source}: Parametro che contiene il nome di una variabile a cui fare riferimento per prendere i dati da utilizzare per costruire le possibili scelte che può fare l'utente; essi graficamente vengono rappresentati come dei pulsanti rettangolari. Se non si fa riferimento a nessuna variabile o sourceType ha valore uguale a LIST, allora va settato a \emph{NULL};
-	\item \textbf{items}: Questo campo contiene un \emph{array} d'oggetti di tipo BlockItem che rappresentano le possibili scelte che può fare l'utente; essi graficamente vengono rappresentati come dei pulsanti arrotondati.
+Si sottolinea inoltre che il modello precedentemente descritto è chiamato modello non strutturato e l'obbiettivo dell'analisi è di fare inferenza sul valore dei parametri abilità $\alpha_{n}$ per stilare una classifica finale di tutti gli oggetti.
 
 
-\end{itemize} 
+\section{Il Bradley-Terry Model con ordered response categories}	
+In molti contesti di comparazione tra oggetti, è possibile che sia richiesto di dare una scala di preferenza tra un oggetto e un altro. Supponiamo che due oggetti \textit{i} e \textit{j} siano confrontati e che la preferenza ora non sia più espressa i termini di: preferisco \textit{i} al posto di \textit{j} o viceversa ma, attraverso una scala di preferenza ad esempio, dando una forte preferenza a \textit{i} rispetto a \textit{j} o una leggera preferenza a \textit{i} rispetto a \textit{j} o non dando nessuna preferenza o preferendo leggermente \textit{j} rispetto a \textit{i} oppure preferire fortemente \textit{j} rispetto a \textit{i}. Dal modello descritto nella precedente sezione si passa da due classi di preferenza a cinque classi di preferenza.\\
+Ovviamente il caso descritto è di interesse per le comparazioni calcistiche dato che non è sufficiente stimare la probabilità di vittoria o sconfitta ma deve essere obbligantemente preso in considerazione anche il pareggio come risultato. Si necessità perciò di un estensione del classico Bradley-Terry model descritto precedentemente.\\
 
-\subsubsection{SAY}
+Modelli che consentono un numero generale di categorie K, sono stati proposti da \autocite{tutz1986bradley} e da \autocite{bradley1952rank}, in particolare quest'ultimo mostrò come due modelli per l'analisi di dati ordinati possono essere adattati per le \emph{ordinal paired comparisons}.\\
 
-Il blocco di conversazione SAY ha la funzione di mostrare all'utente un messaggio a video attraverso il quale si comunica l'esito della operazione precedente e il risultato da essa ricavata. Perciò l'utente richiede l'esecuzione di una qualche operazione, essa viene eseguita e una volta conclusa il \g{bot} risponderà all'utente con il risultato ricavato precedentemente.
+Il primo modello è il \emph{cumulative link model} che sfrutta la rappresentazione della variabile casuale latente. In generale, sia H il numero di gradi della scala di preferenza e sia $Z_{i,j}$ una variabile continua casuale latente e siano $\theta_{1} $ < $\theta_{2}$ < .... < $\theta_{H-1}$ le soglie tale che Y$_{i,j} = h$ quando $\theta_{h-1} < Z_{i,j} < \theta_{h}$. Allora:
+\begin{align}
+	P(Y_{i,j}\leq h) =  \frac{exp(\theta_{h} + \alpha_{i} - \alpha_{j})}{1 + exp(\theta_{h} + \alpha_{i} - \alpha_{j})} \label{for:3.2.1}
+\end{align}
 
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[scale=0.25]{say.jpg}
-	\caption{Esempio di messaggio prodotto da un blocco di tipo SAY}
-\end{figure}
-Oltre a campi del tipo BLOCK ha il seguente campo in più:
+con h $\in$ \{1,....,H\} che indica le possibili \emph{response categories}. I parametri $\theta_{h}$ rappresentano le cosiddette soglie per le singole \emph{response categories}, che determinano la preferenza per le specifiche categorie. In particolare, Y$_{i,j} = 1$ rappresenta la massima preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}.\\
+In generale vi è imposta una simmetria del modello in modo che valga: $P(Y-{i,j} = h) = P(Y_{i,j} = H - h + 1)$. È quindi necessario che le soglie siano ristrette a $\theta_{i}$ = -$\theta_{H-h}$ e se, H è dispari, $\theta_{H/2}$ = 0; per garantire che le probabilità siano simmetriche. Per garantire che le probabilità siano non negative per le singole \emph{response categories} vi è imposta la seguente limitazione: $-\infty$ = $\theta_{0} < \theta_{1} < ... < \theta_{H-1} < \theta_{H} = \infty$. Dato che la soglia per l'ultima categoria è fissata a $\theta_{H} = \infty$ allora vale che $P(Y_{i,j} \leq H)$ = 1. Si sottolinea che le soglie sono parametri che vanno stimate dai dati; inoltre la probabilità di una singola \emph{response category} può essere derivata dalla differenza tra categorie adiacenti cioè:
+\begin{center}
+	  $P(Y_{i,j} = k)$ = $P(Y_{i,j} \leq h)$ - $P(Y_{i,j} \leq k - 1)$
+\end{center}
 
-\begin{itemize}
-	\item \textbf{attachments}: Campo che contiene un \emph{array} d'oggetti di tipo BlockAttachment che permettono di allegare immagini o file PDF.
-\end{itemize}
-\clearpage
-\subsubsection{IF}
+Il modello delle \emph{adjacent categories model}, così come il modello Bradley-Terry, ha anche una rappresentazione logit lineare ed è il seguente:
+\begin{align}
+	logit(Y_{i,j}\leq h) =  \theta_{h} + \alpha_i - \alpha_j 
+\end{align}
 
-Il blocco di conversazione IF ha la funzione di verificare se una o più condizioni sono rispettate. Perciò verifica se le condizioni sono soddisfatte e in base all'esito verrà scelto il prossimo blocco da eseguire.
+Il secondo modello invece proposto da \autocite{agresti1992analysis} è il \emph{adjacent categories model}. In questo caso il collegamento è applicato alle probabilità di risposte adiacenti, piuttosto che alle probabilità cumulative riducendosi così al modello Bradley-Terry quando sono consentite solo due categorie e al modello proposto da \autocite{davidson1970extending} quando sono consentite solo tre categorie.\\
+Il modello proposto da \autocite{davidson1970extending} risulta essere adatto per l'analisi sulle partite di calcio.\\
+Il \emph{adjacent categories model} è più semplice da interpretare rispetto ai \emph{cumulative link models} poiché l'odds ratio si riferisce a un determinato risultato anziché a raggruppamenti di risultati. \\
+Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la non preferenza, nel nostro caso il pareggio, allora:
 
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[scale=1]{img/if.png}
-%	\caption{Definizione della classe IF}
-%\end{figure}
-Oltre a campi del tipo BLOCK ha i seguenti campi in più:
-
-\begin{itemize}
-	\item \textbf{conditions}: Contiene una o più condizioni che devono essere verificate;
-	\item \textbf{trueBlockTarget}: Indica il blocco successivo da eseguire se le condizioni sono soddisfate;
-	\item \textbf{falseBlockTarget}: Indica il blocco successivo da eseguire se le condizioni non sono soddisfate.
-\end{itemize}
-
-
-\subsubsection{PROC}
-Il blocco di conversazione PROC permette di eseguire delle operazioni sulle variabili conversazionali cioè, assegnazione o trasformazione dei dati. Ad esempio, permette di riordinare i dati ricevuti dal server in modo da poter essere utilizzati dai source con sourceType uguale a VARIABLE.
-
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[scale=1]{img/proc.png}
-%	\caption{Definizione della classe PROC}
-%\end{figure}
-
-Oltre a campi del tipo BLOCK ha il seguente campo in più:
-
-\begin{itemize}
-	\item \textbf{expressions}: Contiene le espressioni da eseguire, ad esempio, per la formattazione dei dati.
-	Ha i seguenti campi:
-	\begin{itemize}
-		\item \textbf{var}: Contiene il nome della variabile dove viene salvato il risultato della formattazione;
-		\item \textbf{type}: Indica il tipo di formattazione che si vuole applicare, al momento c'è solo una formattazione disponibile:
-		\begin{itemize}
-			\item \textbf{reduce to textvalue}: Permette di riordinare i vari valori che si hanno in una struttura chiave valore.
-		\end{itemize}
-		\item \textbf{args}: Contiene un espressione in Handlebars, un linguaggio di \emph{templating} utilizzato per costruire \emph{template} in \gls{HTML} con dei cosiddetti segnaposto che verranno poi valorizzati con dei valori, utilizzando delle \emph{keyword} del linguaggio, in modo da ottenere delle componenti in \gls{HTML} da mostrare come messaggio. Viene perciò costruito un \emph{template} del testo del prossimo messaggio da mostrare.
-	\end{itemize}
-\end{itemize}
-
-\subsubsection{JUMP}
-
-Il blocco di conversazione JUMP permette di cambiare il flusso conversazionale ed eseguirne una altro. In termini tecnici si passa da un \g{JSON} di configurazione ad un altro dove ogni configurazione in \g{JSON} contiene uno specifico flusso di conversazione. Perciò, grazie a JUMP, si può "saltare" da un flusso di conversazione a un altro. \\
-
-Nel campo target in questo caso non viene indicato l’id del blocco successivo ma, l’id del \emph{flow} che si vuole eseguire.
-
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[height=5cm]{img/jump.png}
-%	\caption{Definizione della classe JUMP}
-%\end{figure}
-
-
-\subsubsection{CALLFUNC}
-
-Il blocco di conversazione CALLFUNC è il blocco attraverso il quale il \g{bot} (l'applicazione \emph{mobile}) può richiedere l’esecuzione di chiamate ad \g{api} (interne o esterne). Attraverso un \g{WebSocket}, che mantiene una connessione tra il \g{bot} e Azzurra.io, quest’ultima richiama a sua volta delle \g{api} di \gls{AWMS} (o esterne ad \gls{AWMS}) per ottenere i dati richiesti dell’utente o per salvare dati. 
-
-%\begin{figure}[htbp]
-%	\centering
-%	\includegraphics[scale=1]{img/callfun.png}
-%	\caption{Definizione della classe CALLFUNC}
-%\end{figure}
-
-Oltre a campi del tipo BLOCK ha il seguente campo in più:
-
-\begin{itemize}
-	\item \textbf{payload}: Campo che contiene l'intestazione e il corpo della richiesta verso Azzurra.io;
-	Contiene i seguenti campi:
-	\begin{itemize}
-		\item \textbf{type}: Indica se la chiamata è verso Azzurra.io attraverso il valore \textsf{int} oppure verso un servizio esterno con il valore \textsf{ext}.
-	\end{itemize}
-	Se la chiamata è di tipo int ha la seguente struttura:
-	\begin{itemize}
-		\item \textbf{route}: Indica il metodo di Azzurra.io da richiamare;
-		\item \textbf{body}: Contiene il corpo della richiesta, nello specifico un \emph{template} costruito da Handlebars che verrà idratato da Azzurra.io nel caso sia una richiesta di dati o dal \g{bot} nel caso in cui debba inviare dei dati da salvare.
-	\end{itemize}
-	Se la chiamata è di tipo ext ha la seguente struttura:
-	\begin{itemize}
-		\item \textbf{config}: Contiene la struttura di una chiamata \g{http}.\\
-		Ha i seguenti campi:
-		\begin{itemize}
-			\item \textbf{url}: Contiene l'indirizzo \g{url} del servizio esterno a cui fare richiesta;
-			\item \textbf{method}: Se la richiesta e di tipo GET o POST;
-			\item \textbf{headers}: Contiene l'intestazione per la richiesta \g{http};
-			\item \textbf{params}: Contiene le variabili necessarie per la chiamata, questo campo viene usato solo se la richiesta e di tipo GET;
-			\item \textbf{data}: Analogo al campo params solo se viene usato dai metodi POST.
-		\end{itemize}
-	\end{itemize}
-	\item \textbf{var}: Indica il nome della variabile dove salvare il risultato della richiesta;
-	\item \textbf{failureBlockTarget}: Indica il blocco successivo da eseguire se la richiesta non va a buon fine;
-	\item \textbf{successBlockTarget}: Indica il blocco successivo da eseguire se la richiesta va a buon fine.
-\end{itemize}
-
-\subsection{Oggetti ausiliari}
-Come scritto nella sezione precedente, questi oggetti vengono definiti per essere utilizzati all’interno dei blocchi per svolgere un'azione di supporto affinché si possa raggiungere ciò per cui sono stati realizzati i blocchi di conversazione stessi.\\
-
-Di seguito vengono indicate tutte le classi degli oggetti ausiliari disponibili.
-
-\subsubsection*{Widget}
-È un oggetto che a seconda del tipo permette di realizzare delle componenti grafiche, esso viene utilizzo per richiedere delle azioni da parte dell’utente umano.
-Ha i seguenti tipi:
-\begin{itemize}
-	\item \textbf{BUTTONS}: Genera dei bottoni arrotondati;
-	\begin{figure}[h]
-		\centering
-		\includegraphics[scale=1.1]{buttons.png}
-	\caption{Rappresentazione grafica dei buttons}
-	\end{figure}
-	\item \textbf{ITEMS}: Genera dei bottoni quadrati;
-	\begin{figure}[h]
-		\centering
-		\includegraphics[scale=0.3]{items.jpg}
-		\caption{Rappresentazione grafica degli items}
-	\end{figure}
-	\item \textbf{PICKER}: Genera, attraverso il componente “ion-picker” di \textsf{Ionic} una finestra di dialogo dove si può selezionare una opzione tra quelle proposte;
-	\begin{figure}[h]
-		\centering
-		\includegraphics[scale=0.2]{picker.jpg}
-		\caption{Rappresentazione grafica del picker}
-	\end{figure}
-	\item \textbf{TIMEPICKER}: Analogo al PICKER solo che l'opzione da scegliere è l'orario che si vuole selezionare;
-%	\begin{figure}[h]
-	%	\centering
-	%	\includegraphics[scale=0.1]{timePicker.jpg}
-	%	\caption{Rappresentazione grafica del time picker}\label{fig:time}
-%	\end{figure}
-\clearpage
-	\item \textbf{DATEPICKER}: Analogo al PICKER solo che l'opzioni da scegliere è la data che si vuole selezionare;
-	\begin{figure}[h]
-		\centering
-		\includegraphics[scale=0.2]{datePicker.jpg}
-		\caption{Rappresentazione grafica del date picker}\label{fig:date}
-	\end{figure}
-	\item \textbf{CALENDAR}: Fa comparire un calendario grazie all'utilizzo del \emph{plugin} Calendar per Ionic;
-	\item \textbf{QRSCANNER}: Permette di accedere alla fotocamera (solo se si hanno i permessi) e di decodificare i codici \g{QR code} tutto ciò grazie al \emph{plugin} QR Scanner di Cordova.
-	\begin{figure}[h]
-		\centering
-		\includegraphics[scale=0.2]{qrcode.jpg}
-		\caption{Rappresentazione grafica del QR scanner}\label{fig:qrc}
-	\end{figure}
-\end{itemize}
-
-\subsubsection*{BlockItem}
-Questo oggetto rappresenta una possibile scelta che può fare l'utente, graficamente viene rappresentato come un bottone cliccabile dall'utente.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.3]{blockItems.jpg}
-	\caption{Rappresentazione grafica del BlockItem}
-\end{figure}
-Ha la seguente struttura:
-
-\begin{itemize}
-	\item \textbf{text}: Contiene l'etichetta che viene visualizzata sul bottone;
-	\item \textbf{target}: Contiene l'id del prossimo blocco da eseguire.
-\end{itemize}
-
-\subsubsection*{BlockAttachment} 
-L'oggetto in esame permette di allegare immagini o file PDF da mostrare all'utente.
-
-Ha la seguente struttura:
-
-\begin{itemize}
-	\item \textbf{id}: Contiene un codice univoco che identifica ogni BlockAttachment;
-	\item \textbf{type}: Indica se contiene un PDF o un'immagine, nel caso di un'immagine indica se è in formato JPG o in JPEG oppure in PNG.
-\end{itemize}	
-
-\section{Funzionamento di Azzurra Flow Engine}
-L'Azzurra Flow Engine è quell'elemento in grado di interpretare i dati contenuti nelle configurazioni \g{JSON}. Grazie a esso è possibile eseguire il corretto flusso della conversazione e generare i messaggi da mostrare nella \emph{chat} dell'applicazione mobile. 
-\subsection{Messaggio del bot Azzurra}
-Per implementare le funzionalità del Azzura Flow Engine vengono utilizzate le seguenti classi sviluppate in Angular:
-\begin{itemize}
-	\item \textbf{FlowService}: Ha i metodi necessari per interpretare le configurazioni \g{JSON} e quindi, per poter sapere quale tipo di messaggio deve essere costruito, ricavare i dati necessari per costruire i messaggi e sapere come procedere con la conversazione;
-	\item \textbf{AzzurraService}: Permette principalmente di fare da tramite tra il FlowService e il ChatComponent per la creazione della conversazione. Oltre a ciò permette anche di gestire operazioni ad alto livello come il caricamento dei messaggi precedenti nella \emph{chat} e gestire le notifiche che possono arrivare dalla \emph{dashboard};
-	\item \textbf{ChatComponent}: Si occupa di far visualizzare i messaggi della conversazione;
-	\item \textbf{ChatService}: Ha il compito di creare e gestire i Widget da aggiungere al messaggio da far visualizzare e di ricavare da essi le risposte dell'utente umano.
-\end{itemize}
-
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=20cm, width=14cm]{sd_bot_mx2.png}
-	\caption{Diagramma di sequenza per la generazione di un messaggio di Azzurra}\label{fig:mxBot}
-\end{figure}
-
-Una volta stabilita la connessione con Azzurra.io, attraverso un \g{WebSocket}, inizializzato il Flow Engine e ricevuto la configurazione \g{JSON} contenente il flusso conversazionale, la generazione di un messaggio da parte del \g{bot} Azzurra prevede i seguenti passi:\\
-\begin{enumerate}
-	\item Viene inviato all’applicazione \emph{mobile} il flusso conversazionale richiesto precedentemente;
-	\item Viene avviato nel FlowService il metodo start(), il quale riceve in input il flusso da eseguire. Viene verificato se il flusso ricevuto risulta essere il \emph{main flow}, in questo caso vengono inizializzate le variabili conversazionali d'ambiente utilizzate come supporto per la generazione dei messaggi, ad esempio esiste una variabile d'ambiente per indicare il giorno corrente o il formato della data da utilizzare;
-	\item Una volta impostate le variabili conversazionali d’ambiente e usciti dal blocco condizionale viene salvato il \emph{flow} da eseguire attraverso il metodo \_addFlow() che imposta come flusso corrente da eseguire il flusso ricevuto in input. Viene infine controllato se la configurazione definisce delle eventuali shortcuts;
-	\item Se ci sono delle shortcuts viene chiamato il metodo \_renderText() per crearle. Esso sarà in grado di interpretare il pezzo di configurazione dove sono definite le proprietà di ogni shortcuts;
+\begin{align}
+	P(Y_{i,j} = 2 | Y_{i,j} \not = 0) =  \frac{exp(\alpha_{i} - \alpha_{j})}{1 + exp(\alpha_{i} - \alpha_{j})}, 
+\end{align}
 	
-	Una volta finita l'esecuzione del metodo, l'esecuzione torna al metodo start().
-	\item Sempre in start() viene chiamata l'esecuzione di \_processBlock() dandogli in input il primo blocco del flusso da eseguire;
+\begin{align}
+	P(Y_{i,j} = 1) =  \frac{\theta \sqrt{exp(\alpha_{i}) * exp(\alpha_{j})}}{exp(\alpha_{i}) + exp(\alpha_{j}) + \theta\sqrt{exp(\alpha_{i}) * exp(\alpha_{j})}}, 
+\end{align}
+
+\begin{align}	
+	P(Y_{i,j} = 0 | Y_{i,j} \not = 1) =  \frac{exp(\alpha_{j} - \alpha_{i})}{1 + exp(\alpha_{j} - \alpha_{i})}
+\end{align}
+
+Come si può vedere si è riportato la modellazione di tutti e tre i possibili risultati, con $\alpha_{n}$ che rappresenta la forza degli oggetti in comparazione da stimare dai dati. La modellazione vittoria e la sconfitta dell'oggetto \textit{i} contro l'oggetto \textit{j} rimane uguale alla modellazione \hyperref[for:3.1]{(3.1)} descritta precedentemente. Diversamente per il pareggio dove viene aggiunto il parametro $\theta$. \\
+
+\section{Il Bradley–Terry Model con variabili esplicative}
+Fin ad ora è stato presentato un modello che valutasse il grado di preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}, senza che considerasse nessuna variabile. Chiaramente tale modello risulta essere inutile per le nostre analisi, dato che siamo interessati a capire quali variabili possono influenzare il risultato della comparazione. Si necessita perciò di un modello che tenga conto anche di variabili esplicative inserite durante l'analisi. \\
+Sia x$_{i}$=($x_{i1},....x_{iK}$) il vettore di K variabili esplicative per un certo oggetto \textit{i} e $\beta$ = ($\beta_{1},....\beta_{P}$) il vettore dei pesi stimati per ogni variabile presente in x$_{i}$, allora si ha che il parametro abilità $\alpha_{i}$ di un certo oggetto \textit{i} è uguale a:
+
+\begin{center}
+	\begin{large}
+	 $\alpha_{i}$ = $\beta_{1}x_{i1}$ + .... + $\beta_{P}x_{iP}$      con i=1,....,n
+	\end{large}
+
+\end{center}
+
+Si ha quindi che il parametro abilità $\alpha_{i}$ per un certo oggetto \textit{i} è una combinazione lineare di variabili.\\
+Il modello è stato presentato per la prima volta da \autocite{springall1973response}; tale modello viene chiamato modello strutturato.\\
+ 
+Grazie a questo modello se vi sono covariate che hanno un legame con la variabile risposta, tanto da influenzarne l'esito con quest'ultima allora, sarà possibile inserirle nel modello. Nel caso calcistico tali covariate possono essere il possesso della palla o il numero di falli fatti.
+
+
+\subsection{Il Bradley–Terry Model con effetto partite in casa}
+Nel modello descritto nella sezione 2.2, si era scritto che, era necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti, tra questi vi è anche il calcio; poiché l'ordine dei oggetti conta. Infatti nel calcio la prima squadra che viene indicata tra le due squadre, è quella che gioca in casa, dove teoricamente dovrebbe avere un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
+Un possibile modello riadattato al problema esposto è il seguente:
+
+\begin{align} 
+	P(i\succ j) = P(Y_{i,j} = 1) = \frac{exp(\delta + \alpha_{i} - \alpha_{j})}{1 + exp(\delta + \alpha_{i} - \alpha_{j})} \label{for:3.8} 
+\end{align}
+
+Il qual'è il modello \hyperref[for:3.1]{(3.1)} riadatto e da cui possiamo derivare il modello \hyperref[for:3.2.1]{(3.3)} riadatto che è il seguente:
+
+\begin{align}
+	P(Y_{i,j}\leq h) =  \frac{exp(\delta + \theta_{h} + \alpha_{i} - \alpha_{j})}{1 + exp(\delta + \theta_{h} + \alpha_{i} - \alpha_{j})} \label{for:3.9}
+\end{align}
+
+Come si può vedere il vantaggio di giocare in casa, in generale l'effetto d'ordine; viene trattato come una variabile esplicativa. Infatti se $\delta$ > 0 allora viene attribuito un vantaggio all'oggetto \textit{i}, nel contesto calcistico significa che gioca in casa; aumentando la probabilità che vinca il confronto o nel caso di \emph{ordered response categories}, di avere un risultato superiore rispetto all'oggetto \textit{j}. Chiaramente il peso di $\delta$ deve essere stimato dai dati.\\
+
+Il modello \hyperref[for:3.8]{(3.8)} cosi come il modello \hyperref[for:3.9]{(3.9)} , hanno anche una rappresentazione logit lineare e sono le seguenti:\\
+
+Per \hyperref[for:3.8]{(3.8)}
+
+\begin{align}
+	logit(i \succ j) =  \delta + \alpha_i - \alpha_j 
+\end{align}
+
+Per \hyperref[for:3.9]{(3.9)}
+
+\begin{align}
+	logit(Y_{i,j}\leq h) =  \delta + \theta_{h} + \alpha_i - \alpha_j 
+\end{align}
 	
-	\item Nel metodo \_processBlock() viene eseguito il blocco che riceve in input, in questo caso il blocco da eseguire è il primo blocco del flusso come detto nel punto precedente. In questo metodo si verifica innanzitutto se c'è un blocco da eseguire. Se non c'è viene emesso un segnale che informa che il flusso di conversazione è terminato, mentre se c'è un blocco allora si imposta questo blocco come quello in esecuzione e si verifica di che tipo è il blocco.\\
-	A seconda del tipo del blocco vengono eseguite le seguenti istruzioni:
-	\begin{itemize}
-		\item \textbf{Caso SAY}: Viene eseguito il metodo \_processSay() ricevendo in input il blocco corrente. Il metodo prende il valore salvato nel campo text e le eventuali variations del blocco, generando il testo del messaggio da mostrare attraverso il metodo \_renderText(). Se presenti vengono creati gli eventuali BlockAttachments. Infine viene emesso il nuovo messaggio creato per il \g{bot} Azzurra e si passa all'esecuzione del prossimo blocco;
-		\item \textbf{Caso ASK}: Viene eseguito il metodo \_processAsk ricevendo in input il blocco corrente. Il metodo salva il nome della variabile contenuta nel campo var che conterà la risposta dell'utente. Analogamente al caso SAY viene generato il testo della domanda. Vengono inoltre generate le possibili scelte attraverso il metodo \_buildQuestions() il quale controlla il sourceType e in base al valore che ha, genera le scelte. Inoltre sono processati anche gli eventuali widgetOptions. Infine viene emesso il nuovo messaggio creato per il \g{bot}, che rimane in attesa della risposta dell'utente umano quando verrà visualizzato il messaggio;
-		\item \textbf{Caso JUMP}: Viene eseguito il metodo \_processJump() che riceve in input il blocco corrente e richiama il metodo \_getFlow() passandogli l'identificativo del flusso da eseguire attraverso il campo target. Il metodo citato richiede ad Azzurra.io il flusso che ha l'identificativo uguale a quello ricevuto in input e, una volta ricevuto, comincia l'esecuzione del nuovo flusso conversazionale richiamando start();
-		\item \textbf{Caso IF}: Viene eseguito il metodo \_processIf() passando in input il blocco corrente. Valuta la condizione attraverso \_manageConditions(), e in base al risultato stabilisce quale sarà il blocco di conversazione successivo da eseguire;
-		\item \textbf{Caso PROD}: Viene eseguito il metodo \_processProd() passandogli in input il blocco corrente. Stabilisce quale formattazione deve essere fatta e la esegue attraverso il metodo \_manageExpressions(). Infine, passa all'esecuzione del prossimo blocco;
-		\item \textbf{CALLFUNC}: Viene ricavato il \emph{payload} del blocco e codificato il \emph{template} in Handlebars per generare il corpo della richiesta, una volta fatto ciò la richiesta è pronta e viene mandata a Azzurra.io. Successivamente viene salvata la risposta sulla variabile indicata del campo var e in base all'esito della risposta si eseguirà il corrispondente blocco successivo.
-	\end{itemize}	
-	\item Nella Figura~\ref{fig:mxBot} viene mostrato il caso in cui viene eseguito il metodo \_processAsk() perché il blocco attuale e di tipo ASK;
-	\item Viene eseguito \_renderText() per costruire il testo della domanda;
-	\item Attraverso \_buildQuestions() vengono create le possibili scelte;
-	\item Viene eseguito il metodo \_processWidgetOptions() per creare le eventuali widgetOptions;
-	\item A questo punto la struttura del messaggio è stata creata, manca solo la visualizzazione nella \emph{chat} che è compito di ChatComponent, perciò attraverso il metodo next() di Angular, viene emesso un segnale che avvisa chi è in ascolto su \_outgoingMessageSub\$ che è stato creato un nuovo messaggio e che occorre visualizzarlo;
-	\item Viene notificato agli ascoltatori l'evento descritto al punto precedente;
-	\item Nel AzzuraService c'è un ascoltatore che riceve i segnali mandati dai metodi di FlowService, perciò con la notifica inviata al punto precedente AzzuraService ha il messaggio che è stato appena creato;
-	\item AzzuraService emette a sua volta il nuovo messaggio appena ricevuto verso l'ascoltatore presente in ChatComponent;
-	\item Quando ChatComponent riceve il messaggio eseguirà il metodo createMessage() di ChatService passandogli il messaggio ricevuto. Questo metodo si occuperà di far creare il messaggio grafico nel modo corretto.
-	Innanzitutto, verifica chi ha emesso il messaggio. Nel caso in cui sia del \g{bot} Azzurra viene indicato il testo da mostrare estraendolo dal messaggio ricevuto in input e aggiunto lo \emph{sprite} di Azzurra per indicare graficamente che il messaggio viene dal \g{bot};
-	\item Nel caso in cui il messaggio preveda delle azioni da parte dell'utente umano, ovvero ci siano dei Widget, viene chiamato il metodo createAction() passandogli sempre il messaggio. In questo metodo viene verificato che tipo di Widget deve essere creato, per ogni Widget c'è un corrispondente metodo che ne imposta il testo da far visualizzare quando l'utente interagisce con esso, tale testo potrebbe essere un testo di \emph{default} o un testo indicato nel campo widgetOptions inoltre nel caso del DATEPICKER o TIMEPICKER viene impostato il formato di visualizzazione del giorno e dell'ora;
-	\item Nel caso rappresentato dalla Figura~\ref{fig:mxBot}, viene chiamato il metodo \_createQRcodeAction()
-	 il quale imposta il testo da mostrare e chiama il metodo \_openQRcode();
-	\item \_openQRcode() Richiama il metodo create() per creare ed aprire il Widget QRCODE;
-	\item In \_openQRcode() viene chiamato il metodo create() che permette di utilizzare il ModalController di Ionic il quale crea una nuova finestra grafica con dentro la classe che gestisce il lettore di \g{QR code}. Si crea quindi graficamente il Widget. I corrispondenti metodi \emph{open} per DATEPICKER e TIMEPICKER non utilizzano il ModalController ma utilizzano una componente grafica messa a disposizione da Ionic, perciò in questi metodi viene configurato il componente grafico senza richiamare nessuna classe;
-	\item Terminata la creazione il messaggio viene ritornato il messaggio costruito a ChatComponent;
-	\item Con onNewMessage() viene inserito nella \emph{chat} il nuovo messaggio;
-	\item Il nuovo messaggio viene inviato a Azzurra.io per essere memorizzato tramite il metodo addNewMessageToCache();
-	\item Viene aggiornata la \emph{chat} per mostrare il nuovo messaggio con il metodo \_updateMessageVisibility();
-	\item \_updateMessageVisibility() chiama \_showLoading() per simulare un caricamento;
-	\item Infine, \_updateMessageVisibility() chiama \_scrollDown() per muovere verso il basso la \emph{chat} in modo da mostrare il nuovo messaggio che altrimenti rimarrebbe nascosto.
-\end{enumerate}
-
-Una volta che l'utente interagisce con il Widget deve essere creato il messaggio dell'utente umano con la sua risposta. 
-\clearpage
-\subsection{Messaggio dell’utente  umano}
-La generazione di un messaggio da parte dell’utente umano prevede le seguenti azioni:\\
-\begin{figure}[htbp]
-	\centering
-	\includegraphics[height=11cm, width=13cm]{sd_human_mx.png}
-	\caption{Diagramma di sequenza per la generazione di un messaggio dell'utente}\label{fig:mxHuman}
-\end{figure}
-\begin{enumerate}
-	\item Quando l'utente esegue un'azione che genera una risposta da parte sua, il ChatService emette il valore della risposta ogni volta che un Widget la riceve;
-	\item Nel ChatComponent esiste un ascoltatore per ogni evento emesso da ogni Widget. Nella Figura~\ref{fig:mxHuman} viene rappresentato il caso in cui il Widget sia di tipo QRCODE; perciò, attraverso il metodo next() di Angular, viene emesso un segnale che avvisa a chi e in ascolto su \_genericQRCodeScannerChangeSub\$ che è stato emesso un evento da QRCODE inserendo anche il valore letto dallo scanner;
-	\item Viene notificato agli ascoltatori l'evento descritto al punto precedente;
-	\item ChatComponent riceve la notifica e chiama il metodo sendReply() di AzzurraService dandogli in input il valore letto dallo scanner ricevuto dalla notifica solo se il messaggio è valido, se non lo è viene ignorato;	
-	\item Il metodo sendReply() chiama a sua volta processHumanAction() di FlowService;
-	\item In processHumanAction() viene creata la struttura del messaggio con la risposta dell'utente perciò, viene richiamato il metodo \_setVariable() in cui, viene impostato il valore della risposta ritornato dal Widget che è stato salvato nella variabile indicata nel campo var;
-	\item In processHumanAction() viene richiamato il metodo getBlockId() che verifica se il Widget abbia al suo interno un proprio campo target. In caso affermativo viene impostato come prossimo blocco di conversazione il blocco che ha il codice identificativo uguale a quello contenuto nel target, viceversa non ha un campo target proprio si va a prendere il valore del campo target del blocco e si imposta il suo valore come prossimo blocco da eseguire;
-	\item Attraverso il metodo next() di Angular, viene emesso un segnale che avvisa a chi è in ascolto su \_outgoingMessageSub\$ l'emissione di un nuovo messaggio;
-	\item Viene notificato agli ascoltatori l'evento descritto al punto precedente;
-	\item AzzurraService riceve la notifica e tramite il metodo next() avvisa e invia la struttura del nuovo messaggio a tutti coloro che sono in ascolto su \_newMessage\$;
-	\item Viene notificato agli ascoltatori l'evento descritto al punto precedente;
-	\item ChatComponent riceve il messaggio e chiama il metodo createMessage() di ChatService passandogli il messaggio ricevuto. Questo metodo si occuperà di creare il messaggio grafico nel modo corretto. In questo caso il messaggio è di tipo umano perciò verrà creato secondo una certa specifica;
-	\item Viene ritornato il messaggio a ChatComponent;
-	\item Infine, per visualizzare il messaggio sulla \emph{chat}, vengono rifatte le stesse operazioni che erano state fatte per il messaggio del \g{bot} Azzurra.
-\end{enumerate}
-
-\section{Gestione dell'internazionalizzazione di AWMS}% non so dove mettere sta roba la metto qui perchè di si
-Per il sistema \gls{AWMS} è stata implementata la gestione dell'\gls{i18n}. Infatti per rendere tutto il sistema, sia lato \g{back-end} sia lato Azzurra, adattabile a più lingue, sono stati definiti un insieme di testi multi-lingua. Per gestirli è stato progettato di utilizzare un \emph{template engine} al fine di ottenere la parametrizzazione dei testi. \\
-
-Un \emph{template engine} è un programma che prevede la definizione di blocchi detti \emph{template}, spesso scritti in \gls{HTML}, che hanno la caratteristica di avere dei segnaposto detti \emph{placeholders} sostituiti dai dati da visualizzare. In questi blocchi perciò viene definito il testo scritto in una specifica lingua e in quali punti del testo devono essere inseriti i dati per la visualizzazione. Per la sostituzione dei \emph{placeholders} solitamente il \emph{template engine} utilizza file \g{JSON}, in cui i segnaposti sono solitamente rappresentati dai campi che compongono l’oggetto salvato nel file \g{JSON}, i quali andranno a sostituire i segnaposti con i loro valori che rappresentano i dati da visualizzare. Chiaramente i \emph{template} vengono riutilizzanti anche se i dati visualizzati variano. Vengono perciò definiti \emph{template} di testi "localizzati" cioè scritti in un delle lingue supportate dal sistema \gls{AWMS}.\\
-
-Un \emph{template engine} può essere facilmente implementato in JavaScript ma come scelta progettuale è stato deciso di utilizzare \emph{Handlebars}. \emph{Handlebars} è un estensione del \emph{template engine} \emph{mustache} perché utilizza le doppie parentesi graffe le quali racchiudono la parola da sostituire per indicare i \emph{placehorders} all'interno dei \emph{template}. È stato scelto di utilizzare \emph{Handlebars} perché garantisce delle performance migliori: permette di compilare i \emph{template} riducendo così il tempo di \emph{rendering} quando un blocco di codice viene creato più di una volta. Inoltre \emph{Handlebars} permette di utilizzare i cosiddetti "Helpers" che eseguono funzionalità che vanno a manipolare la formattazione del testo. Infine una caratteristica avanzata di \emph{Handlebars} è il supporto ai "Partials". Con tale termine si indica la possibilità di innestare \emph{template} l’uno dentro l’altro, permettendone la riusabilità e la realizzazione di codice più ordinato.\\
-
-Nel \g{back-end} ciascun testo "localizzato" è persistito in apposite tabelle di un \emph{database}.\\
-
-Nel lato \g{bot} Azzurra, nel campo text dei blocchi conversazionali, c'è un oggetto che contiene un attributo per ogni lingua disponibile contente del testo nella corrispondente lingua e un attributo default che contiene il testo di \emph{default}. Quindi Il Flow Engine, interpretando ciascun blocco conversazionale, effettua un processamento dei testi scegliendo quelli relativi alla lingua dell'utente se presenti.\\
-
-Sara poi compito di \emph{Handlebars} "idratare" i \emph{template} sostituendo i \emph{placeholders} in sintassi \emph{mustache} con dati da visualizzare, sempre se presenti.\\
-
-Durante lo stage un parte del tempo è stata dedicata allo studio di \emph{Handlebars} e alla scrittura dei \emph{template} che in molti casi hanno richiesto l'inserimento dei \emph{placeholders} con la sintassi \emph{mustache}.
-

@@ -66,7 +66,9 @@ FBref è un sito web dedicato al tracciamento delle statistiche relative ai calc
 \begin{figure}[!htb]
 	\begin{center}
 		\includegraphics[scale=0.40]{logo.png}
-		\caption{Logo di FBref. link: \url{https://fbref.com}} \label{fig:filt}
+		\caption{Logo di FBref.} 
+		%Source: \url{https://fbref.com}
+		\label{fig:logo}
 	\end{center}
 \end{figure}
 
@@ -74,8 +76,8 @@ FBref è un sito web dedicato al tracciamento delle statistiche relative ai calc
 
 Quindi per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A si è esportato per ogni partita giocata alcune variabili che ci interessavano, selezionando per prima cosa la macro aree dove si trovavano le variabili d'interesse e poi, modificando le tabelle per ottenere solo i dati di tali variabili. Ogni tabella generata veniva poi riconvertita in CSV per essere poi unita con tutte le altre in un file Excel che una volta completato, divenne il dataset per le nostre analisi. Per rendere più leggibile il file Excel, dato che le stringhe in CSV separavano i dati con il carattere separatore virgola, si è utilizzata la funzione di Excel "trasforma testo in colonne" per inserire tutti i dati in modo ordinato nelle celle del foglio Excel.
 
-\subsection{Struttura dataset}
-Il dataset risultate dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga perciò contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezioni per la data della partita (\textsf{Date}), il turno (\textsf{Round}), e gli spettatori (\textsf{Spec}). Quindi per ogni partita esistono due righe, una per ognuna delle due squadre coinvolte. Perciò ogni squadra appare nella colonna \textsf{Team} 38 e dato che si hanno 20 squadre si hanno perciò 760 righe totali. Per quanto riguarda le colonne se ne discuterà nella prossima sotto sezione. \\
+\section{Struttura dataset}
+Il dataset risultate dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga perciò contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezioni per la data della partita (\textsf{Date}), il turno (\textsf{Round}), e gli spettatori (\textsf{Spec}). Quindi per ogni partita esistono due righe, una per ognuna delle due squadre coinvolte. Perciò ogni squadra appare nella colonna \textsf{Team} 38 volte e dato che si hanno 20 squadre si hanno perciò 760 righe totali. %Per quanto riguarda le colonne se ne discuterà nella prossima sotto sezione. \\
 La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime tre partite della stagione. 
 	\begin{table}[!ht]%
 
@@ -108,11 +110,21 @@ La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime t
 	\caption{La tabella mostra un estratto del dataset utilizzato i cui dati sono stati ricavati da FBref.} \label{tab:db}
 \end{table}
 
+Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. Oltre alle già citate \textsf{Date}, \textsf{Round} e \textsf{Spec} che hanno solo un valore di completezza dei dati, le restanti 32 colonne saranno le possibili candidate a essere le covariate che costituiranno il modello.\\
+Le varie covariate presenti sono state raggruppate in quattro macro-aree e sono le seguenti:
+\begin{itemize}
+	\item Statistiche generali;
+	\item Statistiche tiri;
+	\item Statistiche possesso;
+	\item Statistiche passaggi;
+	\item Statistiche difensive.
+\end{itemize}
 
-\subsection{Covariate}
-
-Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. Oltre alle già citate \textsf{Date}, \textsf{Round} e \textsf{Spec} che hanno solo un valore di completezza dei dati, le restanti 32 colonne saranno le possibili candidate a essere le covariate che costituiranno il modello. Ovviamente non è detto che tutte queste variabili saranno inserite nel modello perché prima di costruire un modello, ci sarà un analisi per verificare se sia sensato o no l'utilizzo di ognuna delle variabili verificando attraverso grafici (analisi grafica) e individuando possibili problemi di multicollinearità o di bassa significatività delle variabili.\\
+Di seguito se ne illustrano nel dettaglio.
 %\pagebreak
+
+\subsection{Statistiche generali}
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche che non fanno parte di una precisa macro-area ma che descrivono essenzialmente la partita giocata. 
 
 Le possibili covariate sono le seguenti:
 \begin{itemize}
@@ -128,6 +140,53 @@ Le possibili covariate sono le seguenti:
 	Questa variabile è significativa perché subire pochi gol incide positivamente nell'esito della partita, infatti non espone la squadra a doversi sbilanciare in attacco per poter recuperare lo svantaggio e quindi non rischiare di subire altri gol dai avversari. Inoltre è un fatto riconosciuto che aver la miglior difesa del campionato porta con molta probabilità a vincere il campionato
 	\item \textsf{Team}: Tale variabile indica il nome della squadra a cui i dati della riga fanno riferimento. É necessaria per il funzionamento del modello, nel prossimo paragrafo verrà approfondito il suo utilizzo nel modello.
 	\item \textsf{Vs}: Tale variabile indica il nome della squadra avversaria. É necessaria per il funzionamento del modello, nel prossimo paragrafo verrà approfondito il suo utilizzo nel modello.
+	
+	\item \textsf{Fls}: Tale variabile indica il numero di falli dai giocatori della squadra indicata sulla variabile \textsf{Team}. 
+	
+	Questa variabile è stata inserita per capire se una squadra adotta un gioco più fisico/tattico. In questo caso sarà più propensa a interrompere il gioco della squadra avversaria e a commettere più falli. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita, ricordando però che una che commette molti falli è più soggetta a ricevere cartellini gialli o rossi che condizionano la prestazione dei giocatori.
+	\item \textsf{Fld}: Tale variabile indica il numero di falli subiti dai giocatori della squadra indicata sulla variabile \textsf{Team} da parte della squadra avversaria indicata sulla variabile \textsf{Vs}. 
+	
+	Si è deciso di inserire questa covariata perché un alto numero di falli può portare a molte interruzione della manovra di gioco e quindi permettere alla squadra avversaria di riorganizzarsi. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita.
+	\item \textsf{Off}: Tale variabile indica il numero di volte che la squadra indicata sulla variabile \textsf{Team} è finita in fuorigioco. Un calciatore si trova in posizione di fuorigioco quando una qualsiasi parte del suo corpo, fatta eccezione per braccia e mani perché non possono essere usate per controllare il pallone; si trova nella nella metà campo avversaria ed è più vicina alla linea di porta avversaria sia rispetto al pallone e sia rispetto al penultimo giocatore difendente avversario; tale penultimo avversario può essere anche il portiere, se un compagno di questi è più vicino di lui alla linea di porta. Una rappresentazione grafica del fuorigioco è mostrata nell'immagine \ref{fig:offside}.
+	
+	\begin{figure}[!ht]
+		\begin{center}
+			\includegraphics[scale=0.55]{var.png}
+			
+			\caption{Rappresentazione del fuorigioco} \label{fig:offside}
+			%Source: \url{https://sport.sky.it/calcio/2021/10/05/fifa-figc-var-fuorigioco}
+		\end{center}
+	\end{figure}
+	
+	Tale variabile è stata inserita perché, se una squadra viene colta molte volte in fuorigioco allora il suo gioco sarà interrotto e darà un vantaggio alla squadra avversaria che farà ripartire la sua azione a suo favore.
+	
+\end{itemize}
+\pagebreak
+\subsection{Statistiche tiri}
+
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche che fanno parte della fase offensiva della squadra in esame.
+
+Le possibili covariate sono le seguenti:
+\begin{itemize}
+	
+	\item \textsf{Sh}: Tale variabile indica il numero di tiri totali fatti dalla squadra indicata sulla variabile \textsf{Team}. Quindi vengono conteggiati il numero di tiri in porta più i tiri fuori dalla porta. 
+	
+	Una squadra che effettua tanti tiri ha più probabilità di segnare un gol. Occorre pero capire quanto è precisa una squadra nel centrare la porta.
+	\item \textsf{SoT}: Tale variabile indica il numero di tiri in porta totali fatti dalla squadra indicata sulla variabile \textsf{Team}. 
+	
+	Una squadra con un alto valore di tiri in porta è più probabile che possa segnare un gol. Tale variabile permette di capire quanto è precisa in combinazione con \texttt{Sh} la squadra di calcio nel centrare la porta nei suoi tiri.
+	\item \textsf{G/Sh}: Tale variabile indica la proporzione tra gol e tiri fatti dalla squadra indicata sulla variabile \textsf{Team}. 
+	
+	Tale variabile perciò permette di capire quanto la produzioni di tiri della squadra è efficace o meno. Con \texttt{Sh} e \texttt{SoT} si riesce a valutare quanto è offensiva la squadra cioè, se essa gioca costantemente in attacco o utilizza la tattica difesa e contropiede. Inoltre permette di capire quanto la squadra è precisa nel effettuare i tiri in porta.
+\end{itemize}
+
+\subsection{Statistiche possesso}
+
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relativa riguardati al possesso della palla fatto dai giocatori della squadra in esame.
+
+Le possibili covariate sono le seguenti:
+\begin{itemize}
+	
 	\item \textsf{Poss}: Tale variabile indica in percentuale, la quantità di tempo di possesso della palla durante una partita di calcio della squadra indicata sulla variabile \textsf{Team}. Nel gioco del calcio con il termine “possesso palla” si intende un’azione manovrata di due o più giocatori che riescono a passarsi la palla evitando i contrasti degli avversari. In poche parole durante la partita, ogni volta che una squadra ha il dominio della palla si dice che questa squadra è in fase di “possesso palla”, quindi in questa variabile viene indicato quanto questa fase è durata nell'intera partita.\\
 	Il metodo più comune utilizzato per calcolare il possesso palla di una squadra si basa sull'utilizzo di tre cronometri: uno per ciascuna formazione più uno per i tempi morti. Quando un giocatore della squadra A tocca un pallone che prima era in possesso della squadra B, il cronometro della squadra A parte e quello della squadra B si ferma e così via. Il terzo cronometro registra il tempo in tutte le situazioni di palla inattiva cioè ad esempio: rimesse laterali, calci di punizione ecc.. I tempi vengono poi trasformati in percentuali. Per una registrazione più sofisticata, si può utilizzare 22 cronometri, uno per ogni giocatore, in modo da registrare anche il possesso palla di ogni singolo giocatore per avere una registrazione più precisa.
 	
@@ -138,18 +197,76 @@ Le possibili covariate sono le seguenti:
 	\end{itemize}
 	Il possesso palla però non garantisce certo la vittoria, infatti produrre un possesso palla "sterile" cioè senza che questo porti alla produzioni di azioni offensive, può esporre la squadra in possesso della palla a possibili contropiedi nel caso in cui perde la palla e quindi all'alto rischio di subito gol perché sbilanciata e non ben posizionata. Vedremmo di seguito quali variabili possono essere utili per capire se il possesso palla fatto dalla squadra è "sterile" oppure no.
 
-	\item \textsf{Sh}: Tale variabile indica il numero di tiri totali fatti dalla squadra indicata sulla variabile \textsf{Team}. Quindi vengono conteggiati il numero di tiri in porta più i tiri fuori dalla porta. 
+	\item \textsf{ToDefPen}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} nella propria area di rigore. 
 	
-	Una squadra che effettua tanti tiri ha più probabilità di segnare un gol. Occorre pero capire quanto è precisa una squadra nel centrare la porta.
-	\item \textsf{SoT}: Tale variabile indica il numero di tiri in porta totali fatti dalla squadra indicata sulla variabile \textsf{Team}. 
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra subisce molto la pressione della squadra avversaria, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria area di rigore la cui area nel campo da calcio è indicata nella Figura \ref{fig:penalty}.
 	
-	Una squadra con un alto valore di tiri in porta è più probabile che possa segnare un gol. Tale variabile permette di capire quanto è precisa in combinazione con \texttt{Sh} la squadra di calcio nel centrare la porta nei suoi tiri.
-	\item \textsf{G/Sh}: Tale variabile indica la proporzione tra gol e tiri fatti dalla squadra indicata sulla variabile \textsf{Team}. 
+	\begin{figure}[!ht]
+		\begin{center}
+			\includegraphics[scale=0.60]{rigore.jpg}
+			\caption{In rosso l'area di rigore in un campo da calcio.}
+			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
+			\label{fig:penalty}
+		\end{center}
+	\end{figure}
 	
-	Tale variabile perciò permette di capire quanto la produzioni di tiri della squadra è efficace o meno. Con \texttt{Sh} e \texttt{SoT} si riesce a valutare quanto è offensiva la squadra cioè, se essa gioca costantemente in attacco o utilizza la tattica difesa e contropiede. Inoltre permette di capire quanto la squadra è precisa nel effettuare i tiri in porta.
-	\item \textsf{Saves}: Tale variabile indica il numero di parate fatte del portiere della squadra indicata sulla variabile \textsf{Team}. 
 	
-	La variabile è stata inserita perché permette di valutare se la squadra subisce tanti tiri dai avversari e la qualità del portiere nel salvare la squadra da un possibile gol subito.
+	\item \textsf{ToDef3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} nella propria mediana o trequarti difensiva. 
+	
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla creando poche azioni offensive, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria mediana la cui area nel campo da calcio è indicata nella Figura \ref{fig:def}.
+	
+	\begin{figure}[!ht]
+		\begin{center}
+			\includegraphics[scale=0.60]{mid.jpg}
+			\caption{In rosso la mediana nel campo da calcio.} 
+			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
+			\label{fig:def}
+		\end{center}
+	\end{figure}
+	\item \textsf{ToMid3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a centrocampo. 
+	
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla cercando di creare delle azioni offensive, viceversa cerca di fare un gioco più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto dalla squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi a centrocampo la cui area nel campo da calcio è indicata nella Figura \ref{fig:cen}.
+	
+	\begin{figure}[!ht]
+		\begin{center}
+			\includegraphics[scale=0.60]{cen.jpg}
+			\caption{In rosso il centrocampo nel campo da calcio.}
+			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio}  
+			\label{fig:cen}
+		\end{center}
+	\end{figure}
+	
+	\item \textsf{ToAtt3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a nella trequarti dell'avversario. 
+	
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla per effettuare una pressione sulla squadra avversaria affinché si possano creare degli spazi per delle azioni offensive, viceversa cerca di fare un gioco molto più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella trequarti dell'avversario la cui area nel campo da calcio è indicata nella Figura \ref{fig:treq}.
+	
+	\begin{figure}[!ht]
+		\begin{center}
+			\includegraphics[scale=0.60]{treq.jpg}
+			\caption{In rosso la trequarti dell'avversario nel campo da calcio.} 
+			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
+			\label{fig:treq}
+		\end{center}
+	\end{figure}
+	
+	\item \textsf{ToAttPen}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a nell'area di rigore dell'avversario. 
+	
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla applicando un'alta pressione sulla squadra avversaria affinché si possano creare molte occasioni da gol in area, viceversa o la squadra subisce troppo la pressione dell'avversario oppure tende ad avere un gioco molto difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nell'area di rigore dell'avversario.
+	
+	\item \textsf{ToDist}: Tale variabile indica la distanza totale, espressa in metri, in cui un giocatore della squadra indicata sulla variabile \textsf{Team}, si è mosso con la palla in qualsiasi direzione, controllandola con i piedi.
+	
+	Variabile che è stata inserita perché permette di ricavare se il possesso della palla sia stato statico cioè i giocatori si sono mossi poco senza avanzare, oppure no. Sarà di interesse analizzare se con un alto valore di metri percorsi con palla al piede, possa essere utile a ottenere la vittoria.
+
+\end{itemize}
+
+\subsection{Statistiche passaggi}
+
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relativa riguardati ai passaggi della palla fatti dai giocatori della squadra in esame.
+
+Le possibili covariate sono le seguenti:
+\begin{itemize}
+	
+	
 	\item \textsf{PAtt}: Tale variabile indica il numero di tutti i passaggi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. 
 	
 	Utile a capire quanto la squadra sia incline a tentare i passaggi. Si studierà nell'analisi se tale variabile è significativa ma sicuramente ha un maggior significato se messa a confronto con la percentuale di passaggi riusciti \texttt{PCmp\%}.
@@ -163,10 +280,12 @@ Le possibili covariate sono le seguenti:
 	
 	Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
 	\item \textsf{MPAtt}: Tale variabile indica il numero di passaggi medi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi medi si intendono quelli effettuati all'interno di una lunghezza tra i 13 e 27 metri. Questi passaggi possono essere considerati come passaggi filtranti cioè un tipo di passaggio non diretto direttamente al proprio compagno di squadra ma verso un area del campo dove il compagno di squadra deve andare a prendere la palla, spesso questi passaggi vengono fatti per sorprendere la difesa avversaria e evitare che intercettino la palla. Nella Figura \ref{fig:filt} viene mostrato l'esecuzione di un passaggio filtrante.
+	
 	\begin{figure}[ht]
 		\begin{center}
 			\includegraphics[scale=0.51]{filtrante2.jpg}
 			\caption{Esecuzione di un passaggio filtrante} \label{fig:filt}
+			%Source: \url{https://www.ilmisterone.com/2019/01/16/passaggi-filtranti/}
 		\end{center}
 	\end{figure}
 
@@ -178,6 +297,7 @@ Le possibili covariate sono le seguenti:
 		\begin{center}
 			\includegraphics[scale=0.53]{cambio-di-gioco.png}
 			\caption{Esecuzione di un cambio di gioco} \label{fig:cambio}
+			%Source: \url{https://www.mistercalcio.com/tattica/il-cambio-di-gioco/}
 		\end{center}
 	\end{figure}
 	
@@ -186,78 +306,6 @@ Le possibili covariate sono le seguenti:
 	\item \textsf{LPCmp\%}: Tale variabile indica la percentuale di passaggi lunghi riusciti ai giocatori della squadra indicata sulla variabile \textsf{Team}. 
 	
 	Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
-	\item \textsf{ToDefPen}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} nella propria area di rigore. 
-	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra subisce molto la pressione della squadra avversaria, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria area di rigore la cui area nel campo da calcio è indicata nella Figura \ref{fig:penalty}.
-	
-	\begin{figure}[!ht]
-		\begin{center}
-			\includegraphics[scale=0.60]{rigore.jpg}
-			\caption{In rosso l'area di rigore in un campo da calcio.} 
-			\label{fig:penalty}
-		\end{center}
-	\end{figure}
-	
-
-	\item \textsf{ToDef3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} nella propria mediana o trequarti difensiva. 
-	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla creando poche azioni offensive, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria mediana la cui area nel campo da calcio è indicata nella Figura \ref{fig:def}.
-	
-		\begin{figure}[!ht]
-		\begin{center}
-			\includegraphics[scale=0.60]{mid.jpg}
-			\caption{In rosso la mediana nel campo da calcio.} 
-			\label{fig:def}
-		\end{center}
-	\end{figure}
-	\item \textsf{ToMid3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a centrocampo. 
-	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla cercando di creare delle azioni offensive, viceversa cerca di fare un gioco più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto dalla squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi a centrocampo la cui area nel campo da calcio è indicata nella Figura \ref{fig:cen}.
-	
-		\begin{figure}[!ht]
-		\begin{center}
-			\includegraphics[scale=0.60]{cen.jpg}
-			\caption{In rosso il centrocampo nel campo da calcio.} 
-			\label{fig:cen}
-		\end{center}
-	\end{figure}
-
-	\item \textsf{ToAtt3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a nella trequarti dell'avversario. 
-	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla per effettuare una pressione sulla squadra avversaria affinché si possano creare degli spazi per delle azioni offensive, viceversa cerca di fare un gioco molto più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella trequarti dell'avversario la cui area nel campo da calcio è indicata nella Figura \ref{fig:treq}.
-	
-		\begin{figure}[!ht]
-		\begin{center}
-			\includegraphics[scale=0.60]{treq.jpg}
-			\caption{In rosso la trequarti dell'avversario nel campo da calcio.} 
-			\label{fig:treq}
-		\end{center}
-	\end{figure}
-
-	\item \textsf{ToAttPen}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a nell'area di rigore dell'avversario. 
-	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla applicando un'alta pressione sulla squadra avversaria affinché si possano creare molte occasioni da gol in area, viceversa o la squadra subisce troppo la pressione dell'avversario oppure tende ad avere un gioco molto difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nell'area di rigore dell'avversario.
-	
-	\item \textsf{ToDist}: Tale variabile indica la distanza totale, espressa in metri, in cui un giocatore della squadra indicata sulla variabile \textsf{Team}, si è mosso con la palla in qualsiasi direzione, controllandola con i piedi.
-	
-	Variabile che è stata inserita perché permette di ricavare se il possesso della palla sia stato statico cioè i giocatori si sono mossi poco senza avanzare, oppure no. Sarà di interesse analizzare se con un alto valore di metri percorsi con palla al piede, possa essere utile a ottenere la vittoria.
-	\item \textsf{Fls}: Tale variabile indica il numero di falli dai giocatori della squadra indicata sulla variabile \textsf{Team}. 
-	
-	Questa variabile è stata inserita per capire se una squadra adotta un gioco più fisico/tattico. In questo caso sarà più propensa a interrompere il gioco della squadra avversaria e a commettere più falli. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita, ricordando però che una che commette molti falli è più soggetta a ricevere cartellini gialli o rossi che condizionano la prestazione dei giocatori.
-	\item \textsf{Fld}: Tale variabile indica il numero di falli subiti dai giocatori della squadra indicata sulla variabile \textsf{Team} da parte della squadra avversaria indicata sulla variabile \textsf{Vs}. 
-	
-	Si è deciso di inserire questa covariata perché un alto numero di falli può portare a molte interruzione della manovra di gioco e quindi permettere alla squadra avversaria di riorganizzarsi. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita.
-	\item \textsf{Off}: Tale variabile indica il numero di volte che la squadra indicata sulla variabile \textsf{Team} è finita in fuorigioco. Un calciatore si trova in posizione di fuorigioco quando una qualsiasi parte del suo corpo, fatta eccezione per braccia e mani perché non possono essere usate per controllare il pallone; si trova nella nella metà campo avversaria ed è più vicina alla linea di porta avversaria sia rispetto al pallone e sia rispetto al penultimo giocatore difendente avversario; tale penultimo avversario può essere anche il portiere, se un compagno di questi è più vicino di lui alla linea di porta. Una rappresentazione grafica del fuorigioco è mostrata nell'immagine \ref{fig:offside}.
-	
-	\begin{figure}[!ht]
-		\begin{center}
-			\includegraphics[scale=0.55]{var.png}
-			\caption{Rappresentazione del fuorigioco} \label{fig:offside}
-		\end{center}
-	\end{figure}
-
-	Tale variabile è stata inserita perché, se una squadra viene colta molte volte in fuorigioco allora il suo gioco sarà interrotto e darà un vantaggio alla squadra avversaria che farà ripartire la sua azione a suo favore.
-	
 	
 	\item \textsf{Crs}: Tale variabile indica il numero di cross effettuati dalla squadra indicata sulla variabile \textsf{Team}. Un cross in italiano traversone, è un tipo di passaggio medio o lungo, solitamente effettuato sulle fasce laterali dell'area avversaria o comunque vicino all'area avversaria, che se eseguito permette al compagno di squadra posizionato vicino alla porta avversaria, di colpire la palla al volo di testa oppure di piede per segnare un possibile gol. Quindi se eseguito correttamente, il cross può diventare un assist, cioè l'ultimo passaggio per la realizzazione del gol. 
 	
@@ -265,10 +313,24 @@ Le possibili covariate sono le seguenti:
 		\begin{center}
 			\includegraphics[scale=0.43]{cross.jpg}
 			\caption{Rappresentazione di un cross} \label{fig:cross}
+			%Source: \url{http://www.allfootball.it/blog/calcio-vincere-allenando-i-dettagli/27-2-2017/calcio-la-marcatura-a-uomo-su-cross-laterale/}
 		\end{center}
 	\end{figure}
 	
 	Per tale motivo si è deciso di inserire una variabile specifica per questo tipo di passaggio nell'analisi. Una rappresentazione di un cross è mostrata nella Figura \ref{fig:cross}.
+\end{itemize}
+
+\subsection{Statistiche difensive}
+
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relativa riguardati alla fase difensiva fatta dalla squadra in esame.
+
+Le possibili covariate sono le seguenti:
+\begin{itemize}
+	
+	\item \textsf{Saves}: Tale variabile indica il numero di parate fatte del portiere della squadra indicata sulla variabile \textsf{Team}. 
+	
+	La variabile è stata inserita perché permette di valutare se la squadra subisce tanti tiri dai avversari e la qualità del portiere nel salvare la squadra da un possibile gol subito.
+	
 	\item \textsf{Int}: Tale variabile indica il numero di intercettazioni fatte dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per intercettazione della palla si intende interrompere un passaggio della squadra avversaria entrando in possesso del pallone che era stato lanciato per un passaggio ma che una volta intercettato non è andato a buon fine cioè non è arrivato al compagno del giocatore avversario che ha effettuato il passaggio. 
 	
 	Quindi si è deciso di inserire questa variabile perché indica quante volte si è tolto il possesso della palla all'avversario interrompendone il suo gioco.
@@ -276,8 +338,9 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.40]{tackle.jpg}
-			\caption{Rappresentazione di un contrasto in scivolata} \label{fig:tackle}
+			\includegraphics[scale=0.30]{tackle.jpg}
+			\caption{Rappresentazione di un contrasto in scivolata}
+		%	Source: \url{https://www.ilmisterone.com/2022/01/24/partita-solo-tackle/} \label{fig:tackle}
 		\end{center}
 	\end{figure}
 	
@@ -288,256 +351,33 @@ Le possibili covariate sono le seguenti:
 	Dato che questa variabile sembra essere legata al possesso del pallone sembra essere interessante per l'analisi.
 	
 \end{itemize}
-\section{Preprocessing dei dati}
-Nella sezione precedente si è descritto come si è costruito il dataset che verrà utilizzato per l'analisi e come esso è stato strutturato. Tale struttura ha il vantaggio di essere di facile interpretazione per un essere umano ma vi sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ Dopo aver importato il dataset sul software R, sono state perciò necessarie apportare alcune modifiche attraverso la scrittura di codice che andasse a modificare la struttura del dataset per poi essere correttamente utilizzabile nel modello. \\
-
-Innanzitutto il modello richiede per il suo funzionamento che le due variabili che indicano quali delle due squadra hanno partecipato alla partita in esame; devono essere o di tipo fattore oppure un \textsf{data.frame}. Una variabile fattore è un variabile non numerica, espressa in termini verbali ad esempio una categoria. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali cioè fattori, variabili cardinali cioè vettori numerici; un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ Dato che le due variabili in questione \textsf{Team} e \textsf{Vs} erano solo di tipo \texttt{character} e si voleva inserire un collegamento che faccia capire al modello, quali valori sono legati alla squadra indicata in \textsf{Team} e quali in \textsf{Vs} nella stessa partita; si è deciso perciò di trasformare \textsf{Team} e \textsf{Vs} in \texttt{data.frame} inserendo al loro interno tutte le covariate descritte nella sezione precedente, ad esempio \textsf{Poss}, \textsf{Int} ecc..\\
-
-Si sottolinea inoltre che sono state necessarie ulteriore modifiche per quanto riguarda la variabile \textsf{AtHome}; dato che al momento dell'importazione del dataset, i valori venivano interpretati come stringhe, è stato necessario trasformarli in valori logici con il commando \textsf{as.logical(soccern\$AtHome)}. Ciononostante pero il valore logico non era accettato dal modello ma era accettato un valore numerico per indicare se la squadra giocava in casa o no; si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0. 
-
-\subsection{Codice per l'adattamento del dataset}
-Di seguito viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.
-
-\begin{lstlisting}
-PossVs <- c()
-ShVs <- c()
-ShTVs <- c()
-G.ShVs <- c()
-SavesVs <- c()
-PAttVs <- c()
-PCmp.Vs <- c()
-SPAttVs <- c()
-SPCmp.Vs <- c()
-MPAttVs <- c()
-MPCmp.Vs <- c()
-LPAttVs <- c()
-LPCmp.Vs <- c()
-ToDefPenVs <- c()
-ToDef3rdVs <- c()
-ToMid3rdVs <- c()
-ToAtt3rdVs <- c()
-ToAttPenVs <- c()
-ToDistVs <- c()
-FlsVs <- c()
-FldVs <- c()
-OffVs <- c()
-CrsVs <- c()
-IntVs <- c()
-TklWinVs <- c()
-RecovVs <- c()
-del <-c()
-k <- 1
-z <- 1
-for(i in 1:nrow(soccern)){
-   if(soccern$AtHome[i] == TRUE){
-     for(j in 1:nrow(soccern)){
-	 if((soccern$Team[j] == soccern$Vs[i]) && (soccern$Team[i] == soccern$Vs[j]) && (soccern$AtHome[j] == FALSE)){
-		PossVs[k] <- soccern$Poss[j]
-		ShVs[k] <- soccern$Sh[j]
-		ShTVs[k] <- soccern$SoT[j]
-		G.ShVs[k] <- soccern$G.Sh[j]
-		SavesVs[k] <- soccern$Saves[j]
-		PAttVs[k] <- soccern$PAtt[j]
-		PCmp.Vs[k] <- soccern$PCmp.[j]
-		SPAttVs[k] <- soccern$SPAtt[j]
-		SPCmp.Vs[k] <- soccern$SPCmp.[j]
-		MPAttVs[k] <- soccern$MPAtt[j]
-		MPCmp.Vs[k] <- soccern$MPCmp.[j]
-		LPAttVs[k] <- soccern$LPAtt[j]
-		LPCmp.Vs[k] <- soccern$LPCmp.[j]
-		ToDefPenVs[k] <- soccern$ToDefPen[j]
-		ToDef3rdVs[k] <- soccern$ToDef3rd[j]
-		ToMid3rdVs[k] <- soccern$ToMid3rd[j]
-		ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
-		ToAttPenVs[k] <- soccern$ToAttPen[j]
-		ToDistVs[k] <- soccern$TotDist[j]
-		FlsVs[k] <- soccern$Fls[j]
-		FldVs[k] <- soccern$Fld[j]
-		OffVs[k] <- soccern$Off[j]
-		CrsVs[k] <- soccern$Crs[j]
-		IntVs[k] <- soccern$Int[j]
-		TklWinVs[k] <- soccern$TklWin[j]
-		RecovVs[k] <- soccern$Recov[j]
-		k <- k + 1
-	   }      
-	}
-   }else{
-	del[z] <- i
-	z <- z + 1
-   }
-}
-\end{lstlisting}
-\bigskip
-Con il codice precedente si ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
-Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}.\\
-Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} vi è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
-
-Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
-\bigskip
-\begin{lstlisting}
-> soccern3 <- soccern2[-del,]
-\end{lstlisting}
-\bigskip
-Con il precedente commando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. 
-\bigskip
-\begin{lstlisting}
-> soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, Saves = soccern3$Saves, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDefPen = soccern3$ToDefPen, ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Off = soccern3$Off, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
-
-\end{lstlisting}
-
-\bigskip
-Con il precedente commando si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.
-\bigskip
-\bigskip
-\begin{lstlisting}
-> soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, Saves = SavesVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDefPen = ToDefPenVs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Off = OffVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
-
-\end{lstlisting}
-\bigskip
-Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati vengo riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\
-
-Si segnala inoltre che il dataset non contiene valori mancati dato che, in quei rari casi in cui venivano individui valori mancanti durante la raccolta, veniva ricercato il dato da altre fonti attendibili.
-
-\section{Analisi grafica dei dati}
-In questa sezione attraverso il supporto di grafici, si analizzerà graficamente i dati disponibili e le loro relazione per avere una prima visione dei dati raccolti. Si cercherà di: individuare possibili outliers o anomalie, quali distribuzioni hanno i dati ma soprattutto valutare le relazione tra covariate e variabile di risposta e tra due covariate, con lo scopo di individuare quali covariate possono essere significative per la variabile risposta e quali interazioni tra covariate emergono dall'analisi grafica.\\
-
-Come primo passo dell'analisi, viene valutata la distribuzione delle classi della variabile risposta \texttt{Res} all'interno delle osservazioni disponibili. Tale distribuzione è mostrata nella Figura \ref{fig:res}.
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.28]{barRes.png}
-		\caption{Barplot della distribuzione della variabile di risposta \texttt{Res}} \label{fig:res}
-	\end{center}
-\end{figure}
-
-Come si può notare le classi sembrano ben distribuite dato che abbiamo 196 pareggi e 282 vittorie e altrettante sconfitte. Si ha quindi un campione abbastanza ampio e distribuito e corretto per le nostre analisi.\\
-
-Aumentando il livello di dettaglio è di interessante analizzare come queste classificazione sono distribuite tra le varie squadre.
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[height=8cm,width=15cm]{ResTeam.png}
-		\caption{Barplot della distribuzione della variabile di risposta per squadra\texttt{Res}} \label{fig:team}
-	\end{center}
-\end{figure}
-
-Nella Figura \ref{fig:team} si può notare come la distribuzione di vittorie, pareggi e sconfitte non è omogenea tra le squadre. Ovviamente è un risultato che ci si aspettava ma che sottolinea prima di tutto la correttezza dei dati ma soprattutto che vi è qualche elemento nascosto che ha determinato tale distribuzione.\\
+\begin{comment}
 
 
-Come secondo step si analizzerà le relazione tra variabile di risposta con alcune covariate.\\
-
-La prima relazione che si analizza è quella con la variabile categorica \texttt{AtHome}. Nella Figura \ref{fig:AtHome} si può vedere che c'è una leggera variazione dei risultati tra la squadra che gioca in casa oppure no. Infatti c'è una leggera tendenza a favorire la vittoria per la squadra che gioca in casa piuttosto che la vittoria per la squadra fuori casa. Naturalmente non deve esserci alcuna variazione per quanto riguarda il pareggio dato che entrambe le squadre lo ottengono. Risulta perciò significativa la variabile \texttt{AtHome}.\\
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{AtHomeRes.png}
-		\caption{Mosaicplot che mostra la distribuzione degli esiti rispetto alle partite giocate in casa e fuori casa} \label{fig:AtHome}
-	\end{center}
-\end{figure}
-
-Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica; si segnala solo che la mediana della sconfitta è più vicina al 3$^{\circ}$ quantile mentre quella della vittoria è più vicina al 1$^{\circ}$ quantile. Inoltre non vi sono presenti outliers.
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{Poss.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Poss} } \label{fig:Poss}
-	\end{center}
-\end{figure}
-
-La Figura \ref{fig:sot} mostra come si comporta la relazione con \texttt{SoT}. Come ci si aspetta si hanno valori più alti nella vittoria e valori molto più bassi nella sconfitta, si ha una buona distribuzione dei valori nella vittoria dato che le code sono simmetriche, per le altre due classi non c'è simmetria dato che ci sono valori più bassi rispetto a valori più alti. Vi sono inoltre alcuni outliners che si discostano dalla distribuzione di tutte e tre le classi dovuti al fatto che ci sono state squadre che hanno tirato molto in porta. Le mediane dei box pareggio e vittoria non sono equidistanti dai quantili ma più vicine al 1$^{\circ}$ quantile. Il box della sconfitta ha una bassa varianza. In conclusione avere un valore alto di tiri in porta sembra essere significativo ai fini della vittoria. Si segnala inoltre che si ottengono i stessi risultati anche con \texttt{Sh} solo con valori meno alti per la vittoria rispetto a \texttt{SoT}.\\
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{SoT.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{SoT} } \label{fig:sot}
-	\end{center}
-\end{figure}
-
-La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si nota che vi sono valori molto bassi ma leggermente più alti per la vittoria. La distribuzione non è buona perché le code sono asimmetriche infatti tutti i valori sono concentrati in basso e pochi verso la coda in alto, per di più c'è una bassa varianza tra i valori. Vi è la presenza di outliners dovuti a partite dove le squadre sono riuscite a ottenere il massimo da ogni tiro. I risultati mostrati nonostante la pessima distribuzione, sono comunque coerenti dato che non ci si aspetta dal rapporto tiri gol un numero alto ma comunque una tendenza che favorisca la vittoria.\\
- 
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{g.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{G/Sh} } \label{fig:g}
-	\end{center}
-\end{figure}
-
-La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves}. Come si può notare sembra che tale variabile sia poco significativa ai fini del risultato. Infatti c'è poca variazione tra una classe e l'altra dato che avere un alto numero di parate non è determinante a fini del risultato.\\
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{saves.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Saves} } \label{fig:saves}
-	\end{center}
-\end{figure}
-
-La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'alto numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto ai altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1${^\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita dato che maggior numero di passaggi si prova ad effettuare maggiori sono le possibilità di vittoria, occorre pero sapere quanto è precisa la squadra.\\
-Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti valori alti, infatti la coda in alto e molto meno lunga rispetto alla coda in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non da la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
-Per quanto riguarda le variabili delle altre tipologie di passaggi si discostano di poco dai boxplot in Figura \ref{fig:pass}
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.50]{pass.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{PAtt} e \texttt{PCmp\%}  } \label{fig:pass}
-	\end{center}
-\end{figure}
-\bigskip
-La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefPen}. Come si può notare questa non è per nulla significativa per la variabile risposta, infatti non c'è una minima variazione e i box hanno tutti la stessa varianza. Tale esito può essere giustificato dal fatto che le squadre cercano di rimane fuori il più possibile dalla propria area di rigore per non portare troppo vicino alla porta l'avversario. Da ciò quindi tale variabile non sarà inserita nel modello.\\
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{def.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToDefPen} } \label{fig:defp}
-	\end{center}
-\end{figure}
-
-La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToAttPen}. Contrariamente quanto visto con la Figura \ref{fig:defp} qui si nota una certa variazione da una un box e l'altro, infatti vi è una tendenza positiva che porta ad aver valori più alti in caso di vittoria. Si ha una maggior varianza per quanto riguarda la vittoria rispetto ai altri due esiti e la distribuzione di tutti e tre è abbastanza bilanciata se non che la coda più bassa è leggermente meno lunga rispetto all'altra coda; la mediana invece è equilibrata. Si nota inoltre che vi sono alcuni outliners segno che alcune squadre in qualche partite, si sono particolarmente rese note nel produrre un quantitativo di tocchi maggiore rispetto alla distribuzione, ciò pero non sembra influenzare l'esito.\\
-
-Per quanto riguarda \texttt{ToDef3rd}, \texttt{ToMid3rd} e \texttt{ToAtt3rd}, esse si comportano come \texttt{ToAttPen}. Perciò è stato omesso il loro grafico.\\
- 
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{att.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToAttPen} } \label{fig:att}
-	\end{center}
-\end{figure}
-
-Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei falli, \texttt{Fls} e \texttt{Fld}. Nel boxplot a sinistra si può notare che i valori più alti sono nel box del pareggio mentre sono presenti valori più bassi nel box vittoria. Ciò fa pensare che subire molti falli può impedire la vittoria alla squadra che li subisce. Per quanto riguarda la distribuzione sembra essere buona; c'è minor varianza per quanto riguarda la sconfitta. \\
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{falli.png}
-		\caption{A sinistra il boxplot della variabile risposta e della variabile numerica \texttt{Fls} e a destra il boxplot della variabile risposta e della variabile numerica \texttt{Fld} } \label{fig:falli}
-	\end{center}
-\end{figure}
-
-Nel secondo boxplot si può notare che i valori più alti sono presenti sia sul pareggio e sia sulla vittoria e sempre qui si ha una maggior distribuzione rispetto alla sconfitta. Sembra perciò che dal grafico si può intuire che se la squadra non commette dei falli allora sarà più soggetta a perdere.\\
-
-La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. Sorprendentemente valori più alti sono registrati nella sconfitta, anche se la mediana risulta essere più vicina al 1 $^{\circ}$ quantile sottolineando che vi è un maggior numero di valori bassi piuttosto che alti. La mediana dei restanti esiti invece e ben equilibrata ma il pareggio risulta avere meno variabilità. Sembra perciò che effettuare troppi intercettazioni dei passaggi avversari contrariamente da quanto si pensi sembra essere controproducente per la vittoria. Si segnala inoltre la presenza di alcuni outliners con valori alti di intercettazioni, che si discostano dalle distribuzioni.\\
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{int.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Int}} \label{fig:int}
-	\end{center}
-\end{figure}
-
-La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}. Come si può notare, vincere più contrasti possibili evita di subire una sconfitta. Infatti vi sono valori più alti in pareggio e vittoria oltre a una maggiore varianza rispetto alla sconfitta. Nello specifico pero si nota che, nella distribuzione dei valori vi sono maggior valori alti nella vittoria rispetto al pareggio, graficamente lo si vede dalla mediana che nel pareggio è più vicina al 1$^{\circ}$ quindi a valori più bassi e lo si nota anche dalla coda più bassa che è meno lunga rispetto a quella in alto; invece la mediana della vittoria risulta più vicina al 3$^{\circ}$ oltre ad avere la coda in alto più corta rispetto a quella in basso. Vi è inoltre qualche outliners con valori più alti di contrasti vinti ma sembrano non influenzare la classificazione.\\
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{tklwin.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{TklWin}} \label{fig:tkl}
-	\end{center}
-\end{figure}
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.40]{recov.png}
-		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Recov}} \label{fig:recov}
-	\end{center}
-\end{figure} 
-
-Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra per entrambe le classi equidistante dai quantili. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria oltre ad averne anche di più rispetto alle altre classi. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che vi sono numerosi outliners sopratutto per il pareggio.
-
+	\begin{table}[!htb]%
+	
+	\renewcommand{\arraystretch}{1.7}
+	\centering
+	\begin{tabular}{c c c c c}
+		\hline	
+		
+		\textbf{Statistiche generali} & \textbf{Tiri} & \textbf{Possesso} & \textbf{Passaggi} & \textbf{Difensive} \\	
+		\hline			
+		AtHome & Sh & Poss & PAtt & Saves\\
+		Res & SoT & ToDefPen & PCmp\% & Int\\
+		GF & G/Sh & ToDef3rd & SPAtt & TklWin\\
+		GA &  & ToMid3rd & SPCmp\% & Recov\\
+		Team &  & ToAtt3rd & MPAtt&\\
+		VS &  & ToAttPen & MPCmp\% &\\
+		Fls &  & ToDist & LPAtt &\\
+		Fld &  &  & LPCmp\% &\\
+		Off &  &  & Crs \\
+		\hline
+		& & & \\
+		
+	\end{tabular} \hbox{}
+	
+	\caption{La tabella riassuntiva variabili presenti nel dataset.} \label{tab:summary}
+\end{table}
+\end{comment}
 

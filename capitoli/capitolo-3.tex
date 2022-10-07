@@ -1,119 +1,283 @@
 % !TEX encoding = UTF-8
 % !TEX TS-program = pdflatex
 % !TEX root = ../tesi.tex
+
 %**************************************************************
-\chapter{Modeling Paired Comparisons}
-%\label{cap:archittettura del sistema AWMS}
+\chapter{Analisi dei dati}
+%\label{cap:flow engine}
 %**************************************************************
+\intro{Nel seguente capitolo verrà illustrata la fase di preprocessing e l'analisi grafica dei dati. }\\
 
-\intro{Nel seguente capitolo verranno introdotti differenti modelli per la \textit{paired comparisons}, iniziando con il Bradley-Terry model versione standard fino a presentare tutte le sue estensioni usate per l'analisi trattata. }
-TO DO
+%*************************************************************
 
-\section{Il Bradley-Terry Model}
-Il Bradley-Terry model \autocite{bradley1952rank} asserisce che in una competizione tra due qualsiasi giocatori, detti player \textit{i} e player \textit{j} (i,j $\in$ \{1,...,n\}), la probabilità che \textit{i} sia preferito a \textit{j} è data dal rapporto tra $\alpha_{i}$ e $\alpha_{j}$, dove $\alpha_{i}$ e $\alpha_{j}$ sono parametri che rappresentano la cosiddetta abilità dei due giocatori. Il modello standard non considera covariate e in generale, non presta nessuna attenzione all'eterogeneità causata dai soggetti dei confronti.\\
+\section{Preprocessing dei dati}
+Dopo aver importato il dataset sul software R, il primo step da effettuare durante il prepocessing è individuare e risolvere possibili anomalie nei dati per poter poi effettuare analisi preliminari.\\
+Il dataset è stato importato in modo tale che la prima riga contenga l'intestazione, mentre le restanti righe tutte le osservazioni. Il commando usato per importare il dataset è il seguente:\\
 
-Formalmente, sia Y$_{i,j}$ la variabile casuale associata al risultato della \emph{paired comparison} tra oggetti \textit{i} e \textit{j}, con \textit{j} > \textit{i} $\in$ \{1,...,n\}, dove nella forma più semplice, il modello dato è il seguente:
-\begin{align} 
-	P(i\succ j) = P(Y_{i,j} = 1) = \frac{exp(\alpha_{i} - \alpha_{j})}{1 + exp(\alpha_{i} - \alpha_{j})} \label{for:3.1} 
-\end{align}
-
-Il modello può essere alternativamente espresso in forma di logit lineare:
-
-\begin{align}
-		logit(i \succ j) =  log( \frac{P( i \succ j)}{P( j \succ i))} ) = log(\frac{exp(\alpha_{i})}{exp(\alpha_{j})}) = \alpha_i - \alpha_j 
-	\end{align}
-
-La risposta del modello rappresenta la probabilità che un certo oggetto \textit{i} è preferito rispetto su un altro oggetto \textit{j}, $i \succ j$. La variabile Y$_{i,j}$ essendo binaria può assumere solo due valori, Y$_{i,j}$ = 1 se l'oggetto \textit{i} è preferito sull'oggetto j e Y$_{i,j}$ = 0 viceversa. I parametri $\alpha_{n}$ come scritto precedentemente rappresentano l'attrattiva o la forza del loro corrispondente oggetto. Chiaramente questi parametri di abilità devono essere stimati dal modello attraverso la massima verosimiglianza. Infine si noti che vi è necessario un vincolo per identificare i parametri, ad esempio: il vincolo di somma $ \sum_{i=1}^{n} \alpha_{i} = 0 $ oppure il vincolo dell'oggetto di riferimento, $\alpha_{i} = 0$ per un oggetto \textit{i} $\in$ \{1, ..., n\}. Se il vincolo dell'oggetto di riferimento è usato, allora il valore dei parametri abilità degli altri oggetti \textit{j} sarà la differenza rispetto all'oggetto di riferimento \textit{i}.
-\\
-
-Si sottolinea inoltre che il modello precedentemente descritto è chiamato modello non strutturato e l'obbiettivo dell'analisi è di fare inferenza sul valore dei parametri abilità $\alpha_{n}$ per stilare una classifica finale di tutti gli oggetti.
+\begin{lstlisting}
+> soccer<-read.xlsx("SerieA.xlsx", 1, header=TRUE)
+\end{lstlisting}
+\bigskip
+Il dataset non ha valori mancanti dato. Questo è stato possibile grazie a una buona fonte di dati che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\
+Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
+Il passo successivo è stato controllare se le variabili venivano interpretate con il tipo corretto. Le variabili \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Queste variabili devono essere interpretate come fattore cioè un variabile non numerica, espressa in termini verbali ad esempio una categoria; quindi ogni squadra sarà un livello del fattore. Analogamente per \texttt{AtHome} vi è un interpretazione sbagliata; ciononostante si pensi che possa essere un tipo \texttt{logical} si è preferito convertire la variabile in un fattore con due livelli.
 
 
-\section{Il Bradley-Terry Model con ordered response categories}	
-In molti contesti di comparazione tra oggetti, è possibile che sia richiesto di dare una scala di preferenza tra un oggetto e un altro. Supponiamo che due oggetti \textit{i} e \textit{j} siano confrontati e che la preferenza ora non sia più espressa i termini di: preferisco \textit{i} al posto di \textit{j} o viceversa ma, attraverso una scala di preferenza ad esempio, dando una forte preferenza a \textit{i} rispetto a \textit{j} o una leggera preferenza a \textit{i} rispetto a \textit{j} o non dando nessuna preferenza o preferendo leggermente \textit{j} rispetto a \textit{i} oppure preferire fortemente \textit{j} rispetto a \textit{i}. Dal modello descritto nella precedente sezione si passa da due classi di preferenza a cinque classi di preferenza.\\
-Ovviamente il caso descritto è di interesse per le comparazioni calcistiche dato che non è sufficiente stimare la probabilità di vittoria o sconfitta ma deve essere obbligantemente preso in considerazione anche il pareggio come risultato. Si necessità perciò di un estensione del classico Bradley-Terry model descritto precedentemente.\\
+\section{Analisi grafica dei dati}
+In questa sezione attraverso il supporto di grafici, si analizzerà graficamente i dati disponibili e le loro relazione per avere una prima visione dei dati raccolti. Si cercherà di: individuare possibili outliers o anomalie, quali distribuzioni hanno i dati ma soprattutto valutare le relazione tra covariate e variabile di risposta e tra due covariate, con lo scopo di individuare quali covariate possono essere significative per la variabile risposta e quali interazioni tra covariate emergono dall'analisi grafica.\\
 
-Modelli che consentono un numero generale di categorie K, sono stati proposti da \autocite{tutz1986bradley} e da \autocite{bradley1952rank}, in particolare quest'ultimo mostrò come due modelli per l'analisi di dati ordinati possono essere adattati per le \emph{ordinal paired comparisons}.\\
+Come primo passo dell'analisi, viene valutata la distribuzione delle classi della variabile risposta \texttt{Res} all'interno delle osservazioni disponibili. Tale distribuzione è mostrata nella Figura \ref{fig:res}.
 
-Il primo modello è il \emph{cumulative link model} che sfrutta la rappresentazione della variabile casuale latente. In generale, sia H il numero di gradi della scala di preferenza e sia $Z_{i,j}$ una variabile continua casuale latente e siano $\theta_{1} $ < $\theta_{2}$ < .... < $\theta_{H-1}$ le soglie tale che Y$_{i,j} = h$ quando $\theta_{h-1} < Z_{i,j} < \theta_{h}$. Allora:
-\begin{align}
-	P(Y_{i,j}\leq h) =  \frac{exp(\theta_{h} + \alpha_{i} - \alpha_{j})}{1 + exp(\theta_{h} + \alpha_{i} - \alpha_{j})} \label{for:3.2.1}
-\end{align}
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.28]{barRes.png}
+		\caption{Barplot della distribuzione della variabile di risposta \texttt{Res}} \label{fig:res}
+	\end{center}
+\end{figure}
 
-con h $\in$ \{1,....,H\} che indica le possibili \emph{response categories}. I parametri $\theta_{h}$ rappresentano le cosiddette soglie per le singole \emph{response categories}, che determinano la preferenza per le specifiche categorie. In particolare, Y$_{i,j} = 1$ rappresenta la massima preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}.\\
-In generale vi è imposta una simmetria del modello in modo che valga: $P(Y-{i,j} = h) = P(Y_{i,j} = H - h + 1)$. È quindi necessario che le soglie siano ristrette a $\theta_{i}$ = -$\theta_{H-h}$ e se, H è dispari, $\theta_{H/2}$ = 0; per garantire che le probabilità siano simmetriche. Per garantire che le probabilità siano non negative per le singole \emph{response categories} vi è imposta la seguente limitazione: $-\infty$ = $\theta_{0} < \theta_{1} < ... < \theta_{H-1} < \theta_{H} = \infty$. Dato che la soglia per l'ultima categoria è fissata a $\theta_{H} = \infty$ allora vale che $P(Y_{i,j} \leq H)$ = 1. Si sottolinea che le soglie sono parametri che vanno stimate dai dati; inoltre la probabilità di una singola \emph{response category} può essere derivata dalla differenza tra categorie adiacenti cioè:
-\begin{center}
-	  $P(Y_{i,j} = k)$ = $P(Y_{i,j} \leq h)$ - $P(Y_{i,j} \leq k - 1)$
-\end{center}
+Come si può notare le classi sembrano ben distribuite dato che abbiamo 196 pareggi e 282 vittorie e altrettante sconfitte. Si ha quindi un campione abbastanza ampio e distribuito e corretto per le nostre analisi.\\
 
-Il modello delle \emph{adjacent categories model}, così come il modello Bradley-Terry, ha anche una rappresentazione logit lineare ed è il seguente:
-\begin{align}
-	logit(Y_{i,j}\leq h) =  \theta_{h} + \alpha_i - \alpha_j 
-\end{align}
+Aumentando il livello di dettaglio è di interessante analizzare come queste classificazione sono distribuite tra le varie squadre.
 
-Il secondo modello invece proposto da \autocite{agresti1992analysis} è il \emph{adjacent categories model}. In questo caso il collegamento è applicato alle probabilità di risposte adiacenti, piuttosto che alle probabilità cumulative riducendosi così al modello Bradley-Terry quando sono consentite solo due categorie e al modello proposto da \autocite{davidson1970extending} quando sono consentite solo tre categorie.\\
-Il modello proposto da \autocite{davidson1970extending} risulta essere adatto per l'analisi sulle partite di calcio.\\
-Il \emph{adjacent categories model} è più semplice da interpretare rispetto ai \emph{cumulative link models} poiché l'odds ratio si riferisce a un determinato risultato anziché a raggruppamenti di risultati. \\
-Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la non preferenza, nel nostro caso il pareggio, allora:
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[height=8cm,width=15cm]{ResTeam.png}
+		\caption{Barplot della distribuzione della variabile di risposta per squadra\texttt{Res}} \label{fig:team}
+	\end{center}
+\end{figure}
 
-\begin{align}
-	P(Y_{i,j} = 2 | Y_{i,j} \not = 0) =  \frac{exp(\alpha_{i} - \alpha_{j})}{1 + exp(\alpha_{i} - \alpha_{j})}, 
-\end{align}
+Nella Figura \ref{fig:team} si può notare come la distribuzione di vittorie, pareggi e sconfitte non è omogenea tra le squadre. Ovviamente è un risultato che ci si aspettava ma che sottolinea prima di tutto la correttezza dei dati ma soprattutto che vi è qualche elemento nascosto che ha determinato tale distribuzione.\\
+
+\subsection{Analisi relazione tra variabile risposta e covariate}
+Come secondo step si analizzerà le relazione tra variabile di risposta con alcune covariate.\\
+
+La prima relazione che si analizza è quella con la variabile categorica \texttt{AtHome}. Nella Figura \ref{fig:AtHome} si può vedere che c'è una leggera variazione dei risultati tra la squadra che gioca in casa oppure no. Infatti c'è una leggera tendenza a favorire la vittoria per la squadra che gioca in casa piuttosto che la vittoria per la squadra fuori casa. Naturalmente non deve esserci alcuna variazione per quanto riguarda il pareggio dato che entrambe le squadre lo ottengono. Risulta perciò significativa la variabile \texttt{AtHome}.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{AtHomeRes.png}
+		\caption{Mosaicplot che mostra la distribuzione degli esiti rispetto alle partite giocate in casa e fuori casa} \label{fig:AtHome}
+	\end{center}
+\end{figure}
+
+Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica; si segnala solo che la mediana della sconfitta è più vicina al 3$^{\circ}$ quantile mentre quella della vittoria è più vicina al 1$^{\circ}$ quantile. Inoltre non vi sono presenti outliers.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{Poss.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Poss} } \label{fig:Poss}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:sot} mostra come si comporta la relazione con \texttt{SoT}. Come ci si aspetta si hanno valori più alti nella vittoria e valori molto più bassi nella sconfitta, si ha una buona distribuzione dei valori nella vittoria dato che le code sono simmetriche, per le altre due classi non c'è simmetria dato che ci sono valori più bassi rispetto a valori più alti. Vi sono inoltre alcuni outliners che si discostano dalla distribuzione di tutte e tre le classi dovuti al fatto che ci sono state squadre che hanno tirato molto in porta. Le mediane dei box pareggio e vittoria non sono equidistanti dai quantili ma più vicine al 1$^{\circ}$ quantile. Il box della sconfitta ha una bassa varianza. In conclusione avere un valore alto di tiri in porta sembra essere significativo ai fini della vittoria. Si segnala inoltre che si ottengono i stessi risultati anche con \texttt{Sh} solo con valori meno alti per la vittoria rispetto a \texttt{SoT}.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{SoT.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{SoT} } \label{fig:sot}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si nota che vi sono valori molto bassi ma leggermente più alti per la vittoria. La distribuzione non è buona perché le code sono asimmetriche infatti tutti i valori sono concentrati in basso e pochi verso la coda in alto, per di più c'è una bassa varianza tra i valori. Vi è la presenza di outliners dovuti a partite dove le squadre sono riuscite a ottenere il massimo da ogni tiro. I risultati mostrati nonostante la pessima distribuzione, sono comunque coerenti dato che non ci si aspetta dal rapporto tiri gol un numero alto ma comunque una tendenza che favorisca la vittoria.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{g.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{G/Sh} } \label{fig:g}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves}. Come si può notare sembra che tale variabile sia poco significativa ai fini del risultato. Infatti c'è poca variazione tra una classe e l'altra dato che avere un alto numero di parate non è determinante a fini del risultato.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{saves.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Saves} } \label{fig:saves}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'alto numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto ai altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1${^\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita dato che maggior numero di passaggi si prova ad effettuare maggiori sono le possibilità di vittoria, occorre pero sapere quanto è precisa la squadra.\\
+Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti valori alti, infatti la coda in alto e molto meno lunga rispetto alla coda in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non da la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
+Per quanto riguarda le variabili delle altre tipologie di passaggi si discostano di poco dai boxplot in Figura \ref{fig:pass}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.50]{pass.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{PAtt} e \texttt{PCmp\%}  } \label{fig:pass}
+	\end{center}
+\end{figure}
+\bigskip
+La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefPen}. Come si può notare questa non è per nulla significativa per la variabile risposta, infatti non c'è una minima variazione e i box hanno tutti la stessa varianza. Tale esito può essere giustificato dal fatto che le squadre cercano di rimane fuori il più possibile dalla propria area di rigore per non portare troppo vicino alla porta l'avversario. Da ciò quindi tale variabile non sarà inserita nel modello.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{def.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToDefPen} } \label{fig:defp}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToAttPen}. Contrariamente quanto visto con la Figura \ref{fig:defp} qui si nota una certa variazione da una un box e l'altro, infatti vi è una tendenza positiva che porta ad aver valori più alti in caso di vittoria. Si ha una maggior varianza per quanto riguarda la vittoria rispetto ai altri due esiti e la distribuzione di tutti e tre è abbastanza bilanciata se non che la coda più bassa è leggermente meno lunga rispetto all'altra coda; la mediana invece è equilibrata. Si nota inoltre che vi sono alcuni outliners segno che alcune squadre in qualche partite, si sono particolarmente rese note nel produrre un quantitativo di tocchi maggiore rispetto alla distribuzione, ciò pero non sembra influenzare l'esito.\\
+
+Per quanto riguarda \texttt{ToDef3rd}, \texttt{ToMid3rd} e \texttt{ToAtt3rd}, esse si comportano come \texttt{ToAttPen}. Perciò è stato omesso il loro grafico.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{att.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToAttPen} } \label{fig:att}
+	\end{center}
+\end{figure}
+
+Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei falli, \texttt{Fls} e \texttt{Fld}. Nel boxplot a sinistra si può notare che i valori più alti sono nel box del pareggio mentre sono presenti valori più bassi nel box vittoria. Ciò fa pensare che subire molti falli può impedire la vittoria alla squadra che li subisce. Per quanto riguarda la distribuzione sembra essere buona; c'è minor varianza per quanto riguarda la sconfitta. \\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{falli.png}
+		\caption{A sinistra il boxplot della variabile risposta e della variabile numerica \texttt{Fls} e a destra il boxplot della variabile risposta e della variabile numerica \texttt{Fld} } \label{fig:falli}
+	\end{center}
+\end{figure}
+
+Nel secondo boxplot si può notare che i valori più alti sono presenti sia sul pareggio e sia sulla vittoria e sempre qui si ha una maggior distribuzione rispetto alla sconfitta. Sembra perciò che dal grafico si può intuire che se la squadra non commette dei falli allora sarà più soggetta a perdere.\\
+
+La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. Sorprendentemente valori più alti sono registrati nella sconfitta, anche se la mediana risulta essere più vicina al 1 $^{\circ}$ quantile sottolineando che vi è un maggior numero di valori bassi piuttosto che alti. La mediana dei restanti esiti invece e ben equilibrata ma il pareggio risulta avere meno variabilità. Sembra perciò che effettuare troppi intercettazioni dei passaggi avversari contrariamente da quanto si pensi sembra essere controproducente per la vittoria. Si segnala inoltre la presenza di alcuni outliners con valori alti di intercettazioni, che si discostano dalle distribuzioni.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{int.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Int}} \label{fig:int}
+	\end{center}
+\end{figure}
+
+La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}. Come si può notare, vincere più contrasti possibili evita di subire una sconfitta. Infatti vi sono valori più alti in pareggio e vittoria oltre a una maggiore varianza rispetto alla sconfitta. Nello specifico pero si nota che, nella distribuzione dei valori vi sono maggior valori alti nella vittoria rispetto al pareggio, graficamente lo si vede dalla mediana che nel pareggio è più vicina al 1$^{\circ}$ quindi a valori più bassi e lo si nota anche dalla coda più bassa che è meno lunga rispetto a quella in alto; invece la mediana della vittoria risulta più vicina al 3$^{\circ}$ oltre ad avere la coda in alto più corta rispetto a quella in basso. Vi è inoltre qualche outliners con valori più alti di contrasti vinti ma sembrano non influenzare la classificazione.\\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{tklwin.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{TklWin}} \label{fig:tkl}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{recov.png}
+		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Recov}} \label{fig:recov}
+	\end{center}
+\end{figure} 
+
+Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra per entrambe le classi equidistante dai quantili. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria oltre ad averne anche di più rispetto alle altre classi. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che vi sono numerosi outliners sopratutto per il pareggio.
+
+\subsection{Analisi relazioni tra covariate} 
+\pagebreak
+\section{Adattamento dataset al modello}
+
+Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di essere di facile interpretazione per un essere umano ma vi sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
+Sono state apportare alcune modifiche attraverso la scrittura di codice che andasse a modificare la struttura del dataset in modo da essere correttamente utilizzabile nel modello. \\
+
+Innanzitutto il modello richiede per il suo funzionamento che le due variabili \texttt{Team} e \texttt{Vs} devono essere o di tipo fattore oppure un \textsf{data.frame}. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali cioè fattori, variabili cardinali cioè vettori numerici; un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ 
+Le variabili \textsf{Team} e \textsf{Vs} sono state trasformate in \texttt{data.frame} in modo da poter inserire al loro interno tutte le covariate descritte nella sezione precedente, ad esempio \textsf{Poss}, \textsf{Int} ecc.., cosi che il modello capisca quali valori sono legati alla squadra indicata in \textsf{Team} e quali in \textsf{Vs} nella stessa partita.\\
+
+Inoltre per indicare nel modello se la squadra giocava in casa o no, i valori della variabile \texttt{AtHome} non erano accettati, si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0.
+
+
+
+\subsection{Codice per l'adattamento del dataset}
+Di seguito viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.
+
+\begin{lstlisting}
+PossVs <- c()
+ShVs <- c()
+ShTVs <- c()
+G.ShVs <- c()
+SavesVs <- c()
+PAttVs <- c()
+PCmp.Vs <- c()
+SPAttVs <- c()
+SPCmp.Vs <- c()
+MPAttVs <- c()
+MPCmp.Vs <- c()
+LPAttVs <- c()
+LPCmp.Vs <- c()
+ToDefPenVs <- c()
+ToDef3rdVs <- c()
+ToMid3rdVs <- c()
+ToAtt3rdVs <- c()
+ToAttPenVs <- c()
+ToDistVs <- c()
+FlsVs <- c()
+FldVs <- c()
+OffVs <- c()
+CrsVs <- c()
+IntVs <- c()
+TklWinVs <- c()
+RecovVs <- c()
+del <-c()
+k <- 1
+z <- 1
+for(i in 1:nrow(soccern)){
+  if(soccern$AtHome[i] == TRUE){
+	for(j in 1:nrow(soccern)){
+		if((soccern$Team[j] == soccern$Vs[i]) && (soccern$Team[i] == soccern$Vs[j]) && (soccern$AtHome[j] == FALSE)){
+			PossVs[k] <- soccern$Poss[j]
+			ShVs[k] <- soccern$Sh[j]
+			ShTVs[k] <- soccern$SoT[j]
+			G.ShVs[k] <- soccern$G.Sh[j]
+			SavesVs[k] <- soccern$Saves[j]
+			PAttVs[k] <- soccern$PAtt[j]
+			PCmp.Vs[k] <- soccern$PCmp.[j]
+			SPAttVs[k] <- soccern$SPAtt[j]
+			SPCmp.Vs[k] <- soccern$SPCmp.[j]
+			MPAttVs[k] <- soccern$MPAtt[j]
+			MPCmp.Vs[k] <- soccern$MPCmp.[j]
+			LPAttVs[k] <- soccern$LPAtt[j]
+			LPCmp.Vs[k] <- soccern$LPCmp.[j]
+			ToDefPenVs[k] <- soccern$ToDefPen[j]
+			ToDef3rdVs[k] <- soccern$ToDef3rd[j]
+			ToMid3rdVs[k] <- soccern$ToMid3rd[j]
+			ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
+			ToAttPenVs[k] <- soccern$ToAttPen[j]
+			ToDistVs[k] <- soccern$TotDist[j]
+			FlsVs[k] <- soccern$Fls[j]
+			FldVs[k] <- soccern$Fld[j]
+			OffVs[k] <- soccern$Off[j]
+			CrsVs[k] <- soccern$Crs[j]
+			IntVs[k] <- soccern$Int[j]
+			TklWinVs[k] <- soccern$TklWin[j]
+			RecovVs[k] <- soccern$Recov[j]
+			k <- k + 1
+		}      
+	}
+  }else{
+	 del[z] <- i
+	 z <- z + 1
+  }
+}
+\end{lstlisting}
+\bigskip
+
+Con il codice precedente si ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
+Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}.\\
+Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} vi è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
+
+Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
+\bigskip
+\begin{lstlisting}
+> soccern3 <- soccern2[-del,]
+\end{lstlisting}
+\bigskip
+\bigskip
+Con il precedente commando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. 
+\bigskip
+\begin{lstlisting}
+> soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, Saves = soccern3$Saves, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDefPen = soccern3$ToDefPen, ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Off = soccern3$Off, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
 	
-\begin{align}
-	P(Y_{i,j} = 1) =  \frac{\theta \sqrt{exp(\alpha_{i}) * exp(\alpha_{j})}}{exp(\alpha_{i}) + exp(\alpha_{j}) + \theta\sqrt{exp(\alpha_{i}) * exp(\alpha_{j})}}, 
-\end{align}
+\end{lstlisting}
 
-\begin{align}	
-	P(Y_{i,j} = 0 | Y_{i,j} \not = 1) =  \frac{exp(\alpha_{j} - \alpha_{i})}{1 + exp(\alpha_{j} - \alpha_{i})}
-\end{align}
-
-Come si può vedere si è riportato la modellazione di tutti e tre i possibili risultati, con $\alpha_{n}$ che rappresenta la forza degli oggetti in comparazione da stimare dai dati. La modellazione vittoria e la sconfitta dell'oggetto \textit{i} contro l'oggetto \textit{j} rimane uguale alla modellazione \hyperref[for:3.1]{(3.1)} descritta precedentemente. Diversamente per il pareggio dove viene aggiunto il parametro $\theta$. \\
-
-\section{Il Bradley–Terry Model con variabili esplicative}
-Fin ad ora è stato presentato un modello che valutasse il grado di preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}, senza che considerasse nessuna variabile. Chiaramente tale modello risulta essere inutile per le nostre analisi, dato che siamo interessati a capire quali variabili possono influenzare il risultato della comparazione. Si necessita perciò di un modello che tenga conto anche di variabili esplicative inserite durante l'analisi. \\
-Sia x$_{i}$=($x_{i1},....x_{iK}$) il vettore di K variabili esplicative per un certo oggetto \textit{i} e $\beta$ = ($\beta_{1},....\beta_{P}$) il vettore dei pesi stimati per ogni variabile presente in x$_{i}$, allora si ha che il parametro abilità $\alpha_{i}$ di un certo oggetto \textit{i} è uguale a:
-
-\begin{center}
-	\begin{large}
-	 $\alpha_{i}$ = $\beta_{1}x_{i1}$ + .... + $\beta_{P}x_{iP}$      con i=1,....,n
-	\end{large}
-
-\end{center}
-
-Si ha quindi che il parametro abilità $\alpha_{i}$ per un certo oggetto \textit{i} è una combinazione lineare di variabili.\\
-Il modello è stato presentato per la prima volta da \autocite{springall1973response}; tale modello viene chiamato modello strutturato.\\
- 
-Grazie a questo modello se vi sono covariate che hanno un legame con la variabile risposta, tanto da influenzarne l'esito con quest'ultima allora, sarà possibile inserirle nel modello. Nel caso calcistico tali covariate possono essere il possesso della palla o il numero di falli fatti.
-
-
-\subsection{Il Bradley–Terry Model con effetto partite in casa}
-Nel modello descritto nella sezione 2.2, si era scritto che, era necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti, tra questi vi è anche il calcio; poiché l'ordine dei oggetti conta. Infatti nel calcio la prima squadra che viene indicata tra le due squadre, è quella che gioca in casa, dove teoricamente dovrebbe avere un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
-Un possibile modello riadattato al problema esposto è il seguente:
-
-\begin{align} 
-	P(i\succ j) = P(Y_{i,j} = 1) = \frac{exp(\delta + \alpha_{i} - \alpha_{j})}{1 + exp(\delta + \alpha_{i} - \alpha_{j})} \label{for:3.8} 
-\end{align}
-
-Il qual'è il modello \hyperref[for:3.1]{(3.1)} riadatto e da cui possiamo derivare il modello \hyperref[for:3.2.1]{(3.3)} riadatto che è il seguente:
-
-\begin{align}
-	P(Y_{i,j}\leq h) =  \frac{exp(\delta + \theta_{h} + \alpha_{i} - \alpha_{j})}{1 + exp(\delta + \theta_{h} + \alpha_{i} - \alpha_{j})} \label{for:3.9}
-\end{align}
-
-Come si può vedere il vantaggio di giocare in casa, in generale l'effetto d'ordine; viene trattato come una variabile esplicativa. Infatti se $\delta$ > 0 allora viene attribuito un vantaggio all'oggetto \textit{i}, nel contesto calcistico significa che gioca in casa; aumentando la probabilità che vinca il confronto o nel caso di \emph{ordered response categories}, di avere un risultato superiore rispetto all'oggetto \textit{j}. Chiaramente il peso di $\delta$ deve essere stimato dai dati.\\
-
-Il modello \hyperref[for:3.8]{(3.8)} cosi come il modello \hyperref[for:3.9]{(3.9)} , hanno anche una rappresentazione logit lineare e sono le seguenti:\\
-
-Per \hyperref[for:3.8]{(3.8)}
-
-\begin{align}
-	logit(i \succ j) =  \delta + \alpha_i - \alpha_j 
-\end{align}
-
-Per \hyperref[for:3.9]{(3.9)}
-
-\begin{align}
-	logit(Y_{i,j}\leq h) =  \delta + \theta_{h} + \alpha_i - \alpha_j 
-\end{align}
+\bigskip
+Con il precedente commando si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.
+\bigskip
+\bigskip
+\begin{lstlisting}
+> soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, Saves = SavesVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDefPen = ToDefPenVs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Off = OffVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
 	
+\end{lstlisting}
+\bigskip
+Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati vengo riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\

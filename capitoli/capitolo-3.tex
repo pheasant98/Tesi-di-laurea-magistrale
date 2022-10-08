@@ -20,7 +20,7 @@ Il dataset è stato importato in modo tale che la prima riga contenga l'intestaz
 \bigskip
 Il dataset non ha valori mancanti dato. Questo è stato possibile grazie a una buona fonte di dati che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\
 Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
-Il passo successivo è stato controllare se le variabili venivano interpretate con il tipo corretto. Le variabili \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Queste variabili devono essere interpretate come fattore cioè un variabile non numerica, espressa in termini verbali ad esempio una categoria; quindi ogni squadra sarà un livello del fattore. Analogamente per \texttt{AtHome} vi è un interpretazione sbagliata; ciononostante si pensi che possa essere un tipo \texttt{logical} si è preferito convertire la variabile in un fattore con due livelli.
+Il passo successivo è stato controllare se le variabili venivano interpretate con il tipo corretto. Le variabili \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Queste variabili devono essere interpretate come fattore cioè un variabile non numerica, espressa in termini verbali ad esempio una categoria; quindi ogni squadra sarà un livello del fattore. Analogamente per \texttt{AtHome} vi è un interpretazione sbagliata; ciononostante si pensi che possa essere un tipo \texttt{logical} si è preferito convertire la variabile in un fattore con due livelli. Anche la variabile \texttt{Res} è stata trasformata in un fattore con i livelli; 1 = vittoria, 0 = pareggio, -1 = sconfitta.
 
 
 \section{Analisi grafica dei dati}
@@ -166,7 +166,113 @@ La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}
 Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra per entrambe le classi equidistante dai quantili. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria oltre ad averne anche di più rispetto alle altre classi. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che vi sono numerosi outliners sopratutto per il pareggio.
 
 \subsection{Analisi relazioni tra covariate} 
+Per concludere l'attività di prepossening, non resta che analizzare le relazioni tra covariate in modo da individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che vi sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
+Di seguito si riporteranno quelle che sono state individuate come significative.\\
+
+Sono state individuate le seguenti tre interazioni con la variabile \texttt{Sh}:
+\begin{itemize}
+	\item Interazione tra \texttt{Sh} e \texttt{SoT}. Chiaramente vi si può dedurre facilmente che vi possa essere una buona correlazione tra queste due variabili perché teoricamente più tiri vengono effettuati maggiori saranno i tiri in porta. \\
+	Tale relazione viene anche mostrata graficamente, infatti nella Figura \ref{fig:ShSoT} si può notare che vi è un'andamento positivo tra le due variabili, al cresce di una vi è un aumento quasi lineare dell'altra.
+	Come si può notare dai colori inseriti nel grafico per indicare le tre classi della variabile risposta, l'effetto combinato delle due variabili è utile a spiegare la variabile risposta dato che, valori più bassi sono quasi sempre classificati come sconfitta, un po' più alti come pareggio, mentre quelli alti sono quasi sempre classificati come vittoria.
+	Molte volte i valori vengo ripetuti per molte osservazione, quindi i valori nel grafico sono disposti in colonne e non sparsi.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{sh-sot.png}
+			\caption{Scatter plot tra \texttt{Sh} e \texttt{SoT}} \label{fig:ShSoT}
+		\end{center}
+	\end{figure} 
+	\item Interazione tra \texttt{Sh} e \texttt{ToAtt3rd}. È ragionevole ipotizzare che il numero di tocchi fatti nella trequarti avversaria possano creare azioni che portano ad effettuare un tiro verso la porta avversaria; è quindi possibile che tra le due variabili vi possa esserci una relazione. L'ipotesi è avvalorata dalla Figura \ref{fig:shtreq} dove è presente una tendenza positiva quasi lineare tra le due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{sh-toatt3rd.png}
+			\caption{Scatter plot tra \texttt{Sh} e \texttt{ToAtt3rd}} \label{fig:shtreq}
+		\end{center}
+	\end{figure}
+	\item Interazione tra \texttt{Sh} e \texttt{ToAttPen}. Per la stessa ipotesi esposta nel punto precedente si è ipotizzato a tale interazione. La Figura \ref{fig:shpen} mostra che tale interazione è giustificata da una tendenza positiva nel cresce delle due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione. Si nota graficamente una maggior linearità rispetto alla Figura \ref{fig:shtreq}; ciò è coerente con il fatto che i tocchi vengono effettuati all'interno dell'area di rigore avversaria e quindi ad una distanza ravvicinata dalla porta, ne consegue una maggior possibilità di effettuare tiri in porta.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{sh-toattpen.png}
+			\caption{Scatter plot tra \texttt{Sh} e \texttt{ToAttPen}}  \label{fig:shpen}
+		\end{center}
+	\end{figure}
+\end{itemize}
+
+Sono state individuate le seguenti tre interazioni con la variabile \texttt{Poss}:
+\begin{itemize}
+	\item Interazione tra \texttt{Poss} e \texttt{PAtt}. È ragionevole ipotizzare che il possesso della palla possa incidere su quanto una squadra tenti di effettuare passaggi, cioè da un alto possesso della palla ci si aspetta un alto numero di passaggi tentati, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posspatt} che mostra una relazione positiva è fortemente lineare tra le due ipotesi, oltre ad essere utili per spiegare l'andamento delle tre classi della variabile risposta.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{poss-patt.png}
+			\caption{Scatter plot tra \texttt{Poss} e \texttt{PAtt}}  \label{fig:posspatt}
+		\end{center}
+	\end{figure}
+	\item Interazione tra \texttt{Poss} e \texttt{TotDist}. Appare naturale ipotizzare che il possesso della palla la distanza percorsa con il pallone siano in relazione tra loro. È altrettanto naturale aspettarci da un alto possesso della palla un alto numero di metri percorsi con la palla in possesso, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posstotdist} che mostra una relazione positiva abbastanza lineare tra le due ipotesi. Si segnala pero che dal grafico sembra che non vi sia una chiara divisione delle osservazioni in tre gruppi, tale aspetto sarà tenuto in considerazione nella modellazione.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{poss-totdist.png}
+			\caption{Scatter plot tra \texttt{Poss} e \texttt{TotDist}}  \label{fig:posstotdist}
+		\end{center}
+	\end{figure}
+\end{itemize}
 \pagebreak
+Sono state individuate le seguenti tre interazioni con la variabile \texttt{TotDist}:
+\begin{itemize}
+	\item Interazione tra \texttt{TotDist} e \texttt{PAtt}. Dato che per poter tentare di effettuare passaggi è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che vi sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili vi è una forte relazione lineare e con una correlazione positiva.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{TotDist-PAtt.png}
+			\caption{Scatter plot tra \texttt{TotDist} e \texttt{PAtt}}  \label{fig:totdistpatt}
+		\end{center}
+	\end{figure}
+	\item Interazione tra \texttt{TotDist} e \texttt{PCmp\%}. Dato che per poter tentare di effettuare passaggi e completarli è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che vi sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili vi è una relazione con correlazione positiva, con una andamento simile a una funzione esponenziale, ciò sarà tenuto conto nella modellazione per valutare se inserire oppure no una delle variabili con un grado superiore.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{TotDist-PCmp.png}
+			\caption{Scatter plot tra \texttt{TotDist} e \texttt{PCmp\%}}  \label{fig:totdistpcmp}
+		\end{center}
+	\end{figure}
+\end{itemize}
+
+Infine sono state individuate le seguenti interazioni:
+\begin{itemize}
+	\item Interazione tra \texttt{ToAtt3rd} e \texttt{ToAttPen}. Dato che le due variabili si riferiscono a due zone di campo adiacenti e interessanti a fini del l'esito della partita, si ipotizza che vi sia una interazione. Nella Figura \ref{fig:toatt} si può notare un correlazione positiva molto lineare tra le due variabile che prova l'ipotesi. Si nota all'inizio che tutti i dati sono molto vicini ma che via via diventano più sparsi. Tale interazione sembra perciò utile a spiegare la variabile risposta.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{ToAtt3rd-ToAttPen.png}
+			\caption{Scatter plot tra \texttt{ToAtt3rd} e \texttt{ToAttPen}}  \label{fig:toatt}
+		\end{center}
+	\end{figure}
+	\item Interazione tra \texttt{PAtt} e \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che vi sia una interazione tra loro. Infatti tale interazione è possibile vederla nella Figura \ref{fig:pp} la quale sembra simile alla interazione \texttt{TotDist}*\texttt{PCmp\%}.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{PAtt-PCmp.png}
+			\caption{Scatter plot tra \texttt{PAtt} e \texttt{PCmp\%}}  \label{fig:pp}
+		\end{center}
+	\end{figure}
+
+\end{itemize}
+
+\subsection{Collinearità}
+Per collinearità si intende quel fenomeno per il quale se più variabili esplicative altamente correlate vengono inserite nel modello, allora la loro alta correlazione andrà a nasconde la loro associazione con la variabile risposta. La soluzione per risolvere questo problema è quella di scegliere soltanto una sola variabile della relazione da inserire nel modello.\\
+Nella Figura \ref{fig:cor} viene mostrato il valore della correlazione per ogni possibile interazione tra variabile numeriche.\\
+Come si può notare una maggior correlazione tra le variabile è concentra nella prima parte del triangolo. Dal grafico possiamo vedere come tutte le interazioni che sono state descritte nella sottosezione precedente abbiano un alta correlazione ma non eccessivamente alta. \\
+Nella sottosezione precedente si poteva pensare di inserire interazione abbastanza naturali ad esempio: \texttt{PAtt} con \texttt{SPAtt} e con \texttt{MPAtt} e, \texttt{PCmp\%} con \texttt{MPCmp\%} e con \texttt{LPCmp\%}. Tali interazioni pero sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
+Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, tale interazione non è stata inserita perché la variabile \texttt{ToDefPen} non è significativa per la variabile risposta.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.45]{Rplot.png}
+		\caption{Grafico delle correlazioni di ogni coppia di variabili}  \label{fig:cor}
+	\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.60]{cov.png}
+		\caption{Grafico riassuntivo delle variabili rimaste dopo il Prepossesing}  \label{fig:cov}
+	\end{center}
+\end{figure}
+
 \section{Adattamento dataset al modello}
 
 Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di essere di facile interpretazione per un essere umano ma vi sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
@@ -187,7 +293,6 @@ PossVs <- c()
 ShVs <- c()
 ShTVs <- c()
 G.ShVs <- c()
-SavesVs <- c()
 PAttVs <- c()
 PCmp.Vs <- c()
 SPAttVs <- c()
@@ -196,7 +301,6 @@ MPAttVs <- c()
 MPCmp.Vs <- c()
 LPAttVs <- c()
 LPCmp.Vs <- c()
-ToDefPenVs <- c()
 ToDef3rdVs <- c()
 ToMid3rdVs <- c()
 ToAtt3rdVs <- c()
@@ -204,7 +308,6 @@ ToAttPenVs <- c()
 ToDistVs <- c()
 FlsVs <- c()
 FldVs <- c()
-OffVs <- c()
 CrsVs <- c()
 IntVs <- c()
 TklWinVs <- c()
@@ -220,7 +323,6 @@ for(i in 1:nrow(soccern)){
 			ShVs[k] <- soccern$Sh[j]
 			ShTVs[k] <- soccern$SoT[j]
 			G.ShVs[k] <- soccern$G.Sh[j]
-			SavesVs[k] <- soccern$Saves[j]
 			PAttVs[k] <- soccern$PAtt[j]
 			PCmp.Vs[k] <- soccern$PCmp.[j]
 			SPAttVs[k] <- soccern$SPAtt[j]
@@ -229,7 +331,6 @@ for(i in 1:nrow(soccern)){
 			MPCmp.Vs[k] <- soccern$MPCmp.[j]
 			LPAttVs[k] <- soccern$LPAtt[j]
 			LPCmp.Vs[k] <- soccern$LPCmp.[j]
-			ToDefPenVs[k] <- soccern$ToDefPen[j]
 			ToDef3rdVs[k] <- soccern$ToDef3rd[j]
 			ToMid3rdVs[k] <- soccern$ToMid3rd[j]
 			ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
@@ -237,7 +338,6 @@ for(i in 1:nrow(soccern)){
 			ToDistVs[k] <- soccern$TotDist[j]
 			FlsVs[k] <- soccern$Fls[j]
 			FldVs[k] <- soccern$Fld[j]
-			OffVs[k] <- soccern$Off[j]
 			CrsVs[k] <- soccern$Crs[j]
 			IntVs[k] <- soccern$Int[j]
 			TklWinVs[k] <- soccern$TklWin[j]
@@ -267,7 +367,7 @@ Di seguito vengono riportati i comandi fatti per applicare le modifiche al datas
 Con il precedente commando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. 
 \bigskip
 \begin{lstlisting}
-> soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, Saves = soccern3$Saves, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDefPen = soccern3$ToDefPen, ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Off = soccern3$Off, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
+> soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
 	
 \end{lstlisting}
 
@@ -276,7 +376,7 @@ Con il precedente commando si va a modificare \textsf{Team} rendendolo un \textt
 \bigskip
 \bigskip
 \begin{lstlisting}
-> soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, Saves = SavesVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDefPen = ToDefPenVs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Off = OffVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
+> soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
 	
 \end{lstlisting}
 \bigskip

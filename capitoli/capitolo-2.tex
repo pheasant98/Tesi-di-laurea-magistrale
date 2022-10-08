@@ -151,7 +151,7 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.55]{var.png}
+			\includegraphics[scale=0.50]{var.png}
 			
 			\caption{Rappresentazione del fuorigioco} \label{fig:offside}
 			%Source: \url{https://sport.sky.it/calcio/2021/10/05/fifa-figc-var-fuorigioco}
@@ -283,7 +283,7 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[ht]
 		\begin{center}
-			\includegraphics[scale=0.51]{filtrante2.jpg}
+			\includegraphics[scale=0.45]{filtrante2.jpg}
 			\caption{Esecuzione di un passaggio filtrante} \label{fig:filt}
 			%Source: \url{https://www.ilmisterone.com/2019/01/16/passaggi-filtranti/}
 		\end{center}
@@ -295,7 +295,7 @@ Le possibili covariate sono le seguenti:
 	\item \textsf{LPAtt}: Tale variabile indica il numero di passaggi lunghi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi corti si intendono quelli effettuati all'interno di una lunghezza superiore ai 27 metri. Questi passaggi possono essere considerati come lanci lunghi per cambi di gioco o per lanciare le punte, cioè i giocatori che giocano come attaccanti, in profondità. Una rappresentazione di passaggio lungo è mostrata nella Figura \ref{fig:cambio}.
 	\begin{figure}[ht]
 		\begin{center}
-			\includegraphics[scale=0.53]{cambio-di-gioco.png}
+			\includegraphics[scale=0.45]{cambio-di-gioco.png}
 			\caption{Esecuzione di un cambio di gioco} \label{fig:cambio}
 			%Source: \url{https://www.mistercalcio.com/tattica/il-cambio-di-gioco/}
 		\end{center}
@@ -311,7 +311,7 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.43]{cross.jpg}
+			\includegraphics[scale=0.40]{cross.jpg}
 			\caption{Rappresentazione di un cross} \label{fig:cross}
 			%Source: \url{http://www.allfootball.it/blog/calcio-vincere-allenando-i-dettagli/27-2-2017/calcio-la-marcatura-a-uomo-su-cross-laterale/}
 		\end{center}
@@ -338,9 +338,10 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.30]{tackle.jpg}
+			\includegraphics[scale=0.35]{tackle.jpg}
 			\caption{Rappresentazione di un contrasto in scivolata}
-		%	Source: \url{https://www.ilmisterone.com/2022/01/24/partita-solo-tackle/} \label{fig:tackle}
+		%	Source: \url{https://www.ilmisterone.com/2022/01/24/partita-solo-tackle/}
+		 \label{fig:tackle}
 		\end{center}
 	\end{figure}
 	
@@ -351,7 +352,7 @@ Le possibili covariate sono le seguenti:
 	Dato che questa variabile sembra essere legata al possesso del pallone sembra essere interessante per l'analisi.
 	
 \end{itemize}
-\begin{comment}
+
 
 
 	\begin{table}[!htb]%
@@ -373,11 +374,61 @@ Le possibili covariate sono le seguenti:
 		Fld &  &  & LPCmp\% &\\
 		Off &  &  & Crs \\
 		\hline
-		& & & \\
+
 		
 	\end{tabular} \hbox{}
 	
 	\caption{La tabella riassuntiva variabili presenti nel dataset.} \label{tab:summary}
 \end{table}
-\end{comment}
 
+
+
+
+\begin{table}[!htb]%
+	
+	\renewcommand{\arraystretch}{1.7}
+	\centering
+	\begin{tabular}{c c }
+		\hline	
+		
+		\textbf{Originale} & \textbf{Rinominate} \\	
+		\hline			
+		AtHome & AtHome \\
+		Res & Res \\
+		GF & GF\\
+		GA & GF \\
+		Team & Team \\
+		VS & Vs\\
+		Poss & Poss\\
+		Sh & Sh\\
+		SoT & SoT\\
+		G/Sh & G.Sh \\
+		Saves & Saves \\
+		PAtt & PAtt \\
+		PCmp\% & PCmp.\\
+		SPAtt & SPAtt \\
+		SPCmp\% & SPCmp.\\
+		MPAtt & MPAtt \\
+		MPCmp\% & MPCmp.\\
+		LPAtt & LPAtt \\
+		LPCmp\% & LPCmp. \\
+		ToDefPen & ToDefPen \\
+		ToDef3rd & ToDef3rd \\
+		ToMid3rd & ToMid3rd \\
+		ToAtt3rd & ToAtt3rd \\
+		ToAttPen & ToAttPen \\
+		ToDist & ToDist\\
+		Fls & Fls \\
+		Fld & Fld \\
+		Off & Off \\
+		Crs & Crs \\
+		Int & Int \\
+		TklWin & TklWin \\
+		Recov & Recov \\
+		\hline
+		&  \\
+		
+	\end{tabular} \hbox{}
+	
+	\caption{Tabella corrispondenza nomi originali e nomi nel dataset} \label{tab:summary2}
+\end{table}

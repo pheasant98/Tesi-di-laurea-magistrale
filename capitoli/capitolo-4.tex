@@ -41,7 +41,7 @@ Il primo modello è il \emph{cumulative link model} che sfrutta la rappresentazi
 \end{align}
 
 con h $\in$ \{1,....,H\} che indica le possibili \emph{response categories}. I parametri $\theta_{h}$ rappresentano le cosiddette soglie per le singole \emph{response categories}, che determinano la preferenza per le specifiche categorie. In particolare, Y$_{i,j} = 1$ rappresenta la massima preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}.\\
-In generale vi è imposta una simmetria del modello in modo che valga: $P(Y-{i,j} = h) = P(Y_{i,j} = H - h + 1)$. È quindi necessario che le soglie siano ristrette a $\theta_{i}$ = -$\theta_{H-h}$ e se, H è dispari, $\theta_{H/2}$ = 0; per garantire che le probabilità siano simmetriche. Per garantire che le probabilità siano non negative per le singole \emph{response categories} vi è imposta la seguente limitazione: $-\infty$ = $\theta_{0} < \theta_{1} < ... < \theta_{H-1} < \theta_{H} = \infty$. Dato che la soglia per l'ultima categoria è fissata a $\theta_{H} = \infty$ allora vale che $P(Y_{i,j} \leq H)$ = 1. Si sottolinea che le soglie sono parametri che vanno stimate dai dati; inoltre la probabilità di una singola \emph{response category} può essere derivata dalla differenza tra categorie adiacenti cioè:
+In generale vi è imposta una simmetria del modello in modo che valga: $P(Y_{i,j} = h) = P(Y_{i,j} = H - h + 1)$. È quindi necessario che le soglie siano ristrette a $\theta_{i}$ = -$\theta_{H-h}$ e se, H è dispari, $\theta_{H/2}$ = 0; per garantire che le probabilità siano simmetriche. Per garantire che le probabilità siano non negative per le singole \emph{response categories} vi è imposta la seguente limitazione: $-\infty$ = $\theta_{0} < \theta_{1} < ... < \theta_{H-1} < \theta_{H} = \infty$. Dato che la soglia per l'ultima categoria è fissata a $\theta_{H} = \infty$ allora vale che $P(Y_{i,j} \leq H)$ = 1. Si sottolinea che le soglie sono parametri che vanno stimate dai dati; inoltre la probabilità di una singola \emph{response category} può essere derivata dalla differenza tra categorie adiacenti cioè:
 \begin{center}
 	  $P(Y_{i,j} = k)$ = $P(Y_{i,j} \leq h)$ - $P(Y_{i,j} \leq k - 1)$
 \end{center}
@@ -57,7 +57,7 @@ Il \emph{adjacent categories model} è più semplice da interpretare rispetto ai
 Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la non preferenza, nel nostro caso il pareggio, allora:
 
 \begin{align}
-	P(Y_{i,j} = 2 | Y_{i,j} \not = 0) =  \frac{exp(\alpha_{i} - \alpha_{j})}{1 + exp(\alpha_{i} - \alpha_{j})}, 
+	P(Y_{i,j} = 2 | Y_{i,j} \not = 0) =  \frac{exp(\alpha_{i} - \alpha_{j})}{1 + exp(\alpha_{i} - \alpha_{j})}, \label{for:4.5}
 \end{align}
 	
 \begin{align}
@@ -65,10 +65,10 @@ Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ i
 \end{align}
 
 \begin{align}	
-	P(Y_{i,j} = 0 | Y_{i,j} \not = 1) =  \frac{exp(\alpha_{j} - \alpha_{i})}{1 + exp(\alpha_{j} - \alpha_{i})}
+	P(Y_{i,j} = 0 | Y_{i,j} \not = 1) =  \frac{exp(\alpha_{j} - \alpha_{i})}{1 + exp(\alpha_{j} - \alpha_{i})}\label{for:4.7}
 \end{align}
 
-Come si può vedere si è riportato la modellazione di tutti e tre i possibili risultati, con $\alpha_{n}$ che rappresenta la forza degli oggetti in comparazione da stimare dai dati. La modellazione vittoria e la sconfitta dell'oggetto \textit{i} contro l'oggetto \textit{j} rimane uguale alla modellazione \hyperref[for:3.1]{(3.1)} descritta precedentemente. Diversamente per il pareggio dove viene aggiunto il parametro $\theta$. \\
+Come si può vedere si è riportato la modellazione di tutti e tre i possibili risultati, con $\alpha_{n}$ che rappresenta la forza degli oggetti in comparazione da stimare dai dati. La modellazione della vittoria \hyperref[for:4.5]{(4.5)} e della sconfitta \hyperref[for:4.7]{(4.7)} dell'oggetto \textit{i} contro l'oggetto \textit{j} rimane uguale alla modellazione \hyperref[for:3.1]{(4.2)} descritta precedentemente. Diversamente per il pareggio dove viene aggiunto il parametro $\theta$. \\
 
 \section{Il Bradley–Terry Model con variabili esplicative}
 Fin ad ora è stato presentato un modello che valutasse il grado di preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}, senza che considerasse nessuna variabile. Chiaramente tale modello risulta essere inutile per le nostre analisi, dato che siamo interessati a capire quali variabili possono influenzare il risultato della comparazione. Si necessita perciò di un modello che tenga conto anche di variabili esplicative inserite durante l'analisi. \\
@@ -95,7 +95,7 @@ Un possibile modello riadattato al problema esposto è il seguente:
 	P(i\succ j) = P(Y_{i,j} = 1) = \frac{exp(\delta + \alpha_{i} - \alpha_{j})}{1 + exp(\delta + \alpha_{i} - \alpha_{j})} \label{for:3.8} 
 \end{align}
 
-Il qual'è il modello \hyperref[for:3.1]{(3.1)} riadatto e da cui possiamo derivare il modello \hyperref[for:3.2.1]{(3.3)} riadatto che è il seguente:
+Il qual'è il modello \hyperref[for:3.1]{(4.1)} riadatto e da cui possiamo derivare il modello \hyperref[for:3.2.1]{(4.3)} riadatto che è il seguente:
 
 \begin{align}
 	P(Y_{i,j}\leq h) =  \frac{exp(\delta + \theta_{h} + \alpha_{i} - \alpha_{j})}{1 + exp(\delta + \theta_{h} + \alpha_{i} - \alpha_{j})} \label{for:3.9}
@@ -103,7 +103,7 @@ Il qual'è il modello \hyperref[for:3.1]{(3.1)} riadatto e da cui possiamo deriv
 
 Come si può vedere il vantaggio di giocare in casa, in generale l'effetto d'ordine; viene trattato come una variabile esplicativa. Infatti se $\delta$ > 0 allora viene attribuito un vantaggio all'oggetto \textit{i}, nel contesto calcistico significa che gioca in casa; aumentando la probabilità che vinca il confronto o nel caso di \emph{ordered response categories}, di avere un risultato superiore rispetto all'oggetto \textit{j}. Chiaramente il peso di $\delta$ deve essere stimato dai dati.\\
 
-Il modello \hyperref[for:3.8]{(3.8)} cosi come il modello \hyperref[for:3.9]{(3.9)} , hanno anche una rappresentazione logit lineare e sono le seguenti:\\
+Il modello \hyperref[for:3.8]{(4.8)} cosi come il modello \hyperref[for:3.9]{(4.9)} , hanno anche una rappresentazione logit lineare e sono le seguenti:\\
 
 Per \hyperref[for:3.8]{(3.8)}
 

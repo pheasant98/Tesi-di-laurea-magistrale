@@ -14,11 +14,11 @@
 Dopo aver importato il dataset sul software R, il primo step da effettuare durante il prepocessing è individuare e risolvere possibili anomalie nei dati per poter poi effettuare analisi preliminari.\\
 Il dataset è stato importato in modo tale che la prima riga contenga l'intestazione, mentre le restanti righe tutte le osservazioni. Il commando usato per importare il dataset è il seguente:\\
 
-\begin{lstlisting}
+\begin{lstlisting}[language=R]
 > soccer<-read.xlsx("SerieA.xlsx", 1, header=TRUE)
 \end{lstlisting}
 \bigskip
-Il dataset non ha valori mancanti dato. Questo è stato possibile grazie a una buona fonte di dati che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\
+Il dataset non ha valori mancanti. Questo è stato possibile grazie a una buona fonte di dati che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\
 Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
 Il passo successivo è stato controllare se le variabili venivano interpretate con il tipo corretto. Le variabili \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Queste variabili devono essere interpretate come fattore cioè un variabile non numerica, espressa in termini verbali ad esempio una categoria; quindi ogni squadra sarà un livello del fattore. Analogamente per \texttt{AtHome} vi è un interpretazione sbagliata; ciononostante si pensi che possa essere un tipo \texttt{logical} si è preferito convertire la variabile in un fattore con due livelli. Anche la variabile \texttt{Res} è stata trasformata in un fattore con i livelli; 1 = vittoria, 0 = pareggio, -1 = sconfitta.
 
@@ -60,7 +60,7 @@ La prima relazione che si analizza è quella con la variabile categorica \texttt
 	\end{center}
 \end{figure}
 
-Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica; si segnala solo che la mediana della sconfitta è più vicina al 3$^{\circ}$ quantile mentre quella della vittoria è più vicina al 1$^{\circ}$ quantile. Inoltre non vi sono presenti outliers.
+Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove, valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica; si segnala solo che la mediana della sconfitta è più vicina al 3$^{\circ}$ quantile mentre quella della vittoria è più vicina al 1$^{\circ}$ quantile. Inoltre non vi sono presenti outliers.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -96,8 +96,8 @@ La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'alto numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto ai altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1${^\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita dato che maggior numero di passaggi si prova ad effettuare maggiori sono le possibilità di vittoria, occorre pero sapere quanto è precisa la squadra.\\
-Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti valori alti, infatti la coda in alto e molto meno lunga rispetto alla coda in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non da la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
+La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'alto numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda più in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto ai altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1${^\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita dato che maggior numero di passaggi si prova ad effettuare maggiori sono le possibilità di vittoria, occorre pero sapere quanto è precisa la squadra.\\
+Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti valori alti, infatti la coda più in alto e molto meno lunga rispetto alla coda più in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non da la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
 Per quanto riguarda le variabili delle altre tipologie di passaggi si discostano di poco dai boxplot in Figura \ref{fig:pass}
 
 \begin{figure}[htbp]
@@ -116,7 +116,7 @@ La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefP
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToAttPen}. Contrariamente quanto visto con la Figura \ref{fig:defp} qui si nota una certa variazione da una un box e l'altro, infatti vi è una tendenza positiva che porta ad aver valori più alti in caso di vittoria. Si ha una maggior varianza per quanto riguarda la vittoria rispetto ai altri due esiti e la distribuzione di tutti e tre è abbastanza bilanciata se non che la coda più bassa è leggermente meno lunga rispetto all'altra coda; la mediana invece è equilibrata. Si nota inoltre che vi sono alcuni outliners segno che alcune squadre in qualche partite, si sono particolarmente rese note nel produrre un quantitativo di tocchi maggiore rispetto alla distribuzione, ciò pero non sembra influenzare l'esito.\\
+La Figura \ref{fig:att} mostra come si comporta la relazione con \texttt{ToAttPen}. Contrariamente quanto visto con la Figura \ref{fig:defp} qui si nota una certa variazione da una un box e l'altro, infatti vi è una tendenza positiva che porta ad aver valori più alti in caso di vittoria. Si ha una maggior varianza per quanto riguarda la vittoria rispetto ai altri due esiti e la distribuzione di tutti e tre è abbastanza bilanciata se non che la coda più bassa è leggermente meno lunga rispetto all'altra coda; la mediana invece è equilibrata. Si nota inoltre che vi sono alcuni outliners, segno che alcune squadre in qualche partita, si sono particolarmente rese note nel produrre un quantitativo di tocchi maggiore rispetto alla distribuzione, ciò pero non sembra influenzare l'esito.\\
 
 Per quanto riguarda \texttt{ToDef3rd}, \texttt{ToMid3rd} e \texttt{ToAtt3rd}, esse si comportano come \texttt{ToAttPen}. Perciò è stato omesso il loro grafico.\\
 
@@ -138,7 +138,7 @@ Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei 
 
 Nel secondo boxplot si può notare che i valori più alti sono presenti sia sul pareggio e sia sulla vittoria e sempre qui si ha una maggior distribuzione rispetto alla sconfitta. Sembra perciò che dal grafico si può intuire che se la squadra non commette dei falli allora sarà più soggetta a perdere.\\
 
-La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. Sorprendentemente valori più alti sono registrati nella sconfitta, anche se la mediana risulta essere più vicina al 1 $^{\circ}$ quantile sottolineando che vi è un maggior numero di valori bassi piuttosto che alti. La mediana dei restanti esiti invece e ben equilibrata ma il pareggio risulta avere meno variabilità. Sembra perciò che effettuare troppi intercettazioni dei passaggi avversari contrariamente da quanto si pensi sembra essere controproducente per la vittoria. Si segnala inoltre la presenza di alcuni outliners con valori alti di intercettazioni, che si discostano dalle distribuzioni.\\
+La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. Sorprendentemente valori più alti sono registrati nella sconfitta, anche se la mediana risulta essere più vicina al 1 $^{\circ}$ quantile sottolineando che vi è un maggior numero di valori bassi piuttosto che alti. La mediana dei restanti esiti invece e ben equilibrata ma il pareggio risulta avere meno variabilità. Sembra perciò che effettuare troppi intercettazioni dei passaggi avversari contrariamente da quanto si pensi sia controproducente per la vittoria. Si segnala inoltre la presenza di alcuni outliners con valori alti di intercettazioni, che si discostano dalle distribuzioni.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -147,7 +147,7 @@ La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. S
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}. Come si può notare, vincere più contrasti possibili evita di subire una sconfitta. Infatti vi sono valori più alti in pareggio e vittoria oltre a una maggiore varianza rispetto alla sconfitta. Nello specifico pero si nota che, nella distribuzione dei valori vi sono maggior valori alti nella vittoria rispetto al pareggio, graficamente lo si vede dalla mediana che nel pareggio è più vicina al 1$^{\circ}$ quindi a valori più bassi e lo si nota anche dalla coda più bassa che è meno lunga rispetto a quella in alto; invece la mediana della vittoria risulta più vicina al 3$^{\circ}$ oltre ad avere la coda in alto più corta rispetto a quella in basso. Vi è inoltre qualche outliners con valori più alti di contrasti vinti ma sembrano non influenzare la classificazione.\\
+La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}. Come si può notare, vincere più contrasti possibili evita di subire una sconfitta. Infatti vi sono valori più alti in pareggio e vittoria oltre a una maggiore varianza rispetto alla sconfitta. Nello specifico pero si nota che: nella distribuzione dei valori vi sono maggior valori alti nella vittoria rispetto al pareggio, graficamente lo si vede dalla mediana che nel pareggio è più vicina al 1$^{\circ}$ quindi a valori più bassi e lo si nota anche dalla coda più bassa che è meno lunga rispetto a quella in alto; invece la mediana della vittoria risulta più vicina al 3$^{\circ}$ oltre ad avere la coda in alto più corta rispetto a quella in basso. Vi è inoltre qualche outliners con valori più alti di contrasti vinti ma sembrano non influenzare la classificazione.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -163,7 +163,7 @@ La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}
 	\end{center}
 \end{figure} 
 
-Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra per entrambe le classi equidistante dai quantili. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria oltre ad averne anche di più rispetto alle altre classi. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che vi sono numerosi outliners sopratutto per il pareggio.
+Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra equidistante dai quantili per entrambe le classi. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che vi sono numerosi outliners sopratutto per il pareggio.
 
 \subsection{Analisi relazioni tra covariate} 
 Per concludere l'attività di prepossening, non resta che analizzare le relazioni tra covariate in modo da individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che vi sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
@@ -275,7 +275,7 @@ Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd},
 
 \section{Adattamento dataset al modello}
 
-Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di essere di facile interpretazione per un essere umano ma vi sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
+Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il dataset di facile interpretazione per un essere umano ma vi sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
 Sono state apportare alcune modifiche attraverso la scrittura di codice che andasse a modificare la struttura del dataset in modo da essere correttamente utilizzabile nel modello. \\
 
 Innanzitutto il modello richiede per il suo funzionamento che le due variabili \texttt{Team} e \texttt{Vs} devono essere o di tipo fattore oppure un \textsf{data.frame}. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali cioè fattori, variabili cardinali cioè vettori numerici; un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ 
@@ -288,7 +288,7 @@ Inoltre per indicare nel modello se la squadra giocava in casa o no, i valori de
 \subsection{Codice per l'adattamento del dataset}
 Di seguito viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.
 
-\begin{lstlisting}
+\begin{lstlisting}[language=R]
 PossVs <- c()
 ShVs <- c()
 ShTVs <- c()
@@ -315,40 +315,42 @@ RecovVs <- c()
 del <-c()
 k <- 1
 z <- 1
+
 for(i in 1:nrow(soccern)){
-  if(soccern$AtHome[i] == TRUE){
-	for(j in 1:nrow(soccern)){
-		if((soccern$Team[j] == soccern$Vs[i]) && (soccern$Team[i] == soccern$Vs[j]) && (soccern$AtHome[j] == FALSE)){
-			PossVs[k] <- soccern$Poss[j]
-			ShVs[k] <- soccern$Sh[j]
-			ShTVs[k] <- soccern$SoT[j]
-			G.ShVs[k] <- soccern$G.Sh[j]
-			PAttVs[k] <- soccern$PAtt[j]
-			PCmp.Vs[k] <- soccern$PCmp.[j]
-			SPAttVs[k] <- soccern$SPAtt[j]
-			SPCmp.Vs[k] <- soccern$SPCmp.[j]
-			MPAttVs[k] <- soccern$MPAtt[j]
-			MPCmp.Vs[k] <- soccern$MPCmp.[j]
-			LPAttVs[k] <- soccern$LPAtt[j]
-			LPCmp.Vs[k] <- soccern$LPCmp.[j]
-			ToDef3rdVs[k] <- soccern$ToDef3rd[j]
-			ToMid3rdVs[k] <- soccern$ToMid3rd[j]
-			ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
-			ToAttPenVs[k] <- soccern$ToAttPen[j]
-			ToDistVs[k] <- soccern$TotDist[j]
-			FlsVs[k] <- soccern$Fls[j]
-			FldVs[k] <- soccern$Fld[j]
-			CrsVs[k] <- soccern$Crs[j]
-			IntVs[k] <- soccern$Int[j]
-			TklWinVs[k] <- soccern$TklWin[j]
-			RecovVs[k] <- soccern$Recov[j]
-			k <- k + 1
-		}      
+	if(soccern$AtHome[i] == TRUE){
+		for(j in 1:nrow(soccern)){
+			if((soccern$Team[j] == soccern$Vs[i]) && (soccern$Team[i] == soccern$Vs[j]) && (soccern$AtHome[j] == FALSE)){
+				PossVs[k] <- soccern$Poss[j]
+				ShVs[k] <- soccern$Sh[j]
+				ShTVs[k] <- soccern$SoT[j]
+				G.ShVs[k] <- soccern$G.Sh[j]
+				PAttVs[k] <- soccern$PAtt[j]
+				PCmp.Vs[k] <- soccern$PCmp.[j]
+				SPAttVs[k] <- soccern$SPAtt[j]
+				SPCmp.Vs[k] <- soccern$SPCmp.[j]
+				MPAttVs[k] <- soccern$MPAtt[j]
+				MPCmp.Vs[k] <- soccern$MPCmp.[j]
+				LPAttVs[k] <- soccern$LPAtt[j]
+				LPCmp.Vs[k] <- soccern$LPCmp.[j]
+				ToDef3rdVs[k] <- soccern$ToDef3rd[j]
+				ToMid3rdVs[k] <- soccern$ToMid3rd[j]
+				ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
+				ToAttPenVs[k] <- soccern$ToAttPen[j]
+				ToDistVs[k] <- soccern$TotDist[j]
+				FlsVs[k] <- soccern$Fls[j]
+				FldVs[k] <- soccern$Fld[j]
+				CrsVs[k] <- soccern$Crs[j]
+				IntVs[k] <- soccern$Int[j]
+				TklWinVs[k] <- soccern$TklWin[j]
+				RecovVs[k] <- soccern$Recov[j]
+				k <- k + 1
+			}      
+		}
 	}
-  }else{
-	 del[z] <- i
-	 z <- z + 1
-  }
+	else{
+		del[z] <- i
+		z <- z + 1
+	}
 }
 \end{lstlisting}
 \bigskip
@@ -359,14 +361,14 @@ Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con
 
 Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
 \bigskip
-\begin{lstlisting}
+\begin{lstlisting}[language=R]
 > soccern3 <- soccern2[-del,]
 \end{lstlisting}
 \bigskip
 \bigskip
 Con il precedente commando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. 
 \bigskip
-\begin{lstlisting}
+\begin{lstlisting}[language=R]
 > soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
 	
 \end{lstlisting}
@@ -375,7 +377,7 @@ Con il precedente commando si va a creare un nuovo dataset con 380 righe, elimin
 Con il precedente commando si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.
 \bigskip
 \bigskip
-\begin{lstlisting}
+\begin{lstlisting}[language=R]
 > soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
 	
 \end{lstlisting}

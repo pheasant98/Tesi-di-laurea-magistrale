@@ -60,9 +60,9 @@ La classifica della stagione 2021/2022 è mostrata nella Tabella \ref{tab:rankin
 %**************************************************************
 \section{Costruzione del dataset}
 
-Al giorno d'oggi, nelle partite di calcio professionistico viene raccolta un'enorme quantità di variabili. Ad esempio, per ogni squadra è noto il tempo in percentuale del possesso della palla o il numero di tiri in porta prodotto dalla squadra in una determinata partita. L'obiettivo principale di questo lavoro è determinare l'influenza di queste variabili specifiche della partita. \\
+Al giorno d'oggi, nelle partite di calcio professionistico viene raccolta un'enorme quantità di variabili. Ad esempio, per ogni squadra è noto il tempo in percentuale del possesso della palla o il numero di tiri in porta in una determinata partita. L'obiettivo principale di questo lavoro è determinare l'influenza di queste variabili specifiche della partita. \\
 Per creare il dataset per tale scopo, sono state raccolte un gran numero di variabili che a primo avviso possono essere significative, tali dati sono stati offerti dal sito web FBref.\\
-FBref è un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. FBref mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse, in più per rendere più facile l'esportazione, tali tabelle possono essere convertite in formato di CSV per poter essere poi trasportate in un file Excel.\\
+FBref è un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. FBref mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse, in più per rendere più facile l'esportazione, tali tabelle possono essere convertite in formato CSV per poter essere poi trasportate in un file Excel.\\
 \begin{figure}[!htb]
 	\begin{center}
 		\includegraphics[scale=0.40]{logo.png}
@@ -74,10 +74,10 @@ FBref è un sito web dedicato al tracciamento delle statistiche relative ai calc
 
 
 
-Quindi per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A si è esportato per ogni partita giocata alcune variabili che ci interessavano, selezionando per prima cosa la macro aree dove si trovavano le variabili d'interesse e poi, modificando le tabelle per ottenere solo i dati di tali variabili. Ogni tabella generata veniva poi riconvertita in CSV per essere poi unita con tutte le altre in un file Excel che una volta completato, divenne il dataset per le nostre analisi. Per rendere più leggibile il file Excel, dato che le stringhe in CSV separavano i dati con il carattere separatore virgola, si è utilizzata la funzione di Excel "trasforma testo in colonne" per inserire tutti i dati in modo ordinato nelle celle del foglio Excel.
+Quindi per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A. si è esportato per ogni partita giocata alcune variabili che ci interessavano, selezionando per prima cosa la macro aree dove si trovavano le variabili d'interesse e poi, modificando le tabelle per ottenere solo i dati di tali variabili. Ogni tabella generata veniva poi riconvertita in CSV per essere poi unita con tutte le altre in un file Excel che una volta completato, divenne il dataset per le nostre analisi. Per rendere più leggibile il file Excel, dato che le stringhe in CSV separavano i dati con il carattere separatore virgola, si è utilizzata la funzione di Excel "trasforma testo in colonne" per inserire tutti i dati in modo ordinato nelle celle del foglio Excel.
 
 \section{Struttura dataset}
-Il dataset risultate dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga perciò contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezioni per la data della partita (\textsf{Date}), il turno (\textsf{Round}), e gli spettatori (\textsf{Spec}). Quindi per ogni partita esistono due righe, una per ognuna delle due squadre coinvolte. Perciò ogni squadra appare nella colonna \textsf{Team} 38 volte e dato che si hanno 20 squadre si hanno perciò 760 righe totali. %Per quanto riguarda le colonne se ne discuterà nella prossima sotto sezione. \\
+Il dataset risultate dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezioni per la data della partita (\textsf{Date}), il turno (\textsf{Round}), e gli spettatori (\textsf{Spec}). Quindi per ogni partita esistono due righe, una per ognuna delle due squadre coinvolte. Perciò ogni squadra appare nella colonna \textsf{Team} 38 volte e dato che si hanno 20 squadre si hanno perciò 760 righe totali. %Per quanto riguarda le colonne se ne discuterà nella prossima sotto sezione. \\
 La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime tre partite della stagione. 
 	\begin{table}[!ht]%
 
@@ -137,14 +137,14 @@ Le possibili covariate sono le seguenti:
 	Questa variabile è stata inserita perché può permettere di valutare la qualità della fase offensiva della squadra e quindi essere significativa ai fine dell'analisi.
 	\item \textsf{GA}: Tale variabile indica il numero di gol subiti dalla squadra indicata sulla variabile \textsf{Team} e quindi fatti dalla squadra indicata nella variabile \textsf{Vs}. 
 	
-	Questa variabile è significativa perché subire pochi gol incide positivamente nell'esito della partita, infatti non espone la squadra a doversi sbilanciare in attacco per poter recuperare lo svantaggio e quindi non rischiare di subire altri gol dai avversari. Inoltre è un fatto riconosciuto che aver la miglior difesa del campionato porta con molta probabilità a vincere il campionato
+	Questa variabile è significativa perché subire pochi gol incide positivamente nell'esito della partita, infatti non espone la squadra a doversi sbilanciare in attacco per poter recuperare lo svantaggio e quindi non rischiare di subire altri gol dai avversari. Inoltre è un fatto riconosciuto che aver la miglior difesa del campionato porta con molta probabilità a vincere il campionato.
 	\item \textsf{Team}: Tale variabile indica il nome della squadra a cui i dati della riga fanno riferimento. É necessaria per il funzionamento del modello, nel prossimo paragrafo verrà approfondito il suo utilizzo nel modello.
 	\item \textsf{Vs}: Tale variabile indica il nome della squadra avversaria. É necessaria per il funzionamento del modello, nel prossimo paragrafo verrà approfondito il suo utilizzo nel modello.
 	
-	\item \textsf{Fls}: Tale variabile indica il numero di falli dai giocatori della squadra indicata sulla variabile \textsf{Team}. 
+	\item \textsf{Fls}: Tale variabile indica il numero di falli fatti dai giocatori della squadra indicata sulla variabile \textsf{Team}. 
 	
-	Questa variabile è stata inserita per capire se una squadra adotta un gioco più fisico/tattico. In questo caso sarà più propensa a interrompere il gioco della squadra avversaria e a commettere più falli. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita, ricordando però che una che commette molti falli è più soggetta a ricevere cartellini gialli o rossi che condizionano la prestazione dei giocatori.
-	\item \textsf{Fld}: Tale variabile indica il numero di falli subiti dai giocatori della squadra indicata sulla variabile \textsf{Team} da parte della squadra avversaria indicata sulla variabile \textsf{Vs}. 
+	Questa variabile è stata inserita per capire se una squadra adotta un gioco più fisico/tattico. In questo caso sarà più propensa a interrompere il gioco della squadra avversaria e a commettere più falli. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita, ricordando però che una squadra che commette molti falli è più soggetta a ricevere cartellini gialli o rossi che condizionano la prestazione dei giocatori.
+	\item \textsf{Fld}: Tale variabile indica il numero di falli subiti ai giocatori della squadra indicata sulla variabile \textsf{Team} da parte della squadra avversaria indicata sulla variabile \textsf{Vs}. 
 	
 	Si è deciso di inserire questa covariata perché un alto numero di falli può portare a molte interruzione della manovra di gioco e quindi permettere alla squadra avversaria di riorganizzarsi. Si vuole perciò capire come questa variabile può andare ad influire sull'esito della partita.
 	\item \textsf{Off}: Tale variabile indica il numero di volte che la squadra indicata sulla variabile \textsf{Team} è finita in fuorigioco. Un calciatore si trova in posizione di fuorigioco quando una qualsiasi parte del suo corpo, fatta eccezione per braccia e mani perché non possono essere usate per controllare il pallone; si trova nella nella metà campo avversaria ed è più vicina alla linea di porta avversaria sia rispetto al pallone e sia rispetto al penultimo giocatore difendente avversario; tale penultimo avversario può essere anche il portiere, se un compagno di questi è più vicino di lui alla linea di porta. Una rappresentazione grafica del fuorigioco è mostrata nell'immagine \ref{fig:offside}.
@@ -182,7 +182,7 @@ Le possibili covariate sono le seguenti:
 
 \subsection{Statistiche possesso}
 
-In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relativa riguardati al possesso della palla fatto dai giocatori della squadra in esame.
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relative al possesso della palla fatto dai giocatori della squadra in esame.
 
 Le possibili covariate sono le seguenti:
 \begin{itemize}
@@ -199,7 +199,7 @@ Le possibili covariate sono le seguenti:
 
 	\item \textsf{ToDefPen}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} nella propria area di rigore. 
 	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra subisce molto la pressione della squadra avversaria, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria area di rigore la cui area nel campo da calcio è indicata nella Figura \ref{fig:penalty}.
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra subisce molto la pressione della squadra avversaria, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi, in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria area di rigore la cui area nel campo da calcio è indicata nella Figura \ref{fig:penalty}.
 	
 	\begin{figure}[!ht]
 		\begin{center}
@@ -213,7 +213,7 @@ Le possibili covariate sono le seguenti:
 	
 	\item \textsf{ToDef3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} nella propria mediana o trequarti difensiva. 
 	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla creando poche azioni offensive, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria mediana la cui area nel campo da calcio è indicata nella Figura \ref{fig:def}.
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla creando poche azioni offensive, viceversa cerca di fare un gioco più offensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi, in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella propria mediana la cui area nel campo da calcio è indicata nella Figura \ref{fig:def}.
 	
 	\begin{figure}[!ht]
 		\begin{center}
@@ -225,7 +225,7 @@ Le possibili covariate sono le seguenti:
 	\end{figure}
 	\item \textsf{ToMid3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a centrocampo. 
 	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla cercando di creare delle azioni offensive, viceversa cerca di fare un gioco più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto dalla squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi a centrocampo la cui area nel campo da calcio è indicata nella Figura \ref{fig:cen}.
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla cercando di creare delle azioni offensive, viceversa cerca di fare un gioco più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto dalla squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi, in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi a centrocampo la cui area nel campo da calcio è indicata nella Figura \ref{fig:cen}.
 	
 	\begin{figure}[!ht]
 		\begin{center}
@@ -238,7 +238,7 @@ Le possibili covariate sono le seguenti:
 	
 	\item \textsf{ToAtt3rd}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a nella trequarti dell'avversario. 
 	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla per effettuare una pressione sulla squadra avversaria affinché si possano creare degli spazi per delle azioni offensive, viceversa cerca di fare un gioco molto più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella trequarti dell'avversario la cui area nel campo da calcio è indicata nella Figura \ref{fig:treq}.
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla per effettuare una pressione sulla squadra avversaria affinché si possano creare degli spazi per delle azioni offensive, viceversa cerca di fare un gioco molto più difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi, in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nella trequarti dell'avversario la cui area nel campo da calcio è indicata nella Figura \ref{fig:treq}.
 	
 	\begin{figure}[!ht]
 		\begin{center}
@@ -251,7 +251,7 @@ Le possibili covariate sono le seguenti:
 	
 	\item \textsf{ToAttPen}: Tale variabile indica il numero di tocchi fatti dai giocatori della squadra indicata sulla variabile \textsf{Team} a nell'area di rigore dell'avversario. 
 	
-	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla applicando un'alta pressione sulla squadra avversaria affinché si possano creare molte occasioni da gol in area, viceversa o la squadra subisce troppo la pressione dell'avversario oppure tende ad avere un gioco molto difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nell'area di rigore dell'avversario.
+	Questa variabile è stata inserita perché può essere utile per capire come il possesso della palla viene gestito, cioè se vi è un alto numero di tocchi vuol dire che la squadra cerca di mantenere il possesso palla applicando un'alta pressione sulla squadra avversaria affinché si possano creare molte occasioni da gol in area, viceversa o la squadra subisce troppo la pressione dell'avversario oppure tende ad avere un gioco molto difensivo. Questa variabile in combinazione con \textsf{ToDef3rd}, \textsf{ToMid3rd}, \textsf{ToAtt3rd} e \textsf{ToAttPen} permette di capire se il possesso della palla fatto della squadra è utile e porta benefici ai fini del risultato oppure è sterile. Inoltre si vuole capire attraverso l'analisi, in che misura può influenzare il risultato della partita con un alto o un basso valore di numero di tocchi nell'area di rigore dell'avversario.
 	
 	\item \textsf{ToDist}: Tale variabile indica la distanza totale, espressa in metri, in cui un giocatore della squadra indicata sulla variabile \textsf{Team}, si è mosso con la palla in qualsiasi direzione, controllandola con i piedi.
 	
@@ -261,7 +261,7 @@ Le possibili covariate sono le seguenti:
 
 \subsection{Statistiche passaggi}
 
-In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relativa riguardati ai passaggi della palla fatti dai giocatori della squadra in esame.
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relative ai passaggi della palla fatti dai giocatori della squadra in esame.
 
 Le possibili covariate sono le seguenti:
 \begin{itemize}
@@ -273,13 +273,13 @@ Le possibili covariate sono le seguenti:
 	\item\textsf{PCmp\%}: Tale variabile indica la percentuale di passaggi riusciti ai giocatori della squadra indicata sulla variabile \textsf{Team}. 
 	
 	Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
-	\item \textsf{SPAtt}: Tale variabile indica il numero di passaggi corti tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi corti si intendono quelli effettuati all'interno di una lunghezza tra i tre e 14 metri.
+	\item \textsf{SPAtt}: Tale variabile indica il numero di passaggi corti tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi corti si intendono tutti quelli effettuati all'interno di una lunghezza tra i tre e 14 metri.
 	
 	Questa variabile è stata inserita per capire se un alto numero di passaggi corti possono essere determinanti ai fini dell'esito della partita. Ovviamente analogamente a \texttt{PAtt} occorre fare un confronto con la sua percentuale di passaggi corti riusciti \texttt{SPCmp\%}.
 	\item \textsf{SPCmp\%}: Tale variabile indica la percentuale di passaggi corti riusciti ai giocatori della squadra indicata sulla variabile \textsf{Team}. 
 	
 	Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
-	\item \textsf{MPAtt}: Tale variabile indica il numero di passaggi medi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi medi si intendono quelli effettuati all'interno di una lunghezza tra i 13 e 27 metri. Questi passaggi possono essere considerati come passaggi filtranti cioè un tipo di passaggio non diretto direttamente al proprio compagno di squadra ma verso un area del campo dove il compagno di squadra deve andare a prendere la palla, spesso questi passaggi vengono fatti per sorprendere la difesa avversaria e evitare che intercettino la palla. Nella Figura \ref{fig:filt} viene mostrato l'esecuzione di un passaggio filtrante.
+	\item \textsf{MPAtt}: Tale variabile indica il numero di passaggi medi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi medi si intendono tutti quelli effettuati all'interno di una lunghezza tra i 13 e 27 metri. Questi passaggi possono essere considerati come passaggi filtranti cioè un tipo di passaggio non diretto direttamente al proprio compagno di squadra ma verso un area del campo dove il compagno di squadra deve andare a prendere la palla, spesso questi passaggi vengono fatti per sorprendere la difesa avversaria e evitare che intercettino la palla. Nella Figura \ref{fig:filt} viene mostrato l'esecuzione di un passaggio filtrante.
 	
 	\begin{figure}[ht]
 		\begin{center}
@@ -291,8 +291,8 @@ Le possibili covariate sono le seguenti:
 
 	Questa variabile è stata inserita per capire se un alto numero di passaggi medi possono essere determinanti ai fini dell'esito della partita. Ovviamente analogamente a \texttt{PAtt} occorre fare un confronto con la sua percentuale di passaggi corti riusciti \texttt{MPCmp\%}.
 
-	\item \textsf{MPCmp\%}: Tale variabile indica la percentuale di passaggi medi riusciti ai giocatori della squadra indicata sulla variabile \textsf{Team}. Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
-	\item \textsf{LPAtt}: Tale variabile indica il numero di passaggi lunghi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi corti si intendono quelli effettuati all'interno di una lunghezza superiore ai 27 metri. Questi passaggi possono essere considerati come lanci lunghi per cambi di gioco o per lanciare le punte, cioè i giocatori che giocano come attaccanti, in profondità. Una rappresentazione di passaggio lungo è mostrata nella Figura \ref{fig:cambio}.
+	\item \textsf{MPCmp\%}: Tale variabile indica la percentuale di passaggi medi riusciti ai giocatori della squadra indicata sulla variabile \textsf{Team}.\\ Questa variabile è stata inserita perché permette di capire quanti passaggi sono andati a buon fine tra tutti quelli tentati e quindi qual'è la precisione dei giocatori della squadra.
+	\item \textsf{LPAtt}: Tale variabile indica il numero di passaggi lunghi tentati dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per passaggi lunghi si intendono tutti quelli effettuati all'interno di una lunghezza superiore ai 27 metri. Questi passaggi possono essere considerati come lanci lunghi per cambi di gioco o per lanciare le punte, cioè i giocatori che giocano come attaccanti, in profondità. Una rappresentazione di passaggio lungo è mostrata nella Figura \ref{fig:cambio}.
 	\begin{figure}[ht]
 		\begin{center}
 			\includegraphics[scale=0.45]{cambio-di-gioco.png}
@@ -322,7 +322,7 @@ Le possibili covariate sono le seguenti:
 
 \subsection{Statistiche difensive}
 
-In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relativa riguardati alla fase difensiva fatta dalla squadra in esame.
+In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relative alla fase difensiva fatta dalla squadra in esame.
 
 Le possibili covariate sono le seguenti:
 \begin{itemize}
@@ -331,7 +331,7 @@ Le possibili covariate sono le seguenti:
 	
 	La variabile è stata inserita perché permette di valutare se la squadra subisce tanti tiri dai avversari e la qualità del portiere nel salvare la squadra da un possibile gol subito.
 	
-	\item \textsf{Int}: Tale variabile indica il numero di intercettazioni fatte dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per intercettazione della palla si intende interrompere un passaggio della squadra avversaria entrando in possesso del pallone che era stato lanciato per un passaggio ma che una volta intercettato non è andato a buon fine cioè non è arrivato al compagno del giocatore avversario che ha effettuato il passaggio. 
+	\item \textsf{Int}: Tale variabile indica il numero di intercettazioni fatte dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per intercettazione della palla si intende interrompere un passaggio della squadra avversaria entrando in possesso del pallone che era stato lanciato per un passaggio ma che una volta intercettato non è andato a buon fine cioè non è arrivato al compagno del giocatore avversario.. 
 	
 	Quindi si è deciso di inserire questa variabile perché indica quante volte si è tolto il possesso della palla all'avversario interrompendone il suo gioco.
 	\item \textsf{TklWin}: Tale variabile indica il numero di contrasti vinti dai giocatori della squadra indicata sulla variabile \textsf{Team}. Per contrasto si intende il tentativo da parte di un giocatore difendente di sottrarre il possesso della palla all'avversario. Quindi chi ha in possesso la palla viene attaccato da chi ne è privo. Se si riesce a prendere il pallone all'avversario allora si avrà vinto il contrasto. Si sottolinea che i contrasti vengono anche effettuati per allontanare dalle zone pericolose l'avversario. La Figura \ref{fig:tackle} mostra un contrasto di gioco.
@@ -352,8 +352,6 @@ Le possibili covariate sono le seguenti:
 	Dato che questa variabile sembra essere legata al possesso del pallone sembra essere interessante per l'analisi.
 	
 \end{itemize}
-
-
 
 	\begin{table}[!htb]%
 	
@@ -381,7 +379,7 @@ Le possibili covariate sono le seguenti:
 	\caption{La tabella riassuntiva variabili presenti nel dataset.} \label{tab:summary}
 \end{table}
 
-
+%Di seguito viene mostrata una tabella dove viene indicato per ogni variabile il nome all'interno del dataset.
 
 
 \begin{table}[!htb]%
@@ -426,7 +424,6 @@ Le possibili covariate sono le seguenti:
 		TklWin & TklWin \\
 		Recov & Recov \\
 		\hline
-		&  \\
 		
 	\end{tabular} \hbox{}
 	

@@ -281,11 +281,34 @@ Infine sono state individuate le seguenti interazioni:
 \subsection{Collinearità}
 Per collinearità si intende quel fenomeno per il quale se più variabili esplicative altamente correlate vengono inserite nel modello, allora la loro alta correlazione andrà a nasconde la loro associazione con la variabile risposta. La soluzione per risolvere questo problema è quella di scegliere soltanto una sola variabile della relazione da inserire nel modello.\\
 Nella Figura \ref{fig:cor} viene mostrato il valore della correlazione per ogni possibile interazione tra variabile numeriche.\\
-Come si può notare una maggior correlazione tra le variabile è concentra nella prima parte del triangolo. Dal grafico possiamo vedere come tutte le interazioni che sono state descritte nella sottosezione precedente abbiano un alta correlazione ma non eccessivamente alta. \\
-Nella sottosezione precedente si poteva pensare di inserire interazione abbastanza naturali ad esempio: \texttt{PAtt} con \texttt{SPAtt} e con \texttt{MPAtt} e, \texttt{PCmp\%} con \texttt{MPCmp\%} e con \texttt{LPCmp\%}. Tali interazioni pero sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
-Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, tale interazione non è stata inserita perché la variabile \texttt{ToDefPen} non è significativa per la variabile risposta.
+Come si può notare una maggior correlazione tra le variabile è concentra nella prima parte del triangolo. Dal grafico possiamo vedere come tutte le interazioni che sono state descritte nella sottosezione precedente abbiano un alta correlazione ma non eccessivamente alta. Si hanno i seguenti valori di correlazione:
+\begin{itemize}
+	\item Le interazioni con la variabile \texttt{Sh}:
+	\begin{itemize}
+		\item L'interazione tra \texttt{Sh} e \texttt{SoT} ha come valore 0,70 tale da giustificare l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{Sh} e \texttt{ToAtt3rd} ha come valore 0,72 tale da giustificare l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{Sh} e \texttt{ToAttPen} ha come valore 0,82 è un valore alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
+	\end{itemize}
+	\item Le interazioni con la variabile \texttt{Poss}:
+	\begin{itemize}
+		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,88 è un valore molto alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,81 è un valore alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
+	\end{itemize}
+	\item Le interazioni con la variabile \texttt{TotDist}:
+	\begin{itemize}
+		\item L'interazione tra \texttt{TotDist} e \texttt{PAtt} ha come valore 0,87 è un valore molto alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{TotDist} e \texttt{PCmp\%} ha come valore 0,75 tale da giustificare l'inserimento dell'interazione.
+	\end{itemize}
 
-TO DO
+	\item L'interazione tra \texttt{ToAtt3rd} e \texttt{PAttPen} ha come valore 0,79 tale da giustificare l'inserimento dell'interazione.
+	\item L'interazione tra \texttt{PAtt} e \texttt{PCmp\%} ha come valore 0,74 tale da giustificare l'inserimento dell'interazione.
+\end{itemize}  
+
+
+Nella sottosezione precedente si poteva pensare di inserire interazione abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni pero sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
+Il grafico suggerisce alcune interazioni che non sono state descritti ad esempio:\\ \texttt{Poss}*\texttt{ToAtt3rd}, \texttt{Poss}*\texttt{SPAtt},  \texttt{TotDist}*\texttt{ToAtt3rd}, \texttt{PCmp\%}*\texttt{SPAtt} e \texttt{PCmp\%}*\texttt{MPAtt}.
+Tali interazioni saranno analizzate durante la fase di modellazione per verificare se effettivamente sono significative per il modello.\\
+Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, tale interazione non è stata inserita perché la variabile \texttt{ToDefPen} non è significativa per la variabile risposta.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -296,7 +319,7 @@ TO DO
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.80]{cov.png}
+		\includegraphics[scale=0.70]{cov.png}
 		\caption{Grafico riassuntivo delle variabili rimaste dopo il Prepossesing}  \label{fig:cov}
 	\end{center}
 \end{figure}

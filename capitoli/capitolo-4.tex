@@ -43,7 +43,7 @@ Il primo modello è il \emph{cumulative link model} che sfrutta la rappresentazi
 con h $\in$ \{1,....,H\} che indica le possibili \emph{response categories}. I parametri $\theta_{h}$ rappresentano le cosiddette soglie per le singole \emph{response categories}, che determinano la preferenza per le specifiche categorie. In particolare, Y$_{i,j} = 1$ rappresenta la massima preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}.\\
 In generale vi è imposta una simmetria del modello in modo che valga: $P(Y_{i,j} = h) = P(Y_{i,j} = H - h + 1)$. È quindi necessario che le soglie siano ristrette a $\theta_{i}$ = -$\theta_{H-h}$ e se, H è dispari, $\theta_{H/2}$ = 0; per garantire che le probabilità siano simmetriche. Per garantire che le probabilità siano non negative per le singole \emph{response categories} vi è imposta la seguente limitazione: $-\infty$ = $\theta_{0} < \theta_{1} < ... < \theta_{H-1} < \theta_{H} = \infty$. Dato che la soglia per l'ultima categoria è fissata a $\theta_{H} = \infty$ allora vale che $P(Y_{i,j} \leq H)$ = 1. Si sottolinea che le soglie sono parametri che vanno stimate dai dati; inoltre la probabilità di una singola \emph{response category} può essere derivata dalla differenza tra categorie adiacenti cioè:
 \begin{center}
-	  $P(Y_{i,j} = k)$ = $P(Y_{i,j} \leq h)$ - $P(Y_{i,j} \leq k - 1)$
+	  $P(Y_{i,j} = k)$ = $P(Y_{i,j} \leq k + 1)$ - $P(Y_{i,j} \leq k - 1)$
 \end{center}
 
 Il modello delle \emph{adjacent categories model}, così come il modello Bradley-Terry, ha anche una rappresentazione logit lineare ed è il seguente:

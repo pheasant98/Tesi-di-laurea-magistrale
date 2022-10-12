@@ -67,7 +67,7 @@ FBref è un sito web dedicato al tracciamento delle statistiche relative ai calc
 	\begin{center}
 		\includegraphics[scale=0.40]{logo.png}
 		\caption{Logo di FBref.} 
-		%Source: \url{https://fbref.com}
+		Source: \url{https://fbref.com}
 		\label{fig:logo}
 	\end{center}
 \end{figure}
@@ -113,17 +113,17 @@ La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime t
 Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. Oltre alle già citate \textsf{Date}, \textsf{Round} e \textsf{Spec} che hanno solo un valore di completezza dei dati, le restanti 32 colonne saranno le possibili candidate a essere le covariate che costituiranno il modello.\\
 Le varie covariate presenti sono state raggruppate in quattro macro-aree e sono le seguenti:
 \begin{itemize}
-	\item Statistiche generali;
-	\item Statistiche tiri;
-	\item Statistiche possesso;
-	\item Statistiche passaggi;
-	\item Statistiche difensive.
+	\item Dati generali;
+	\item Dati sui tiri;
+	\item Dati sul possesso;
+	\item Dati sui passaggi;
+	\item Dati difensivi.
 \end{itemize}
 
 Di seguito se ne illustrano nel dettaglio.
 %\pagebreak
 
-\subsection{Statistiche generali}
+\subsection{Dati generali}
 In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche che non fanno parte di una precisa macro-area ma che descrivono essenzialmente la partita giocata. 
 
 Le possibili covariate sono le seguenti:
@@ -154,7 +154,7 @@ Le possibili covariate sono le seguenti:
 			\includegraphics[scale=0.50]{var.png}
 			
 			\caption{Rappresentazione del fuorigioco} \label{fig:offside}
-			%Source: \url{https://sport.sky.it/calcio/2021/10/05/fifa-figc-var-fuorigioco}
+			Source: \url{https://sport.sky.it/calcio/2021/10/05/fifa-figc-var-fuorigioco}
 		\end{center}
 	\end{figure}
 	
@@ -162,7 +162,7 @@ Le possibili covariate sono le seguenti:
 	
 \end{itemize}
 \pagebreak
-\subsection{Statistiche tiri}
+\subsection{Dati sui tiri}
 
 In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche che fanno parte della fase offensiva della squadra in esame.
 
@@ -180,7 +180,7 @@ Le possibili covariate sono le seguenti:
 	Tale variabile perciò permette di capire quanto la produzioni di tiri della squadra è efficace o meno. Con \texttt{Sh} e \texttt{SoT} si riesce a valutare quanto è offensiva la squadra cioè, se essa gioca costantemente in attacco o utilizza la tattica difesa e contropiede. Inoltre permette di capire quanto la squadra è precisa nel effettuare i tiri in porta.
 \end{itemize}
 
-\subsection{Statistiche possesso}
+\subsection{Dati sul possesso}
 
 In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relative al possesso della palla fatto dai giocatori della squadra in esame.
 
@@ -203,9 +203,9 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.60]{rigore.jpg}
+			\includegraphics[scale=0.58]{rigore.jpg}
 			\caption{In rosso l'area di rigore in un campo da calcio.}
-			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
+			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
 			\label{fig:penalty}
 		\end{center}
 	\end{figure}
@@ -217,9 +217,9 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.60]{mid.jpg}
+			\includegraphics[scale=0.58]{mid.jpg}
 			\caption{In rosso la mediana nel campo da calcio.} 
-			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
+			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
 			\label{fig:def}
 		\end{center}
 	\end{figure}
@@ -229,9 +229,9 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.60]{cen.jpg}
+			\includegraphics[scale=0.58]{cen.jpg}
 			\caption{In rosso il centrocampo nel campo da calcio.}
-			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio}  
+			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio}  
 			\label{fig:cen}
 		\end{center}
 	\end{figure}
@@ -242,9 +242,9 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.60]{treq.jpg}
+			\includegraphics[scale=0.58]{treq.jpg}
 			\caption{In rosso la trequarti dell'avversario nel campo da calcio.} 
-			%Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
+			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
 			\label{fig:treq}
 		\end{center}
 	\end{figure}
@@ -259,7 +259,7 @@ Le possibili covariate sono le seguenti:
 
 \end{itemize}
 
-\subsection{Statistiche passaggi}
+\subsection{Dati sui passaggi}
 
 In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relative ai passaggi della palla fatti dai giocatori della squadra in esame.
 
@@ -285,7 +285,7 @@ Le possibili covariate sono le seguenti:
 		\begin{center}
 			\includegraphics[scale=0.45]{filtrante2.jpg}
 			\caption{Esecuzione di un passaggio filtrante} \label{fig:filt}
-			%Source: \url{https://www.ilmisterone.com/2019/01/16/passaggi-filtranti/}
+			Source: \url{https://www.ilmisterone.com/2019/01/16/passaggi-filtranti/}
 		\end{center}
 	\end{figure}
 
@@ -297,7 +297,7 @@ Le possibili covariate sono le seguenti:
 		\begin{center}
 			\includegraphics[scale=0.45]{cambio-di-gioco.png}
 			\caption{Esecuzione di un cambio di gioco} \label{fig:cambio}
-			%Source: \url{https://www.mistercalcio.com/tattica/il-cambio-di-gioco/}
+			Source: \url{https://www.mistercalcio.com/tattica/il-cambio-di-gioco/}
 		\end{center}
 	\end{figure}
 	
@@ -311,16 +311,16 @@ Le possibili covariate sono le seguenti:
 	
 	\begin{figure}[!ht]
 		\begin{center}
-			\includegraphics[scale=0.40]{cross.jpg}
+			\includegraphics[scale=0.37]{cross.jpg}
 			\caption{Rappresentazione di un cross} \label{fig:cross}
-			%Source: \url{http://www.allfootball.it/blog/calcio-vincere-allenando-i-dettagli/27-2-2017/calcio-la-marcatura-a-uomo-su-cross-laterale/}
+			Source: \url{http://www.allfootball.it/blog/calcio-vincere-allenando-i-dettagli/27-2-2017/calcio-la-marcatura-a-uomo-su-cross-laterale/}
 		\end{center}
 	\end{figure}
 	
 	Per tale motivo si è deciso di inserire una variabile specifica per questo tipo di passaggio nell'analisi. Una rappresentazione di un cross è mostrata nella Figura \ref{fig:cross}.
 \end{itemize}
 
-\subsection{Statistiche difensive}
+\subsection{Dati difensivi}
 
 In questo gruppo vi sono raggruppate le variabili che riguardano alcune statistiche relative alla fase difensiva fatta dalla squadra in esame.
 
@@ -340,7 +340,7 @@ Le possibili covariate sono le seguenti:
 		\begin{center}
 			\includegraphics[scale=0.35]{tackle.jpg}
 			\caption{Rappresentazione di un contrasto in scivolata}
-		%	Source: \url{https://www.ilmisterone.com/2022/01/24/partita-solo-tackle/}
+			Source: \url{https://www.ilmisterone.com/2022/01/24/partita-solo-tackle/}
 		 \label{fig:tackle}
 		\end{center}
 	\end{figure}

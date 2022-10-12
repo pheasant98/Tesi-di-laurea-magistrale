@@ -1,0 +1,77 @@
+\chapter{Appendice A}
+
+\section{Codice di adattamento dataset per il trasferimento dati} \label{sec:a1}
+\begin{lstlisting}[language=R]
+PossVs <- c()
+ShVs <- c()
+ShTVs <- c()
+G.ShVs <- c()
+PAttVs <- c()
+PCmp.Vs <- c()
+SPAttVs <- c()
+SPCmp.Vs <- c()
+MPAttVs <- c()
+MPCmp.Vs <- c()
+LPAttVs <- c()
+LPCmp.Vs <- c()
+ToDef3rdVs <- c()
+ToMid3rdVs <- c()
+ToAtt3rdVs <- c()
+ToAttPenVs <- c()
+ToDistVs <- c()
+FlsVs <- c()
+FldVs <- c()
+CrsVs <- c()
+IntVs <- c()
+TklWinVs <- c()
+RecovVs <- c()
+del <-c()
+k <- 1
+z <- 1
+for(i in 1:nrow(soccern)){
+	if(soccern$AtHome[i] == TRUE){
+		for(j in 1:nrow(soccern)){
+			if((soccern$Team[j] == soccern$Vs[i]) && (soccern$Team[i] == soccern$Vs[j]) && (soccern$AtHome[j] == FALSE)){
+				PossVs[k] <- soccern$Poss[j]
+				ShVs[k] <- soccern$Sh[j]
+				ShTVs[k] <- soccern$SoT[j]
+				G.ShVs[k] <- soccern$G.Sh[j]
+				PAttVs[k] <- soccern$PAtt[j]
+				PCmp.Vs[k] <- soccern$PCmp.[j]
+				SPAttVs[k] <- soccern$SPAtt[j]
+				SPCmp.Vs[k] <- soccern$SPCmp.[j]
+				MPAttVs[k] <- soccern$MPAtt[j]
+				MPCmp.Vs[k] <- soccern$MPCmp.[j]
+				LPAttVs[k] <- soccern$LPAtt[j]
+				LPCmp.Vs[k] <- soccern$LPCmp.[j]
+				ToDef3rdVs[k] <- soccern$ToDef3rd[j]
+				ToMid3rdVs[k] <- soccern$ToMid3rd[j]
+				ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
+				ToAttPenVs[k] <- soccern$ToAttPen[j]
+				ToDistVs[k] <- soccern$TotDist[j]
+				FlsVs[k] <- soccern$Fls[j]
+				FldVs[k] <- soccern$Fld[j]
+				CrsVs[k] <- soccern$Crs[j]
+				IntVs[k] <- soccern$Int[j]
+				TklWinVs[k] <- soccern$TklWin[j]
+				RecovVs[k] <- soccern$Recov[j]
+				k <- k + 1
+			}      
+		}
+	}
+	else{
+		del[z] <- i
+		z <- z + 1
+	}
+}
+\end{lstlisting}
+\bigskip
+\section{Codice per la creazione del data.frame Team} \label{sec:a2}
+\begin{lstlisting}[language=R]
+	> soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
+\end{lstlisting}
+\bigskip
+\section{Codice per la creazione del data.frame Vs} \label{sec:a3}
+\begin{lstlisting}[language=R]
+	> soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
+\end{lstlisting}

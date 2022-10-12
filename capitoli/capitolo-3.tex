@@ -12,7 +12,7 @@
 
 \section{Preprocessing dei dati}
 Dopo aver importato il dataset sul software R, il primo step da effettuare durante il prepocessing è individuare e risolvere possibili anomalie nei dati per poter poi effettuare analisi preliminari.\\
-Il dataset è stato importato in modo tale che la prima riga contenga l'intestazione, mentre le restanti righe tutte le osservazioni. Il commando usato per importare il dataset è il seguente:\\
+Il dataset è stato importato in modo tale che la prima riga contenga l'intestazione, mentre le restanti righe tutte le osservazioni. Il comando usato per importare il dataset è il seguente:\\
 
 \begin{lstlisting}[language=R]
 > soccer<-read.xlsx("SerieA.xlsx", 1, header=TRUE)
@@ -123,7 +123,7 @@ Per la relazione con la variabile \texttt{LPCmp\%}, si ha un grafico molto simil
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefPen}. Come si può notare questa non è per nulla significativa per la variabile risposta, infatti non c'è una minima variazione e i box hanno tutti la stessa varianza. Tale esito può essere giustificato dal fatto che le squadre cercano di rimane fuori il più possibile dalla propria area di rigore per non portare troppo vicino alla porta l'avversario. Da ciò quindi tale variabile non sarà inserita nel modello.\\
+La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefPen}. Come si può notare questa non è per nulla significativa per la variabile risposta, infatti non c'è una minima variazione e i box hanno tutti la stessa varianza. Tale esito può essere giustificato dal fatto che le squadre cercano di rimane fuori il più possibile dalla propria area di rigore per non portare troppo vicino alla porta l'avversario. Da ciò si puo pensare che tale variabile non è significativa per il modello; prima di escluderla si andrà ad analizzare se vi è qualche interazione con altre variabili che la fanno diventare significativa.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -191,7 +191,7 @@ Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \textt
 
 \subsection{Analisi relazioni tra covariate} 
 Per concludere l'attività di prepossening, non resta che analizzare le relazioni tra covariate in modo da individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che vi sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
-Di seguito si riporteranno le interazioni che sono state individuate come significative. Si sottolinea che nei grafici di dispersione si è inserito come terza variabile, la variabile risposta \texttt{Res}, dove ogni colore rappresenta una delle tre classi di \texttt{Res}. Tale scelta è stata fatta per capire se i tre gruppi di classi sono ben separati e quindi è utile avere un interazione che vada a spiegare questi tre gruppi.\\
+Di seguito si riporteranno le interazioni che sono state individuate come significative. Si sottolinea che nei grafici di dispersione si è inserito come terza variabile, la variabile risposta \texttt{Res}, dove ogni colore rappresenta una delle tre classi di \texttt{Res}. Tale scelta è stata fatta per capire se i tre gruppi di classi sono ben separati e quindi è utile avere un'interazione che vada a spiegare questi tre gruppi.\\
 
 
 \bigskip
@@ -261,14 +261,14 @@ Sono state individuate le seguenti tre interazioni con la variabile \texttt{TotD
 
 Infine sono state individuate le seguenti interazioni:
 \begin{itemize}
-	\item Interazione tra \texttt{ToAtt3rd} e \texttt{ToAttPen}. Dato che le due variabili si riferiscono a due zone di campo adiacenti e interessanti a fini del l'esito della partita, si ipotizza che vi sia una interazione. Nella Figura \ref{fig:toatt} si può notare un correlazione positiva molto lineare tra le due variabile che prova l'ipotesi. Si nota all'inizio che tutti i dati sono molto vicini ma che via via diventano più sparsi. Tale interazione sembra perciò utile a spiegare la variabile risposta.
+	\item Interazione tra \texttt{ToAtt3rd} e \texttt{ToAttPen}. Dato che le due variabili si riferiscono a due zone di campo adiacenti e interessanti a fini del l'esito della partita, si ipotizza che vi sia un'interazione. Nella Figura \ref{fig:toatt} si può notare un correlazione positiva molto lineare tra le due variabile che prova l'ipotesi. Si nota all'inizio che tutti i dati sono molto vicini ma che via via diventano più sparsi. Tale interazione sembra perciò utile a spiegare la variabile risposta.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{ToAtt3rd-ToAttPen.png}
 			\caption{Scatter plot tra \texttt{ToAtt3rd} e \texttt{ToAttPen}}  \label{fig:toatt}
 		\end{center}
 	\end{figure}
-	\item Interazione tra \texttt{PAtt} e \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che vi sia una interazione tra loro. Infatti tale interazione è possibile vederla nella Figura \ref{fig:pp} la quale sembra simile alla interazione \texttt{TotDist}*\texttt{PCmp\%}.
+	\item Interazione tra \texttt{PAtt} e \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che vi sia un'interazione tra loro. Infatti tale interazione è possibile vederla nella Figura \ref{fig:pp} la quale sembra simile all'interazione \texttt{TotDist}*\texttt{PCmp\%}.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{PAtt-PCmp.png}
@@ -305,10 +305,10 @@ Come si può notare una maggior correlazione tra le variabile è concentra nella
 \end{itemize}  
 
 
-Nella sottosezione precedente si poteva pensare di inserire interazione abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni pero sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
+Nella sottosezione precedente si poteva pensare di inserire interazioni abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni pero sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. Una correlazione cosi alta era prevedibile dato che vi è una ridondanza dei dati tra le variabili. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
 Il grafico suggerisce alcune interazioni che non sono state descritti ad esempio:\\ \texttt{Poss}*\texttt{ToAtt3rd}, \texttt{Poss}*\texttt{SPAtt},  \texttt{TotDist}*\texttt{ToAtt3rd}, \texttt{PCmp\%}*\texttt{SPAtt} e \texttt{PCmp\%}*\texttt{MPAtt}.
 Tali interazioni saranno analizzate durante la fase di modellazione per verificare se effettivamente sono significative per il modello.\\
-Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, tale interazione non è stata inserita perché la variabile \texttt{ToDefPen} non è significativa per la variabile risposta.
+Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, tale interazione può essere inserita perché va a giustificare il fatto che la variabile \texttt{ToDefPen} combinata con \texttt{ToDef3rd} diventa significativa per la variabile risposta.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -336,76 +336,9 @@ Inoltre per indicare nel modello se la squadra giocava in casa o no, i valori de
 
 
 
-\subsection{Codice per l'adattamento del dataset}
-Di seguito viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.
-
-\begin{lstlisting}[language=R]
-PossVs <- c()
-ShVs <- c()
-ShTVs <- c()
-G.ShVs <- c()
-PAttVs <- c()
-PCmp.Vs <- c()
-SPAttVs <- c()
-SPCmp.Vs <- c()
-MPAttVs <- c()
-MPCmp.Vs <- c()
-LPAttVs <- c()
-LPCmp.Vs <- c()
-ToDef3rdVs <- c()
-ToMid3rdVs <- c()
-ToAtt3rdVs <- c()
-ToAttPenVs <- c()
-ToDistVs <- c()
-FlsVs <- c()
-FldVs <- c()
-CrsVs <- c()
-IntVs <- c()
-TklWinVs <- c()
-RecovVs <- c()
-del <-c()
-k <- 1
-z <- 1
-for(i in 1:nrow(soccern)){
-	if(soccern$AtHome[i] == TRUE){
-		for(j in 1:nrow(soccern)){
-			if((soccern$Team[j] == soccern$Vs[i]) && (soccern$Team[i] == soccern$Vs[j]) && (soccern$AtHome[j] == FALSE)){
-				PossVs[k] <- soccern$Poss[j]
-				ShVs[k] <- soccern$Sh[j]
-				ShTVs[k] <- soccern$SoT[j]
-				G.ShVs[k] <- soccern$G.Sh[j]
-				PAttVs[k] <- soccern$PAtt[j]
-				PCmp.Vs[k] <- soccern$PCmp.[j]
-				SPAttVs[k] <- soccern$SPAtt[j]
-				SPCmp.Vs[k] <- soccern$SPCmp.[j]
-				MPAttVs[k] <- soccern$MPAtt[j]
-				MPCmp.Vs[k] <- soccern$MPCmp.[j]
-				LPAttVs[k] <- soccern$LPAtt[j]
-				LPCmp.Vs[k] <- soccern$LPCmp.[j]
-				ToDef3rdVs[k] <- soccern$ToDef3rd[j]
-				ToMid3rdVs[k] <- soccern$ToMid3rd[j]
-				ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
-				ToAttPenVs[k] <- soccern$ToAttPen[j]
-				ToDistVs[k] <- soccern$TotDist[j]
-				FlsVs[k] <- soccern$Fls[j]
-				FldVs[k] <- soccern$Fld[j]
-				CrsVs[k] <- soccern$Crs[j]
-				IntVs[k] <- soccern$Int[j]
-				TklWinVs[k] <- soccern$TklWin[j]
-				RecovVs[k] <- soccern$Recov[j]
-				k <- k + 1
-			}      
-		}
-	}
-	else{
-		del[z] <- i
-		z <- z + 1
-	}
-}
-\end{lstlisting}
-\bigskip
-
-Con il codice precedente si ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
+\subsection{Implementazione dell'adattamento del dataset}
+Nella Sezione \ref{sec:a1} viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.\\
+Tale codice ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
 Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}.\\
 Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} vi è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
 
@@ -415,19 +348,8 @@ Di seguito vengono riportati i comandi fatti per applicare le modifiche al datas
 > soccern3 <- soccern2[-del,]
 \end{lstlisting}
 \bigskip
-\bigskip
-Con il precedente commando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. 
-\bigskip
-\begin{lstlisting}[language=R]
-> soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
-\end{lstlisting}
+Con il precedente comando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. \\
 
-\bigskip
-Con il precedente commando si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.
-\bigskip
-\bigskip
-\begin{lstlisting}[language=R]
-> soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
-\end{lstlisting}
-\bigskip
-Con il precedente commando si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati vengo riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\
+Con il comando mostrato nella Sezione \ref{sec:a2} si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.\\
+
+Con il comando mostrato nella Sezione \ref{sec:a3} si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati, vengono riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\

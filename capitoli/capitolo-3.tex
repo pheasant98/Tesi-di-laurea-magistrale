@@ -12,22 +12,22 @@
 
 \section{Preprocessing dei dati}
 Dopo aver importato il dataset utilizzando il linguaggio R, il primo step da effettuare durante il prepocessing è individuare e risolvere possibili anomalie nei dati per poter poi effettuare analisi preliminari.\\
-Il dataset è stato importato in modo tale che la prima riga contenga l'intestazione, mentre le restanti righe tutte le osservazioni. Il comando usato per importare il dataset è il seguente:\\
+Il dataset è stato importato in modo che la prima riga contenga l'intestazione, mentre le restanti righe tutte le osservazioni. Il comando usato per importare il dataset è il seguente:\\
 
 \begin{lstlisting}[language=R]
 > soccer<-read.xlsx("SerieA.xlsx", 1, header=TRUE)
 \end{lstlisting}
 \bigskip
-Il dataset non ha valori mancanti. Questo è stato possibile grazie a una buona fonte di dati che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\ %DEVI DIRE QUALE FONTE E NON DIRE "FONTE DI DATI METTE A DISPOSIZIONE DATI", È RIDONDANTE
+Il dataset non ha valori mancanti. Questo è stato possibile grazie a FBref che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\ 
 Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
-Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. Le variabili \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Queste variabili devono essere interpretate come fattore cioè un variabile non numerica, espressa in termini verbali ad esempio una categoria; quindi ogni squadra sarà un livello del fattore. Analogamente per \texttt{AtHome} vi è un interpretazione sbagliata; ciononostante si pensi che possa essere un tipo \texttt{logical} si è preferito convertire la variabile in un fattore con due livelli. Anche la variabile \texttt{Res} è stata trasformata in un fattore con i livelli; 1 = vittoria, 0 = pareggio, -1 = sconfitta.
+Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. Le variabili \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Queste variabili devono essere interpretate come fattore cioè un variabile non numerica, espressa in termini verbali ad esempio una categoria; quindi ogni squadra sarà un livello del fattore. Analogamente per \texttt{AtHome} c'è un interpretazione sbagliata; ciononostante si pensi che possa essere un tipo \texttt{logical} si è preferito convertire la variabile in un fattore con due livelli. Anche la variabile \texttt{Res} è stata trasformata in un fattore con i livelli; 1 = vittoria, 0 = pareggio, -1 = sconfitta.
 %SECONDO ME LO PREFERISCE RISCRITTO IN MODO MOLTO PIù SEMPLIFICATO, MA MAGARI PER LA LINGUA ITALIANA LE VA BENE COSì
 
 
 \section{Analisi grafica dei dati}
-In questa sezione attraverso il supporto di grafici, si analizzerà graficamente i dati disponibili e le loro relazione per avere una prima visione dei dati raccolti. Si cercherà di individuare possibili outliers o anomalie, quali distribuzioni hanno i dati e soprattutto valutare le relazione tra covariate e variabile di risposta e tra due covariate, con lo scopo di individuare quali possano essere significative per la variabile risposta e quali interazioni emergono dall'analisi grafica.\\
+In questa sezione attraverso il supporto di grafici, si analizzerà graficamente i dati disponibili e le loro relazione per avere una prima visione dei dati raccolti. Si cercherà di individuare possibili outliers, quali distribuzioni hanno i dati e soprattutto valutare le relazione tra covariate e variabile di risposta e tra due covariate, con lo scopo di individuare quali possano essere significative per la variabile risposta e quali interazioni emergono dall'analisi grafica.\\
 
-Come primo passo, è stata valutata la distribuzione delle classi della variabile risposta \texttt{Res} all'interno delle osservazioni disponibili. Tale distribuzione è mostrata nella Figura \ref{fig:res}.
+Come primo passo, è stata valutata la distribuzione delle classi della variabile risposta \texttt{Res} all'interno delle osservazioni disponibili. La distribuzione è mostrata nella Figura \ref{fig:res}.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -38,7 +38,7 @@ Come primo passo, è stata valutata la distribuzione delle classi della variabil
 
 Si può notare come le classi sembrino ben distribuite, dato che abbiamo 196 pareggi e 282 vittorie e altrettante sconfitte. Si ha quindi un campione abbastanza ampio, distribuito e privo di classi povere.\\
 
-Aumentando il livello di dettaglio è di interessante si può analizzare come queste classificazione sono distribuite tra le varie squadre. %NON CAPISCO COSA VUOI DIRE 
+Aumentando il livello di dettaglio è di interesse analizzare come queste classificazione sono distribuite tra le varie squadre.  
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -47,12 +47,12 @@ Aumentando il livello di dettaglio è di interessante si può analizzare come qu
 	\end{center}
 \end{figure}
 
-Nella Figura \ref{fig:team} si può notare come la distribuzione di vittorie, pareggi e sconfitte non è omogenea tra le squadre. Ovviamente è un risultato che ci si aspettava ma che sottolinea la correttezza dei dati e la presenza di qualche elemento nascosto che ne ha determinato tale distribuzione.\\
+Nella Figura \ref{fig:team} si può notare come la distribuzione di vittorie, pareggi e sconfitte non è omogenea tra le squadre. Ovviamente è un risultato che ci si aspettava ma che sottolinea la correttezza dei dati e la presenza di qualche elemento nascosto che ne ha determinato una tale distribuzione.\\
 
 \subsection{Analisi relazione tra variabile risposta e covariate}
 In seguito è stata analizzata le relazione tra variabile di risposta con alcune covariate.\\
 
-La prima relazione che si analizza riguarda la variabile categorica \texttt{AtHome}. Nella Figura \ref{fig:AtHome} si può vedere che c'è una leggera variazione dei risultati tra la squadra che gioca in casa e l'avversaria. Infatti, c'è una leggera tendenza a favorire la vittoria per la squadra che gioca in casa. Naturalmente non deve esserci alcuna variazione per quanto riguarda il pareggio dato che entrambe le squadre lo ottengono. Risulta perciò significativa la variabile \texttt{AtHome}.\\
+La prima relazione che si analizza riguarda la variabile categorica \texttt{AtHome}. Nella Figura \ref{fig:AtHome} si può vedere che c'è una leggera variazione dei risultati tra la squadra che gioca in casa e l'avversaria. Infatti, c'è una leggera tendenza a favorire la vittoria per la squadra che gioca in casa. Naturalmente non deve esserci alcuna variazione per il pareggio dato che entrambe le squadre lo ottengono. Risulta perciò significativa la variabile \texttt{AtHome}.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -61,7 +61,7 @@ La prima relazione che si analizza riguarda la variabile categorica \texttt{AtHo
 	\end{center}
 \end{figure}
 
-Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti vi è un relazione positiva dove, valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. Vi è una buona distribuzione dei dati, infatti le code sono simmetriche mentre vi è una variabilità quasi identica. Si segnala solo che la mediana della sconfitta è più vicina al 3$^{\circ}$ quantile mentre quella della vittoria è più vicina al 1$^{\circ}$ quantile. Inoltre non vi sono presenti outliers.\\
+Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla Figura \ref{fig:Poss} si nota che tale variabile sembra essere significativa per l'esito. Infatti c'è un relazione positiva dove, valori più alti di possesso palla sono registrati nel box della vittoria e ciò può portare a una maggiore probabilità di vittoria. C'è una buona distribuzione dei dati, infatti le code sono simmetriche mentre c'è una variabilità quasi identica. Si segnala solo che la mediana della sconfitta è più vicina al 3$^{\circ}$ quantile mentre quella della vittoria è più vicina al 1$^{\circ}$ quantile. Inoltre non ci sono presenti outliers.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -70,9 +70,9 @@ Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:sot} mostra come si comporta la relazione con \texttt{SoT}. Come ci si aspetta si hanno valori più alti nella vittoria e valori molto più bassi nella sconfitta, si ha una buona distribuzione dei valori nella vittoria dato che le code sono simmetriche, per le altre due classi non c'è simmetria dato che ci sono valori più bassi rispetto a valori più alti. Vi sono inoltre alcuni outliers che si discostano dalla distribuzione di tutte e tre le classi dovuti al fatto che ci sono state squadre che hanno tirato molto in porta. Le mediane dei box pareggio e vittoria non sono equidistanti dai quantili ma più vicine al 1$^{\circ}$ quantile. Il box della sconfitta ha una bassa varianza. In conclusione, avere un valore alto di tiri in porta sembra essere significativo ai fini della vittoria.\\
+La Figura \ref{fig:sot} mostra come si comporta la relazione con \texttt{SoT}. Come ci si aspetta si hanno valori più alti nella vittoria e valori molto più bassi nella sconfitta, c'è una buona distribuzione dei valori nella vittoria dato che le code sono simmetriche, per le altre due classi non c'è simmetria dato che ci sono valori più bassi rispetto a valori più alti. Inoltre alcuni outliers si discostano dalla distribuzione di tutte e tre le classi perché ci sono state squadre che hanno tirato molto in porta. Le mediane dei box pareggio e vittoria non sono equidistanti dai quantili ma più vicine al 1$^{\circ}$ quantile. Il box della sconfitta ha una bassa varianza. In conclusione, avere un valore alto di tiri in porta sembra essere significativo ai fini della vittoria.\\
 
-Per la relazione con la variabile \texttt{Sh}, si ha un grafico molto simile al grafico mostrato nella Figura \ref{fig:Poss}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{Sh} rispetto al grafico di \texttt{Poss} ha dei outliners, ha una minor varianza e la mediana della sconfitta non è equidistante dai quantili ma più vicina al 1$^{\circ}$ quantile.\\
+Per la relazione con la variabile \texttt{Sh}, si ha un grafico molto simile al grafico mostrato nella Figura \ref{fig:Poss}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{Sh} rispetto al grafico di \texttt{Poss} ha dei outliers, ha una minor varianza e la mediana della sconfitta non è equidistante dai quantili ma più vicina al 1$^{\circ}$ quantile.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -81,7 +81,7 @@ Per la relazione con la variabile \texttt{Sh}, si ha un grafico molto simile al 
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si nota che vi sono valori molto bassi ma leggermente più alti per la vittoria. La distribuzione non è buona perché le code sono asimmetriche infatti tutti i valori sono concentrati in basso e pochi verso la coda più in alto, per di più c'è una bassa varianza tra i valori. Vi è la presenza di outliners dovuti a partite dove le squadre sono riuscite a ottenere il massimo da ogni tiro. I risultati mostrati nonostante la pessima distribuzione, sono comunque coerenti dato che non ci si aspetta dal rapporto tiri gol un numero alto ma comunque una tendenza che favorisca la vittoria.\\
+La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si nota che ci sono valori molto bassi ma leggermente più alti per la vittoria. La distribuzione non è buona perché le code sono asimmetriche infatti tutti i valori sono concentrati in basso e pochi verso la coda più in alto, per di più c'è una bassa varianza tra i valori. C'è la presenza di outliers perché alcune squadre sono riuscite a ottenere il massimo da ogni tiro. I risultati mostrati nonostante la pessima distribuzione, sono comunque coerenti dato che non ci si aspetta dal rapporto tiri-gol un numero alto ma comunque una tendenza che favorisca la vittoria.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -90,7 +90,7 @@ La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves}. Come si può notare sembra che tale variabile sia poco significativa ai fini del risultato. Infatti c'è poca variazione tra una classe e l'altra dato che avere un alto numero di parate non è determinante a fini del risultato.\\
+La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves}. Come si può notare sembra che \texttt{Saves} sia poco significativa ai fini del risultato. Infatti c'è poca variazione tra una classe e l'altra dato che avere un alto numero di parate non è determinante a fini del risultato.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -99,21 +99,21 @@ La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'elevato numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda più in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto agli altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1$^{\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita dato che maggior numero di passaggi si prova ad effettuare maggiori sono le possibilità di vittoria, occorre pero sapere quanto è precisa la squadra.\\
+La Figura \ref{fig:pass} mostra come si comporta la relazione con \texttt{PAtt} e con \texttt{PCmp\%}. Per entrambi sembra significativo l'elevato numero di passaggi tentati ma soprattutto quelli completati ai fini della vittoria. Nel primo boxplot la coda più in alto è più lunga rispetto alla coda più in basso, quindi abbiamo valori più concentrati verso il basso che verso l'alto. Sempre nel primo boxplot il box della vittoria ha una maggiore variabilità rispetto agli altri due è varia di più avendo valori più alti; sia la mediana del box vittoria e sia quello del pareggio sono più vicine al 1$^{\circ}$ quantile, viceversa quella della sconfitta. I dati nel primo boxplot sembrano essere coerenti con l'esito della partita perché, maggior numero di passaggi si prova ad effettuare, maggiori sono le possibilità di vittoria. Occorre però sapere quanto è precisa la squadra.\\
 
-Nel secondo boxplot si notano valori alti e molti outliners con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti valori alti, infatti la coda più in alto e molto meno lunga rispetto alla coda più in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione pero non dà la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
+Nel secondo boxplot si notano valori alti e molti outliers con valori bassi dovuti al fatto che ci sono state partite dove alcune squadre sono state poco precise nei passaggi. A differenza del primo boxplot il secondo boxplot ha molti valori alti, infatti la coda più in alto e molto meno lunga rispetto alla coda più in basso e le variabilità dei box sembrano essere uguali tra di loro; anche qui le code non sono simmetriche e quindi non c'è una buona distribuzione dei dati. Sorprendentemente sembra che avere un buona precisione però non dà la sicurezza di una vittoria, inoltre l'andamento prima scende da sconfitta a pareggio e poi sale da pareggio a vittoria.\\
 
-Per la relazione con la variabile \texttt{SPAtt}, si ha un grafico molto simile al grafico a sinistra della Figura \ref{fig:pass}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{SPAtt} ha un maggior numero di outliners soprattutto per la sconfitta rispetto al grafico \texttt{PAtt}; sempre per il grafico di \texttt{SPAtt} si ha una minor varianza per tutte le tre classi oltre a un insieme di valori più bassi ma questo è naturale dato che \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli corti.\\
+Per la relazione con la variabile \texttt{SPAtt}, si ha un grafico molto simile al grafico a sinistra della Figura \ref{fig:pass}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{SPAtt} ha un maggior numero di outliers soprattutto per la sconfitta rispetto al grafico \texttt{PAtt}; sempre per il grafico di \texttt{SPAtt} si ha una minor varianza per tutte le tre classi oltre a un insieme di valori più bassi ma questo è naturale perché \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli corti.\\
 
 Per la relazione con la variabile \texttt{SPCmp\%}, si ha un grafico molto simile al grafico a destra della Figura \ref{fig:pass}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{SPCmp\%} ha per il pareggio una distribuzione più ampia dei valori rispetto al grafico di \texttt{PCmp\%} e viceversa per la vittoria, il grafico di \texttt{SPCmp\%} ha una distribuzione più ristretta.\\
 
 Per la relazione con la variabile \texttt{MPAtt}, si ha un grafico molto simile al grafico a sinistra della Figura \ref{fig:pass}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{MPAtt} ha per la sconfitta una distribuzione più ampia dei valori rispetto al grafico di \texttt{PAtt}.\\
-I valori sono più bassi rispetto al grafico di \texttt{PAtt} ma questo è naturale dato che \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli medi.\\
+I valori sono più bassi rispetto al grafico di \texttt{PAtt} ma questo è naturale perché \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli medi.\\
 
 Per la relazione con la variabile \texttt{MPCmp\%}, si ha un grafico molto simile al grafico a destra della Figura \ref{fig:pass}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{MPCmp\%} rispetto al grafico di \texttt{PCmp\%} ha valori più alti e molti più outliers, inoltre le code più in basso per la sconfitta e la vittoria sono più corte.\\
 
 Per la relazione con la variabile \texttt{LPAtt}, si ha un grafico molto simile al grafico a sinistra della Figura \ref{fig:pass}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{LPAtt} rispetto al grafico di \texttt{PAtt} ha per la sconfitta valori più bassi rispetto al pareggio e alla vittoria, ha un maggior numero di outliers oltre ad avere per il pareggio una distribuzione più ampia dei valori e per la vittoria, una distribuzione più ristretta.\\
-I valori sono più bassi rispetto al grafico di \texttt{PAtt} ma questo è naturale dato che \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli lunghi.\\
+I valori sono più bassi rispetto al grafico di \texttt{PAtt} ma questo è naturale perché \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli lunghi.\\
 
 Per la relazione con la variabile \texttt{LPCmp\%}, si ha un grafico molto simile al grafico a destra della Figura \ref{fig:pass}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{LPCmp\%} rispetto al grafico di \texttt{PCmp\%} ha valori più bassi, la distribuzione dei valori per la sconfitta è ben equilibrata dato che le code sono della stessa lunghezza oltre alla mediana che è equidistante dai due quantili, analogamente anche il pareggio ha una distribuzione equilibrata ma più ampia e, una mediana equidistante dai quantili.\\
 
@@ -124,7 +124,7 @@ Per la relazione con la variabile \texttt{LPCmp\%}, si ha un grafico molto simil
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefPen}. Come si può notare questa non è per nulla significativa per la variabile risposta, infatti non c'è una minima variazione e i box hanno tutti la stessa varianza. Tale esito può essere giustificato dal fatto che le squadre cercano di rimane fuori il più possibile dalla propria area di rigore per non portare troppo vicino alla porta l'avversario. Da ciò si puo pensare che tale variabile non è significativa per il modello; prima di escluderla si andrà ad analizzare se vi è qualche interazione con altre variabili che la fanno diventare significativa.\\
+La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefPen}. Come si può notare questa non è per nulla significativa per la variabile risposta, infatti non c'è una minima variazione e i box hanno tutti la stessa varianza. L'esito può essere giustificato dal fatto che le squadre cercano di rimane fuori il più possibile dalla propria area di rigore per non portare troppo vicino alla porta l'avversario. Da ciò si può ipotizzare che \texttt{ToDefPen} non è significativa per il modello; prima di escluderla si andrà ad analizzare se c'è qualche interazione con altre variabili che la fanno diventare significativa.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -133,7 +133,7 @@ La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefP
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:att} mostra come si comporta la relazione con \texttt{ToAttPen}. Contrariamente quanto visto con la Figura \ref{fig:defp} qui si nota una certa variazione da una un box e l'altro, infatti vi è una tendenza positiva che porta ad aver valori più alti in caso di vittoria. Si ha una maggior varianza per quanto riguarda la vittoria rispetto ai altri due esiti e la distribuzione di tutti e tre è abbastanza bilanciata se non che la coda più bassa è leggermente meno lunga rispetto all'altra coda; la mediana invece è equilibrata. Si nota inoltre che vi sono alcuni outliners, segno che alcune squadre in qualche partita, si sono particolarmente rese note nel produrre un quantitativo di tocchi maggiore rispetto alla distribuzione, ciò pero non sembra influenzare l'esito.\\
+La Figura \ref{fig:att} mostra come si comporta la relazione con \texttt{ToAttPen}. Contrariamente quanto visto con la Figura \ref{fig:defp} qui si nota una certa variazione da una un box e l'altro, infatti c'è una tendenza positiva che porta ad aver valori più alti in caso di vittoria. C'è una maggior varianza per quanto riguarda la vittoria rispetto agli altri due esiti e la distribuzione di tutti e tre è abbastanza bilanciata se non che, la coda più in basso è leggermente meno lunga rispetto all'altra coda; la mediana invece è equilibrata. Si nota inoltre che ci sono alcuni outliers, segno che alcune squadre in qualche partita, si sono particolarmente rese note nel produrre un quantitativo di tocchi maggiore rispetto alla distribuzione, ciò però non sembra influenzare l'esito.\\
 
 Per la relazione con la variabile \texttt{ToDef3rd}, si ha un grafico molto simile a quello mostrato nella Figura \ref{fig:att}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{ToDef3rd} rispetto al grafico di \texttt{ToAttPen} ha un minore numero di outliers soprattutto per il pareggio, e sempre per il pareggio una varianza simile a quella della sconfitta. La vittoria invece ha una distribuzione ben equilibrata.\\
 
@@ -148,7 +148,7 @@ Per la relazione con la variabile \texttt{ToAtt3rd}, si ha un grafico molto simi
 	\end{center}
 \end{figure}
 
-Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei falli, \texttt{Fls} e \texttt{Fld}. Nel boxplot a sinistra si può notare che i valori più alti sono nel pareggio mentre sono presenti valori più bassi nella vittoria. Ciò fa pensare che subire molti falli può impedire la vittoria alla squadra che li subisce. Per quanto riguarda la distribuzione sembra essere buona; c'è minor varianza per quanto riguarda la sconfitta. \\
+Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei falli, \texttt{Fls} e \texttt{Fld}. Nel boxplot a sinistra si può notare che i valori più alti sono nel pareggio mentre sono presenti valori più bassi nella vittoria. Ciò fa ipotizzare che subire molti falli può impedire la vittoria alla squadra che li subisce. Per quanto riguarda la distribuzione sembra essere buona; c'è minor varianza per quanto riguarda la sconfitta. \\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -157,13 +157,13 @@ Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei 
 	\end{center}
 \end{figure}
 
-Nel secondo boxplot si può notare che i valori più alti sono presenti sia sul pareggio e sia sulla vittoria e sempre qui si ha una maggior distribuzione rispetto alla sconfitta. Sembra perciò che dal grafico si può intuire che se la squadra non commette dei falli allora sarà più soggetta a perdere.\\
+Nel secondo boxplot valori più alti sono presenti sia sul pareggio e sia sulla vittoria e sempre qui si ha una maggior distribuzione rispetto alla sconfitta. Sembra perciò che dal grafico si può intuire che se la squadra non commette dei falli allora sarà più soggetta a perdere.\\
 
 Per la relazione con la variabile \texttt{Off}, si ha un grafico molto simile a quello mostrato nella Figura \ref{fig:saves}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{Off} rispetto al grafico di \texttt{Saves} ha meno valori per la sconfitta rispetto alle altre due classi e le mediane della sconfitta e del pareggio sono attaccate al 1$^{\circ}$ quantile. Data la poca significatività con la variabile risposta si opta per non inserirla nel modello.\\
 
 Per la relazione con la variabile \texttt{Crs}, si ha un grafico molto simile a quello mostrato nella Figura \ref{fig:int}. Le poche differenze che si possono riscontrare tra i due grafici sono: il grafico di \texttt{Crs} rispetto al grafico di \texttt{Saves} ha per la sconfitta più variabilità e le code più in basso della sconfitta e della vittoria sono più corte.\\
 
-La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. Sorprendentemente valori più alti sono registrati nella sconfitta, anche se la mediana risulta essere più vicina al 1$^{\circ}$ quantile sottolineando che vi è un maggior numero di valori bassi piuttosto che alti. La mediana dei restanti esiti invece e ben equilibrata ma il pareggio risulta avere meno variabilità. Sembra perciò che effettuare troppi intercettazioni dei passaggi avversari contrariamente da quanto si pensi sia controproducente per la vittoria. Si segnala inoltre la presenza di alcuni outliners con valori alti di intercettazioni, che si discostano dalle distribuzioni.\\
+La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. Sorprendentemente valori più alti sono registrati nella sconfitta, anche se la mediana risulta essere più vicina al 1$^{\circ}$ quantile sottolineando che c'è un maggior numero di valori bassi piuttosto che alti. La mediana dei restanti esiti invece è ben equilibrata ma il pareggio risulta avere meno variabilità. Sembra perciò che effettuare troppi intercettazioni dei passaggi avversari contrariamente da quanto si pensi sia controproducente per la vittoria. Si segnala inoltre la presenza di alcuni outliers con valori alti di intercettazioni, che si discostano dalle distribuzioni.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -172,7 +172,7 @@ La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. S
 	\end{center}
 \end{figure}
 
-La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}. Come si può notare, vincere più contrasti possibili evita di subire una sconfitta. Infatti vi sono valori più alti in pareggio e vittoria oltre a una maggiore varianza rispetto alla sconfitta. Nello specifico pero si nota che: nella distribuzione dei valori vi sono maggior valori alti nella vittoria rispetto al pareggio, graficamente lo si vede dalla mediana che nel pareggio è più vicina al 1$^{\circ}$ quindi a valori più bassi e lo si nota anche dalla coda più in basso che è meno lunga rispetto a quella più in alto; invece la mediana della vittoria risulta più vicina al 3$^{\circ}$ oltre ad avere la coda più in alto, più corta rispetto a quella più in basso. Vi è inoltre qualche outliners con valori più alti di contrasti vinti ma sembrano non influenzare la classificazione.\\
+La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}. Come si può notare, vincere più contrasti possibili evita di subire una sconfitta. Infatti ci sono valori più alti in pareggio e vittoria oltre a una maggiore varianza rispetto alla sconfitta. Nello specifico però si nota che: nella distribuzione ci sono maggior valori alti nella vittoria rispetto al pareggio, graficamente lo si vede dalla mediana che nel pareggio è più vicina al 1$^{\circ}$ quindi a valori più bassi e lo si nota anche dalla coda più in basso che è meno lunga rispetto a quella più in alto; invece la mediana della vittoria risulta più vicina al 3$^{\circ}$ oltre ad avere la coda più in alto, più corta rispetto a quella più in basso. C'è inoltre qualche outliers con valori più alti di contrasti vinti ma sembrano non influenzare la classificazione.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -188,18 +188,18 @@ La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}
 	\end{center}
 \end{figure} 
 
-Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra equidistante dai quantili per entrambe le classi. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che vi sono numerosi outliners sopratutto per il pareggio.
+Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra equidistante dai quantili per entrambe le classi. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che ci sono numerosi outliers sopratutto per il pareggio.
 
 \subsection{Analisi relazioni tra covariate} 
-Per concludere l'attività di prepossening, non resta che analizzare le relazioni tra covariate in modo da individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che vi sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
+Per concludere l'attività di prepossening, non resta che analizzare le relazioni tra covariate in modo da individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che ci sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
 Di seguito si riporteranno le interazioni che sono state individuate come significative. Si sottolinea che nei grafici di dispersione si è inserito come terza variabile, la variabile risposta \texttt{Res}, dove ogni colore rappresenta una delle tre classi di \texttt{Res}. Tale scelta è stata fatta per capire se i tre gruppi di classi sono ben separati e quindi è utile avere un'interazione che vada a spiegare questi tre gruppi.\\
 
 
 \bigskip
 Sono state individuate le seguenti tre interazioni con la variabile \texttt{Sh}:
 \begin{itemize}
-	\item Interazione tra \texttt{Sh} e \texttt{SoT}. Chiaramente vi si può dedurre facilmente che vi possa essere una buona correlazione tra queste due variabili perché teoricamente più tiri vengono effettuati maggiori saranno i tiri in porta. \\
-	Tale relazione viene anche mostrata graficamente, infatti nella Figura \ref{fig:ShSoT} si può notare che vi è un'andamento positivo tra le due variabili, al cresce di una vi è un aumento quasi lineare dell'altra.
+	\item Interazione tra \texttt{Sh} e \texttt{SoT}. Chiaramente si può dedurre facilmente che possa essere una buona correlazione tra queste due variabili perché teoricamente più tiri vengono effettuati maggiori saranno i tiri in porta. \\
+	Tale relazione viene anche mostrata graficamente, infatti nella Figura \ref{fig:ShSoT} si può notare che c'è un'andamento positivo tra le due variabili, al cresce di una c'è un aumento quasi lineare dell'altra.
 	Come si può notare dai colori inseriti nel grafico per indicare le tre classi della variabile risposta, l'effetto combinato delle due variabili è utile a spiegare la variabile risposta dato che, valori più bassi sono quasi sempre classificati come sconfitta, un po' più alti come pareggio, mentre quelli più alti sono quasi sempre classificati come vittoria.
 	Molte volte i valori vengo ripetuti per molte osservazioni, quindi i valori nel grafico sono disposti in colonne e non sparsi.
 	\begin{figure}[htbp]
@@ -208,7 +208,7 @@ Sono state individuate le seguenti tre interazioni con la variabile \texttt{Sh}:
 			\caption{Scatter plot tra \texttt{Sh} e \texttt{SoT}} \label{fig:ShSoT}
 		\end{center}
 	\end{figure} 
-	\item Interazione tra \texttt{Sh} e \texttt{ToAtt3rd}. È ragionevole ipotizzare che il numero di tocchi fatti nella trequarti avversaria possano creare azioni che portano ad effettuare un tiro verso la porta avversaria; è quindi possibile che tra le due variabili vi possa esserci una relazione. L'ipotesi è avvalorata dalla Figura \ref{fig:shtreq} dove è presente una tendenza positiva quasi lineare tra le due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione.
+	\item Interazione tra \texttt{Sh} e \texttt{ToAtt3rd}. È ragionevole ipotizzare che il numero di tocchi fatti nella trequarti avversaria possano creare azioni che portano ad effettuare un tiro verso la porta avversaria; è quindi possibile che tra le due variabili possa esserci una relazione. L'ipotesi è avvalorata dalla Figura \ref{fig:shtreq} dove è presente una tendenza positiva quasi lineare tra le due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{sh-toatt3rd.png}
@@ -233,7 +233,7 @@ Sono state individuate le seguenti tre interazioni con la variabile \texttt{Poss
 			\caption{Scatter plot tra \texttt{Poss} e \texttt{PAtt}}  \label{fig:posspatt}
 		\end{center}
 	\end{figure}
-	\item Interazione tra \texttt{Poss} e \texttt{TotDist}. Appare naturale ipotizzare che il possesso della palla e la distanza percorsa con il pallone siano in relazione tra loro. È altrettanto naturale aspettarci da un alto possesso della palla un alto numero di metri percorsi con la palla in possesso, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posstotdist} che mostra una relazione positiva abbastanza lineare tra le due ipotesi. Si segnala pero che dal grafico sembra che non vi sia una chiara divisione delle osservazioni in tre gruppi, tale aspetto sarà tenuto in considerazione nella modellazione.
+	\item Interazione tra \texttt{Poss} e \texttt{TotDist}. Appare naturale ipotizzare che il possesso della palla e la distanza percorsa con il pallone siano in relazione tra loro. È altrettanto naturale aspettarci da un alto possesso della palla un alto numero di metri percorsi con la palla in possesso, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posstotdist} che mostra una relazione positiva abbastanza lineare tra le due ipotesi. Si segnala però che dal grafico sembra che non ci sia una chiara divisione delle osservazioni in tre gruppi, tale aspetto sarà tenuto in considerazione nella modellazione.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{poss-totdist.png}
@@ -244,14 +244,14 @@ Sono state individuate le seguenti tre interazioni con la variabile \texttt{Poss
 \pagebreak
 Sono state individuate le seguenti tre interazioni con la variabile \texttt{TotDist}:
 \begin{itemize}
-	\item Interazione tra \texttt{TotDist} e \texttt{PAtt}. Dato che per poter tentare di effettuare passaggi è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che vi sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili vi è una forte relazione lineare e con una correlazione positiva.
+	\item Interazione tra \texttt{TotDist} e \texttt{PAtt}. Dato che per poter tentare di effettuare passaggi è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che ci sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili c'è una forte relazione lineare e con una correlazione positiva.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{TotDist-PAtt.png}
 			\caption{Scatter plot tra \texttt{TotDist} e \texttt{PAtt}}  \label{fig:totdistpatt}
 		\end{center}
 	\end{figure}
-	\item Interazione tra \texttt{TotDist} e \texttt{PCmp\%}. Dato che per poter tentare di effettuare passaggi e completarli è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che vi sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili vi è una relazione con correlazione positiva, con una andamento simile a una funzione esponenziale, ciò sarà tenuto conto nella modellazione per valutare se inserire oppure no una delle variabili con un grado superiore.
+	\item Interazione tra \texttt{TotDist} e \texttt{PCmp\%}. Dato che per poter tentare di effettuare passaggi e completarli è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che ci sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili c'è una relazione con correlazione positiva, con una andamento simile a una funzione esponenziale, ciò sarà tenuto conto nella modellazione per valutare se inserire oppure no una delle variabili con un grado superiore.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{TotDist-PCmp.png}
@@ -262,14 +262,14 @@ Sono state individuate le seguenti tre interazioni con la variabile \texttt{TotD
 
 Infine sono state individuate le seguenti interazioni:
 \begin{itemize}
-	\item Interazione tra \texttt{ToAtt3rd} e \texttt{ToAttPen}. Dato che le due variabili si riferiscono a due zone di campo adiacenti e interessanti a fini del l'esito della partita, si ipotizza che vi sia un'interazione. Nella Figura \ref{fig:toatt} si può notare un correlazione positiva molto lineare tra le due variabile che prova l'ipotesi. Si nota all'inizio che tutti i dati sono molto vicini ma che via via diventano più sparsi. Tale interazione sembra perciò utile a spiegare la variabile risposta.
+	\item Interazione tra \texttt{ToAtt3rd} e \texttt{ToAttPen}. Dato che le due variabili si riferiscono a due zone di campo adiacenti e interessanti a fini del l'esito della partita, si ipotizza che ci sia un'interazione. Nella Figura \ref{fig:toatt} si può notare un correlazione positiva molto lineare tra le due variabile che prova l'ipotesi. Si nota all'inizio che tutti i dati sono molto vicini ma che via via diventano più sparsi. Tale interazione sembra perciò utile a spiegare la variabile risposta.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{ToAtt3rd-ToAttPen.png}
 			\caption{Scatter plot tra \texttt{ToAtt3rd} e \texttt{ToAttPen}}  \label{fig:toatt}
 		\end{center}
 	\end{figure}
-	\item Interazione tra \texttt{PAtt} e \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che vi sia un'interazione tra loro. Infatti tale interazione è possibile vederla nella Figura \ref{fig:pp} la quale sembra simile all'interazione \texttt{TotDist}*\texttt{PCmp\%}.
+	\item Interazione tra \texttt{PAtt} e \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che ci sia un'interazione tra loro. Infatti tale interazione è possibile vederla nella Figura \ref{fig:pp} la quale sembra simile all'interazione \texttt{TotDist}*\texttt{PCmp\%}.
 	\begin{figure}[htbp]
 		\begin{center}
 			\includegraphics[scale=0.60]{PAtt-PCmp.png}
@@ -288,16 +288,16 @@ Come si può notare una maggior correlazione tra le variabile è concentra nella
 	\begin{itemize}
 		\item L'interazione tra \texttt{Sh} e \texttt{SoT} ha come valore 0,70 tale da giustificare l'inserimento dell'interazione.
 		\item L'interazione tra \texttt{Sh} e \texttt{ToAtt3rd} ha come valore 0,72 tale da giustificare l'inserimento dell'interazione.
-		\item L'interazione tra \texttt{Sh} e \texttt{ToAttPen} ha come valore 0,82 è un valore alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{Sh} e \texttt{ToAttPen} ha come valore 0,82 è un valore alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
 	\end{itemize}
 	\item Le interazioni con la variabile \texttt{Poss}:
 	\begin{itemize}
-		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,88 è un valore molto alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
-		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,81 è un valore alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,88 è un valore molto alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,81 è un valore alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
 	\end{itemize}
 	\item Le interazioni con la variabile \texttt{TotDist}:
 	\begin{itemize}
-		\item L'interazione tra \texttt{TotDist} e \texttt{PAtt} ha come valore 0,87 è un valore molto alto con un possibile rischio di collinearità. Tale valore pero giustifica l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{TotDist} e \texttt{PAtt} ha come valore 0,87 è un valore molto alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
 		\item L'interazione tra \texttt{TotDist} e \texttt{PCmp\%} ha come valore 0,75 tale da giustificare l'inserimento dell'interazione.
 	\end{itemize}
 
@@ -306,7 +306,7 @@ Come si può notare una maggior correlazione tra le variabile è concentra nella
 \end{itemize}  
 
 
-Nella sottosezione precedente si poteva pensare di inserire interazioni abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni pero sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. Una correlazione cosi alta era prevedibile dato che vi è una ridondanza dei dati tra le variabili. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
+Nella sottosezione precedente si poteva pensare di inserire interazioni abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni però sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. Una correlazione cosi alta era prevedibile dato che c'è una ridondanza dei dati tra le variabili. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
 Il grafico suggerisce alcune interazioni che non sono state descritti ad esempio:\\ \texttt{Poss}*\texttt{ToAtt3rd}, \texttt{Poss}*\texttt{SPAtt},  \texttt{TotDist}*\texttt{ToAtt3rd}, \texttt{PCmp\%}*\texttt{SPAtt} e \texttt{PCmp\%}*\texttt{MPAtt}.
 Tali interazioni saranno analizzate durante la fase di modellazione per verificare se effettivamente sono significative per il modello.\\
 Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, tale interazione può essere inserita perché va a giustificare il fatto che la variabile \texttt{ToDefPen} combinata con \texttt{ToDef3rd} diventa significativa per la variabile risposta.
@@ -327,7 +327,7 @@ Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd},
 
 \section{Adattamento dataset al modello}
 
-Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il dataset di facile interpretazione per un essere umano ma vi sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
+Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il dataset di facile interpretazione per un essere umano ma ci sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
 Sono state apportare alcune modifiche attraverso la scrittura di codice che andasse a modificare la struttura del dataset in modo da essere correttamente utilizzabile nel modello. \\
 
 Innanzitutto il modello richiede per il suo funzionamento che le due variabili \texttt{Team} e \texttt{Vs} devono essere o di tipo fattore oppure un \textsf{data.frame}. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali cioè fattori, variabili cardinali cioè vettori numerici; un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ 
@@ -341,7 +341,7 @@ Inoltre per indicare nel modello se la squadra giocava in casa o no, i valori de
 Nella Sezione \ref{sec:a1} viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.\\
 Tale codice ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
 Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}.\\
-Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} vi è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
+Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} c'è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
 
 Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
 \bigskip

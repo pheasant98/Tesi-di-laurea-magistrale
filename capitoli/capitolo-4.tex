@@ -10,7 +10,7 @@
 TO DO
 
 \section{Il Bradley-Terry Model}
-Il Bradley-Terry model \autocite{bradley1952rank} asserisce che in una competizione tra due qualsiasi giocatori, detti player \textit{i} e player \textit{j} (i,j $\in$ \{1,...,n\}), la probabilità che \textit{i} sia preferito a \textit{j} è data dal rapporto tra $\alpha_{i}$ e $\alpha_{j}$, dove $\alpha_{i}$ e $\alpha_{j}$ sono parametri che rappresentano la cosiddetta abilità dei due giocatori. Il modello standard non considera covariate e in generale, non presta nessuna attenzione all'eterogeneità causata dai soggetti dei confronti.\\
+Il Bradley-Terry model \autocite{bradley1952rank} asserisce che in una competizione tra due qualsiasi giocatori, detti player \textit{i} e player \textit{j} (i,j $\in$ \{1,...,n\}), la probabilità che \textit{i} sia preferito a \textit{j} è data dal rapporto tra $\alpha_{i}$ e $\alpha_{j}$, dove $\alpha_{i}$ e $\alpha_{j}$ sono parametri che rappresentano la cosiddetta abilità dei due giocatori. Il modello standard non considera covariate e in generale, non presta alcuna attenzione all'eterogeneità causata dai soggetti dei confronti.\\
 
 Formalmente, sia Y$_{i,j}$ la variabile casuale associata al risultato della \emph{paired comparison} tra oggetti \textit{i} e \textit{j}, con \textit{j} > \textit{i} $\in$ \{1,...,n\}, dove nella forma più semplice, il modello dato è il seguente:
 \begin{align} 
@@ -23,7 +23,7 @@ Il modello può essere alternativamente espresso in forma di logit lineare:
 		logit(i \succ j) =  log( \frac{P( i \succ j)}{P( j \succ i))} ) = log(\frac{exp(\alpha_{i})}{exp(\alpha_{j})}) = \alpha_i - \alpha_j 
 	\end{align}
 
-La risposta del modello rappresenta la probabilità che un certo oggetto \textit{i} è preferito rispetto su un altro oggetto \textit{j}, $i \succ j$. La variabile Y$_{i,j}$ essendo binaria può assumere solo due valori, Y$_{i,j}$ = 1 se l'oggetto \textit{i} è preferito sull'oggetto j e Y$_{i,j}$ = 0 viceversa. I parametri $\alpha_{n}$ come scritto precedentemente rappresentano l'attrattiva o la forza del loro corrispondente oggetto. Chiaramente questi parametri di abilità devono essere stimati dal modello attraverso la massima verosimiglianza. Infine si noti che vi è necessario un vincolo per identificare i parametri, ad esempio: il vincolo di somma $ \sum_{i=1}^{n} \alpha_{i} = 0 $ oppure il vincolo dell'oggetto di riferimento, $\alpha_{i} = 0$ per un oggetto \textit{i} $\in$ \{1, ..., n\}. Se il vincolo dell'oggetto di riferimento è usato, allora il valore dei parametri abilità degli altri oggetti \textit{j} sarà la differenza rispetto all'oggetto di riferimento \textit{i}.
+La risposta del modello rappresenta la probabilità che un certo oggetto \textit{i} è preferito rispetto ad un altro \textit{j}, $i \succ j$. La variabile Y$_{i,j}$ essendo binaria può assumere solo due valori: Y$_{i,j}$ = 1 se l'oggetto \textit{i} è preferito sull'oggetto j e Y$_{i,j}$ = 0 viceversa. I parametri $\alpha_{n}$ rappresentano l'attrattiva o la forza del loro corrispondente oggetto. Chiaramente questi parametri di abilità devono essere stimati dal modello attraverso la massima verosimiglianza. È infine necessario un vincolo per identificare i parametri, ad esempio il vincolo di somma $ \sum_{i=1}^{n} \alpha_{i} = 0 $ oppure il vincolo dell'oggetto di riferimento, $\alpha_{i} = 0$ per un oggetto \textit{i} $\in$ \{1, ..., n\}. Se il vincolo dell'oggetto di riferimento è usato, allora il valore dei parametri abilità degli altri oggetti \textit{j} sarà la differenza rispetto all'oggetto di riferimento \textit{i}.
 \\
 
 Si sottolinea inoltre che il modello precedentemente descritto è chiamato modello non strutturato e l'obbiettivo dell'analisi è di fare inferenza sul valore dei parametri abilità $\alpha_{n}$ per stilare una classifica finale di tutti gli oggetti.
@@ -35,7 +35,7 @@ Ovviamente il caso descritto è di interesse per le comparazioni calcistiche dat
 
 Modelli che consentono un numero generale di categorie K, sono stati proposti da \autocite{tutz1986bradley} e da \autocite{bradley1952rank}, in particolare quest'ultimo mostrò come due modelli per l'analisi di dati ordinati possono essere adattati per le \emph{ordinal paired comparisons}.\\
 
-Il primo modello è il \emph{cumulative link model} che sfrutta la rappresentazione della variabile casuale latente. In generale, sia H il numero di gradi della scala di preferenza e sia $Z_{i,j}$ una variabile continua casuale latente e siano $\theta_{1} $ < $\theta_{2}$ < .... < $\theta_{H-1}$ le soglie tale che Y$_{i,j} = h$ quando $\theta_{h-1} < Z_{i,j} < \theta_{h}$. Allora:
+Il primo modello è il \emph{cumulative link model} e sfrutta la rappresentazione della variabile casuale latente. In generale, sia H il numero di gradi della scala di preferenza e sia $Z_{i,j}$ una variabile continua casuale latente e siano $\theta_{1} $ < $\theta_{2}$ < .... < $\theta_{H-1}$ le soglie tale che Y$_{i,j} = h$ quando $\theta_{h-1} < Z_{i,j} < \theta_{h}$. Allora:
 \begin{align}
 	P(Y_{i,j}\leq h) =  \frac{exp(\theta_{h} + \alpha_{i} - \alpha_{j})}{1 + exp(\theta_{h} + \alpha_{i} - \alpha_{j})} \label{for:3.2.1}
 \end{align}

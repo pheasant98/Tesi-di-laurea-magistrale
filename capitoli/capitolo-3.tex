@@ -31,7 +31,7 @@ Come primo passo, è stata valutata la distribuzione delle classi della variabil
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.28]{barRes.png}
+		\includegraphics[scale=0.40]{barRes.png}
 		\caption{Barplot della distribuzione della variabile di risposta \texttt{Res}} \label{fig:res}
 	\end{center}
 \end{figure}
@@ -40,12 +40,38 @@ Si può notare come le classi sembrino ben distribuite, dato che abbiamo 196 par
 
 Aumentando il livello di dettaglio è di interesse analizzare come queste classificazione sono distribuite tra le varie squadre.  
 
+\newpage
+\paperwidth=\pdfpageheight
+\paperheight=\pdfpagewidth
+\pdfpageheight=\paperheight
+\pdfpagewidth=\paperwidth
+\headwidth=\textheight
+
+\begingroup 
+\vsize=\textwidth
+\hsize=\textheight
+
+
+\pagestyle{empty}
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[height=8cm,width=15cm]{ResTeam.png}
+		\includegraphics[height = 15cm, width = 25cm]{ResTeam.png}
 		\caption{Barplot della distribuzione della variabile di risposta per squadra\texttt{Res}} \label{fig:team}
 	\end{center}
 \end{figure}
+
+\textwidth=\hsize
+\textheight=\vsize
+
+\endgroup
+\newpage
+\paperwidth=\pdfpageheight
+\paperheight=\pdfpagewidth
+\pdfpageheight=\paperheight
+\pdfpagewidth=\paperwidth
+\headwidth=\textwidth
+
+
 
 Nella Figura \ref{fig:team} si può notare come la distribuzione di vittorie, pareggi e sconfitte non è omogenea tra le squadre. Ovviamente è un risultato che ci si aspettava ma che sottolinea la correttezza dei dati e la presenza di qualche elemento nascosto che ne ha determinato una tale distribuzione.\\
 
@@ -56,7 +82,7 @@ La prima relazione che si analizza riguarda la variabile categorica \texttt{AtHo
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{AtHomeRes.png}
+		\includegraphics[scale=0.45]{AtHomeRes.png}
 		\caption{Mosaicplot che mostra la distribuzione degli esiti rispetto alle partite giocate in casa e fuori casa} \label{fig:AtHome}
 	\end{center}
 \end{figure}
@@ -65,7 +91,7 @@ Analizzando invece la relazione tra variabile di risposta e \texttt{Poss}, dalla
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{Poss.png}
+		\includegraphics[scale=0.50]{Poss.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Poss} } \label{fig:Poss}
 	\end{center}
 \end{figure}
@@ -76,7 +102,7 @@ Per la relazione con la variabile \texttt{Sh}, si ha un grafico molto simile al 
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{SoT.png}
+		\includegraphics[scale=0.50]{SoT.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{SoT} } \label{fig:sot}
 	\end{center}
 \end{figure}
@@ -85,7 +111,7 @@ La Figura \ref{fig:g} mostra come si comporta la relazione con \texttt{G/Sh}. Si
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{g.png}
+		\includegraphics[scale=0.50]{g.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{G/Sh} } \label{fig:g}
 	\end{center}
 \end{figure}
@@ -94,7 +120,7 @@ La Figura \ref{fig:saves} mostra come si comporta la relazione con \texttt{Saves
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{saves.png}
+		\includegraphics[scale=0.50]{saves.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Saves} } \label{fig:saves}
 	\end{center}
 \end{figure}
@@ -119,7 +145,7 @@ Per la relazione con la variabile \texttt{LPCmp\%}, si ha un grafico molto simil
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.50]{pass.png}
+		\includegraphics[height=8cm,width=13cm]{pass.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{PAtt} e \texttt{PCmp\%}  } \label{fig:pass}
 	\end{center}
 \end{figure}
@@ -128,7 +154,7 @@ La Figura \ref{fig:defp} mostra come si comporta la relazione con \texttt{ToDefP
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{def.png}
+		\includegraphics[scale=0.50]{def.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToDefPen} } \label{fig:defp}
 	\end{center}
 \end{figure}
@@ -143,7 +169,7 @@ Per la relazione con la variabile \texttt{ToAtt3rd}, si ha un grafico molto simi
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{att.png}
+		\includegraphics[scale=0.50]{att.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{ToAttPen} } \label{fig:att}
 	\end{center}
 \end{figure}
@@ -152,7 +178,7 @@ Nella Figura \ref{fig:falli} vengono mostrati gli andamenti delle variabile dei 
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{falli.png}
+		\includegraphics[height=8cm,width=13cm]{falli.png}
 		\caption{A sinistra il boxplot della variabile risposta e della variabile numerica \texttt{Fls} e a destra il boxplot della variabile risposta e della variabile numerica \texttt{Fld} } \label{fig:falli}
 	\end{center}
 \end{figure}
@@ -167,7 +193,7 @@ La Figura \ref{fig:int} mostra come si comporta la relazione con \texttt{Int}. S
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{int.png}
+		\includegraphics[scale=0.50]{int.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Int}} \label{fig:int}
 	\end{center}
 \end{figure}
@@ -176,14 +202,14 @@ La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{tklwin.png}
+		\includegraphics[scale=0.50]{tklwin.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{TklWin}} \label{fig:tkl}
 	\end{center}
 \end{figure}
 
 \begin{figure}[htbp]
 	\begin{center}
-		\includegraphics[scale=0.40]{recov.png}
+		\includegraphics[scale=0.50]{recov.png}
 		\caption{Boxplot della variabile risposta e della variabile numerica \texttt{Recov}} \label{fig:recov}
 	\end{center}
 \end{figure} 
@@ -191,34 +217,34 @@ La Figura \ref{fig:tkl} mostra come si comporta la relazione con \texttt{TklWin}
 Infine la Figura \ref{fig:recov} mostra come si comporta la relazione con \texttt{Recov}. Per entrambe le classi la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe le code più in basso sono più corte rispetto a quelle più in alto che sono più lunghe. Per quanto riguarda la mediana sembra equidistante dai quantili per entrambe le classi. Si nota che il pareggio presenta minor varianza rispetto alle altre due classi ma valori più alti soprattutto nei confronti della vittoria. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che ci sono numerosi outliers sopratutto per il pareggio.
 
 \subsection{Analisi relazioni tra covariate} 
-Per concludere l'attività di prepossening, non resta che analizzare le relazioni tra covariate in modo da individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che ci sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
+Per concludere l'attività di prepossening, non resta che analizzare le relazioni tra covariate per individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che ci sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
 Di seguito si riporteranno le interazioni che sono state individuate come significative. Si sottolinea che nei grafici di dispersione si è inserito come terza variabile, la variabile risposta \texttt{Res}, dove ogni colore rappresenta una delle tre classi di \texttt{Res}. Tale scelta è stata fatta per capire se i tre gruppi di classi sono ben separati e quindi è utile avere un'interazione che vada a spiegare questi tre gruppi.\\
 
 
 \bigskip
 Sono state individuate le seguenti tre interazioni con la variabile \texttt{Sh}:
 \begin{itemize}
-	\item Interazione tra \texttt{Sh} e \texttt{SoT}. Chiaramente si può dedurre facilmente che possa essere una buona correlazione tra queste due variabili perché teoricamente più tiri vengono effettuati maggiori saranno i tiri in porta. \\
-	Tale relazione viene anche mostrata graficamente, infatti nella Figura \ref{fig:ShSoT} si può notare che c'è un'andamento positivo tra le due variabili, al cresce di una c'è un aumento quasi lineare dell'altra.
+	\item Interazione tra \texttt{Sh} e \texttt{SoT}. Chiaramente si può dedurre facilmente che possa esserci una buona correlazione tra queste due variabili perché teoricamente più tiri vengono effettuati maggiori saranno i tiri in porta. \\
+	La relazione viene anche mostrata graficamente, infatti nella Figura \ref{fig:ShSoT} si può notare che c'è un'andamento positivo tra le due variabili, al cresce di una c'è un aumento quasi lineare dell'altra.
 	Come si può notare dai colori inseriti nel grafico per indicare le tre classi della variabile risposta, l'effetto combinato delle due variabili è utile a spiegare la variabile risposta dato che, valori più bassi sono quasi sempre classificati come sconfitta, un po' più alti come pareggio, mentre quelli più alti sono quasi sempre classificati come vittoria.
 	Molte volte i valori vengo ripetuti per molte osservazioni, quindi i valori nel grafico sono disposti in colonne e non sparsi.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{sh-sot.png}
+			\includegraphics[scale=0.50]{sh-sot.png}
 			\caption{Scatter plot tra \texttt{Sh} e \texttt{SoT}} \label{fig:ShSoT}
 		\end{center}
 	\end{figure} 
 	\item Interazione tra \texttt{Sh} e \texttt{ToAtt3rd}. È ragionevole ipotizzare che il numero di tocchi fatti nella trequarti avversaria possano creare azioni che portano ad effettuare un tiro verso la porta avversaria; è quindi possibile che tra le due variabili possa esserci una relazione. L'ipotesi è avvalorata dalla Figura \ref{fig:shtreq} dove è presente una tendenza positiva quasi lineare tra le due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{sh-toatt3rd.png}
+			\includegraphics[scale=0.50]{sh-toatt3rd.png}
 			\caption{Scatter plot tra \texttt{Sh} e \texttt{ToAtt3rd}} \label{fig:shtreq}
 		\end{center}
 	\end{figure}
-	\item Interazione tra \texttt{Sh} e \texttt{ToAttPen}. Per la stessa ipotesi esposta nel punto precedente si è ipotizzato a tale interazione. La Figura \ref{fig:shpen} mostra che tale interazione è giustificata da una tendenza positiva nel cresce delle due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione. Si nota graficamente una maggior linearità rispetto alla Figura \ref{fig:shtreq}; ciò è coerente con il fatto che i tocchi vengono effettuati all'interno dell'area di rigore avversaria e quindi ad una distanza ravvicinata dalla porta, ne consegue una maggior possibilità di effettuare tiri in porta.
+	\item Interazione tra \texttt{Sh} e \texttt{ToAttPen}. Per la stessa ipotesi esposta nel punto precedente si è ipotizzato a tale interazione. La Figura \ref{fig:shpen} mostra che l'interazione è giustificata da una tendenza positiva nel cresce delle due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione. Si nota graficamente una maggior linearità rispetto alla Figura \ref{fig:shtreq}; ciò è coerente con il fatto che i tocchi vengono effettuati all'interno dell'area di rigore avversaria e quindi ad una distanza ravvicinata dalla porta, ne consegue una maggior possibilità di effettuare tiri in porta.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{sh-toattpen.png}
+			\includegraphics[scale=0.50]{sh-toattpen.png}
 			\caption{Scatter plot tra \texttt{Sh} e \texttt{ToAttPen}}  \label{fig:shpen}
 		\end{center}
 	\end{figure}
@@ -229,14 +255,14 @@ Sono state individuate le seguenti tre interazioni con la variabile \texttt{Poss
 	\item Interazione tra \texttt{Poss} e \texttt{PAtt}. È ragionevole ipotizzare che il possesso della palla possa incidere su quanto una squadra tenti di effettuare passaggi, cioè da un alto possesso della palla ci si aspetta un alto numero di passaggi tentati, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posspatt} che mostra una relazione positiva è fortemente lineare tra le due ipotesi, oltre ad essere utili per spiegare l'andamento delle tre classi della variabile risposta.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{poss-patt.png}
+			\includegraphics[scale=0.50]{poss-patt.png}
 			\caption{Scatter plot tra \texttt{Poss} e \texttt{PAtt}}  \label{fig:posspatt}
 		\end{center}
 	\end{figure}
 	\item Interazione tra \texttt{Poss} e \texttt{TotDist}. Appare naturale ipotizzare che il possesso della palla e la distanza percorsa con il pallone siano in relazione tra loro. È altrettanto naturale aspettarci da un alto possesso della palla un alto numero di metri percorsi con la palla in possesso, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posstotdist} che mostra una relazione positiva abbastanza lineare tra le due ipotesi. Si segnala però che dal grafico sembra che non ci sia una chiara divisione delle osservazioni in tre gruppi, tale aspetto sarà tenuto in considerazione nella modellazione.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{poss-totdist.png}
+			\includegraphics[scale=0.50]{poss-totdist.png}
 			\caption{Scatter plot tra \texttt{Poss} e \texttt{TotDist}}  \label{fig:posstotdist}
 		\end{center}
 	\end{figure}
@@ -247,14 +273,14 @@ Sono state individuate le seguenti tre interazioni con la variabile \texttt{TotD
 	\item Interazione tra \texttt{TotDist} e \texttt{PAtt}. Dato che per poter tentare di effettuare passaggi è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che ci sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili c'è una forte relazione lineare e con una correlazione positiva.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{TotDist-PAtt.png}
+			\includegraphics[scale=0.50]{TotDist-PAtt.png}
 			\caption{Scatter plot tra \texttt{TotDist} e \texttt{PAtt}}  \label{fig:totdistpatt}
 		\end{center}
 	\end{figure}
 	\item Interazione tra \texttt{TotDist} e \texttt{PCmp\%}. Dato che per poter tentare di effettuare passaggi e completarli è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che ci sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili c'è una relazione con correlazione positiva, con una andamento simile a una funzione esponenziale, ciò sarà tenuto conto nella modellazione per valutare se inserire oppure no una delle variabili con un grado superiore.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{TotDist-PCmp.png}
+			\includegraphics[scale=0.50]{TotDist-PCmp.png}
 			\caption{Scatter plot tra \texttt{TotDist} e \texttt{PCmp\%}}  \label{fig:totdistpcmp}
 		\end{center}
 	\end{figure}
@@ -265,14 +291,14 @@ Infine sono state individuate le seguenti interazioni:
 	\item Interazione tra \texttt{ToAtt3rd} e \texttt{ToAttPen}. Dato che le due variabili si riferiscono a due zone di campo adiacenti e interessanti a fini del l'esito della partita, si ipotizza che ci sia un'interazione. Nella Figura \ref{fig:toatt} si può notare un correlazione positiva molto lineare tra le due variabile che prova l'ipotesi. Si nota all'inizio che tutti i dati sono molto vicini ma che via via diventano più sparsi. Tale interazione sembra perciò utile a spiegare la variabile risposta.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{ToAtt3rd-ToAttPen.png}
+			\includegraphics[scale=0.50]{ToAtt3rd-ToAttPen.png}
 			\caption{Scatter plot tra \texttt{ToAtt3rd} e \texttt{ToAttPen}}  \label{fig:toatt}
 		\end{center}
 	\end{figure}
 	\item Interazione tra \texttt{PAtt} e \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che ci sia un'interazione tra loro. Infatti tale interazione è possibile vederla nella Figura \ref{fig:pp} la quale sembra simile all'interazione \texttt{TotDist}*\texttt{PCmp\%}.
 	\begin{figure}[htbp]
 		\begin{center}
-			\includegraphics[scale=0.60]{PAtt-PCmp.png}
+			\includegraphics[scale=0.50]{PAtt-PCmp.png}
 			\caption{Scatter plot tra \texttt{PAtt} e \texttt{PCmp\%}}  \label{fig:pp}
 		\end{center}
 	\end{figure}
@@ -309,7 +335,7 @@ Come si può notare una maggior correlazione tra le variabile è concentra nella
 Nella sottosezione precedente si poteva pensare di inserire interazioni abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni però sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. Una correlazione cosi alta era prevedibile dato che c'è una ridondanza dei dati tra le variabili. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
 Il grafico suggerisce alcune interazioni che non sono state descritti ad esempio:\\ \texttt{Poss}*\texttt{ToAtt3rd}, \texttt{Poss}*\texttt{SPAtt},  \texttt{TotDist}*\texttt{ToAtt3rd}, \texttt{PCmp\%}*\texttt{SPAtt} e \texttt{PCmp\%}*\texttt{MPAtt}.
 Tali interazioni saranno analizzate durante la fase di modellazione per verificare se effettivamente sono significative per il modello.\\
-Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, tale interazione può essere inserita perché va a giustificare il fatto che la variabile \texttt{ToDefPen} combinata con \texttt{ToDef3rd} diventa significativa per la variabile risposta.
+Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, l'interazione può essere inserita perché va a giustificare il fatto che la variabile \texttt{ToDefPen} combinata con \texttt{ToDef3rd} diventa significativa per la variabile risposta.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -318,24 +344,22 @@ Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd},
 	\end{center}
 \end{figure}
 
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[scale=0.70]{cov.png}
-		\caption{Grafico riassuntivo delle variabili rimaste dopo il Prepossesing}  \label{fig:cov}
-	\end{center}
-\end{figure}
+%\begin{figure}[htbp]
+%	\begin{center}
+%		\includegraphics[scale=0.70]{cov.png}
+%		\caption{Grafico riassuntivo delle variabili rimaste dopo il Prepossesing}  \label{fig:cov}
+%	\end{center}
+%\end{figure}
 
 \section{Adattamento dataset al modello}
 
 Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il dataset di facile interpretazione per un essere umano ma ci sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
-Sono state apportare alcune modifiche attraverso la scrittura di codice che andasse a modificare la struttura del dataset in modo da essere correttamente utilizzabile nel modello. \\
+Sono state apportare le seguenti modifiche.\\
 
 Innanzitutto il modello richiede per il suo funzionamento che le due variabili \texttt{Team} e \texttt{Vs} devono essere o di tipo fattore oppure un \textsf{data.frame}. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali cioè fattori, variabili cardinali cioè vettori numerici; un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ 
 Le variabili \textsf{Team} e \textsf{Vs} sono state trasformate in \texttt{data.frame} in modo da poter inserire al loro interno tutte le covariate descritte nella sezione precedente, ad esempio \textsf{Poss}, \textsf{Int} ecc.., cosi che il modello capisca quali valori sono legati alla squadra indicata in \textsf{Team} e quali in \textsf{Vs} nella stessa partita.\\
 
 Inoltre per indicare nel modello se la squadra giocava in casa o no, i valori della variabile \texttt{AtHome} non erano accettati, si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0.
-
-
 
 \subsection{Implementazione dell'adattamento del dataset}
 Nella Sezione \ref{sec:a1} viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.\\

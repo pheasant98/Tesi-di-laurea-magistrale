@@ -68,7 +68,7 @@ Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ i
 	P(Y_{i,j} = 0 | Y_{i,j} \not = 1) =  \frac{exp(\alpha_{j} - \alpha_{i})}{1 + exp(\alpha_{j} - \alpha_{i})}\label{for:4.7}
 \end{align}
 
-Come si può vedere si è riportato la modellazione di tutti e tre i possibili risultati, con $\alpha_{n}$ che rappresenta la forza degli oggetti in comparazione da stimare dai dati. La modellazione della vittoria \hyperref[for:4.5]{(4.5)} e della sconfitta \hyperref[for:4.7]{(4.7)} dell'oggetto \textit{i} contro l'oggetto \textit{j} rimane uguale alla modellazione \hyperref[for:3.1]{(4.2)} descritta precedentemente. Diversamente per il pareggio dove viene aggiunto il parametro $\theta$. \\
+Si è riportato la modellazione di tutti e tre i possibili risultati, con $\alpha_{n}$ che rappresenta la forza degli oggetti in comparazione da stimare dai dati. La modellazione della vittoria \hyperref[for:4.5]{(4.5)} e della sconfitta \hyperref[for:4.7]{(4.7)} dell'oggetto \textit{i} contro l'oggetto \textit{j} rimane uguale alla modellazione \hyperref[for:3.1]{(4.2)} descritta precedentemente. Diversamente per il pareggio dove viene aggiunto il parametro $\theta$. \\
 
 \section{Il Bradley–Terry Model con variabili esplicative}
 Fin ad ora è stato presentato un modello che valutasse il grado di preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}, senza che considerasse nessuna variabile. Chiaramente tale modello risulta essere inutile per le nostre analisi, dato che siamo interessati a capire quali variabili possono influenzare il risultato della comparazione. Si necessita perciò di un modello che tenga conto anche di variabili esplicative inserite durante l'analisi. \\
@@ -88,7 +88,7 @@ Grazie a questo modello se vi sono covariate che hanno un legame con la variabil
 
 
 \subsection{Il Bradley–Terry Model con effetto partite in casa}
-Nel modello descritto nella sezione 2.2, si era scritto che, era necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti, tra questi vi è anche il calcio; poiché l'ordine dei oggetti conta. Infatti nel calcio la prima squadra che viene indicata tra le due squadre, è quella che gioca in casa, dove teoricamente dovrebbe avere un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
+Nel modello descritto nella sezione 4.2, si era scritto che, era necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti, tra questi vi è anche il calcio; poiché l'ordine dei oggetti conta. Infatti nel calcio la prima squadra che viene indicata tra le due squadre, è quella che gioca in casa, dove teoricamente dovrebbe avere un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
 Un possibile modello riadattato al problema esposto è il seguente:
 
 \begin{align} 

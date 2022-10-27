@@ -212,125 +212,14 @@ Nella Figura \ref{fig:tkl} viene riportato il boxplot della distribuzione della 
 Infine nella Figura \ref{fig:recov} viene riportato il Boxplot della distribuzione della variabile \texttt{Recov} rispetto ai valori della variabile risposta \texttt{Res}. Per entrambi i boxplot la distribuzione sembra più sbilanciata verso valori bassi quindi ad una loro maggior presenza, infatti entrambe i baffi inferiori sono più corti rispetto a quelli superiori. Per quanto riguarda la mediana sembra equidistante dai quantili per entrambi i tre boxplot. Si nota che il boxplot del pareggio presenta minor varianza rispetto agli altri due boxplot ma valori più alti soprattutto nei confronti del boxplot della vittoria. Sembra perciò che un eccessivo numero di recuperi non porti alla vittoria. Si nota inoltre che ci sono numerosi outliers.
 
 \subsection{Analisi possibili interazioni} 
-Per concludere l'attività di preprossening, non resta che analizzare le relazioni tra covariate per individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che ci sono più di 30 variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
-Di seguito si riporteranno le interazioni che sono state individuate come significative. Si sottolinea che nei grafici di dispersione si è inserito come terza variabile, la variabile risposta \texttt{Res}, infatti ogni punto è colorato in tre possibili colori che rappresenta una delle tre categorie di \texttt{Res}. Tale scelta è stata fatta per capire se i tre gruppi di classi sono ben separati e quindi capire se un'interazione può spiegare l'andamento dei punti della variabile risposta.\\
+Per concludere l'attività di preprossening, non resta che analizzare le relazioni tra le covariate per individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che ci sono più di trenta variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
 
 
-\bigskip
-Sono state individuate le seguenti tre interazioni con la variabile \texttt{Sh}:
-\begin{itemize}
-	\item Interazione tra \texttt{Sh} e \texttt{SoT}. Chiaramente si può dedurre facilmente che possa esserci una buona correlazione tra queste due variabili perché teoricamente più tiri vengono effettuati maggiori saranno i tiri in porta. \\
-	La relazione viene anche mostrata graficamente, infatti nella Figura \ref{fig:ShSoT} si può notare che c'è un'andamento positivo tra le due variabili, al cresce di una c'è un aumento quasi lineare dell'altra.
-	Come si può notare dai colori inseriti nel grafico per indicare le tre classi della variabile risposta, l'effetto combinato delle due variabili è utile a spiegare la variabile risposta dato che, valori più bassi sono quasi sempre classificati come sconfitta, un po' più alti come pareggio, mentre quelli più alti sono quasi sempre classificati come vittoria.
-	Molte volte i valori vengo ripetuti per molte osservazioni, quindi i valori nel grafico sono disposti in colonne e non sparsi.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{sh-sot.png}
-			\caption{Scatter plot tra \texttt{Sh} e \texttt{SoT}} \label{fig:ShSoT}
-		\end{center}
-	\end{figure} 
-	\item Interazione tra \texttt{Sh} e \texttt{ToAtt3rd}. È ragionevole ipotizzare che il numero di tocchi fatti nella trequarti avversaria possano creare azioni che portano ad effettuare un tiro verso la porta avversaria; è quindi possibile che tra le due variabili possa esserci una relazione. L'ipotesi è avvalorata dalla Figura \ref{fig:shtreq} dove è presente una tendenza positiva quasi lineare tra le due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{sh-toatt3rd.png}
-			\caption{Scatter plot tra \texttt{Sh} e \texttt{ToAtt3rd}} \label{fig:shtreq}
-		\end{center}
-	\end{figure}
-	\item Interazione tra \texttt{Sh} e \texttt{ToAttPen}. Per la stessa ipotesi esposta nel punto precedente si è ipotizzato a tale interazione. La Figura \ref{fig:shpen} mostra che l'interazione è giustificata da una tendenza positiva nel cresce delle due variabili oltre a tre distribuzioni differenti dei dati in base alla loro classificazione. Si nota graficamente una maggior linearità rispetto alla Figura \ref{fig:shtreq}; ciò è coerente con il fatto che i tocchi vengono effettuati all'interno dell'area di rigore avversaria e quindi ad una distanza ravvicinata dalla porta, ne consegue una maggior possibilità di effettuare tiri in porta.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{sh-toattpen.png}
-			\caption{Scatter plot tra \texttt{Sh} e \texttt{ToAttPen}}  \label{fig:shpen}
-		\end{center}
-	\end{figure}
-\end{itemize}
+Per l'analisi delle interazioni si sono utilizzati i grafici di dispersione. Un grafico di dispersione mostra la relazione tra due variabili continue. A tali grafici si è inserito una terza variabile, la variabile risposta \texttt{Res}, dove ogni punto è colorato in tre possibili colori che rappresentano una delle tre categorie di \texttt{Res}. Di conseguenza il grafico permette di visualizzare se le categorie sono ben separati e quindi se un'interazione può spiegare l'andamento dei punti della variabile risposta.\\
+Inoltre è stato utilizzato l'indice di correlazione, che indica la forza dell'associazione lineare espressa in valori compresi tra -1 e 1. Tale misura permette di escludere da subito alcune relazioni tra variabili se l'indice è troppo alto o basso, infatti, le relazioni troppo forti vanno escluse perché può presentarsi il fenomeno della collinearità. 
+La collinearità è quel fenomeno che va a nasconde il legame tra le variabili e la variabile risposta, a causa di un legame troppo forte tra le covariate.
 
-Sono state individuate le seguenti tre interazioni con la variabile \texttt{Poss}:
-\begin{itemize}
-	\item Interazione tra \texttt{Poss} e \texttt{PAtt}. È ragionevole ipotizzare che il possesso della palla possa incidere su quanto una squadra tenti di effettuare passaggi, cioè da un alto possesso della palla ci si aspetta un alto numero di passaggi tentati, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posspatt} che mostra una relazione positiva è fortemente lineare tra le due ipotesi, oltre ad essere utili per spiegare l'andamento delle tre classi della variabile risposta.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{poss-patt.png}
-			\caption{Scatter plot tra \texttt{Poss} e \texttt{PAtt}}  \label{fig:posspatt}
-		\end{center}
-	\end{figure}
-	\item Interazione tra \texttt{Poss} e \texttt{TotDist}. Appare naturale ipotizzare che il possesso della palla e la distanza percorsa con il pallone siano in relazione tra loro. È altrettanto naturale aspettarci da un alto possesso della palla un alto numero di metri percorsi con la palla in possesso, viceversa con un valore basso di possesso. L'ipotesi è confermata dalla Figura \ref{fig:posstotdist} che mostra una relazione positiva abbastanza lineare tra le due ipotesi. Si segnala però che dal grafico sembra che non ci sia una chiara divisione delle osservazioni in tre gruppi, tale aspetto sarà tenuto in considerazione nella modellazione.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{poss-totdist.png}
-			\caption{Scatter plot tra \texttt{Poss} e \texttt{TotDist}}  \label{fig:posstotdist}
-		\end{center}
-	\end{figure}
-\end{itemize}
-\pagebreak
-Sono state individuate le seguenti tre interazioni con la variabile \texttt{TotDist}:
-\begin{itemize}
-	\item Interazione tra \texttt{TotDist} e \texttt{PAtt}. Dato che per poter tentare di effettuare passaggi è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che ci sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili c'è una forte relazione lineare e con una correlazione positiva.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{TotDist-PAtt.png}
-			\caption{Scatter plot tra \texttt{TotDist} e \texttt{PAtt}}  \label{fig:totdistpatt}
-		\end{center}
-	\end{figure}
-	\item Interazione tra \texttt{TotDist} e \texttt{PCmp\%}. Dato che per poter tentare di effettuare passaggi e completarli è possibile farlo solo se ci si muove con la palla, allora è possibile ipotizzare che ci sia una relazione tra queste variabili. Dalla Figura \ref{fig:totdistpatt} si può notare che tra le due variabili c'è una relazione con correlazione positiva, con una andamento simile a una funzione esponenziale, ciò sarà tenuto conto nella modellazione per valutare se inserire oppure no una delle variabili con un grado superiore.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{TotDist-PCmp.png}
-			\caption{Scatter plot tra \texttt{TotDist} e \texttt{PCmp\%}}  \label{fig:totdistpcmp}
-		\end{center}
-	\end{figure}
-\end{itemize}
-
-Infine sono state individuate le seguenti interazioni:
-\begin{itemize}
-	\item Interazione tra \texttt{ToAtt3rd} e \texttt{ToAttPen}. Dato che le due variabili si riferiscono a due zone di campo adiacenti e interessanti a fini del l'esito della partita, si ipotizza che ci sia un'interazione. Nella Figura \ref{fig:toatt} si può notare un correlazione positiva molto lineare tra le due variabile che prova l'ipotesi. Si nota all'inizio che tutti i dati sono molto vicini ma che via via diventano più sparsi. Tale interazione sembra perciò utile a spiegare la variabile risposta.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{ToAtt3rd-ToAttPen.png}
-			\caption{Scatter plot tra \texttt{ToAtt3rd} e \texttt{ToAttPen}}  \label{fig:toatt}
-		\end{center}
-	\end{figure}
-	\item Interazione tra \texttt{PAtt} e \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che ci sia un'interazione tra loro. Infatti tale interazione è possibile vederla nella Figura \ref{fig:pp} la quale sembra simile all'interazione \texttt{TotDist}*\texttt{PCmp\%}.
-	\begin{figure}[htbp]
-		\begin{center}
-			\includegraphics[scale=0.50]{PAtt-PCmp.png}
-			\caption{Scatter plot tra \texttt{PAtt} e \texttt{PCmp\%}}  \label{fig:pp}
-		\end{center}
-	\end{figure}
-
-\end{itemize}
-
-\subsection{Collinearità}
-Per collinearità si intende quel fenomeno per il quale se più variabili esplicative altamente correlate vengono inserite nel modello, allora la loro alta correlazione andrà a nasconde la loro associazione con la variabile risposta. La soluzione per risolvere questo problema è quella di scegliere soltanto una sola variabile della relazione da inserire nel modello.\\
-Nella Figura \ref{fig:cor} viene mostrato il valore della correlazione per ogni possibile interazione tra variabile numeriche.\\
-Come si può notare una maggior correlazione tra le variabile è concentra nella prima parte del triangolo. Dal grafico possiamo vedere come tutte le interazioni che sono state descritte nella sottosezione precedente abbiano un alta correlazione ma non eccessivamente alta. Si hanno i seguenti valori di correlazione:
-\begin{itemize}
-	\item Le interazioni con la variabile \texttt{Sh}:
-	\begin{itemize}
-		\item L'interazione tra \texttt{Sh} e \texttt{SoT} ha come valore 0,70 tale da giustificare l'inserimento dell'interazione.
-		\item L'interazione tra \texttt{Sh} e \texttt{ToAtt3rd} ha come valore 0,72 tale da giustificare l'inserimento dell'interazione.
-		\item L'interazione tra \texttt{Sh} e \texttt{ToAttPen} ha come valore 0,82 è un valore alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
-	\end{itemize}
-	\item Le interazioni con la variabile \texttt{Poss}:
-	\begin{itemize}
-		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,88 è un valore molto alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
-		\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,81 è un valore alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
-	\end{itemize}
-	\item Le interazioni con la variabile \texttt{TotDist}:
-	\begin{itemize}
-		\item L'interazione tra \texttt{TotDist} e \texttt{PAtt} ha come valore 0,87 è un valore molto alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
-		\item L'interazione tra \texttt{TotDist} e \texttt{PCmp\%} ha come valore 0,75 tale da giustificare l'inserimento dell'interazione.
-	\end{itemize}
-
-	\item L'interazione tra \texttt{ToAtt3rd} e \texttt{PAttPen} ha come valore 0,79 tale da giustificare l'inserimento dell'interazione.
-	\item L'interazione tra \texttt{PAtt} e \texttt{PCmp\%} ha come valore 0,74 tale da giustificare l'inserimento dell'interazione.
-\end{itemize}  
-
-
-Nella sottosezione precedente si poteva pensare di inserire interazioni abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni però sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. Una correlazione cosi alta era prevedibile dato che c'è una ridondanza dei dati tra le variabili. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
-Il grafico suggerisce alcune interazioni che non sono state descritti ad esempio:\\ \texttt{Poss}*\texttt{ToAtt3rd}, \texttt{Poss}*\texttt{SPAtt},  \texttt{TotDist}*\texttt{ToAtt3rd}, \texttt{PCmp\%}*\texttt{SPAtt} e \texttt{PCmp\%}*\texttt{MPAtt}.
-Tali interazioni saranno analizzate durante la fase di modellazione per verificare se effettivamente sono significative per il modello.\\
-Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, l'interazione può essere inserita perché va a giustificare il fatto che la variabile \texttt{ToDefPen} combinata con \texttt{ToDef3rd} diventa significativa per la variabile risposta.
+Nella Figura \ref{fig:cor} viene mostrato il valore della correlazione per ogni possibile relazione tra variabili numeriche. Si nota che ci sono molte relazioni che hanno un valore di correlazione molto vicino a 1, in basso a sinistra del grafico. Ad esempio notiamo che la variabile \texttt{SPCmp\%} ha una relazione molto forte con la variabile \texttt{PCmp\%} (correlazione = 0.82), ciò è coerente perché, la variabile \texttt{SPCmp\%} contiene solo i passaggi corti completati mentre \texttt{PCmp\%} contiene tutti i tipi di passaggi completati, ne consegue che la ridondanza dei dati causa questa alta correlazione. Analogamente la stessa motivazione la si può applicare tra la variabile \texttt{PAtt} e la variabile \texttt{SPAtt} (correlazione = 0.91). Perciò tale motivazione è applicabile a tutte le variabili relative ai passaggi completati o relative ai passaggi tentati.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -339,6 +228,128 @@ Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd},
 	\end{center}
 \end{figure}
 
+Di seguito si riporteranno le interazioni che sono state individuate come significative.\\ 
+
+	%$\dfrac{\sum_{i=1}^{N}(x_{i}-\tau_{x})(y_{i}-\tau_{y})}{N}$
+
+Sono state individuate le seguenti tre interazioni con la variabile \texttt{Sh}:
+\begin{itemize}
+	\item Interazione tra la variabile \texttt{Sh} e la variabile \texttt{ToAttPen}. È ragionevole ipotizzare che il numero di tocchi fatti nell'area di rigore avversaria possano creare azioni da tiro. È quindi possibile che tra le due variabili possa esserci una relazione. La Figura \ref{fig:shpen} mostra una relazione  positiva tra le due variabili infatti, quando aumenta la variabile \texttt{Sh} aumenta anche la variabile \texttt{ToAttPen} e viceversa. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta, inoltre la correlazione tra le due variabili non è troppo alta (0.72). Ne consegue che un'interazione tra la variabile \texttt{Sh} e la variabile \texttt{ToAttPen}, sembra essere significativa rispetto alla variabile risposta.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.50]{sh-toattpen.png}
+			\caption{Scatterplot della distribuzione della variabile \texttt{Sh} rispetto ai valori della variabile \texttt{ToAttPen}}  \label{fig:shpen}
+		\end{center}
+	\end{figure}
+
+\item Interazione tra la variabile \texttt{Sh} e la variabile \texttt{G/Sh}. È ragionevole ipotizzare che ci sia un legame naturale tra tiri fatti e rapporto tiri-gol. La Figura \ref{fig:shgol} mostra una relazione negativa tra le due variabili infatti, quando aumenta la variabile \texttt{Sh} diminuisce anche la variabile \texttt{G/Sh} e viceversa. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta infatti, i punti della categoria vittoria sono più in alto mentre i punti delle categorie pareggio e sconfitta più in basso. Inoltre la correlazione tra le due variabili non è bassa (-0.15). Ne consegue che un'interazione tra la variabile \texttt{Sh} e la variabile \texttt{G/Sh}, sembra essere significativa rispetto alla variabile risposta.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.60]{sh-g.sh.png}
+		\caption{Scatterplot della distribuzione della variabile \texttt{Sh} rispetto ai valori della variabile \texttt{G/Sh}}  \label{fig:shgol}
+	\end{center}
+\end{figure}
+
+\item Interazione tra la variabile \texttt{Sh} e la variabile \texttt{Poss}. Generalmente è possibili ipotizzare che il possesso della palla possa favorire nel effettuare i tiri. Infatti, la Figura \ref{fig:shposs} mostra una relazione positiva tra le due variabili, quando aumenta la variabile \texttt{Sh} aumenta anche la variabile \texttt{Poss} e viceversa. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta, inizialmente i vari punti sono mescolati tra di loro ma, con l'avanzamento emergono le direzioni di ogni categoria infatti, i punti della categoria vittoria vanno più verso destra mentre i punti delle categoria sconfitta si spostano verso l'alto senza tendere verso destra, i punti della categoria pareggio pareggio invece, si muovono in mezzo ai punti delle altre due categorie. La correlazione tra le due variabili non è alta (0.51). Ne consegue che un'interazione tra la variabile \texttt{Sh} e la variabile \texttt{Poss}, sembra essere significativa rispetto alla variabile risposta.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.60]{poss-sh.png}
+		\caption{Scatterplot della distribuzione della variabile \texttt{Sh} rispetto ai valori della variabile \texttt{Poss}}  \label{fig:shposs}
+	\end{center}
+\end{figure}
+\end{itemize}
+
+
+Sono state individuate le seguenti tre interazioni con la variabile \texttt{ToMid3rd}:
+\begin{itemize}
+	\item Interazione tra la variabile \texttt{ToMid3rd} e la variabile \texttt{LPAtt}. Si suppone che tra le due variabili ci sia una relazione perché molti lanci lunghi per le punte partono proprio del centrocampo. La Figura \ref{fig:midl} mostra un andamento un po' a "nuvola" ma comunque, è possibile individuare una relazione positiva tra le due variabili infatti, quando aumenta la variabile \texttt{ToMid3rd} aumenta anche la variabile \texttt{LPAtt} e viceversa. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta, inizialmente i vari punti sono mescolati tra di loro ma, successivamente i punti della categoria vittoria vanno molto in alto mentre i punti della categoria sconfitta rimangono molto più bassi muovendosi verso destra, invece i punti della categoria pareggio anche essi vanno verso destra ma rimanendo più alti rispetto ai punti della categoria sconfitta. La correlazione tra le due variabili non è alta (0.45). Ne consegue che un'interazione tra la variabile \texttt{ToMid3rd} e la variabile \texttt{LPAtt}, sembra essere significativa rispetto alla variabile risposta.
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{mid-lpatt.png}
+			\caption{Scatterplot della distribuzione della variabile \texttt{ToMid3rd} rispetto ai valori della variabile \texttt{LPAtt}}  \label{fig:midl}
+		\end{center}
+	\end{figure}
+	
+	\item Interazione tra la variabile \texttt{ToMid3rd} e la variabile \texttt{PCmp\%}. Per le stesse ragioni illustrate nel punto precedente si ipotizza una relazione tra le variabili. La Figura \ref{fig:midp} mostra una relazione positiva tra le due variabili infatti, quando aumenta la variabile \texttt{ToMid3rd} aumenta anche la variabile \texttt{PCmp\%}, con un'andamento simile ad una funzione esponenziale. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta, dove i punti più in alto sono della categoria del pareggio, leggermente più sotto ci sono i punti della vittoria che pero verso la fine del grafico raggiungono i valori più alti, e infine i punti della sconfitta. La correlazione tra le due variabili non è alta (0.66). Ne consegue che un'interazione tra la variabile \texttt{ToMid3rd} e la variabile \texttt{PCmp\%}, sembra essere significativa rispetto alla variabile risposta.
+	
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.60]{mid-pcmp.png}
+			\caption{Scatterplot della distribuzione della variabile \texttt{ToMid3rd} rispetto ai valori della variabile \texttt{PCmp\%}}  \label{fig:midp}
+		\end{center}
+	\end{figure}
+\end{itemize}
+
+
+Infine sono state individuate le seguenti interazioni:
+\begin{itemize}
+	\item Interazione tra la variabile \texttt{TotDist} e la variabile \texttt{PCmp\%}. Naturalmente per effettuare i passaggi e completarli è possibile farlo solo se ci si muove con la palla. La Figura \ref{fig:totdistpcmp} mostra una relazione positiva tra le due variabili infatti, quando aumenta la variabile \texttt{TotDist} aumenta anche la variabile \texttt{PCmp\%}, con un'andamento simile ad una funzione esponenziale. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta, dove i punti più in alto sono della categoria del pareggio, leggermente più sotto ci sono i punti della vittoria e infine i punti della sconfitta. La correlazione tra le due variabili non è troppo alta (0.75). Ne consegue che un'interazione tra la variabile \texttt{TotDist} e la variabile \texttt{PCmp\%}, sembra essere significativa rispetto alla variabile risposta.
+	
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.50]{TotDist-PCmp.png}
+			\caption{Scatterplot della distribuzione della variabile \texttt{TotDist} rispetto ai valori della variabile\texttt{PCmp\%}}  \label{fig:totdistpcmp}
+		\end{center}
+	\end{figure}
+	\item Interazione tra la variabile \texttt{PAtt} e la variabile \texttt{PCmp\%}. Data la loro naturale correlazione si ipotizza che ci sia un'interazione. La Figura \ref{fig:pp} mostra una relazione positiva tra le due variabili infatti, quando aumenta la variabile \texttt{PAtt} aumenta anche la variabile \texttt{PCmp\%}, con un'andamento simile ad una funzione esponenziale. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta, dove i punti più in alto sono della categoria del pareggio, leggermente più sotto ci sono i punti della vittoria e infine i punti della sconfitta. La correlazione tra le due variabili non è troppo alta (0.74). Ne consegue che un'interazione tra la variabile \texttt{PAtt} e la variabile \texttt{PCmp\%}, sembra essere significativa rispetto alla variabile risposta.
+	
+	\begin{figure}[htbp]
+		\begin{center}
+			\includegraphics[scale=0.50]{PAtt-PCmp.png}
+			\caption{Scatterplot della distribuzione della variabile \texttt{PAtt} rispetto ai valori della variabile \texttt{PCmp\%}}  \label{fig:pp}
+		\end{center}
+	\end{figure}
+
+\item Interazione tra la variabile \texttt{ToDefPen} e la variabile \texttt{ToAttPen}. Come ci si può aspettare la Figura \ref{fig:defatt} mostra una relazione negativa tra le due variabili, quando aumenta la variabile \texttt{ToDefPen} diminuisce anche la variabile \texttt{ToAttPen} e viceversa. Sono distinguibili tre differenti gruppi che rappresentano le tre categorie della variabile risposta infatti, i punti della categoria vittoria sono quelli più distanti dallo zero mentre i punti delle categorie pareggio e sconfitta sono più vicini allo zero. Inoltre la correlazione tra le due variabili non è bassa (-0.45). Ne consegue che un'interazione tra la variabile \texttt{ToDefPen} e la variabile \texttt{ToAttPen}, sembra essere significativa rispetto alla variabile risposta.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.60]{def.att.png}
+		\caption{Scatterplot della distribuzione della variabile \texttt{ToDefPen} rispetto ai valori della variabile \texttt{ToAttPen}}  \label{fig:defatt}
+	\end{center}
+\end{figure}
+
+\end{itemize}
+
+\begin{comment}
+	\subsection{Collinearità}
+	Per collinearità si intende quel fenomeno per il quale se più variabili esplicative altamente correlate vengono inserite nel modello, allora la loro alta correlazione andrà a nasconde la loro associazione con la variabile risposta. La soluzione per risolvere questo problema è quella di scegliere soltanto una sola variabile della relazione da inserire nel modello.\\
+	Nella Figura \ref{fig:cor} viene mostrato il valore della correlazione per ogni possibile interazione tra variabile numeriche.\\
+	Come si può notare una maggior correlazione tra le variabile è concentra nella prima parte del triangolo. Dal grafico possiamo vedere come tutte le interazioni che sono state descritte nella sottosezione precedente abbiano un alta correlazione ma non eccessivamente alta. Si hanno i seguenti valori di correlazione:
+	\begin{itemize}
+		\item Le interazioni con la variabile \texttt{Sh}:
+		\begin{itemize}
+			\item L'interazione tra \texttt{Sh} e \texttt{SoT} ha come valore 0,70 tale da giustificare l'inserimento dell'interazione.
+			\item L'interazione tra \texttt{Sh} e \texttt{ToAtt3rd} ha come valore 0,72 tale da giustificare l'inserimento dell'interazione.
+			\item L'interazione tra \texttt{Sh} e \texttt{ToAttPen} ha come valore 0,82 è un valore alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
+		\end{itemize}
+		\item Le interazioni con la variabile \texttt{Poss}:
+		\begin{itemize}
+			\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,88 è un valore molto alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
+			\item L'interazione tra \texttt{Poss} e \texttt{PAtt} ha come valore 0,81 è un valore alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
+		\end{itemize}
+		\item Le interazioni con la variabile \texttt{TotDist}:
+		\begin{itemize}
+			\item L'interazione tra \texttt{TotDist} e \texttt{PAtt} ha come valore 0,87 è un valore molto alto con un possibile rischio di collinearità. Tale valore però giustifica l'inserimento dell'interazione.
+			\item L'interazione tra \texttt{TotDist} e \texttt{PCmp\%} ha come valore 0,75 tale da giustificare l'inserimento dell'interazione.
+		\end{itemize}
+		
+		\item L'interazione tra \texttt{ToAtt3rd} e \texttt{PAttPen} ha come valore 0,79 tale da giustificare l'inserimento dell'interazione.
+		\item L'interazione tra \texttt{PAtt} e \texttt{PCmp\%} ha come valore 0,74 tale da giustificare l'inserimento dell'interazione.
+	\end{itemize}  
+	
+	
+	Nella sottosezione precedente si poteva pensare di inserire interazioni abbastanza naturali ad esempio: \texttt{PAtt}*\texttt{SPAtt}, \texttt{PAtt}*\texttt{MPAtt} e, \texttt{PCmp\%}*\texttt{MPCmp\%} e \texttt{PAtt}*\texttt{LPCmp\%}. Tali interazioni però sono composte da variabili che hanno un alta correlazione tra loro, e quindi si ha il rischio di incombere in un problema di collinearità. Una correlazione cosi alta era prevedibile dato che c'è una ridondanza dei dati tra le variabili. In questa fase dell'analisi non si hanno abbastanza elementi per poter scegliere quale variabile tenere e quale no perciò tale scelta verrà rinviata alla fase di modellazione.\\
+	Il grafico suggerisce alcune interazioni che non sono state descritti ad esempio:\\ \texttt{Poss}*\texttt{ToAtt3rd}, \texttt{Poss}*\texttt{SPAtt},  \texttt{TotDist}*\texttt{ToAtt3rd}, \texttt{PCmp\%}*\texttt{SPAtt} e \texttt{PCmp\%}*\texttt{MPAtt}.
+	Tali interazioni saranno analizzate durante la fase di modellazione per verificare se effettivamente sono significative per il modello.\\
+	Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd}, l'interazione può essere inserita perché va a giustificare il fatto che la variabile \texttt{ToDefPen} combinata con \texttt{ToDef3rd} diventa significativa per la variabile risposta....
+\end{comment}
+
+
+
+
 %\begin{figure}[htbp]
 %	\begin{center}
 %		\includegraphics[scale=0.70]{cov.png}
@@ -346,30 +357,20 @@ Infine si nota una buona correlazione tra \texttt{ToDefPen} e \texttt{ToDef3rd},
 %	\end{center}
 %\end{figure}
 
-\section{Adattamento dataset al modello}
+\section{Ulteriori modifiche del dataset}
 
-Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il dataset di facile interpretazione per un essere umano ma ci sono alcune criticità che non lo permettono di essere utilizzato correttamente all'interno del modello messo a disposizione dal pacchetto \texttt{BradleyTerry2}.\\ 
+Nelle sezioni precedenti si è descritto come si è costruito il dataset e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il dataset di facile interpretazione, ma deve essere riadattato per poter utilizzare le funzioni del pacchetto \texttt{BradleyTerry2}.\\ 
 Sono state apportare le seguenti modifiche.\\
 
-Innanzitutto il modello richiede per il suo funzionamento che le due variabili \texttt{Team} e \texttt{Vs} devono essere o di tipo fattore oppure un \textsf{data.frame}. Un \textsf{data.frame} è una lista di vettori, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali cioè fattori, variabili cardinali cioè vettori numerici; un \textsf{data.frame} può essere visto come una matrice ma con il tipo dei valori che può essere diverso.\\ 
-Le variabili \textsf{Team} e \textsf{Vs} sono state trasformate in \texttt{data.frame} in modo da poter inserire al loro interno tutte le covariate descritte nella sezione precedente, ad esempio \textsf{Poss}, \textsf{Int} ecc.., cosi che il modello capisca quali valori sono legati alla squadra indicata in \textsf{Team} e quali in \textsf{Vs} nella stessa partita.\\
+Innanzitutto il modello richiede che le due variabili \texttt{Team} e \texttt{Vs} siano di tipo fattore oppure costituiscano un \textsf{data.frame}. Un \textsf{data.frame} è una raccolta di vettori di osservazioni, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali (fattori) o variabili numeriche.
+Le variabili \textsf{Team} e \textsf{Vs} sono state trasformate in \texttt{data.frame} in modo da poter inserire al loro interno tutte le covariate descritte nella sezione precedente.
 
-Inoltre per indicare nel modello se la squadra giocava in casa o no, i valori della variabile \texttt{AtHome} non erano accettati, si è quindi convertito il valore \texttt{TRUE} in 1 mentre FALSE in 0.
+Inoltre  i valori della variabile \texttt{AtHome} sono stati converti in 1 (se \texttt{TRUE}) mentre in 0 (se \texttt{FALSE}).
 
-\subsection{Implementazione dell'adattamento del dataset}
-Nella Sezione \ref{sec:a1} viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.\\
-Tale codice ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
-Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}.\\
-Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} c'è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
 
-Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
-\bigskip
-\begin{lstlisting}[language=R]
-> soccern3 <- soccern2[-del,]
-\end{lstlisting}
-\bigskip
-Con il precedente comando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. \\
 
-Con il comando mostrato nella Sezione \ref{sec:a2} si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.\\
 
-Con il comando mostrato nella Sezione \ref{sec:a3} si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati, vengono riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\
+
+
+
+

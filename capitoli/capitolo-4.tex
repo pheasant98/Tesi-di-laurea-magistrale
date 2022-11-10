@@ -126,12 +126,12 @@ Di seguito vengono illustrate le tre tipologie di covariate in una \emph{paired 
 		\begin{center}
 			$ \gamma_{pi}$ = $\beta_{i0} + z^{T}_{pi}\tau$
 		\end{center}
-	 dove $\tau$ rappresenta il peso stimato delle covariate. Come si può notare il parametro $\tau$ non ha alcun indice, questo perchè l'effetto della covariate è uguale su tutti gli oggetti.
+	 dove $\tau$ rappresenta il peso stimato delle covariate. Come si può notare il parametro $\tau$ non ha alcun indice, questo perché l'effetto della covariate è uguale su tutti gli oggetti.
 \end{itemize}
 Nei vari modelli presentati precedentemente, veniva aggiunto il parametro $\beta_{i0}$. Tale parametro è l'intercetta che è una variabile di tipo \emph{object-specific}. Tale parametro spiegata la maggior parte della forza dell'oggetto, infatti le covariate possono essere viste come estensioni, contenenti effetti aggiuntivi dell'abilità dell'oggetto che non sono spiegati dall'intercetta. In tal senso, gli effetti della covariata possono aiutare a spiegare i risultati (imprevisti) di un soggetto che non possono essere completamente spiegati esclusivamente dall'intercetta.\\
 Nella Sezione \ref{sez:4.3}, viene presentato l'\emph{order effect} degli oggetti in competizione. Invece di un \emph{order effect} globale $\delta$ , che è uguale per tutti gli oggetti, è possibile specificare l'\emph{order effect} specifico per ogni oggetto $\alpha_i$, quindi $\delta_i$.\\
 la Tabella \ref{tab:type} vengono riassunti tutti i tipi di covariate e tutte le possibili parametrizzazioni che possono essere applicate.\\
-Riassumendo il parametro abilità  $\gamma_{pi}$ di un oggetto $\alpha_i$ con \emph{i} = 1,....,n su un soggetto \emph{p}, \emph{p} = 1,.....,m non è altro che una combinazione lineare dei parametri precedentemente spiegati. Da ciò si ottiene il modello capace di utilizzare le covariate. Tale modello viene chiamato modello strutturato e fa parte dei generalized linear models (GLMs). Riprendendo il modello \ref{for:3.9} puo essere riadatto nella seguente forma
+Riassumendo il parametro abilità  $\gamma_{pi}$ di un oggetto $\alpha_i$ con \emph{i} = 1,....,n su un soggetto \emph{p}, \emph{p} = 1,.....,m non è altro che una combinazione lineare dei parametri precedentemente spiegati. Da ciò si ottiene il modello capace di utilizzare le covariate. Tale modello viene chiamato modello strutturato e fa parte dei \emph{generalized linear models} (GLMs). Riprendendo il modello \ref{for:3.9} può essere riadatto nella seguente forma
 \begin{align}
 	P(Y_{p(i,j)}\leq h) =  \frac{exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}{1 + exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)} \label{for:4.9}
 \end{align}
@@ -160,7 +160,41 @@ Riassumendo il parametro abilità  $\gamma_{pi}$ di un oggetto $\alpha_i$ con \e
 	\caption{La Tabella riassuntiva di tutti i tipi di covariate e di tutte le possibili parametrizzazioni applicabili.} \label{tab:type}
 \end{table}
 
+\section{Stima e penalizzazione}
+È importante considerare che con l'inserimento di un elevato numero di covariate si ha un aumento di complessità del modello. Dato che si utilizza un modello lineare, un eccessivo livello di complessità può portare a problemi di identificabilità ed efficienza. Infatti includendo soltanto una covariata di tipo \emph{subject-object-specific} questa ha un peso pari a \emph{n} covariate dove \emph{n} sono il numero di oggetti in considerazione, oltretutto per ogni oggetto c'è la sua intercetta, perciò è necessario limitare il più possibile la complessità del modello. La soluzione è utilizzare metodi di \emph{shrinkage} che includono termini di penalizzazione nelle procedure di stima. L'obiettivo è quello di ottenere un modello con una moderata complessità utilizzando solo i parametri realmente necessari. \\
+Con l'inclusione della penalizzazione dei termini il modello potrebbe migliorare o leggermente peggiorare, ma la variabilità associata alle stime sarà minore. C'è perciò un trade-off di cui occuparsi, infatti più è forte la penalità inserita, più sarà elevata la varianza perché molte informazioni sulle variabili vengono perse. Perciò non si massimizzerà la verosimiglianza ma la verosimiglianza penalizzata 
+\begin{center}
+	$ l(\varepsilon)_{p}$ = $l(\varepsilon) - \lambda J(\varepsilon)$
+\end{center}
+dove $l(\varepsilon)$ è la log verosimiglianza con $\varepsilon$ che rappresenta il vettore contenente tutti i parametri del modello. $J(\varepsilon)$ è un termine di penalizzazione. Il parametro $\lambda$ è il parametro di turing che stabilisce quanto forte deve essere la penalizzazione sui parametri. 
+Nell'analisi verrà applicato il metodo \emph{Adaptive Lasso} \autocite{Zou2006}, in particolare verranno utilizzate penalità di tipo $L_1$. Sono state utilizzate solo alcune modalità di penalizzazione tra quelle disponibili, di seguito verranno esposte solo quelle effettivamente utilizzate. In \autocite{SchaubergerTutz2019} vi è una trattazione completa di tutte le penalizzazioni applicabili.\\
+Il primo passo da eseguire è trasformate in scale comparabili tutte le covariate.\\
+Nel modello si è inserito l'effetto partita in casa come variabile di tipo \emph{object-specific}, la penalizzazione risultate è data dalle differenze assolute tra tutti i confronti.
 
+\begin{center}
+	$ P(\delta_1,....\delta_m)_{\delta}$ = $\sum_{i<j}|\delta_i - \delta_j|$ 
+\end{center}
+
+È importante sottolineare che se ci sono molte differenze pari a zero, si ottengono gruppi di oggetti (nel nostro caso squadre) con un effetto identico della variabile penalizzata e che quindi la variabile deve avere un effetto globale piuttosto che \emph{object-specific}. Quindi con la penalizzazione è possibile capire quale tipo di effetto è più opportuno applicare.\\
+Dato che non vi sono dubbi che l'effetto casa sia determinante per l'esito di una partita di calcio non verrà applicata nessun altra penalizzazione.\\
+La penalizzazione per tutte le altre covariate (di tipo \emph{subject-ibject-specific}) è la seguente 
+\begin{center}
+	$ P_{\eta}(\eta_1,....\eta_m)$ = $\sum^{m}_{p=1}\sum_{i<j}|\eta_{ip} - \eta_{jp}| + \sum^{m}_{p=1}\sum^{n}_{i<j}|\eta_{ip}|$
+\end{center}
+
+rispetto alla penalizzazione precedente è stata aggiunta una penalizzazione al valore assoluto delle covariate. Questo perché non sappiamo in anticipo se una variabile è influente oppure no, perciò è stato introdotto un ulteriore termine di penalizzazione.\\
+
+Le penalizzazione illustrate precedentemente se combinate permettono di ottenere il parametro $J(.) = P_\delta(.) + P_\eta(.)$.
+\subsection{Scelta del parametro di turing}
+Un punto cruciale per le tecniche di \emph{shrinkage} è la determinazione del parametro di turing ottimo $\lambda$, cioè il grado di penalizzazione che ci da il miglior trade-off. Per farlo ci si affiderà alla k-fold cross-validation (con k = 10), che sceglierà la miglior $\lambda$ rispetto alla metrica \emph{ranked probability score}(RPS).
+Il RPS per \emph{ordinal response} $y \in \{1,....,K\}$ \autocite{GneitingRaftery2007} può essere cosi espresso 
+\begin{center}
+	$ RPS(y,\pi(k))$ = $\sum^{K}_{k = 1}(\pi(k) - \mathbb{1}(y \le k))^2$ 
+\end{center}
+dove $\pi(k)$ rappresenta la probabilità cumulativa $\pi(k)$ = $P(y \le k)$. A differenza delle altre possibili misure dell'errore, ad esempio la devianza, il RPS tiene conto dell'ordine di preferenza.
+
+\section{Modellazione}
+ %dato che verrà utilizzato solo una variabile di tipo \emph{object-specific} e tutte il resto variabili di 
 
 
 

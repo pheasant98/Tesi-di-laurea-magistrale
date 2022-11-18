@@ -9,55 +9,57 @@
 \intro{Nel seguente capitolo verranno introdotti differenti modelli per il confronto a coppie, iniziando con il modello Bradley-Terry versione base fino a presentare tutte le sue estensioni usate per l'analisi trattata. Infine verrà illustrata la penalizzazione applicata.}
 
 
-\section{Modello Bradley-Terry base}
-Il modello Bradley-Terry \autocite{bradley1952rank} è un modello probabilistico che permette di predire il risultato di un confronto a coppie, dove per confronto a coppie si intende un processo di comparazione tra due oggetti $\alpha_{i}$ e $\alpha_{j}$ con i,j $\in$ \{1,...,n\}, appartenenti a un set di oggetti \{$\alpha_{1},....,\alpha_{n}$\}, dove gli oggetti sono l'entità che vengono confrontate tra di loro.
-
-Formalmente, dato un set di oggetti \{$\alpha_{1},....,\alpha_{n}$\}, un set di parametri $ \{\gamma_{1}, ..., \gamma_{n}\}$ che rappresentano ciascuno l'abilità/forza del i-esimo oggetto e la variabile casuale associata al risultato del confronto a coppie Y$_{i,j}$ con i<j $\in$ \{1,...,n\}, la probabilità che il risultato sia $\alpha_{i}$ $\succ$ $\alpha_{j}$ è
+\section{Introduzione al Modello Bradley-Terry base}
+Il modello Bradley-Terry \autocite{bradley1952rank} è un modello probabilistico che permette di predire il risultato di un confronto a coppie. Un confronto a coppie è un processo di comparazione tra una serie di oggetti dove ogni oggetto viene confrontato in coppia con un altro oggetto determinando per ogni confronto, se l'oggetto è preferibile all'altro.
+%$\alpha_{i}$ e $\alpha_{j}$ con \emph{i,j $\in$ \{1,...,n\}}, appartenenti a un set di oggetti \{$\alpha_{1},....,\alpha_{n}$\}, 
+Formalmente, dato un set di \emph{n} oggetti \{$\alpha_{1},....,\alpha_{n}$\}, un set di \emph{n} parametri $ \{\gamma_{1}, ..., \gamma_{n}\}$ che rappresentano ciascuno l'abilità/forza dell'i-esimo oggetto, la variabile casuale associata al risultato del confronto a coppie Y$_{i,j}$ con \emph{i<j $\in$ \{1,...,n\}}, la probabilità che il risultato sia $\alpha_{i}$ $\succ$ $\alpha_{j}$ è
 
 \begin{align} 
-	P(\alpha_{i} \succ \alpha_{j}) = P(Y_{i,j} = 1) = \frac{exp(\gamma_{i} - \gamma_{j})}{1 + exp(\gamma_{i} - \gamma_{j})} \label{for:3.1} 
+	P(\alpha_{i} \succ \alpha_{j}) = P(Y_{i,j} = 1) = \frac{exp(\gamma_{i} - \gamma_{j})}{1 + exp(\gamma_{i} - \gamma_{j})} \label{for:3.1}.
 \end{align}
 
-Il risultato $\alpha_{i}$ $\succ$ $\alpha_{j}$ può essere letto come "l'oggetto $\alpha_{i}$ è preferito all'oggetto $\alpha_{j}$","$\alpha_{i}$ batte l'oggetto $\alpha_{j}$" oppure "$\alpha_{i}$ è migliore dell'oggetto $\alpha_{j}$". La variabile casuale è di tipo binario cioè Y$_{i,j}$ = 1 se l'oggetto $\alpha_{i}$ è preferito all'oggetto $\alpha_{j}$ e Y$_{i,j}$ = 0 se l'oggetto $\alpha_{j}$ è preferito all'oggetto $\alpha_{i}$. I parametri $\gamma_{i}$ sono stimati dal modello attraverso la massima verosimiglianza.
-È necessario imporre un vincolo per identificare gli oggetti. Tali vincoli possono essere, il vincolo di somma $ \sum_{i=1}^{n} \gamma_{i} = 0 $ oppure il vincolo dell'oggetto di riferimento.
-Per il vincolo dell'oggetto di riferimento si intende che viene fissato $\gamma_{i} = 0$ per un oggetto $\alpha_{i}$ $\in$ \{1, ..., n\}, mentre il valore dei parametri $\gamma_{j}$ degli altri oggetti $\alpha_{j}$ sarà la differenza rispetto all'oggetto di riferimento $\alpha_{i}$.\\
-Il modello precedentemente descritto è chiamato modello non strutturato, inoltre il modello base non considera covariate e, in generale, non presta alcuna attenzione all'eterogeneità causata dai soggetti dei confronti.\\
+Il risultato $\alpha_{i}$ $\succ$ $\alpha_{j}$ può essere letto come "l'oggetto $\alpha_{i}$ è preferito all'oggetto $\alpha_{j}$","$\alpha_{i}$ batte l'oggetto $\alpha_{j}$" oppure "$\alpha_{i}$ è migliore dell'oggetto $\alpha_{j}$". La variabile casuale Y$_{i,j}$ è di tipo binario, cioè Y$_{i,j}$ = 1 se l'oggetto $\alpha_{i}$ è preferito all'oggetto $\alpha_{j}$ e Y$_{i,j}$ = 0 se l'oggetto $\alpha_{j}$ è preferito all'oggetto $\alpha_{i}$. I parametri $\gamma_{i}$ sono stimati dal modello attraverso la massima verosimiglianza.
+È necessario imporre un vincolo per identificare gli oggetti. Tali vincoli possono essere il vincolo di somma $ \sum_{i=1}^{n} \gamma_{i} = 0 $ oppure il vincolo dell'oggetto di riferimento.
+Per il vincolo dell'oggetto di riferimento si intende che viene fissato $\gamma_{i} = 0$ per un oggetto \emph{$\alpha_{i}$ $\in$ \{1, ..., n\}}, mentre il valore dei parametri $\gamma_{j}$ degli altri oggetti $\alpha_{j}$ sarà la differenza rispetto all'oggetto di riferimento $\alpha_{i}$.\\
 
-Il modello può essere alternativamente espresso in forma di logit lineare:
+Il modello può essere alternativamente espresso in forma di logit lineare
 
 \begin{align}
-		logit(\alpha_{i} \succ \alpha_{j}) =  log\left( \frac{P( \alpha_{i} \succ \alpha_{j})}{P( \alpha_{j} \succ \alpha_{i})} \right) = log\left(\frac{exp(\gamma_{i})}{exp(\gamma_{j})}\right) = \gamma_i - \gamma_j \label{for:4.1}
+		logit(\alpha_{i} \succ \alpha_{j}) =  log\left( \frac{P( \alpha_{i} \succ \alpha_{j})}{P( \alpha_{j} \succ \alpha_{i})} \right) = log\left(\frac{exp(\gamma_{i})}{exp(\gamma_{j})}\right) = \gamma_i - \gamma_j \label{for:4.1}.
 \end{align}
+
+Il modello descritto è chiamato \emph{modello non strutturato}. Il modello non strutturato non considera covariate e, in generale, non presta alcuna attenzione all'eterogeneità causata dai soggetti dei confronti.
+Per la nostra analisi, vengono considerati un numero di oggetti pari a \emph{n=20}, cioè il numero di squadre partecipanti alla Serie A.
 
 
 \section{Modello Bradley-Terry con categorie di risposta ordinate}\label{sez:4.2}
-In molti contesti di comparazione tra oggetti, è possibile che sia richiesto di dare una scala di preferenza tra un oggetto e un altro, ossia la variabile casuale deve avere K possibili categorie di risposta con K > 2. Inoltre tali scelte devono avere un ordine di preferenza, dal risultato meno gradevole al più gradevole per l'i-esimo oggetto, ad esempio si preferisce il pareggio piuttosto che perdere. Perciò il modello \ref{for:4.1} che ha una variabile casuale binaria non è adeguato. 
+In molti contesti di comparazione tra oggetti, è possibile che sia richiesto di dare una scala di preferenza tra un oggetto e un altro. In tal caso, la variabile casuale presenta \emph{K} possibili categorie di risposta con \emph{K} > 2. Le scelte di preferenza devono avere un ordine, dal risultato meno gradevole al più gradevole per ogni oggetto. Avere \emph{K} categorie di risposta ordinate con \emph{K} > 2 è di interesse per le comparazioni calcistiche. Infatti non è sufficiente stimare la probabilità di vittoria o di sconfitta ma deve essere obbligantemente preso in considerazione anche il pareggio come risultato. Inoltre anche l'ordine delle \emph{K} categorie di risposta e importante infatti, un oggetto preferisce il pareggio piuttosto che la sconfitta. Perciò il modello (\ref{for:4.1}) con una variabile risposta binaria non è adeguato. 
 
 %Supponiamo che due oggetti $\alpha_{i}$ e $\alpha_{j}$ siano confrontati e che la preferenza ora non sia più espressa i termini di: preferisco $\alpha_{i}$ al posto di $\alpha_{j}$ o viceversa ma, attraverso una scala di preferenza, ad esempio dando una forte preferenza a $\alpha_{i}$ rispetto a $\alpha_{j}$ o una leggera preferenza a $\alpha_{i}$ rispetto a $\alpha_{j}$ o non dando nessuna preferenza o preferendo leggermente $\alpha_{j}$ rispetto a $\alpha_{i}$ oppure preferire fortemente $\alpha_{j}$ rispetto a $\alpha_{i}$. 
 %Quindi dal modello descritto nella precedente sezione si passa da due classi di preferenza a cinque classi di preferenza.\\
-Avere K categorie di risposta ordinate con K > 2 è di interesse per le comparazioni calcistiche dato che non è sufficiente stimare la probabilità di vittoria o sconfitta ma deve essere obbligantemente preso in considerazione anche il pareggio come risultato.\\
 
-Modelli che consentono un numero generale di categorie K, sono stati proposti da \autocite{bradley1952rank} a \autocite{tutz1986bradley} . In particolare \autocite{tutz1986bradley} mostrò come due modelli per l'analisi di dati ordinati possono essere adattati per i confronti a coppie.\\
 
-Il primo modello presentato è detto a collegamento cumulativo e sfrutta la rappresentazione nelle variabili latenti. In generale, data la variabile continua casuale latente $Z_{i,j}$ sia K il numero di gradi della scala di preferenza e siano $\theta_{1} $ < $\theta_{2}$ < .... < $\theta_{K-1}$ le soglie tale che Y$_{i,j} = k$ quando $\theta_{k-1} < Z_{i,j} < \theta_{k}$. Allora:
+Modelli che consentono un numero generale di categorie \emph{K} sono stati proposti da \textcite{bradley1952rank} e \textcite{tutz1986bradley}. In particolare, \textcite{tutz1986bradley} mostrò come due modelli per l'analisi di dati ordinati possono essere adattati per i confronti a coppie.\\
+
+Il primo modello presentato è detto a \emph{collegamento cumulativo} il quale sarà usato per l'analisi. Il modello sfrutta la rappresentazione tramite variabili latenti. In generale, data la variabile continua casuale latente $Z_{i,j}$, sia \emph{K} il numero di gradi della scala di preferenza e siano $\theta_{1} $ < $\theta_{2}$ < .... < $\theta_{K-1}$ le soglie tale che Y$_{i,j} = k$ quando $\theta_{k-1} < Z_{i,j} < \theta_{k}$. Allora:
 \begin{align}
-	P(Y_{i,j}\leq k) =  \frac{exp(\theta_{k} + \gamma_{i} - \gamma_{j})}{1 + exp(\theta_{k} + \gamma_{i} - \gamma_{j})} \label{for:3.2.1}
+	P(Y_{i,j}\leq k) =  \frac{exp(\theta_{k} + \gamma_{i} - \gamma_{j})}{1 + exp(\theta_{k} + \gamma_{i} - \gamma_{j})} \label{for:3.2.1},
 \end{align}
 
-con k $\in$ \{1,....,K\} che indica le possibili categorie di risposta. I parametri $\theta_{k}$ rappresentano le cosiddette soglie per le singole categorie di risposta, che determinano la preferenza per le specifiche categorie. In particolare, Y$_{i,j} = 1$ rappresenta la massima preferenza per un oggetto \textit{i} rispetto a un oggetto \textit{j}.\\
-In generale vi è imposta una simmetria del modello in modo che valga: $P(Y_{i,j} = k) = P(Y_{j,i} = K - k + 1)$. È quindi necessario che le soglie siano ristrette a $\theta_{k}$ = -$\theta_{K-k}$ e se, K è dispari, $\theta_{K/2}$ = 0; per garantire che le probabilità siano simmetriche cioè il risultato opposto abbia la stessa probabilità di verificarsi. Per garantire che le probabilità siano non negative per le singole categorie di risposta vi è imposta la seguente limitazione: $-\infty$ = $\theta_{0} < \theta_{1} < ... < \theta_{K-1} < \theta_{K} = \infty$. Dato che la soglia per l'ultima categoria è fissata a $\theta_{K} = \infty$ allora $P(Y_{i,j} \leq K)$ = 1. Si sottolinea che le soglie sono parametri che vanno stimate dai dati. Inoltre, la probabilità di una singola categorie di risposta può essere derivata dalla differenza tra categorie adiacenti cioè:
+con \emph{k $\in$ \{1,....,K\}} che indica le possibili categorie di risposta. I parametri $\theta_{k}$ rappresentano le cosiddette soglie per le singole categorie di risposta, cioè sono i migliori valori in cui dividere le categorie. Tali soglie vengono stimate dai dati. %I parametri $\theta_{k}$ sono stimati massimizzando la verosimiglianza partizionata  %In particolare, Y$_{i,j} = 1$ rappresenta la massima preferenza per un oggetto $\alpha_{i}$ rispetto a un oggetto  $\alpha_{j}$.\\
+In generale vi è imposta una simmetria del modello, in modo che valga: $P(Y_{i,j} = k) = P(Y_{j,i} = K - k + 1)$. Pertanto le soglie sono ristrette a $\theta_{k}$ = -$\theta_{K-k}$ e se, \emph{K} è dispari, $\theta_{K/2}$ = 0, per garantire che le probabilità siano simmetriche, cioè il risultato opposto abbia la stessa probabilità di verificarsi. Per garantire che le probabilità siano non negative per le singole categorie di risposta si impone il seguente vincolo $-\infty$ = $\theta_{0} < \theta_{1} < ... < \theta_{K-1} < \theta_{K} = \infty$. Dato che la soglia per l'ultima categoria è fissata a $\theta_{K} = \infty$, allora $P(Y_{i,j} \leq K)$ = 1. La probabilità di una singola categoria di risposta può essere derivata dalla differenza tra categorie adiacenti, come segue,
 \begin{center}
 	  $P(Y_{i,j} = k)$ = $P(Y_{i,j} \leq k)$ - $P(Y_{i,j} \leq k - 1)$.
 \end{center}
 
-Il modello ha anche una rappresentazione logit lineare ed è la seguente:
+Il modello ha anche la seguente rappresentazione logit lineare 
 \begin{align}
-	logit(Y_{i,j}\leq k) =  \theta_{k} + \gamma_i - \gamma_j 
+	logit(Y_{i,j}\leq k) =  \theta_{k} + \gamma_i - \gamma_j.
 \end{align}
 
-Il secondo modello invece proposto da \autocite{agresti1992analysis} è detto modello a categorie adiacenti. In questo caso il collegamento è applicato alle probabilità di risposte adiacenti piuttosto che alle probabilità cumulative, riducendosi così al modello Bradley-Terry quando sono consentite solo due categorie mentre quando sono consentite solo tre categorie, si riduce al modello proposto da \autocite{davidson1970extending} che verrà presentato di seguito al prossimo paragrafo.\\
+Il secondo modello invece proposto da \textcite{agresti1992analysis} è detto \emph{modello a categorie adiacenti}. In questo caso il collegamento è applicato alle probabilità di risposte adiacenti piuttosto che alle probabilità cumulative, riducendosi così al modello Bradley-Terry quando sono consentite solo due categorie. Quando sono consentite solo tre categorie, il modello coincidere con quello di \textcite{davidson1970extending} che verrà presentato di seguito.\\
 Il modello a categorie adiacenti è più semplice da interpretare rispetto ai modelli a collegamenti cumulativi poiché la probabilità si riferisce a un determinato risultato anziché a raggruppamenti di risultati. \\
-Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la non preferenza, allora:
+Sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la non preferenza. Allora \autocite{davidson1970extending}
 
 \begin{align}
 	P(Y_{i,j} = 2 | Y_{i,j} \not = 0) =  \frac{exp(\gamma_{i} - \gamma_{j})}{1 + exp(\gamma_{i} - \gamma_{j})}, \label{for:4.5}
@@ -68,85 +70,77 @@ Perciò dal modello proposto da \autocite{davidson1970extending}, sia $\theta$ i
 \end{align}
 
 \begin{align}	
-	P(Y_{i,j} = 0 | Y_{i,j} \not = 1) =  \frac{exp(\gamma_{j} - \gamma_{i})}{1 + exp(\gamma_{j} - \gamma_{i})}\label{for:4.7}
+	P(Y_{i,j} = 0 | Y_{i,j} \not = 1) =  \frac{exp(\gamma_{j} - \gamma_{i})}{1 + exp(\gamma_{j} - \gamma_{i})}\label{for:4.7}.
 \end{align}
 
-Si è riportato la modellazione di tutti e tre i possibili risultati, con $\gamma_{n}$ che rappresenta la forza degli oggetti in comparazione. La probabilità che l'oggetto $\alpha_{i}$ batta l'oggetto $\alpha_{j}$ è rappresentata da \hyperref[for:4.5]{(4.5)}, mentre la probabilità che l'oggetto $\alpha_{j}$ batta l'oggetto $\alpha_{i}$ è rappresentata da  \hyperref[for:4.7]{(4.7)}. Sia \hyperref[for:4.5]{(4.5)} e sia \hyperref[for:4.7]{(4.7)} rimangono uguali alla probabilità \hyperref[for:3.1]{(4.2)} descritta precedentemente. Invece, per la probabilità che l'oggetto $\alpha_{i}$ pareggi con l'oggetto $\alpha_{j}$ \hyperref[for:4.6]{(4.6)}, viene aggiunto il parametro $\theta$. Il parametro $\theta$ rappresenta quanto è auspicabile il pareggio. \\
+Si è riportato la modellazione di tutti e tre i possibili risultati, con $\gamma_{n}$ che rappresenta la forza degli oggetti in comparazione. La probabilità che l'oggetto $\alpha_{i}$ batta l'oggetto $\alpha_{j}$ è rappresentata da \hyperref[for:4.5]{(4.5)}, mentre la probabilità che l'oggetto $\alpha_{j}$ batta l'oggetto $\alpha_{i}$ è rappresentata da  \hyperref[for:4.7]{(4.7)}. Sia \hyperref[for:4.5]{(4.5)}sia \hyperref[for:4.7]{(4.7)} rimangono uguali alla probabilità \hyperref[for:3.1]{(4.2)} descritta precedentemente. Invece, per la probabilità che l'oggetto $\alpha_{i}$ pareggi con l'oggetto $\alpha_{j}$ \hyperref[for:4.6]{(4.6)}, viene aggiunto il parametro $\theta$. Il parametro $\theta$ rappresenta, quindi, quanto sia auspicabile il pareggio. \\
 
 \section{Bradley–Terry Model con effetti dell'ordine} \label{sez:4.3}
-Nel modello descritto nella sezione \ref{sez:4.2}, è necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti. Tra questi vi è anche il calcio poiché l'ordine dei oggetti (le squadre) conta. Infatti in una partita di calcio, la prima squadra che viene indicata tra le due squadre, è quella che gioca in casa, dove teoricamente dovrebbe avere un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
+Nel modello descritto nella sezione \ref{sez:4.2} è necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti. Tra questi vi è anche il calcio poiché l'ordine dei oggetti (le squadre) conta. Infatti in una partita di calcio, la prima squadra che viene indicata tra le due squadre è quella che gioca in casa, per cui ci si attende crei un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
 Un possibile modello riadattato al problema esposto è il seguente:
 
 \begin{align} 
 	P(\alpha_{i}\succ \alpha_{j}) = P(Y_{i,j} = 1) = \frac{exp(\delta + \gamma_{i} - \gamma_{j})}{1 + exp(\delta + \gamma_{i} - \gamma_{j})} \label{for:3.8}. 
 \end{align}
 
-L'effetto dell'ordine (il vantaggio di giocare in casa in ambito calcistico) viene trattato come un parametro $\delta$. Se $\delta$ > 0 allora viene attribuito un vantaggio all'oggetto $\alpha_{i}$; aumentando la probabilità che vinca il confronto o nel caso di categorie di risposta ordinate, di avere un risultato superiore rispetto all'oggetto $\alpha_{j}$. Chiaramente il peso di $\delta$ deve essere stimato dai dati.\\
+L'effetto dell'ordine come ad esempio il vantaggio di giocare in casa in ambito calcistico, viene trattato come un parametro $\delta$. Se $\delta$ > 0, viene attribuito un vantaggio all'oggetto $\alpha_{i}$, aumentando la probabilità che vinca il confronto o, nel caso di categorie di risposta ordinate, di avere un risultato superiore rispetto all'oggetto $\alpha_{j}$. Chiaramente il valore di $\delta$ deve essere stimato dai dati.\\
 
-Invece un modello con categorie di risposta ordinate riadatto è il seguente:
+Invece un modello con categorie di risposta ordinate con l'effetto dell'ordine è il seguente
 
 \begin{align}
-	P(Y_{i,j}\leq h) =  \frac{exp(\delta + \theta_{h} + \gamma_{i} - \gamma_{j})}{1 + exp(\delta + \theta_{h} + \gamma_{i} - \gamma_{j})} \label{for:3.9}
+	P(Y_{i,j}\leq h) =  \frac{exp(\delta + \theta_{h} + \gamma_{i} - \gamma_{j})}{1 + exp(\delta + \theta_{h} + \gamma_{i} - \gamma_{j})} \label{for:3.9}.
 \end{align}
 
-Il modello \hyperref[for:3.8]{(4.8)} e il modello \hyperref[for:3.9]{(4.9)} , hanno anche una rappresentazione logit lineare e sono le seguenti:\\
-
-Per \hyperref[for:3.8]{(3.8)}
+Il modello \hyperref[for:3.8]{(4.8)} e il modello \hyperref[for:3.9]{(4.9)} hanno anche la seguente rappresentazione logit lineare rispettivamente,
 
 \begin{align}
-	logit(\alpha_{i} \succ \alpha_{j}) =  \delta + \gamma_i - \gamma_j 
+	logit(\alpha_{i} \succ \alpha_{j}) =  \delta + \gamma_i - \gamma_j,
 \end{align}
 
-Per \hyperref[for:3.9]{(3.9)}
-
 \begin{align}
-	logit(\alpha_{i} \succ \alpha_{j}) =  \delta + \theta_{h} + \gamma_i - \gamma_j 
+	logit(\alpha_{i} \succ \alpha_{j}) =  \delta + \theta_{h} + \gamma_i - \gamma_j.
 \end{align}
 	
+Perciò si fissa che la prima squadra che viene indicata tra le due squadre è quella che gioca in casa.
 \section{Bradley–Terry Model con variabili esplicative}
-È stato presentato un modello che valutasse il grado di preferenza per un oggetto $\alpha_{i}$ rispetto a un oggetto $\alpha_{j}$, senza considerare nessuna covariata. Tale modello risulta essere inutile, dato che siamo interessati a capire quali covariate possono influenzare il risultato della comparazione. Prima di esporre il modello con covariate, è necessario fare una distinzione tra soggetti e oggetti e successivamente distinguere i tre tipi di covariate di un confronto a coppie, ovvero: le covariate specifiche al soggetto $x_p$, le covariate specifiche all'oggetto $z_i$ e infine le covariate specifiche al soggetto e all'oggetto $z_pi$ per i soggetti \emph{p}, \emph{p} = 1,.....,m e gli oggetti $\alpha_{i}$, \emph{i} = 1,....,n.\\
-Gli oggetti sono le entità che vengono confrontate in un confronto a coppie. I soggetti invece, sono le unità che stabiliscono la preferenza tra gli oggetti in un confronto a coppie. Nel calcio gli oggetti sono le squadre di calcio, mentre i soggetti sono le partite di calcio dove avviene la comparazione tra le squadre.\\
+In precedenza è stato descritto un modello che valutasse il grado di preferenza per un oggetto $\alpha_{i}$ rispetto a un oggetto $\alpha_{j}$, senza considerare nessuna covariata. Spesso, però, si è interessati a capire quali elementi possono essere associati al risultato della comparazione. Prima di esporre il modello con covariate, è necessario fare una distinzione tra soggetti e oggetti e successivamente distinguere i tre tipi di covariate di un confronto a coppie, ovvero, le covariate specifiche al soggetto $x_p$, le covariate specifiche all'oggetto $z_i$ e infine le covariate specifiche al soggetto e all'oggetto $z_pi$ per i soggetti \emph{p}, \emph{p = 1,.....,m} e gli oggetti $\alpha_{i}$, \emph{i = 1,....,n.}\\
+Gli oggetti sono le entità che vengono confrontate in un confronto a coppie. I soggetti invece, sono le unità che stabiliscono la preferenza tra gli oggetti in un confronto a coppie. Nel calcio gli oggetti sono le squadre di calcio, mentre i soggetti sono le partite di calcio tramite le quali avviene la comparazione tra le squadre. Nell'analisi tratta il numero di soggetti sarà pari a \emph{m=380}, cioè il numero di partite giocate nel campionato di Serie A.
+\\
 
 Di seguito vengono illustrate le tre tipologie di covariate in un confronto a coppie:
 \begin{itemize}
-	\item \texttt{specifiche al soggetto}: Caratterizzano i soggetti che eseguono i confronti tra oggetti, e quindi queste covariate variano solo tra soggetti. Ad esempio nel calcio, covariate come il numero spettatori o il meteo sono specifiche al soggetto. Perciò, sia $x_p$ un vettore di covariate specifiche al soggetto, $\beta_i$ il peso stimato delle covariate per ogni oggetto $\alpha_{i}$ e $\beta_{i0}$ l'intercetta, allora l'abilità $\gamma_{pi}$ dell'oggetto $\alpha_{i}$ nel soggetto \emph{p} sarà
+	\item \texttt{covariate specifiche del soggetto}. Caratterizzano i soggetti che eseguono i confronti tra oggetti e quindi queste covariate variano solo tra soggetti. Ad esempio nel calcio, covariate specifiche del soggetto sono il numero spettatori o le condizioni meteo sono specifiche al soggetto. Sia $x_p$ un vettore di covariate specifiche del soggetto, $\beta_i$ il peso stimato delle covariate per ogni oggetto $\alpha_{i}$ e $\beta_{i0}$ l'intercetta. Allora l'abilità $\gamma_{pi}$ dell'oggetto $\alpha_{i}$ nel soggetto \emph{p} sarà
 	\begin{center}
 		$ \gamma_{pi}$ = $\beta_{i0} + x^{T}_{p}\beta_i$.
 	\end{center}
 
-	Con l'inclusione di covariate specifiche al soggetto, il modello è in grado di spiegare l'eterogeneità sui soggetti. Le covariate specifiche al soggetto nei confronti a coppie sono state considerate da \autocite{francis2010} a \autocite{Turner2012Firth}.
-	\item \texttt{specifiche all'oggetto}: Caratterizzano gli oggetti che vengono confrontati ma, non variano tra i soggetti ma tra gli oggetti. Nel calcio una covariata specifica all'oggetto può essere il valore di mercato della rosa della squadra di calcio. Un loro utilizzo lo si può trovare in \autocite{schauberger2017}.
-	Perciò, sia $z_{i}$ un vettore di covariate specifiche all'oggetto, $\tau$ il peso uguale per tutti gli oggetti e $\beta_{i0}$ l'intercetta,  
-	allora l'abilità $\gamma_{i}$ dell'oggetto $\alpha_{i}$ sarà
+	Con l'inclusione di covariate specifiche del soggetto, il modello è in grado di spiegare l'eterogeneità tra i soggetti. Le covariate specifiche del soggetto nei confronti a coppie sono state considerate, ad esempio da \textcite{francis2010} e \textcite{Turner2012Firth}.
+	\item \texttt{covariate specifiche dell'oggetto}. Caratterizzano gli oggetti che vengono confrontati. Non variano tra i soggetti, ma tra gli oggetti. Nel caso del calcio, una covariata specifica dell'oggetto può essere il valore di mercato della rosa della squadra di calcio. Un loro utilizzo lo si può trovare in \textcite{schauberger2017}.
+	Sia $z_{i}$ un vettore di covariate specifiche all'oggetto, $\tau$ il peso uguale per tutti gli oggetti e $\beta_{i0}$ l'intercetta. Allora l'abilità $\gamma_{i}$ dell'oggetto $\alpha_{i}$ sarà
 	\begin{center}
 		$\gamma_{pi}$ = $ \gamma_{i}$ = $\beta_{i0} + z^{T}_{i}\tau$.
 	\end{center}
-	Il peso $\tau$ è un parametro globale, che insieme a $z_{i}$ rappresenta l'abilità spiegata delle covariate mentre $\beta_{i0}$ rappresenta la parte dell'abilità non spiegata dalle covariate. 
-	\item \texttt{specifiche al soggetto e all'oggetto}: Questi tipi di covariate possono variare sia per oggetti e sia per i soggetti, ad esempio nel calcio il possesso palla è una covariata che varia per ogni singola squadra e per ogni singola partita. Tali variabili vengono approfondite da \autocite{thurner2000policy} a \autocite{mauerer2015modeling}. Perciò, sia 
-	$z_pi$ un vettore di covariate specifiche al soggetto e all'oggetto, $\eta_i$ il peso stimato delle covariate per ogni oggetto, $\beta_{i0}$ l'intercetta, allora l'abilità $\gamma_{pi}$ dell'oggetto $\alpha_{i}$ nel soggetto \emph{p} sarà
+	Il peso $\tau$ è un parametro globale che insieme a $z_{i}$ rappresenta l'abilità spiegata delle covariate, mentre $\beta_{i0}$ rappresenta la parte dell'abilità non spiegata dalle covariate. Nell'analisi in esame questo tipo di covariate non verrà usato.
+	\item \texttt{covariate specifiche del soggetto e dell'oggetto}. Questi tipi di covariate possono variare sia per oggetti e sia per i soggetti. Nel calcio, ad esempio il possesso palla, è una covariata che varia per ogni singola squadra e per ogni singola partita. Tali variabili vengono approfondite in \textcite{thurner2000policy} e in \textcite{mauerer2015modeling}. Sia $z_{pi}$ un vettore di covariate specifiche del soggetto e dell'oggetto, $\eta_i$ il peso stimato delle covariate per ogni oggetto, $\beta_{i0}$ l'intercetta. Allora l'abilità $\gamma_{pi}$ dell'oggetto $\alpha_{i}$ nel soggetto \emph{p} sarà
 		\begin{center}
 		$ \gamma_{pi}$ = $\beta_{i0} + z^{T}_{pi}\eta_i$.
 	\end{center}
-	Contrariamente alle coviariate specifiche al soggetto, le covariate specifiche al soggetto e all'oggetto posso essere modellate con un effetto globale, quindi $\gamma_{pi}$ sarà
+	Contrariamente alle coviariate specifiche al soggetto, le covariate specifiche al soggetto e all'oggetto posso essere modellate con un effetto globale
 		\begin{center}
-			$ \gamma_{pi}$ = $\beta_{i0} + z^{T}_{pi}\tau$
+			$ \gamma_{pi}$ = $\beta_{i0} + z^{T}_{pi}\tau$,
 		\end{center}
-	 dove $\tau$ rappresenta il peso stimato delle covariate. Come si può notare il parametro $\tau$ non ha alcun indice, questo perché l'effetto della covariate è uguale su tutti gli oggetti.
+	 dove $\tau$ rappresenta il peso stimato delle covariate. Come si può notare, il parametro $\tau$ non ha alcun indice, questo perché l'effetto della covariate è uguale su tutti gli oggetti.
 \end{itemize}
 
 
-
-
-
-
-Nei vari punti presentati precedentemente, veniva aggiunto il parametro $\beta_{i0}$. Tale parametro è l'intercetta che è un parametro specifico all'oggetto. Tale parametro spiegata la maggior parte della forza dell'oggetto, infatti le covariate possono essere viste come estensioni contenenti effetti aggiuntivi dell'abilità dell'oggetto che non sono spiegati dall'intercetta. In tal senso, gli effetti della covariata possono aiutare a spiegare i risultati (imprevisti) di un soggetto che non possono essere completamente spiegati esclusivamente dall'intercetta.\\
-Nella Sezione \ref{sez:4.3}, viene presentato l'effetto dell'ordine degli oggetti in competizione. Invece dell'effetto d'ordine globale $\delta$ , che è uguale per tutti gli oggetti, è possibile specificare l'effetto d'ordine specifico per ogni oggetto $\alpha_i$, quindi $\delta_i$.\\
-Nella Tabella \ref{tab:type} vengono riassunti tutti i tipi di covariate e tutte le possibili parametrizzazioni che possono essere applicate.\\
-Quindi, il parametro abilità $\gamma_{pi}$ di un oggetto $\alpha_i$ con \emph{i} = 1,....,n su un soggetto \emph{p}, \emph{p} = 1,.....,m non è altro che una combinazione lineare dei parametri precedentemente spiegati. Da ciò si ottiene il modello capace di utilizzare le covariate. Tale modello viene chiamato modello strutturato e fa parte dei \emph{generalized linear models} (GLMs). Riprendendo il modello \ref{for:3.9} può essere riadatto nella seguente forma
+Il parametro $\beta_{i0}$ nelle specificazioni precedenti è l'intercetta specifica dell'oggetto. Tale parametro spiega la maggior parte della forza dell'oggetto. Infatti le covariate possono essere viste come estensioni contenenti effetti aggiuntivi dell'abilità dell'oggetto che non sono spiegati dall'intercetta. In tal senso, gli effetti della covariata possono aiutare a spiegare i risultati imprevisti di un soggetto che non possono essere completamente spiegati esclusivamente dall'intercetta \autocite{cattelan2012models} e \autocite{schauberger2017}.\\
+Nella Sezione \ref{sez:4.3} viene presentato l'effetto dell'ordine degli oggetti in competizione. Invece dell'effetto d'ordine globale $\delta$, che è uguale per tutti gli oggetti, è possibile specificare l'effetto d'ordine specifico per ogni oggetto $\alpha_i$, quindi $\delta_i$. Nella Tabella \ref{tab:type} vengono riassunti tutti i tipi di covariate e tutte le possibili parametrizzazioni che possono essere applicate.\\
+Quindi, il parametro abilità $\gamma_{pi}$ di un oggetto $\alpha_i$ con \emph{i} = \emph{1,....,n} su un soggetto \emph{p}, \emph{p} = \emph{1,.....,m} non è altro che una combinazione lineare dei parametri precedentemente spiegati. Da ciò si ottiene il modello capace di utilizzare le covariate. Tale modello viene chiamato modello strutturato e fa parte dei \emph{generalized linear models} (GLMs). Aggiungendo al modello \ref{for:3.9} le covariate di tipo specifiche del soggetto e dell'oggetto al modello si ha
 \begin{align}
-	P(Y_{p(i,j)}\leq h) =  \frac{exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}{1 + exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)} \label{for:4.9}
+	P(Y_{p(i,j)}\leq h) =  \frac{exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}{1 + exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}, \label{for:4.9}
 \end{align}
-
+con \emph{i<j} $\in$ \{\emph{1,...,20}\} e \emph{p} $\in$ \{\emph{1,...,380}\}.\\
+Come si può vedere, il parametro abilità $\gamma_{i}$ è stato sostituito da $\beta_{i0}$ e $ x^T_{pi}\eta_i$. Analogamente anche per $\gamma_{j}$.
 	\begin{table}[!htb]%
 	
 	\renewcommand{\arraystretch}{1.7}
@@ -156,63 +150,92 @@ Quindi, il parametro abilità $\gamma_{pi}$ di un oggetto $\alpha_i$ con \emph{i
 		
 		\textbf{Tipo di covariate} & \textbf{Tipo di effetto} & \textbf{$\gamma_{pi}$ =}& \textbf{$\gamma_{pj}$ =} & \textbf{$\gamma_{p(ij)}$ = $\gamma_{pi}$ $-$ $\gamma_{pj}$} \\	
 		\hline			
-		Intercetta & Spec. all'oggetto & $\beta_{i0}$ & $\beta_{j0}$ & $\beta_{i0} - \beta_{j0}$\\
+		Intercetta & Spec. dell'oggetto & $\beta_{i0}$ & $\beta_{j0}$ & $\beta_{i0} - \beta_{j0}$\\
 		Effetto dell'ordine & Globale & + $\delta$ &  & + $\delta$ \\
-		Effetto dell'ordine & Spec. all'oggetto &  + $\delta_i$ &  &  + $\delta_i$\\
-		Spec. al soggetto $x_p$ & Spec. all'oggetto & + $x^T_p\beta_i$ & + $x^T_p\beta_j$ & + $x^T_p(\beta_i - \beta_j)$\\
-		Spec.all'oggetto  $z_i$ & Globale & + $z^T_{i}\tau$ & + $z^T_{si}\tau$ & + ($z_{i} - z_{j})^T\tau$\\
-		Spec. al soggetto e all'oggetto $z_pi$ & Globale & + $z^T_{pi}\tau$ & + $z^T_{pj}\tau$ & + ($z_{pi} - z_{pj})^T\tau$\\
-		Spec. al soggetto e all'oggetto $z_pi$ & Spec. all'oggetto & + $x^T_{pi}\eta_i$ & + $x^T_{pj}\eta_i$& + $x^T_{pi}\eta_i$ $-$ $x^T_{pj}\eta_j$\\
+		Effetto dell'ordine & Spec. dell'oggetto &  + $\delta_i$ &  &  + $\delta_i$\\
+		Spec. del soggetto $x_p$ & Spec. dell'oggetto & + $x^T_p\beta_i$ & + $x^T_p\beta_j$ & + $x^T_p(\beta_i - \beta_j)$\\
+		Spec.dell'oggetto  $z_i$ & Globale & + $z^T_{i}\tau$ & + $z^T_{si}\tau$ & + ($z_{i} - z_{j})^T\tau$\\
+		Spec. del sogg. e dell'ogg. $z_{pi}$ & Globale & + $z^T_{pi}\tau$ & + $z^T_{pj}\tau$ & + ($z_{pi} - z_{pj})^T\tau$\\
+		Spec. del sogg. e dell'ogg. $z_{pi}$ & Spec. dell'oggetto & + $x^T_{pi}\eta_i$ & + $x^T_{pj}\eta_i$& + $x^T_{pi}\eta_i$ $-$ $x^T_{pj}\eta_j$\\
 		\hline
 		
 		
 	\end{tabular} \hbox{}
 	
-	\caption{La Tabella riassuntiva di tutti i tipi di covariate e di tutte le possibili parametrizzazioni applicabili.} \label{tab:type}
+	\caption{Tipi di covariate e possibili parametrizzazioni applicabili al parametro abilità $\gamma$.} \label{tab:type}
 \end{table}
 
 \section{Stima e penalizzazione}
-È importante considerare che con l'inserimento di un elevato numero di covariate si ha un aumento di complessità del modello. Dato che si utilizza un modello lineare, un eccessivo livello di complessità può portare a problemi di identificabilità ed efficienza. Infatti includendo soltanto una covariata specifica al soggetto e all'oggetto, questa ha un peso pari a \emph{n} covariate dove \emph{n} sono il numero di oggetti in considerazione. Oltretutto per ogni oggetto c'è la sua intercetta, perciò è necessario limitare il più possibile la complessità del modello. La soluzione è utilizzare metodi di \emph{shrinkage} che includono termini di penalizzazione nelle procedure di stima. L'obiettivo è quello di ottenere un modello con una moderata complessità utilizzando solo i parametri realmente necessari. \\
-Con l'inclusione della penalizzazione dei termini il modello potrebbe migliorare o leggermente peggiorare, ma la variabilità associata alle stime sarà minore. C'è perciò un trade-off di cui occuparsi, infatti più è forte la penalità inserita, più sarà elevata la varianza perché molte informazioni sulle variabili vengono perse. Non si massimizzerà la verosimiglianza ma la verosimiglianza penalizzata 
+È importante considerare che, con l'inserimento di un elevato numero di covariate, si ha un aumento di complessità del modello. Dato che si utilizza un modello lineare, un eccessivo livello di complessità può portare a problemi di identificabilità ed efficienza. Infatti se si include una covariata specifica del soggetto e dell'oggetto equivale a inserire \emph{n} covariate dove \emph{n} è il numero di oggetti in considerazione. Nel nostro caso abbiamo 26 covariate di tipo specifiche del soggetto e dell'oggetto da inserire, cioè significa che se abbiamo 20 squadre abbiamo 520 parametri da stimare, un numero chiaramente troppo grande. Inoltre, la complessità è aumentata dalla presenza di una intercetta per ogni oggetto. La soluzione alla gestione di modelli complessi è l'utilizzo di metodi di \emph{shrinkage}, che includono termini di penalizzazione nelle procedure di stima. I metodi di \emph{shrinkage} \autocite{copas1983regression} regolarizzano il processo di stima spingendo le stime dei parametri verso zero.
+%L'obiettivo è quello di ottenere un modello con una moderata complessità utilizzando solo i parametri realmente necessari. \\
+L'inclusione della penalizzazione dei termini potrebbe migliorare o leggermente peggiorare il modello, ma la variabilità associata alle stime sarà minore. C'è perciò un trade off di cui occuparsi, infatti più è forte la penalità inserita, più i parametri saranno vicini a zero e quindi meno informazioni si avranno sui parametri, di conseguenza sarà elevata la varianza a causa della perdita di informazioni. Ovviamente più informazioni vengono perse meno complesso sarà il modello ma allo stesso tempo sarà poco preciso. Non si massimizzerà la log verosimiglianza ma la log verosimiglianza penalizzata 
 \begin{center}
-	$ l(\varepsilon)_{p}$ = $l(\varepsilon) - \lambda J(\varepsilon)$
+	$ L(\varepsilon)^{p}$ = $L(\varepsilon) - \lambda P(\varepsilon)$,
 \end{center}
-dove $l(\varepsilon)$ è la log verosimiglianza con $\varepsilon$ che rappresenta il vettore contenente tutti i parametri del modello. $J(\varepsilon)$ è un termine di penalizzazione. Il parametro $\lambda$ è il parametro di Turing che stabilisce quanto forte deve essere la penalizzazione sui parametri. \\
-Per eseguire la penalizzazione è necessario trasformare in scale comparabili tutte le covariate.\\
-Sono state utilizzate solo alcune modalità di penalizzazione tra quelle disponibili, quindi verranno esposte solo quelle effettivamente utilizzate. In \autocite{schauberger2019btllasso} vi è una trattazione completa di tutte le penalizzazioni applicabili.\\
-Come metodo di penalizzazione verrà applicato l'\emph{Adaptive Lasso} proposto da \autocite{zou2006}. Il metodo riduce i coefficienti ed esegue una selezione delle covariate applicando penalità di tipo $L_1$ per le differenze di coefficienti, di seguito verrà illustrato come è stato applicato.\\
-
-Nel modello si è inserito l'effetto partita in casa come parametro con effetto specifico all'oggetto $\delta_i$, la penalizzazione risultate è data dalle differenze assolute tra tutti i confronti.
+dove $L(\varepsilon)$ è la log verosimiglianza con $\varepsilon$ che rappresenta il vettore contenente tutti i parametri del modello e $P(\varepsilon)$ è un termine di penalizzazione. Il parametro $\lambda$ è il parametro di tuning che stabilisce quanto forte deve essere la penalizzazione sui parametri. \\
+Per eseguire la penalizzazione è necessario trasformare in scale comparabili tutte le covariate, per evitare che la penalizzazione influisca in modo diverso sui parametri.\\
+Oltre a una riduzione di complessità del modello, si vogliono ottenere i seguenti due obbiettivi:
+\begin{itemize}
+	\item Eseguire una selezione delle covariate spingendo a zero quelle non significative,
+	\item Valutare se vi è la formazione di un \emph{cluster} di valori di una covariata su più squadre, in modo tale da utilizzare un effetto globale piuttosto che un effetto specifico dell'oggetto. 
+\end{itemize}
+Quello che si intende per \emph{cluster} di valori è che, durante la penalizzazione può accadere che una covariata ha come valore del parametro lo stesso per tutti gli oggetti in esame, perciò non occorre considerare \emph{n} volte la covariata ma soltanto una volta, riducendo cosi là complessità.
+Per soddisfare questi punti, come metodo di penalizzazione verrà applicato il \emph{LASSO} \autocite{tibshirani1996regression}.\\
+%\autocite{zou2006}. Prima di illustralo è necessario spiegare il metodo di regolarizzazione \emph{Lasso}. 
+\subsection{LASSO}
+Il metodo \emph{Least Absolute Shrinkage and Selection Operator} detto \emph{LASSO} \autocite{tibshirani1996regression} è un metodo di penalizzazione che permette di eseguire una selezione delle covariate. La selezione è possibile perché la penalizzazione applicata spinge i parametri ad essere uguali a zero. Si ha la seguente penalizzazione
 
 \begin{center}
-	$ P(\delta_1,....\delta_m)_{\delta}$ = $\sum_{i<j}|\delta_i - \delta_j|$ 
+$L(\varepsilon)^{P}$ = $L(\varepsilon) + \lambda\sum_{j=1}^{p}|\beta_{j}|$,
 \end{center}
 
-È importante sottolineare che se ci sono molte differenze pari a zero, si ottengono gruppi di oggetti (nel nostro caso squadre) con un effetto identico della covariata penalizzata e che quindi la covariata deve avere un effetto globale piuttosto che specifico all'oggetto. Quindi con la penalizzazione è possibile capire quale tipo di effetto è più opportuno applicare.\\
-Dato che non vi sono dubbi che l'effetto casa sia determinante per l'esito di una partita di calcio \autocite{lago2016home}, non verrà applicata nessun altra penalizzazione.\\
-La penalizzazione per tutte le altre covariate (specifiche al soggetto e all'oggetto) è la seguente 
+dove  $\lambda\sum_{j=1}^{p}|\beta_{j}|$ è il fattore di penalizzazione che include una norma $L_1$ dei parametri. Grazie alla norma $L_1$ è possibile eseguire la selezione delle covariate.\\
+Sono state utilizzate solo alcune modalità di penalizzazione tra quelle disponibili, quindi verranno esposte solo quelle effettivamente utilizzate. Si veda ad esempio, \textcite{schauberger2019btllasso} per una trattazione delle varie penalizzazioni esistenti.\\
+
+Le applicazioni del \emph{LASSO} sono le seguenti:
+\begin{itemize}
+	\item \texttt{Penalizzazione all'effetto partita in casa}\\
+	Si è applicata la seguente penalizzazione su 20 parametri che rappresentano l'effetto di giocare una partita in casa
+	\begin{center}
+		$ P_{\delta}(\delta_1,....\delta_n)$ = $\sum^{n}_{i<j}|\delta_i - \delta_j|$.
+	\end{center}
+	Come si può notare l'effetto partita in casa $\delta_i$ è un parametro con effetto specifico all'oggetto. La penalizzazione risultate è data dai valori delle differenze assolute tra tutti i parametri. Tale tipo di penalizzazione permette di formare clusters di oggetti, nel nostro caso squadre, con un valore dell'abilità simile.\\
+	È possibile applicare una penalizzazione sul valore assoluto del parametro ma, dato che non vi sono dubbi che l'effetto casa sia determinante per l'esito di una partita di calcio \autocite{lago2016home}, non verrà applicata nessun altra penalizzazione.
+	\item \texttt{Penalizzazione alla covariata specifica del soggetto e dell'oggetto}\\
+	Si è applicata la seguente penalizzazione sui parametri della c-esima covariata 
+	\begin{center}
+		$ P_{\eta_{c}}(\eta_{1,1},....\eta_{n,m})$ = $\sum^{m}_{p=1}\sum^{n}_{i<j}|\eta_{ip} - \eta_{jp}| + \sum^{m}_{p=1}\sum^{n}_{i<j}|\eta_{ip}|$.
+	\end{center}
+	Rispetto alla penalizzazione precedente è stata aggiunta una penalizzazione al valore assoluto delle covariate. Questo perché non sappiamo in anticipo se una variabile è associata alla risposta oppure no. Perciò con la penalizzazione al valore assoluto possiamo fare selezione delle covariate.\\
+\end{itemize}
+
+Le penalizzazione illustrate precedentemente se combinate permettono di ottenere il parametro 
 \begin{center}
-	$ P_{\eta}(\eta_1,....\eta_m)$ = $\sum^{m}_{p=1}\sum_{i<j}|\eta_{ip} - \eta_{jp}| + \sum^{m}_{p=1}\sum^{n}_{i<j}|\eta_{ip}|$.
+	$ P(\varepsilon)$ = $\sum_{c=1}^{C}P_{\eta_c} + P_{\delta}$,
+	
 \end{center}
+con \emph{C = 26} che indica il numero di covariate descritte nel Capitolo 2.
 
-Rispetto alla penalizzazione precedente è stata aggiunta una penalizzazione al valore assoluto delle covariate. Questo perché non sappiamo in anticipo se una variabile è influente oppure no.\\
 
-Le penalizzazione illustrate precedentemente se combinate permettono di ottenere il parametro $J(.) = P_\delta(.) + P_\eta(.)$.
-\subsection{Scelta del parametro di Turing}
-Un punto cruciale per le tecniche di \emph{shrinkage} è la determinazione del parametro di Turing ottimo $\lambda$, cioè il grado di penalizzazione che ci da il miglior trade-off. Per farlo ci si affiderà alla \emph{K-Fold Cross-Validation} (con k = 10), che sceglierà la miglior $\lambda$ rispetto alla metrica \emph{ranked probability score} (RPS).\\
-Il RPS \autocite{gneiting2007strictly} per categorie di risposte ordinate $y \in \{1,....,K\}$  misura quanto siano buone le previsioni espresse come distribuzioni di probabilità rispetto ai valori osservati.
-Il RPS può essere cosi espresso 
+%\subsection{Adaptive Lasso}
+
+%Il metodo riduce i coefficienti ed esegue una selezione delle covariate applicando penalità di tipo $L_1$ per le differenze di coefficienti, di seguito verrà illustrato come è stato applicato.\\
+%È importante sottolineare che se ci sono molte differenze pari a zero, si ottengono gruppi di oggetti (nel nostro caso squadre) con un effetto identico della covariata penalizzata e che quindi la covariata deve avere un effetto globale piuttosto che specifico all'oggetto. Quindi con la penalizzazione è possibile capire quale tipo di effetto è più opportuno applicare.\\
+
+\subsection{Scelta del parametro di tuning}
+Un punto cruciale per le tecniche di \emph{shrinkage} è la determinazione del parametro di \emph{tuning} ottimo $\lambda$, cioè il grado di penalizzazione che fornisce il miglior trade off tra complessità e precisione del modello. Per farlo ci si affiderà alla \emph{K-Fold Cross-Validation} con \emph{k = 10}, che sceglierà la miglior $\lambda$ rispetto alla metrica \emph{ranked probability score} (RPS). Il RPS \autocite{gneiting2007strictly} per categorie di risposte ordinate $y \in \{1,....,K\}$  misura quanto siano buone le previsioni espresse come distribuzioni di probabilità rispetto ai valori osservati.
+Sia \emph{K} il numero di categorie della variabile risposta y, il RPS è cosi espresso 
 \begin{center}
-	$ RPS(y,\pi(k))$ = $\sum^{K}_{k = 1}(\pi(k) -  \mathds{1} (y \le k))^2$ 
+	$ RPS(y,\pi(k))$ = $\sum^{K}_{k = 1}{\pi(k) -  \mathds{1} (y \le k)}^2$ 
 \end{center}
-dove $\pi(k)$ rappresenta la probabilità cumulativa $\pi(k)$ = $P(y \le k)$. A differenza delle altre possibili misure dell'errore, ad esempio la devianza, il RPS tiene conto dell'ordine di preferenza.
-$\mathbb{}$
+dove $\pi(k)$ rappresenta la probabilità cumulativa $\pi(k)$ = $P(y \le k)$ mentre $\mathds{1}$ è una funzione che restituisce 1 se il parametro in ingresso è vero, 0 altrimenti. A differenza delle altre possibili misure dell'errore, ad esempio la devianza, il RPS tiene conto dell'ordine di preferenza.
+
 
 
 
 \begin{comment}
 	Si necessita perciò di un modello che tenga conto anche di variabili esplicative inserite durante l'analisi. \\
-	Sia x$_{i}$=($x_{i1},....x_{iK}$) il vettore di K variabili esplicative per un certo oggetto \textit{i} e $\beta$ = ($\beta_{1},....\beta_{P}$) il vettore dei pesi stimati per ogni variabile presente in x$_{i}$, allora si ha che il parametro abilità $\alpha_{i}$ di un certo oggetto \textit{i} è uguale a:
+	Sia x$_{i}$=($x_{i1},....x_{iK}$) il vettore di \emph{K} variabili esplicative per un certo oggetto \textit{i} e $\beta$ = ($\beta_{1},....\beta_{P}$) il vettore dei pesi stimati per ogni variabile presente in x$_{i}$, allora si ha che il parametro abilità $\alpha_{i}$ di un certo oggetto \textit{i} è uguale a:
 	
 	\begin{center}
 		\begin{large}

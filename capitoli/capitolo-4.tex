@@ -3,13 +3,13 @@
 % !TEX root = ../tesi.tex
 %**************************************************************
 \chapter{Il modello Bradley-Terry}
-%\label{cap:archittettura del sistema AWMS}
+\label{cap:BT}
 %**************************************************************
 
 \intro{Nel seguente capitolo verranno introdotti differenti modelli per il confronto a coppie, iniziando con il modello Bradley-Terry versione base fino a presentare tutte le sue estensioni usate per l'analisi trattata. Infine verrà illustrata la penalizzazione applicata.}
 
 
-\section{Introduzione al Modello Bradley-Terry base}
+\section{Introduzione al Modello Bradley-Terry}
 Il modello Bradley-Terry \autocite{bradley1952rank} è un modello probabilistico che permette di predire il risultato di un confronto a coppie. Un confronto a coppie è un processo di comparazione tra una serie di oggetti dove ogni oggetto viene confrontato in coppia con un altro oggetto determinando per ogni confronto, se l'oggetto è preferibile all'altro.
 %$\alpha_{i}$ e $\alpha_{j}$ con \emph{i,j $\in$ \{1,...,n\}}, appartenenti a un set di oggetti \{$\alpha_{1},....,\alpha_{n}$\}, 
 Formalmente, dato un set di \emph{n} oggetti \{$\alpha_{1},....,\alpha_{n}$\}, un set di \emph{n} parametri $ \{\gamma_{1}, ..., \gamma_{n}\}$ che rappresentano ciascuno l'abilità/forza dell'i-esimo oggetto, la variabile casuale associata al risultato del confronto a coppie Y$_{i,j}$ con \emph{i<j $\in$ \{1,...,n\}}, la probabilità che il risultato sia $\alpha_{i}$ $\succ$ $\alpha_{j}$ è
@@ -75,7 +75,7 @@ Sia $\theta$ il parametro stimato dai dati che indica quanto è auspicabile la n
 
 Si è riportato la modellazione di tutti e tre i possibili risultati, con $\gamma_{n}$ che rappresenta la forza degli oggetti in comparazione. La probabilità che l'oggetto $\alpha_{i}$ batta l'oggetto $\alpha_{j}$ è rappresentata da \hyperref[for:4.5]{(4.5)}, mentre la probabilità che l'oggetto $\alpha_{j}$ batta l'oggetto $\alpha_{i}$ è rappresentata da  \hyperref[for:4.7]{(4.7)}. Sia \hyperref[for:4.5]{(4.5)}sia \hyperref[for:4.7]{(4.7)} rimangono uguali alla probabilità \hyperref[for:3.1]{(4.2)} descritta precedentemente. Invece, per la probabilità che l'oggetto $\alpha_{i}$ pareggi con l'oggetto $\alpha_{j}$ \hyperref[for:4.6]{(4.6)}, viene aggiunto il parametro $\theta$. Il parametro $\theta$ rappresenta, quindi, quanto sia auspicabile il pareggio. \\
 
-\section{Bradley–Terry Model con effetti dell'ordine} \label{sez:4.3}
+\section{Modello Bradley–Terry con effetti dell'ordine} \label{sez:4.3}
 Nel modello descritto nella sezione \ref{sez:4.2} è necessario imporre la simmetria tra le categorie di risposta. Purtroppo la simmetria imposta risulta essere non adeguata in alcuni contesti. Tra questi vi è anche il calcio poiché l'ordine dei oggetti (le squadre) conta. Infatti in una partita di calcio, la prima squadra che viene indicata tra le due squadre è quella che gioca in casa, per cui ci si attende crei un vantaggio sull'avversario. Perciò, il presupposto che le categorie di risposta siano simmetriche non vale più. \\
 Un possibile modello riadattato al problema esposto è il seguente:
 
@@ -88,7 +88,7 @@ L'effetto dell'ordine come ad esempio il vantaggio di giocare in casa in ambito 
 Invece un modello con categorie di risposta ordinate con l'effetto dell'ordine è il seguente
 
 \begin{align}
-	P(Y_{i,j}\leq h) =  \frac{exp(\delta + \theta_{h} + \gamma_{i} - \gamma_{j})}{1 + exp(\delta + \theta_{h} + \gamma_{i} - \gamma_{j})} \label{for:3.9}.
+	P(Y_{i,j}\leq k) =  \frac{exp(\delta + \theta_{k} + \gamma_{i} - \gamma_{j})}{1 + exp(\delta + \theta_{h} + \gamma_{i} - \gamma_{j})} \label{for:3.9}.
 \end{align}
 
 Il modello \hyperref[for:3.8]{(4.8)} e il modello \hyperref[for:3.9]{(4.9)} hanno anche la seguente rappresentazione logit lineare rispettivamente,
@@ -102,7 +102,7 @@ Il modello \hyperref[for:3.8]{(4.8)} e il modello \hyperref[for:3.9]{(4.9)} hann
 \end{align}
 	
 Perciò si fissa che la prima squadra che viene indicata tra le due squadre è quella che gioca in casa.
-\section{Bradley–Terry Model con variabili esplicative}
+\section{Modello Bradley–Terry con variabili esplicative}
 In precedenza è stato descritto un modello che valutasse il grado di preferenza per un oggetto $\alpha_{i}$ rispetto a un oggetto $\alpha_{j}$, senza considerare nessuna covariata. Spesso, però, si è interessati a capire quali elementi possono essere associati al risultato della comparazione. Prima di esporre il modello con covariate, è necessario fare una distinzione tra soggetti e oggetti e successivamente distinguere i tre tipi di covariate di un confronto a coppie, ovvero, le covariate specifiche al soggetto $x_p$, le covariate specifiche all'oggetto $z_i$ e infine le covariate specifiche al soggetto e all'oggetto $z_pi$ per i soggetti \emph{p}, \emph{p = 1,.....,m} e gli oggetti $\alpha_{i}$, \emph{i = 1,....,n.}\\
 Gli oggetti sono le entità che vengono confrontate in un confronto a coppie. I soggetti invece, sono le unità che stabiliscono la preferenza tra gli oggetti in un confronto a coppie. Nel calcio gli oggetti sono le squadre di calcio, mentre i soggetti sono le partite di calcio tramite le quali avviene la comparazione tra le squadre. Nell'analisi tratta il numero di soggetti sarà pari a \emph{m=380}, cioè il numero di partite giocate nel campionato di Serie A.
 \\
@@ -135,9 +135,9 @@ Di seguito vengono illustrate le tre tipologie di covariate in un confronto a co
 
 Il parametro $\beta_{i0}$ nelle specificazioni precedenti è l'intercetta specifica dell'oggetto. Tale parametro spiega la maggior parte della forza dell'oggetto. Infatti le covariate possono essere viste come estensioni contenenti effetti aggiuntivi dell'abilità dell'oggetto che non sono spiegati dall'intercetta. In tal senso, gli effetti della covariata possono aiutare a spiegare i risultati imprevisti di un soggetto che non possono essere completamente spiegati esclusivamente dall'intercetta \autocite{cattelan2012models} e \autocite{schauberger2017}.\\
 Nella Sezione \ref{sez:4.3} viene presentato l'effetto dell'ordine degli oggetti in competizione. Invece dell'effetto d'ordine globale $\delta$, che è uguale per tutti gli oggetti, è possibile specificare l'effetto d'ordine specifico per ogni oggetto $\alpha_i$, quindi $\delta_i$. Nella Tabella \ref{tab:type} vengono riassunti tutti i tipi di covariate e tutte le possibili parametrizzazioni che possono essere applicate.\\
-Quindi, il parametro abilità $\gamma_{pi}$ di un oggetto $\alpha_i$ con \emph{i} = \emph{1,....,n} su un soggetto \emph{p}, \emph{p} = \emph{1,.....,m} non è altro che una combinazione lineare dei parametri precedentemente spiegati. Da ciò si ottiene il modello capace di utilizzare le covariate. Tale modello viene chiamato modello strutturato e fa parte dei \emph{generalized linear models} (GLMs). Aggiungendo al modello \ref{for:3.9} le covariate di tipo specifiche del soggetto e dell'oggetto al modello si ha
+Quindi, il parametro abilità $\gamma_{pi}$ di un oggetto $\alpha_i$ con \emph{i} = \emph{1,....,n} su un soggetto \emph{p}, \emph{p} = \emph{1,.....,m} non è altro che una combinazione lineare dei parametri precedentemente spiegati. Da ciò si ottiene il modello capace di utilizzare le covariate. Tale modello viene chiamato modello strutturato e fa parte dei \emph{generalized linear models} (GLMs). Aggiungendo al modello \ref{for:3.9} le covariate di tipo specifiche del soggetto e dell'oggetto al modello e l'effetto dell'ordine con effetto specifico dell'oggetto si ha
 \begin{align}
-	P(Y_{p(i,j)}\leq h) =  \frac{exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}{1 + exp(\delta + \theta_{h} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}, \label{for:4.9}
+	P(Y_{p(i,j)}\leq k) =  \frac{exp(\delta_i + \theta_{k} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}{1 + exp(\delta_i + \theta_{k} + \beta_{i0} - \beta_{j0} + x^T_{pi}\eta_i - x^T_{pj}\eta_j)}, \label{for:4.9}
 \end{align}
 con \emph{i<j} $\in$ \{\emph{1,...,20}\} e \emph{p} $\in$ \{\emph{1,...,380}\}.\\
 Come si può vedere, il parametro abilità $\gamma_{i}$ è stato sostituito da $\beta_{i0}$ e $ x^T_{pi}\eta_i$. Analogamente anche per $\gamma_{j}$.
@@ -214,7 +214,7 @@ Le penalizzazione illustrate precedentemente se combinate permettono di ottenere
 	$ P(\varepsilon)$ = $\sum_{c=1}^{C}P_{\eta_c} + P_{\delta}$,
 	
 \end{center}
-con \emph{C = 26} che indica il numero di covariate descritte nel Capitolo 2.
+con \emph{C = 26} che indica il numero di covariate descritte nel Capitolo \ref{cap:dataset}.
 
 
 %\subsection{Adaptive Lasso}

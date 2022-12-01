@@ -18,7 +18,7 @@ Il dataset è stato importato in modo che la prima riga contenga l'intestazione,
 > soccer<-read.xlsx("SerieA.xlsx", 1, header=TRUE)
 \end{lstlisting}
 \bigskip
-Il dataset non ha valori mancanti. Questo è stato possibile grazie a FBref che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\ 
+Il dataset non ha valori mancanti. Questo è stato possibile grazie a \texttt{\cite{fbref}} che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\ 
 Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
 Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. \texttt{Team} e \texttt{Vs} devono essere interpretate come un fattore cioè è un valore non numerico, espresso in termini verbali, ad esempio una categoria; quindi ogni squadra sarà un livello del fattore. Analogamente, \texttt{AtHome} è stata fatta trasformata in un fattore a due livelli. Invece, \texttt{Res} è stata trasformata in un fattore ordinato con i livelli: -1 = sconfitta <  0 = pareggio < 1 = vittoria.
 
@@ -371,8 +371,85 @@ Inoltre  i valori della variabile \texttt{AtHome} sono stati converti in 1 (se \
 
 \end{comment}
 
+\section{Ulteriori modifiche del dataset}
 
+Nelle sezioni precedenti si è descritto come si è costruito il \emph{dataset} e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il \emph{dataset} di facile interpretazione, ma deve essere riadattato per poter utilizzare le funzioni del pacchetto \textit{\cite{bt2}} e del pacchetto \textit{\cite{btl}}.\\ 
+Innanzitutto la variabile risposta \texttt{Res} viene modificata in modo tale che valga le seguenti condizioni
+%\begin{align*}
 
+\begin{equation}
+	Res =
+	\begin{cases}
+		1 & \text{se la squadra in casa batte la squadra ospite,}\\
+		2 & \text{se la partita termina con un pareggio,}\\
+		3 & \text{se la squadra ospite batte la squadra in casa. }
+	\end{cases}       
+\end{equation}
 
+La variabile risposta \texttt{Res} rimane ancora un fattore ordinato.\\
+Di seguito vengono presentate le modifiche effettuate specifiche per i due pacchetti.
+\subsection{Modifiche per il pacchetto BradleyTerry2}
+
+Innanzitutto il modello richiede che le due variabili \texttt{Team} e \texttt{Vs} siano di tipo fattore oppure che costituiscano un \textsf{data.frame}. Un \textsf{data.frame} è una raccolta di vettori di osservazioni, che devono avere tutti la stessa lunghezza, ma possono essere di tipo diverso: variabili nominali (fattori) o variabili numeriche.
+Le variabili \textsf{Team} e \textsf{Vs} sono state trasformate in \texttt{data.frame} in modo da poter inserire al loro interno tutte le variabili descritte nella sezione precedente.\\
+Inoltre  i valori della variabile \texttt{AtHome} sono stati converti in 1 se \texttt{TRUE} mentre in 0 se \texttt{FALSE}.\\
+Per poter creare i due \texttt{data.frame} occorre raccogliere le informazioni sulle partite giocate fuori casa dalle squadre indicate nella variabile \texttt{Team}. Con la funzione \ref{code:a1} viene implementato ciò in R. La definizione è la seguente.\\
+Innanzitutto viene creato un vettore vuoto per ogni variabile presente nel \emph{dataset}, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Viene creato il vettore \texttt{del} che tiene traccia di quali osservazioni saranno da eliminare. Si eliminano le osservazioni delle partite giocate fuori casa dalle squadre indicate nella variabile \texttt{Team} perché dopo le modifiche saranno ridondanti. La variabile \texttt{k} è l'indice usato per scorre il \emph{dataset} per trovare i dati dell'avversario. La variabile \texttt{z} è l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}. Il funzionamento è il seguente\\
+Il primo ciclo \texttt{for} scorre tutto il \emph{dataset} alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il \emph{dataset} per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}. All'interno del secondo ciclo \texttt{for} c'è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
+
+Di seguito vengono riportati i comandi fatti per applicare le modifiche al \emph{dataset}.
+
+\begin{lstlisting}[language=R]
+	> AdjserieA2 <- AdjserieA[-del,]
+\end{lstlisting}
+
+Con il precedente comando si va a creare un nuovo \emph{dataset} con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. \\
+Con il comando \ref{sec:a2} si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = AdjserieA2\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.\\
+
+\begin{lstlisting}[language=R, caption={Codice per la creazione del data.frame Team}, label=sec:a2] 
+	> AdjserieA2$Team <- data.frame(team = AdjserieA2$Team, GF = AdjserieA2$GF, GA = AdjserieA2$GA,  at.home = 1, Poss = AdjserieA2$Poss, Sh = AdjserieA2$Sh, SoT = AdjserieA2$SoT, G.Sh = AdjserieA2$G.Sh, PAtt = AdjserieA2$PAtt, PCmp. = AdjserieA2$PCmp., SPAtt = AdjserieA2$SPAtt, SPCmp. = AdjserieA2$SPCmp., MPAtt = AdjserieA2$MPAtt, MPCmp. = AdjserieA2$MPCmp., LPAtt = AdjserieA2$LPAtt, LPCmp. = AdjserieA2$LPCmp., ToDef3rd = AdjserieA2$ToDef3rd, ToAtt3rd = AdjserieA2$ToAtt3rd, ToAttPen = AdjserieA2$ToAttPen, TotDist = AdjserieA2$TotDist, Fls = AdjserieA2$Fls, Fld = AdjserieA2$Fld, Crs = AdjserieA2$Crs, Int = AdjserieA2$Int, TklWin = AdjserieA2$TklWin, Recov = AdjserieA2$Recov)
+\end{lstlisting}
+\bigskip
+
+Con il comando \ref{sec:a3} si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = AdjserieA2\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}. Per quanto riguarda il resto dei dati, vengono riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\
+
+\begin{lstlisting}[language=R, caption={Codice per la creazione del data.frame Vs}, captionpos=b, label=sec:a3]
+	> AdjserieA2$Vs <- data.frame(team = AdjserieA2$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
+\end{lstlisting}
+
+\subsection{Modifiche per il pacchetto BTLLasso}
+Il pacchetto richiede una specifica lista strutturata nel seguente modo:
+\begin{itemize}
+	\item \texttt{Y3}: Oggetto risposta per il pacchetto con tre categorie di risposta, inoltre include i seguenti attributi: 
+	\begin{itemize}
+		\item \texttt{response}: Variabile risposta di tipo fattore ordinato,
+		\item \texttt{first.object}: Vettore che indica il nome della squadra che gioca in casa
+		\item \texttt{second.object}: Vettore che indica il nome della squadra che gioca fuori casa,
+		\item \texttt{subject}: Vettore che indica a quale giornata appartiene ogni partita,
+		\item \texttt{subject.names}: Vettore di tipo fattore che indica l'identificativo di ogni giornata,
+		\item \texttt{object.names}: Vettore di tipo fattore che indica l'identificativo di ogni squadra,
+		\item \texttt{m}: Indica il numero di giornate presenti,
+		\item \texttt{n}: Indica il numero di squadre presenti,
+		\item \texttt{k}: Indica il numero di categorie presenti,
+		\item \texttt{with.order}: Vettore di tipo logico che indica per ogni partita se considerare l'effetto dell'ordine.				
+	\end{itemize}
+	\item \texttt{Z1}: Matrice che contiene tutti i dati sulle variabili raccolte suddivise per squadra e per partita.
+\end{itemize} 
+
+Con la funzione \ref{code:a4} vengono raccolte le informazioni per produrre l'elemento \texttt{Y3}. Nella funzione ci sono tre cicli, il primo per scorre le giornate, il secondo per scorrere le partite della i-esima giornata, il terzo per trovare l'altra osservazione della j-esima partita, dato che si ricorda per ogni partita ci sono due osservazioni. Quindi man mano vengono raccolte le varie informazioni e ritornata attraverso \emph{side effects}.\\
+Per creare la matrice \texttt{Z1} viene utilizzata la funzione \ref{code:a6}, la quale estrae tutte le variabili indicate nell'attributo \texttt{covs}. Per funzionare tale funzione estrae una alla volte le variabile attraverso la funzione \ref{code:a5}. La funzione \ref{code:a5} scorre tutto il \emph{dataset} raccogliendo per ogni squadra tutti i valori registra in ogni partita per la variabile indicata nell'attributo \texttt{cov}. Una volta estratte tutti i dati della z-esima variabile viene creata una nuova matrice contenente i dati raccolti precedentemente sulle altre variabili, insieme a le informazioni della z-esima variabile, inserendo \texttt{n} colonne dove \texttt{n} indica il numero di squadre presenti. Perciò, viene creata una colonna per ogni squadra per ogni variabile raccolta. Infine viene creata per ogni colonna la sua etichetta, nella forma \emph{variabile.squadra}. Per creare le etichette viene utilizzata la funzione \ref{code:a7}.\\
+
+Infine vengono riportati i comandi per eseguire le modifiche
+\begin{lstlisting}[language=R, caption={Comandi per la creazione della lista per il pacchetto \textit{BTLLAsso}}, captionpos=b, label=sec:a9]
+Ztmp <-c()
+row <- rowLabel(str1, 38)
+createYFull(SerieA)
+subject.name <- levels(as.factor(SerieA$Round))
+object.name <- levels(as.factor(SerieA$Team))
+Ztmp<-extractAll(c("Poss","Sh","SoT", "G/Sh", "Saves", "PAtt","PCmp%", "SPAtt",    "SPCmp%",  
+"MPAtt",    "MPCmp%",   "LPAtt",    "LPCmp%", "ToDefPen", "ToDef3rd", "ToMid3rd", "ToAtt3rd", "ToAttPen", "TotDist", "Fls", "Fld", "Off", "Crs", "Int", "TklWin", "Recov"), row, object.name)
+#"Poss", "SoT", "G/Sh", "PCmp%", "LPAtt", "ToDefPen", "ToMid3rd", "ToAttPen", "Fld", "TklWin"
+SerieA2122 <- list(Y3 = list(response = as.ordered(response), first.object = as.double(first.object), second.object = as.double(second.object), subject = subject, withS = TRUE, subject.names = subject.name, object.names = object.name, n = 38, m = 20, k = 3, q = 2, with.order = with.order), Z1 = Ztmp)
+\end{lstlisting}
 
 

@@ -7,13 +7,13 @@
 \label{cap:dataset}
 %**************************************************************
 
-\intro{Nel seguente capitolo verrà descritta la raccolta dati effettuata per costruire il dataset riguardante le partite di calcio della Serie A italiana della stagione 2021/2022 e la struttura di tale dataset.}\\
+\intro{Nel seguente capitolo verrà descritta la raccolta dati effettuata per costruire il \emph{dataset} riguardante le partite di calcio della Serie A italiana della stagione 2021/2022 e la struttura di tale \emph{dataset}.}\\
 
 %**************************************************************
 \section{Serie A 2021/2022}
 
 L'analisi effettuata ha preso in considerazione le partite della Serie A italiana della stagione 2021/2022. La Serie A è un torneo che comprende 20 squadre sparse per tutta l'Italia, alcune anche della stessa città, come ad esempio Milan e Inter per Milano. \\
-Tale torneo è organizzato con una struttura Double-Round-Robin, dove ogni squadra affronta due volte le altre 19 avversarie del torneo. Vi è quindi una partita di andata e una di ritorno. In base al sorteggio necessario alla creazione del calendario delle partite si decide quale delle due partite sarà giocata in casa oppure fuori casa (in casa dell'avversario). \\
+Tale torneo è organizzato con una struttura \emph{Double-Round-Robin}, dove ogni squadra affronta due volte le altre 19 avversarie del torneo. Vi è quindi una partita di andata e una di ritorno. In base al sorteggio necessario alla creazione del calendario delle partite si decide quale delle due partite sarà giocata in casa oppure fuori casa (in casa dell'avversario). \\
 Il torneo della stagione 2021/2022 è iniziato il 22 Agosto con Inter - Genoa e si è concluso il 22 Maggio con le partite Salernitana - Udinese e Venezia - Cagliari, per un totale 380 partite giocate, suddivise in 38 turni, ciascuno composto da 10 partite.
 
 \subsection{Ranking}
@@ -62,7 +62,7 @@ La classifica della stagione 2021/2022 è riportata nella Tabella \ref{tab:ranki
 
 Al giorno d'oggi, nelle partite di calcio professionistico viene raccolta un'enorme quantità di variabili. Ad esempio, per ogni squadra è noto il tempo in percentuale del possesso della palla e il numero di tiri in porta in una determinata partita. L'obbiettivo principale di questo lavoro è determinare l'influenza che queste variabili hanno sull'esito della partita. \\
 A tale scopo, sono state raccolte un gran numero di variabili che si suppone essere associate all'esito della partita.\\
-Tali dati sono stati offerti dal sito web FBref(\url{https://fbref.com}), un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. FBref mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse.\\
+Tali dati sono stati offerti dal sito web \textit{\cite{fbref}}, un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. \textit{\cite{fbref}} mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse.\\
 \begin{figure}[!htb]
 	\begin{center}
 		\includegraphics[scale=0.40]{logo.png}
@@ -74,10 +74,10 @@ Tali dati sono stati offerti dal sito web FBref(\url{https://fbref.com}), un sit
 
 
 
-Dunque, per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A, sono state esportate le variabili di interesse per ogni partita giocata, selezionando le macro aree opportune e adattando le tabelle per ottenere solo i dati utili. Le varie tabelle hanno composto un file Excel divenuto il dataset per le analisi svolte nelle tesi 
+Dunque, per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A, sono state esportate le variabili di interesse per ogni partita giocata, selezionando le macro aree opportune e adattando le tabelle per ottenere solo i dati utili. Le varie tabelle hanno composto un file \emph{Excel} divenuto il \emph{dataset} per le analisi svolte nelle tesi 
 
 \section{Struttura del dataset}
-Il dataset risultante dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezione per la data della partita (\textsf{Date}), il turno (\textsf{Round}) e gli spettatori (\textsf{Spec}). Quindi, per ogni partita esistono due righe, una per ciascuna squadra coinvolta. Come risultato finale, ogni squadra appare nella colonna \textsf{Team} 38 volte e, siccome il numero totale di squadre è 20, si ottengono 760 righe. %Per quanto riguarda le colonne se ne discuterà nella prossima sotto sezione. \\
+Il \emph{dataset} risultante dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezione per la data della partita (\textsf{Date}), il turno (\textsf{Round}) e gli spettatori (\textsf{Spec}). Quindi, per ogni partita esistono due righe, una per ciascuna squadra coinvolta. Come risultato finale, ogni squadra appare nella colonna \textsf{Team} 38 volte e, siccome il numero totale di squadre è 20, si ottengono 760 righe. %Per quanto riguarda le colonne se ne discuterà nella prossima sotto sezione. \\
 La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime tre partite della stagione. 
 	\begin{table}[!ht]%
 
@@ -107,10 +107,10 @@ La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime t
 		
 	\end{tabular} \hbox{}
 	
-	\caption{La tabella mostra un estratto del dataset utilizzato i cui dati sono stati ricavati da FBref.} \label{tab:db}
+	\caption{La tabella mostra un estratto del \emph{dataset} utilizzato i cui dati sono stati ricavati da FBref.} \label{tab:db}
 \end{table}
 
-Come scritto precedentemente all'interno del dataset sono presenti 35 colonne. Oltre alle già citate \textsf{Date}, \textsf{Round} e \textsf{Spec} che hanno solo un valore di completezza dei dati, le restanti 32 colonne sanno le possibili variabili che possono influenzare l'esito della partita.
+Come scritto precedentemente all'interno del \emph{dataset} sono presenti 35 colonne. Oltre alle già citate \textsf{Date}, \textsf{Round} e \textsf{Spec} che hanno solo un valore di completezza dei dati, le restanti 32 colonne sanno le possibili variabili che possono influenzare l'esito della partita.
 Le covariate sono state raggruppate nelle seguenti cinque macro-aree:
 \begin{itemize}
 	\item dati generali,
@@ -381,10 +381,10 @@ Nella Tabella \ref{tab:summary} è riassunto l'insieme delle variabili presenti 
 		
 	\end{tabular} \hbox{}
 	
-	\caption{La tabella riassuntiva variabili presenti nel dataset.} \label{tab:summary}
+	\caption{La tabella riassuntiva variabili presenti nel \emph{dataset}.} \label{tab:summary}
 \end{table}
 
-Di seguito nella Tabella \ref{tab:summary2} è mostrato per ogni variabile il nome che ha all'interno del dataset.
+Di seguito nella Tabella \ref{tab:summary2} è mostrato per ogni variabile il nome che ha all'interno del \emph{dataset}.
 
 
 \begin{table}[!htb]%
@@ -432,5 +432,5 @@ Di seguito nella Tabella \ref{tab:summary2} è mostrato per ogni variabile il no
 		
 	\end{tabular} \hbox{}
 	
-	\caption{Tabella corrispondenza nomi originali e nomi nel dataset} \label{tab:summary2}
+	\caption{Tabella corrispondenza nomi originali e nomi nel \emph{dataset}} \label{tab:summary2}
 \end{table}

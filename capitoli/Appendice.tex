@@ -1,94 +1,270 @@
-\chapter{Appendice A}
-TO REWRITE
-\section{Codice di adattamento dataset per il trasferimento dati}
+\chapter{Codice in R}
+\section{extractRowsAway}
+\label{sez:raccolta}
+Codice della funzione per la raccolta delle partite giocate fuori casa dalla squadra indicata nella variabile \texttt{Team}.
 
-Nella Figura \ref{sec:a1} viene mostrato il codice applicato per adeguare il dataset con le modifiche scritte precedentemente.\\
-Tale codice ha l'obbiettivo di prendere le due righe di ogni partita e di unirle insieme formando un unica riga per ogni partita. Successivamente si elimineranno le righe delle partite giocate fuori casa (\textsf{AtHome} = FALSE) dalle squadre indicate in \textsf{Team} mentre le righe delle partite giocate in casa (\textsf{AtHome} = TRUE) dalle squadre indicate in \textsf{Team} conteranno il risultato della fusione.\\
-Perciò si è creato un vettore vuoto per ogni covariata presente nel dataset, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Il vettore \texttt{del} è il vettore che tiene traccia di quali righe saranno da eliminare. \texttt{k} è l'indice usato per scorre il dataset per trovare i dati dell'avversario; \texttt{z} l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}.\\
-Il primo ciclo \texttt{for} scorre tutto il dataset alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team}, infatti al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il dataset per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}; giocata ovviamente fuori casa. Perciò all'interno del secondo ciclo \texttt{for} c'è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\
-
-\begin{lstlisting}[language=R, caption{Codice di adattamento dataset per il trasferimento dati}, captionpos=b, label=sec:a1]
-PossVs <- c()
-ShVs <- c()
-ShTVs <- c()
-G.ShVs <- c()
-PAttVs <- c()
-PCmp.Vs <- c()
-SPAttVs <- c()
-SPCmp.Vs <- c()
-MPAttVs <- c()
-MPCmp.Vs <- c()
-LPAttVs <- c()
-LPCmp.Vs <- c()
-ToDef3rdVs <- c()
-ToMid3rdVs <- c()
-ToAtt3rdVs <- c()
-ToAttPenVs <- c()
-ToDistVs <- c()
-FlsVs <- c()
-FldVs <- c()
-CrsVs <- c()
-IntVs <- c()
-TklWinVs <- c()
-RecovVs <- c()
-del <-c()
-k <- 1
-z <- 1
-for(i in 1:nrow(soccern)){
-	if(soccern$AtHome[i] == TRUE){
-		for(j in 1:nrow(soccern)){
-			if((soccern$Team[j] == soccern$Vs[i]) && (soccern$Team[i] == soccern$Vs[j]) && (soccern$AtHome[j] == FALSE)){
-				PossVs[k] <- soccern$Poss[j]
-				ShVs[k] <- soccern$Sh[j]
-				ShTVs[k] <- soccern$SoT[j]
-				G.ShVs[k] <- soccern$G.Sh[j]
-				PAttVs[k] <- soccern$PAtt[j]
-				PCmp.Vs[k] <- soccern$PCmp.[j]
-				SPAttVs[k] <- soccern$SPAtt[j]
-				SPCmp.Vs[k] <- soccern$SPCmp.[j]
-				MPAttVs[k] <- soccern$MPAtt[j]
-				MPCmp.Vs[k] <- soccern$MPCmp.[j]
-				LPAttVs[k] <- soccern$LPAtt[j]
-				LPCmp.Vs[k] <- soccern$LPCmp.[j]
-				ToDef3rdVs[k] <- soccern$ToDef3rd[j]
-				ToMid3rdVs[k] <- soccern$ToMid3rd[j]
-				ToAtt3rdVs[k] <- soccern$ToAtt3rd[j]
-				ToAttPenVs[k] <- soccern$ToAttPen[j]
-				ToDistVs[k] <- soccern$TotDist[j]
-				FlsVs[k] <- soccern$Fls[j]
-				FldVs[k] <- soccern$Fld[j]
-				CrsVs[k] <- soccern$Crs[j]
-				IntVs[k] <- soccern$Int[j]
-				TklWinVs[k] <- soccern$TklWin[j]
-				RecovVs[k] <- soccern$Recov[j]
-				k <- k + 1
-			}      
+\begin{lstlisting}[language=R, caption={Codice di adattamento dataset per il trasferimento dati.}, captionpos=b, label=code:a1]
+extractRowsAway <-function(){
+	k <- 1
+	z <- 1
+	for(i in 1:nrow(AdjserieA)){
+		if(AdjserieA$AtHome[i] == TRUE){
+			for(j in 1:nrow(AdjserieA)){
+				if((AdjserieA$Team[j] == AdjserieA$Vs[i]) && (AdjserieA$Team[i] == AdjserieA$Vs[j]) && (AdjserieA$AtHome[j] == FALSE)){
+					PossVs[k] <<- AdjserieA$Poss[j]
+					ShVs[k] <<- AdjserieA$Sh[j]
+					ShTVs[k] <<- AdjserieA$SoT[j]
+					G.ShVs[k] <<- AdjserieA$`G/Sh`[j]
+					SavesVs[k] <<- AdjserieA$Saves[j]
+					PAttVs[k] <<- AdjserieA$PAtt[j]
+					PCmp.Vs[k] <<- AdjserieA$`PCmp%`[j]
+					SPAttVs[k] <<- AdjserieA$SPAtt[j]
+					SPCmp.Vs[k] <<- AdjserieA$`SPCmp%`[j]
+					MPAttVs[k] <<- AdjserieA$MPAtt[j]
+					MPCmp.Vs[k] <<- AdjserieA$`MPCmp%`[j]
+					LPAttVs[k] <<- AdjserieA$LPAtt[j]
+					LPCmp.Vs[k] <<- AdjserieA$`LPCmp%`[j]
+					ToDefPenVs[k] <<- AdjserieA$ToDefPen[j]
+					ToDef3rdVs[k] <<- AdjserieA$ToDef3rd[j]
+					ToMid3rdVs[k] <<- AdjserieA$ToMid3rd[j]
+					ToAtt3rdVs[k] <<- AdjserieA$ToAtt3rd[j]
+					ToAttPenVs[k] <<- AdjserieA$ToAttPen[j]
+					ToDistVs[k] <<- AdjserieA$TotDist[j]
+					FlsVs[k] <<- AdjserieA$Fls[j]
+					FldVs[k] <<- AdjserieA$Fld[j]
+					OffVs[k] <<- AdjserieA$Off[j]
+					CrsVs[k] <<- AdjserieA$Crs[j]
+					IntVs[k] <<- AdjserieA$Int[j]
+					TklWinVs[k] <<- AdjserieA$TklWin[j]
+					RecovVs[k] <<- AdjserieA$Recov[j]
+					GFVs[k] <<- AdjserieA$GF[j]
+					GAVs[k] <<- AdjserieA$GA[j]
+					k <- k + 1  
+				}      
+			}
+		} else{
+			del[z] <<- i
+			z <- z + 1
 		}
-	}
-	else{
-		del[z] <- i
-		z <- z + 1
 	}
 }
 \end{lstlisting}
-\bigskip
-Di seguito vengono riportati i comandi fatti per applicare le modifiche al dataset.
-\bigskip
-\begin{lstlisting}[language=R]
-	> soccern3 <- soccern2[-del,]
+
+\section{createYFull}
+\label{sez:y3}
+Codice della funzione per la creazione della variabile \texttt{Y3}.
+
+\begin{lstlisting}[language=R, caption={Codice per la creazione della variabile Y3.}, captionpos=b, label=code:a4]
+createYFull <- function(SerieA){
+	for(i in 1:38){
+		for(y in 1:10){
+			for(z in 1:nrow(SerieA)){
+				if((paste(str1, i) == SerieA$Round[z]) && (SerieA$AtHome[z] == TRUE )  && (first.time[z] == TRUE)){
+					if(SerieA$Res[z] == -1)
+					{
+						response[w] <<- 3
+					}
+					else{
+						if(SerieA$Res[z] == 0){
+							response[w] <<- 2
+						}
+						else{
+							response[w] <<- SerieA$Res[z]
+						}
+						
+					}              
+					switch(
+					SerieA$Team[z],
+					"Atalanta"  =  first.object[w] <<- 1,
+					"Bologna"  =  first.object[w] <<- 2,       
+					"Cagliari"  =  first.object[w] <<- 3,      
+					"Empoli"  =  first.object[w] <<- 4,        
+					"Fiorentina"  =  first.object[w] <<- 5,    
+					"Genoa"  =  first.object[w] <<- 6,         
+					"Hellas Verona"  =  first.object[w] <<- 7, 
+					"Inter"  =  first.object[w] <<- 8,        
+					"Juventus"  =  first.object[w] <<- 9,     
+					"Lazio"  =  first.object[w] <<- 10,         
+					"Milan"  =  first.object[w] <<- 11,         
+					"Napoli"  =  first.object[w] <<- 12,        
+					"Roma"  =  first.object[w] <<- 13,          
+					"Salernitana"  =  first.object[w] <<- 14,   
+					"Sampdoria"  =  first.object[w] <<- 15,     
+					"Sassuolo"  =  first.object[w] <<- 16,     
+					"Spezia"  =  first.object[w] <<- 17,        
+					"Torino"  =  first.object[w] <<- 18,        
+					"Udinese"  =  first.object[w] <<- 19,       
+					"Venezia"  =  first.object[w] <<- 20,      
+					)
+					switch(
+					SerieA$Vs[z],
+					"Atalanta"  =  second.object[w] <<- 1,
+					"Bologna"  =  second.object[w] <<- 2,       
+					"Cagliari"  =  second.object[w] <<- 3,      
+					"Empoli"  =  second.object[w] <<- 4,        
+					"Fiorentina"  =  second.object[w] <<- 5,    
+					"Genoa"  =  second.object[w] <<- 6,         
+					"Hellas Verona"  =  second.object[w] <<- 7, 
+					"Inter"  =  second.object[w] <<- 8,        
+					"Juventus"  =  second.object[w] <<- 9,     
+					"Lazio"  =  second.object[w] <<- 10,         
+					"Milan"  =  second.object[w] <<- 11,         
+					"Napoli"  =  second.object[w] <<- 12,        
+					"Roma"  =  second.object[w] <<- 13,          
+					"Salernitana"  =  second.object[w] <<- 14,   
+					"Sampdoria"  =  second.object[w] <<- 15,     
+					"Sassuolo"  =  second.object[w] <<- 16,     
+					"Spezia"  =  second.object[w] <<- 17,        
+					"Torino"  =  second.object[w] <<- 18,        
+					"Udinese"  =  second.object[w] <<- 19,       
+					"Venezia"  =  second.object[w] <<- 20,      
+					)
+					
+					subject[w] <<- paste(str1, i)
+					with.order[w] <<- TRUE
+					first.time[z] <- FALSE
+					w <- w + 1
+					break
+				}
+			}
+		}
+	}
+}
 \end{lstlisting}
-\bigskip
-Con il precedente comando si va a creare un nuovo dataset con 380 righe, eliminando tutte quelle righe con valore \texttt{FALSE} su \textsf{AtHome}. \\
 
-Con il comando mostrato nella Figura \ref{sec:a2} si va a modificare \textsf{Team} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca in casa. Si inserisce come chiave \texttt{team = soccern3\$Team} e si indica che la partita è in casa per la squadra di riferimento con \texttt{at.home = 1}.\\
+\section{extractData}
+\label{sez:Z1.1}
+Codice della funzione per estrarre le informazioni di una variabile.
 
-\begin{lstlisting}[language=R, caption={Codice per la creazione del data.frame Team}, label=sec:a2] 
-	> soccern3$Team <- data.frame(team = soccern3$Team, GF = soccern3$GF, GA = soccern3$GA,  at.home = 1, Poss = soccern3$Poss, Sh = soccern3$Sh, SoT = soccern3$SoT, G.Sh = soccern3$G.Sh, PAtt = soccern3$PAtt, PCmp. = soccern3$PCmp., SPAtt = soccern3$SPAtt, SPCmp. = soccern3$SPCmp., MPAtt = soccern3$MPAtt, MPCmp. = soccern3$MPCmp., LPAtt = soccern3$LPAtt, LPCmp. = soccern3$LPCmp., ToDef3rd = soccern3$ToDef3rd, ToAtt3rd = soccern3$ToAtt3rd, ToAttPen = soccern3$ToAttPen, TotDist = soccern3$TotDist, Fls = soccern3$Fls, Fld = soccern3$Fld, Crs = soccern3$Crs, Int = soccern3$Int, TklWin = soccern3$TklWin, Recov = soccern3$Recov)
+\begin{lstlisting}[language=R, caption={Codice per estrarre le informazioni di una variabile.}, captionpos=b, label=code:a5]
+extractData <-function(cov){
+	for(i in 1:nrow(SerieA)){
+		switch(
+			SerieA$Team[i],
+			"Atalanta"  =  {ata[it[1]] <<- SerieA[[cov]][i]
+				it[1] <- it[1] + 1                      
+			},
+			"Bologna"  =  {bol[it[2]] <<- SerieA[[cov]][i]
+				it[2] <- it[2] + 1
+			},       
+			"Cagliari"  =  {cag[it[3]] <<- SerieA[[cov]][i]
+				it[3] <- it[3] + 1
+			},      
+			"Empoli"  =  {emp[it[4]] <<- SerieA[[cov]][i]
+				it[4] <- it[4] + 1
+			},      
+			"Fiorentina"  =  {fio[it[5]] <<- SerieA[[cov]][i]
+				it[5] <- it[5] + 1
+			},   
+			"Genoa"  =  {gen[it[6]] <<- SerieA[[cov]][i]
+				it[6] <- it[6] + 1
+			},        
+			"Hellas Verona"  =  {ver[it[7]] <<- SerieA[[cov]][i]
+				it[7] <- it[7] + 1
+			},
+			"Inter"  =  {int[it[8]] <<- SerieA[[cov]][i]
+				it[8] <- it[8] + 1
+			},       
+			"Juventus"  =  {juv[it[9]] <<- SerieA[[cov]][i]
+				it[9] <- it[9] + 1
+			},     
+			"Lazio"  =  {laz[it[10]] <<- SerieA[[cov]][i]
+				it[10] <- it[10] + 1
+			},         
+			"Milan"  =  {mil[it[11]] <<- SerieA[[cov]][i]
+				it[11] <- it[11] + 1
+			},         
+			"Napoli"  =  {nap[it[12]] <<- SerieA[[cov]][i]
+				it[12] <- it[12] + 1
+			},        
+			"Roma"  =  {rom[it[13]] <<- SerieA[[cov]][i]
+				it[13] <- it[13] + 1
+			},          
+			"Salernitana"  =  {sal[it[14]] <<- SerieA[[cov]][i]
+				it[14] <- it[14] + 1
+			},   
+			"Sampdoria"  =  {sam[it[15]] <<- SerieA[[cov]][i]
+				it[15] <- it[15] + 1
+			},     
+			"Sassuolo"  =  {sas[it[16]] <<- SerieA[[cov]][i]
+				it[16] <- it[16] + 1
+			},     
+			"Spezia"  =  {spe[it[17]] <<- SerieA[[cov]][i]
+				it[17] <- it[17] + 1
+			},        
+			"Torino"  =  {tor[it[18]] <<- SerieA[[cov]][i]
+				it[18] <- it[18] + 1
+			},       
+			"Udinese"  = {udi[it[19]] <<- SerieA[[cov]][i]
+				it[19] <- it[19] + 1
+			},       
+			"Venezia"  =  {ven[it[20]] <<- SerieA[[cov]][i]
+				it[20] <- it[20] + 1
+			},     
+		)
+	}
+}
 \end{lstlisting}
-\bigskip
 
-Con il comando mostrato nella Figura \ref{sec:a3} si va a modificare \textsf{Vs} rendendolo un \texttt{data.frame}, andando a inserire i dati della riga relativi alla squadra che gioca fuori casa. Si inserisce come chiave \texttt{team = soccern3\$Vs} e si indica che la partita è fuori casa per la squadra \texttt{Vs} con \texttt{at.home = 0}.\\ Per quanto riguarda il resto dei dati, vengono riportati attraverso l'inserimento dei vettori costruiti e riempiti precedentemente.\\
+\section{extractAll}
+\label{sez:Z1.2}
+Codice della funzione per estrarre le informazioni di tutte le variabili.
 
-\begin{lstlisting}[language=R, caption={Codice per la creazione del data.frame Vs}, captionpos=b, label=sec:a3]
-	> soccern3$Vs <- data.frame(team = soccern3$Vs, GF = GFVs, GA = GAVs, at.home = 0, Poss = PossVs, Sh = ShVs, SoT = ShTVs, G.Sh = G.ShVs, PAtt = PAttVs, PCmp. = PCmp.Vs, SPAtt = SPAttVs, SPCmp. = SPCmp.Vs, MPAtt = MPAttVs, MPCmp. = MPCmp.Vs, LPAtt = LPAttVs, LPCmp. = LPCmp.Vs, ToDef3rd = ToDef3rdVs, ToAtt3rd = ToAtt3rdVs, ToAttPen = ToAttPenVs, TotDist = ToDistVs, Fls = FlsVs, Fld = FldVs, Crs = CrsVs, Int = IntVs, TklWin = TklWinVs, Recov = RecovVs)
+\begin{lstlisting}[language=R, caption={Codice per estrarre le informazioni di tutte le variabili.}, captionpos=b, label=code:a6]
+extractAll <- function(covs, row, teams, n = 20, m = 38){
+	clear()
+	num <- 20
+	isFirst = TRUE
+	tab <-c()
+	for(z in 1:length(covs)){
+		extractData(covs[z])
+		if(isFirst){
+			tab <- matrix(cbind(ata,bol,cag,emp,fio,gen,ver,int,juv,laz,mil,nap,rom,sal,sam,sas,spe,tor,udi,ven), nrow = m, ncol = num)
+			isFirst = FALSE
+		}
+		else{
+			tab <- matrix(cbind(tab, ata,bol,cag,emp,fio,gen,ver,int,juv,laz,mil,nap,rom,sal,sam,sas,spe,tor,udi,ven), nrow = m, ncol = num)
+		}
+		refresh()
+		num <- num + n 		
+	}
+	col <- colLabel(teams, covs)  
+	num2 <- num - n
+	dimnames(tab) <- list(row[1:m], col[1:num2])
+	return(tab)
+}
+\end{lstlisting}
+
+\section{colLabel}
+\label{sez:Z1.3}
+Codice della funzione per creare le etichette delle colonne.
+
+\begin{lstlisting}[language=R, caption={Codice  per creare le etichette delle colonne.}, captionpos=b, label=code:a7]
+colLabel <- function(teams, cov){
+	nameCov <- c()
+	z <- 1
+	for(i in 1:length(cov)){
+		for(y in 1:length(teams)){
+			nameCov[z] <- paste(cov[i], teams[y], sep=".")
+			z <- z + 1
+		}
+	}
+	return(nameCov)
+}
+
+\end{lstlisting}
+
+\section{rowLabel}
+\label{sez:Z1.4}
+Codice della funzione  per creare le etichette delle righe.
+
+\begin{lstlisting}[language=R, caption={Codice per creare le etichette delle righe.}, captionpos=b, label=code:a8]
+rowLabel <- function(str, n){
+	nameRows <- c()
+	for(i in 1:n){
+		nameRows[i] <- paste(str, i)
+	}
+	return(nameRows)
+}
+
 \end{lstlisting}

@@ -8,53 +8,87 @@
 %**************************************************************
 
 \intro{In questo capitolo vengono presentate le stime e i risultati ottenuti dai modelli Bradley-Terry (BTM) descritti nel Capitolo \ref{cap:BT}. Inoltre, sarà riportata l'applicazione del metodo \emph{LASSO} con relativi risultati. Infine si riporteranno le predizioni sugli esiti delle partite prodotte dai modelli per essere poi confrontate con le predizioni dei \emph{bookmakes}}\\
- %Seguirà poi un analisi conclusiva sulle variabile esplicative alla luce dei risultati ottenuti.
-\section{Premesse}
-I risultati che verranno esposti non tengono in considerazione le variabili esplicative del numero di gol fatti \texttt{GF} e dei gol subiti \texttt{GA}. Questo perché provocano la non convergenza del modello. Infatti, le librerie usate non sono in grado di interpretare correttamente i dati. Una possibile soluzione è allargare il numero di categoria \emph{K} inserendo per ogni possibile risultato finale una categoria. Ovviamente questa soluzione rende troppo complesso il modello, perciò si è deciso di lasciare K = 3. Inoltre, data l'elevata complessità che raggiunge il modello esteso Bradley-Terry, non sono state inserite le interazioni illustrate nel Capitolo \ref{cap:Analisi}.
+%Seguirà poi un’analisi conclusiva sulle variabili esplicative alla luce dei risultati ottenuti.
+\section {Premesse}
+I risultati che verranno esposti non tengono in considerazione le variabili esplicative del numero di gol fatti \texttt {GF} e dei gol subiti \texttt{GA}. Questo perché provocano la non convergenza del modello. Infatti, le librerie usate non sono in grado di interpretare correttamente i dati. Una possibile soluzione è allargare il numero di categoria \emph{K} inserendo per ogni possibile risultato finale una categoria. Ovviamente questa soluzione rende troppo complesso il modello, perciò si è deciso di lasciare K = 3. Inoltre, data l'elevata complessità che raggiunge il modello esteso Bradley-Terry, non sono state inserite le interazioni illustrate nel Capitolo \ref{cap:Analisi}.
 
-\section{BTM con effetto dell'ordine}
-Le analisi dello studio iniziano con l'applicazione del modello \hyperref[for:3.9]{(4.9)}. Tale modello presenta una struttura abbastanza semplice, in cui la stima dell'abilità delle squadre tiene conto solo degli esiti osservati delle varie partite e del vantaggio di giocare in casa. 
-La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari rispettivamente, a -0.669 e 0.669 mentre il parametro $\delta$ globale per tutte le squadre è di 0.099 con uno \emph{standard error} (SE) di 0.126. Si nota che la possibilità di giocare in casa è effettivamente in quanto la stima del parametro è positiva. Nella Tabella \ref{tab:BTH} vengono riportati i risultati ottenuti in ordine dell'abilità stimata. Inoltre viene riportato lo \emph{Standard Error} (SE) il \emph{Quasi Standard Error} (QSE) \autocite{firth2004quasi} e il \emph{Quasi Variance} (QV)\autocite{firth2004quasi} per ogni squadra.
+\section {BTM con effetto dell'ordine}
+Le analisi dello studio iniziano con l'applicazione del modello (\hyperref[for:3.9]{4.9}). Tale modello presenta una struttura abbastanza semplice, in cui la stima dell'abilità delle squadre tiene conto solo degli esiti osservati delle varie partite e del vantaggio di giocare in casa. 
+La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari rispettivamente, a -0.669 e 0.669 mentre il parametro $\delta$ globale per tutte le squadre è di 0.099 con uno \emph{standard error} (SE) di 0.126. Si nota che la possibilità di giocare in casa è effettivamente in quanto la stima del parametro è positiva. Nella Figura \ref{tab:BTH} vengono riportati i risultati ottenuti in ordine dell'abilità stimata. Inoltre viene riportato lo \emph{Standard Error} (SE) il \emph{Quasi Standard Error} (QSE) \autocite{firth2004quasi} e il \emph{Quasi Variance} (QV)\autocite{firth2004quasi} per ogni squadra.\\
+Nonostante, la semplicità del modello, viene offerta una stima delle abilità delle squadre che rispecchia molto il piazzamento mostrato nella Tabella \ref{tab:ranking}. Infatti, solo quattro squadre hanno un piazzamento diverso da quello reale. L'Udinese e il Sassuolo hanno il piazzamento invertito con una stima dell'abilità che è molto simile. Ciononostante, il risultato è comunque soddisfacente dato che nella stagione in esame il distacco tra Udinese e Sassuolo è stato solo di tre punti. Anche Genoa e Salernitana hanno un piazzamento differente da quello reale.
+\newpage
+\paperwidth=\pdfpageheight
+\paperheight=\pdfpagewidth
+\pdfpageheight=\paperheight
+\pdfpagewidth=\paperwidth
+\headwidth=\textheight
+
+\begingroup 
+\vsize=\textwidth
+\hsize=\textheight
+
+
+\pagestyle{empty}
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[height = 13cm, width = 23cm]{rank.png}
+		\caption{Barplot che indica per ogni squadra l'abilità stimata dal modello (\hyperref[for:3.9]{4.9}). A fianco al grafico viene riportato lo \emph{Standard Error} (SE), il \emph{Quasi Standard Error} (QSE) e il \emph{Quasi Variance} (QV). Nel grafico viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale, anche esso riportato a destra del grafico.} \label{tab:BTH}
+	\end{center}
+\end{figure}
+
+\textwidth=\hsize
+\textheight=\vsize
+
+\endgroup
+\newpage
+\paperwidth=\pdfpageheight
+\paperheight=\pdfpagewidth
+\pdfpageheight=\paperheight
+\pdfpagewidth=\paperwidth
+\headwidth=\textwidth
+\begin{comment}
 	\begin{table}[!htb]%
-	
-	\renewcommand{\arraystretch}{1.7}
-	\centering
-	\begin{tabular}{c c c c c c}
-		\hline	
 		
-		\textbf{Squadra} & \textbf{Abilità} & \textbf{SE} & \textbf{QSE} & \textbf{QV} & \textbf{Rank}   \\	
-		\hline			
-		Milan & 1.492 & 0.557 & 0.359 & 0.129 & 1\\
-		Inter & 1.4 & 0.537 & 0.400 & 0.160 & 2\\
-		Napoli & 1.17 & 0.530 & 0.389 & 0.152 & 3 \\
-		Juventus & 0.825 & 0.520& 0.373& 0.139& 4\\
-		Lazio & 0.459 & 0.516 & 0.368 & 0.135 & 5\\
-		Roma & 0.413 & 0.516& 0.368& 0.135& 6\\
-		Fiorentina & 0.339 & 0.511& 0.357& 0.127& 7\\
-		Atalanta & 0.312 & 0.000 & 0.368& 0.135& 8 \\
-		Hellas Verona & 0.049 & 0.513& 0.356& 0.127& 9\\
-		Torino & -0.012 & 0.512 & 0.355& 0.126& 10 \\
-		*Udinese & -0.072 & 0.512& 0.355 & 0.126& 12\\
-		*Sassuolo & -0.145 & 0.511& 0.355 & 0.126& 11\\
-		Bologna & -0.233 & 0.515& 0.359& 0.128& 13\\
-		Empoli & -0.549 & 0.518& 0.362& 0.131& 14\\
-		Sampdoria & -0.775 & 0.527& 0.372& 0.138& 15\\
-		Spezia & -0.831 & 0.527& 0.372& 0.138& 16\\
-		*Genoa & -0.879 & 0.532& 0.378& 0.143& 19 \\
-		Cagliari & -0.897 & 0.532& 0.378& 0.143& 18\\
-		*Salernitana & -0.91 & 0.527& 0.372& 0.138& 17\\
-		Venezia & -1.156 & 0.538& 0.387& 0.149& 20\\
-		\hline
-		& & & & &\\
+		\renewcommand{\arraystretch}{1.7}
+		\centering
+		\begin{tabular}{c c c c c c}
+			\hline	
+			
+			\textbf{Squadra} & \textbf{Abilità} & \textbf{SE} & \textbf{QSE} & \textbf{QV} & \textbf{Rank}   \\	
+			\hline			
+			Milan & 1.492 & 0.557 & 0.359 & 0.129 & 1\\
+			Inter & 1.4 & 0.537 & 0.400 & 0.160 & 2\\
+			Napoli & 1.17 & 0.530 & 0.389 & 0.152 & 3 \\
+			Juventus & 0.825 & 0.520& 0.373& 0.139& 4\\
+			Lazio & 0.459 & 0.516 & 0.368 & 0.135 & 5\\
+			Roma & 0.413 & 0.516& 0.368& 0.135& 6\\
+			Fiorentina & 0.339 & 0.511& 0.357& 0.127& 7\\
+			Atalanta & 0.312 & 0.000 & 0.368& 0.135& 8 \\
+			Hellas Verona & 0.049 & 0.513& 0.356& 0.127& 9\\
+			Torino & -0.012 & 0.512 & 0.355& 0.126& 10 \\
+			*Udinese & -0.072 & 0.512& 0.355 & 0.126& 12\\
+			*Sassuolo & -0.145 & 0.511& 0.355 & 0.126& 11\\
+			Bologna & -0.233 & 0.515& 0.359& 0.128& 13\\
+			Empoli & -0.549 & 0.518& 0.362& 0.131& 14\\
+			Sampdoria & -0.775 & 0.527& 0.372& 0.138& 15\\
+			Spezia & -0.831 & 0.527& 0.372& 0.138& 16\\
+			*Genoa & -0.879 & 0.532& 0.378& 0.143& 19 \\
+			Cagliari & -0.897 & 0.532& 0.378& 0.143& 18\\
+			*Salernitana & -0.91 & 0.527& 0.372& 0.138& 17\\
+			Venezia & -1.156 & 0.538& 0.387& 0.149& 20\\
+			\hline
+			& & & & &\\
+			
+		\end{tabular} \hbox{}
 		
-	\end{tabular} \hbox{}
-	
-	\caption{Per ogni squadra viene riportata l'abilità stimata, lo \emph{Standard 
-		Error} (SE), il \emph{Quasi Standard Error} (QSE) e il \emph{Quasi Variance} (QV). Nella tabella viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale.} \label{tab:BTH}
-\end{table}
-Nonostante, la semplicità del modello, viene offerta una stima delle abilità delle squadre che rispecchia molto il piazzamento mostrato nella Tabella \ref{tab:ranking}. Infatti, solo quattro squadre hanno un piazzamento diverso da quello reale. L'Udinese e il Sassuolo hanno il piazzamento invertito con una stima dell'abilità che è molto simile. Ciononostante, il risultato è comunque soddisfacente dato che nella stagione in esame il distacco tra Udinese e Sassuolo è stato solo di tre punti. Anche Genoa e Salernitana hanno un piazzamento differente da quello reale. Per quanto riguarda il Genoa tale risultato può essere spiegato dal fatto che all'inizio del campionato ha avuto un buon andamento (vedi \textit{\cite{storyGenoa}}) e dall'ottenimento di punti contro Juventus, Inter, Roma e Atalanta, cioè squadre considerate tra le più forti del campionato. Per quanto la stima al ribasso della Salernitana è determinata dal suo pessimo andamento per la maggior parte del campionato fatta eccezione per l'ultima parte, dove sono stati guadagnati la maggior parte dei punti, tanto da permettere alla squadra di guadagnare all'ultima giornata la salvezza (vedi \textit{\cite{storySal}}). \\
-Il \emph{Quasi Variance} (QV)\autocite{firth2004quasi} è un metodo che fornisce un'approssimazione della varianza, ed è utilizzato per confrontare livelli differenti di un fattore. Il tipo fattore è stato illustrato nel Capitolo \ref{cap:Analisi}. Il QV è stato introdotta da \textcite{firth2004quasi} per risolvere il problema della categoria di riferimento. Tale problema si riferisce al fatto che risulta essere semplice confrontare un livello qualsiasi del fattore con il suo livello di riferimento ma confrontare tra loro due livelli entrambi non di riferimento non è possibile. Grazie al QV cioè è possibile, infatti permette di confrontare tra di loro diversi livelli che non sono di riferimento con il vantaggio di non dover riportare tutta la matrice delle varianze e delle covarianze per effettuare i confronti. Nel nostro caso abbiamo la variabile \texttt{team} di tipo fattore con la squadra Atalanta come livello di riferimento. Grazie al QV ci viene fornita il QSE, una stima dello SE che verrà utilizzata per confrontare le abilità stimate dei diversi livelli, ovvero le squadre, per poter dedurre se la differenza di abilità tra due squadre sia significativa dal punto di vista statistico. Con il QSE le squadre vengono trattate come unità indipendenti. Esempio di applicazioni del QSE e del QV su BTM è possibile trovarli in \textcite{firth2004quasi} e in \textcite{turner2012bradley}.\\
-Perciò, confrontiamo le stime dei valori delle abilità delle squadre classificatesi nelle prime due posizione, rispettivamente Milan e Inter. Il QSE per Milan è di 0.359, mentre per l'Inter è di 0.400. La differenza assoluta tra le loro abilità è paria a |1.492 - 1.4| = 0.092. Applicando il calcolo pitagorico è possibile calcolare lo QSE, cioè un SE approssimato, relativo alla differenza tra abilità. Questo risulta essere($0.359^2 + 0.400^2)^\frac{1}{2}=0.537 > 0.092$. Perciò la differenza in termini di abilità tra le due squadre non è significativa da un punto di vista statistico. Infatti le due squadre hanno una differenza di soli due punti.
+		\caption{Per ogni squadra viene riportata l'abilità stimata, lo \emph{Standard 
+				Error} (SE), il \emph{Quasi Standard Error} (QSE) e il \emph{Quasi Variance} (QV). Nella tabella viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale.} \label{tab:BTH}
+	\end{table}
+\end{comment}
+
+Per quanto riguarda il Genoa tale risultato può essere spiegato dal fatto che all'inizio del campionato ha avuto un buon andamento (vedi \textit{\cite{storyGenoa}}) e dall'ottenimento di punti contro Juventus, Inter, Roma e Atalanta, cioè squadre considerate tra le più forti del campionato. Per quanto la stima al ribasso della Salernitana è determinata dal suo pessimo andamento per la maggior parte del campionato fatta eccezione per l'ultima parte, dove sono stati guadagnati la maggior parte dei punti, tanto da permettere alla squadra di guadagnare all'ultima giornata la salvezza (vedi \textit{\cite{storySal}}). \\
+Il \emph{Quasi Variance} (QV)\autocite{firth2004quasi} è un metodo che fornisce un'approssimazione della varianza, ed è utilizzato per confrontare livelli differenti di un fattore. Il tipo fattore è stato illustrato nel Capitolo \ref{cap:Analisi}. Il QV è stato introdotto da \textcite{firth2004quasi} per risolvere il problema della categoria di riferimento. Tale problema si riferisce al fatto che risulta essere semplice confrontare un livello qualsiasi del fattore con il suo livello di riferimento ma confrontare tra loro due livelli entrambi non di riferimento non è possibile. Grazie al QV cioè è possibile, infatti permette di confrontare tra di loro diversi livelli che non sono di riferimento con il vantaggio di non dover riportare tutta la matrice delle varianze e delle covarianze per effettuare i confronti. Nel nostro caso abbiamo la variabile \texttt{team} di tipo fattore con la squadra Atalanta come livello di riferimento. Grazie al QV ci viene fornita il QSE, una stima dello SE che verrà utilizzata per confrontare le abilità stimate dei diversi livelli, ovvero le squadre, per poter dedurre se la differenza di abilità tra due squadre sia significativa dal punto di vista statistico. Con il QSE le squadre vengono trattate come unità indipendenti. Esempio di applicazioni del QSE e del QV su BTM è possibile trovarli in \textcite{firth2004quasi} e in \textcite{turner2012bradley}.\\
+Perciò, confrontiamo le stime dei valori delle abilità delle squadre classificatesi nelle prime due posizioni, rispettivamente Milan e Inter. Il QSE per Milan è di 0.359, mentre per l'Inter è di 0.400. La differenza assoluta tra le loro abilità è paria a |1.492 - 1.4| = 0.092. Applicando il calcolo pitagorico è possibile calcolare lo QSE, cioè un SE approssimato, relativo alla differenza tra abilità. Questo risulta essere ($0.359^2 + 0.400^2)^\frac{1}{2}=0.537 > 0.092$. Perciò la differenza in termini di abilità tra le due squadre non è significativa da un punto di vista statistico. Infatti, le due squadre hanno una differenza di soli due punti.
 %**************************************************************
 
 \section{BTM con covariate specifiche dell'oggetto}
@@ -63,46 +97,17 @@ Si consideri l'estensione del modello Bradley-Terry con covariate specifiche del
 	P(Y_{p(i,j)}\leq k) =  \frac{exp(\delta + \theta_{k} + \beta_{i0} - \beta_{j0} + x^T_{pi}\tau - x^T_{pj}\tau)}{1 + exp(\delta + \theta_{k} + \beta_{i0} - \beta_{j0} + x^T_{pi}\tau - x^T_{pj}\tau)}, \label{for:5.1}
 \end{align}
 dove l'effetto dell'ordine $\delta$, cioè il vantaggio di giocare la partita in casa, ha ancora un effetto globale per tutte le squadre, mentre $x^T_{pi}$ è il vettore con tutti i valori delle ventisei covariate per l'i-esima squadra e per la p-esima partita. Il parametro $\tau$ è il peso medio stimato di ogni covariata. Le covariate, perciò, sono specifiche del soggetto e dell'oggetto ma con un effetto specifico dell'oggetto.\\
-La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari, rispettivamente a -1.113 e 1.113, mentre il parametro $\delta$ globale per tutte le squadre è salito a 0.27, con uno SE di 0.142. Nella Tabella \ref{tab:BTC} e nella Tabella \ref{tab:BTC2} vengono riportate le stime delle abilità delle squadre con i relativi SE, QSE e QV, e le stime di ogni covariata sul modello con relativo SE.\\
-\begin{table}[!htb]%
-	
-	\renewcommand{\arraystretch}{1.7}
+La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari, rispettivamente a -1.113 e 1.113, mentre il parametro $\delta$ globale per tutte le squadre è salito a 0.27, con uno SE di 0.142. Nella Figura \ref{tab:BTC} e nella Tabella \ref{tab:BTC2} vengono riportate le stime delle abilità delle squadre con i relativi SE, QSE e QV, e le stime di ogni covariata sul modello con relativo SE.\\%stacca
+	\begin{sidewaysfigure} 
 	\centering
-	\begin{tabular}{c c c c c c}
-		\hline	
-		
-		\textbf{Squadra} & \textbf{Abilità} & \textbf{SE} & \textbf{QSE} & \textbf{QV} & \textbf{Rank}   \\	
-		\hline			
-		Milan & 1.406 & 0.644 & 0.455 & 0.239 & 1\\
-		Inter & 1.097 & 0.685 & 0.433 & 0.286 & 2\\
-		Napoli & 1.067 & 0.595 & 0.423 & 0.236 & 3 \\		
-		Juventus & 0.892 & 0.623 & 0.417& 0.226& 4\\
-		Lazio & 0.399 & 0.645 & 0.467 & 0.276 & 5\\
-		Roma & 0.377 & 0.634 & 0.469 & 0.279 & 6\\
-		*Atalanta & 0.317 & 0.000 & 0.423& 0.238& 8 \\
-		*Fiorentina & 0.236 & 0.596 & 0.383 & 0.235& 7\\
-		*Torino & 0.092 & 0.591 & 0.427 & 0.165 & 10 \\
-		*Hellas Verona & 0.013 & 0.561 & 0.427& 0.164& 9\\
-		Sassuolo & -0.023 & 0.587 & 0.435 & 0.253& 11\\
-		*Bologna & -0.045 & 0.657& 0.459& 0.128& 13\\
-		*Empoli & -0.094 & 0.618& 0.432& 0.211 & 14\\
-		*Udinese & -0.178 & 0.642& 0.478 & 0.281& 12\\
-		Sampdoria & -0.426 & 0.600 & 0.453& 0.288& 15\\
-		*Salernitana & -0.854 & 0.544& 0.429& 0.219& 17\\
-		*Spezia & -0.922 & 0.587& 0.452 & 0.249 & 16\\
-		Cagliari & -1.01 & 0.612 & 0.498& 0.269 & 18\\
-		Genoa & -1.026 & 0.632 & 0.456 & 0.214& 19 \\
-		Venezia & -1.318 & 0.592 & 0.434 & 0.231 & 20\\
+	{\includegraphics[height = 12cm, width = 23cm]{rank2.png}}\qquad\qquad 
+	\caption{Barplot che indica per ogni squadra l'abilità stimata dal modello (\ref{for:5.1}). A fianco al grafico vengono riportati i relativi \emph{Standard 
+			Error} (SE), \emph{Quasi Standard Error} (QSE) e \emph{Quasi Variance} (QV). Nel grafico viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale, anche esso riportato a destra del grafico} \label{tab:BTC}  
 	
-		\hline
-		& & & & & \\
-		
-	\end{tabular} \hbox{}
-\caption{Stime delle abilità con relativi \emph{Standard 
-		Error} (SE), \emph{Quasi Standard Error} (QSE) e \emph{Quasi Variance} (QV). Nella tabella viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale.} \label{tab:BTC}  
-\end{table}
+	
+\end{sidewaysfigure}
 
-\begin{table}[]%
+\begin{table}[htbp]
 	
 	\renewcommand{\arraystretch}{1.7}
 	\centering
@@ -141,63 +146,118 @@ La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari, rispettivamente a
 		& &  \\
 		
 	\end{tabular} \hbox{}
-\caption{Stime delle covariate con relativo \emph{Standard 
-		Error} (SE), stimate dal modello \ref{for:5.1}.} \label{tab:BTC2} 
-     
+	\caption{Stime delle covariate con relativo \emph{Standard 
+			Error} (SE), stimate dal modello \ref{for:5.1}.} \label{tab:BTC2} 
+	
 \end{table}
-Dai risultati si nota che alcune variabili esplicative sono fortemente associate all'esito della partita. Come ci si aspetta le variabili esplicative legate ai tiri quindi, tiri \texttt{Sh}, tiri in porta \texttt{SoT} e il rapporto tiri/gol \texttt{G/Sh} hanno un peso stimato molto alto e positivo. Sono perciò fortemente decisive per aumentare la probabilità di vittoria. Da notare che sia \texttt{G/Sh} e sia \texttt{Sh} hanno un alto SE, quindi un' elevata variabilità. Sarà interessante perciò analizzare nel prossimo modello, il peso di queste covariate per ogni singola squadra.
+Dai risultati si nota che alcune variabili esplicative sono fortemente associate all'esito della partita. Come ci si aspetta le variabili esplicative legate ai tiri quindi, tiri \texttt{Sh}, tiri in porta \texttt{SoT} e il rapporto tiri/gol \texttt{G/Sh} hanno un peso stimato molto alto e positivo. Sono perciò fortemente decisive per aumentare la probabilità di vittoria. Da notare che sia \texttt{G/Sh} e sia \texttt{Sh} hanno un alto SE, quindi un' elevata variabilità. Sarà interessante, perciò, analizzare nel prossimo modello, il peso di queste covariate per ogni singola squadra.
 Sorprendentemente la variabile esplicativa ha una forte associazione positiva con la probabilità di vittoria è il numero di tocchi con la palla fatti a centrocampo \texttt{ToMid3rd}. Le altre covariate legate ai tocchi nelle altre zone del campo quindi \texttt{ToDefPen}, \texttt{ToDef3rd}, \texttt{ToAtt3rd} e \texttt{ToAttPen} hanno un'associazione positiva seppur minore rispetto a \texttt{ToMid3rd}. Sembra perciò che avere il controllo del centrocampo sia fondamentale per costruire azioni da gol, ma anche per mantenere un risultato positivo dalla partita. Anzi, mantenere il pallone in zone difensive con meno transizioni in zone d'attacco sembra che dia maggior probabilità di vittoria. Infatti, si può notare che un elevato numero di tocchi in area di rigore avversaria \texttt{ToAttPen} aumenti di molto poco la probabilità di vittoria. A sostegno di ciò, si consideri che il campionato italiano è spesso considerato un campionato difensivista e tattico (vedi \textit{\cite{speculazione}}), dove si spinge l'avversario a sbilanciarsi per poi attaccarlo in contropiede.\\
-Un aspetto difensivo chiave sembra essere rappresentato dalle parate fatte \texttt{Saves}. Inoltre, anche il numero di contrasti vinti \texttt{TklWin} è positivo quando associato alla probabilità di vittoria. Sorprendentemente però per quanto riguarda le altre variabili esplicative difensive rispettivamente, numero di intercetti \texttt{Int} e numero di recuperi \texttt{Recov} hanno un'associazione negativa con la probabilità di vittoria. Al contrario di quanto si pensi il possesso della palla non sembra essere un elemento chiave per la vittoria. Infatti la sua stima fa aumentare di molto poco la probabilità di vittoria. Analogamente, anche la distanza percorsa con la palla \texttt{TotDist} non sembra essere un elemento chiave per la vittoria, anzi va a diminuire la probabilità di vittoria. Perciò sembra che stia emergendo dall'analisi una tendenza ad avere il controllo del gioco nei momenti giusti e nelle zone giuste del campo per aver maggior probabilità di vittoria.\\
+Un aspetto difensivo chiave sembra essere rappresentato dalle parate fatte \texttt{Saves}. Inoltre, anche il numero di contrasti vinti \texttt{TklWin} è positivo quando associato alla probabilità di vittoria. Sorprendentemente però per quanto riguarda le altre variabili esplicative difensive rispettivamente, numero di intercetti \texttt{Int} e numero di recuperi \texttt{Recov} hanno un'associazione negativa con la probabilità di vittoria. Al contrario di quanto si pensi il possesso della palla non sembra essere un elemento chiave per la vittoria. Infatti, la sua stima fa aumentare di molto poco la probabilità di vittoria. Analogamente, anche la distanza percorsa con la palla \texttt{TotDist} non sembra essere un elemento chiave per la vittoria, anzi va a diminuire la probabilità di vittoria. Perciò sembra che stia emergendo dall'analisi una tendenza ad avere il controllo del gioco nei momenti giusti e nelle zone giuste del campo per aver maggior probabilità di vittoria.\\
 Per quanto riguarda l'aggressività della squadra, la stima del modello indica che commettere falli \texttt{Fld} aumenti le probabilità di vittoria, d'altra parte subire falli \texttt{Fls} è più conveniente.\\ 
 Si nota che subire un fuorigioco \texttt{Off} ha un impatto negativo sulle probabilità di vittoria.\\
-Per quanto riguarda le covariate legate ai passaggi notiamo che solo la percentuale dei passaggi completati \texttt{PCmp\%} e il numero di lanci lunghi tentati \texttt{LPAtt} hanno un associazione positiva con la probabilità di vittoria, le restanti covariate invece presentano un'associazione negativa. Un abuso di passaggi filtrati \texttt{MPAtt} o di cross \texttt{Crs} sembra essere controproducente per la vittoria. Una buona precisione sui passaggi \texttt{PCmp\%} e tentare i cambi di gioco \texttt{LPAtt} invece, suggeriscono la possibilità di maggiori probabilità di vittoria. \\
-
+Per quanto riguarda le covariate legate ai passaggi notiamo che solo la percentuale dei passaggi completati \texttt{PCmp\%} e il numero di lanci lunghi tentati \texttt{LPAtt} hanno un’associazione positiva con la probabilità di vittoria, le restanti covariate invece presentano un'associazione negativa. Un abuso di passaggi filtrati \texttt{MPAtt} o di cross \texttt{Crs} sembra essere controproducente per la vittoria. Una buona precisione sui passaggi \texttt{PCmp\%} e tentare i cambi di gioco \texttt{LPAtt} invece, suggeriscono la possibilità di maggiori probabilità di vittoria. \\
 Come fatto nella sezione precedente è possibile anche qui confrontare tra loro le squadre utilizzando i loro QSE relativi alla loro abilità stimata.
 Confrontando ancora le prime due squadre cioè Milan e Inter, la loro differenza assoluta di abilità è pari|1.406 - 1.097| = 0.309 e il relativo QSE è pari a ($0.455^2 + 0.433^2)^\frac{1}{2}=0,628 > 0.309$. Si ottiene per ciò che la differenza di abilità tra le due squadre è ancora non significativa anche con l’effetto delle covariate.
-
-\section{Modello Bradley-Terry e LASSO}
-Nella sezione precedente si sono presentati i risultati ottenutiel modello Bradley-Terry con l'inserimento di covariate con effetto specifico dell'oggetto. È però di interesse per le nostre analisi capire come ogni singola covariata sia determinante per la vittoria a seconda della squadra in esame. Per esempio, è possibile che il possesso della palla possa essere determinante per una squadra mentre per un'altra no. A tale scopo si applicherà il modello (\ref{for:4.9}) utilizzando covariate specifiche del soggetto e dell'oggetto. Ovviamente con l'inserimento di questo tipo di covariate il modello sarà estremante complesso, essendo basato su 520 covariate. Di conseguenza sarà applicata una selezione delle covariate operata attraverso il metodo \emph{LASSO} illustrato nel Capitolo \ref{cap:BT}. Sempre attraverso il \emph{LASSO} sarà di interesse individuare clusters di squadre che per una certa covariata hanno un effetto simile. Allo stesso tempo si cercherà di individuare quali squadre invece si discostano maggiormente da questi clusters.\\
-Purtroppo non è stato possibile riportare gli SE delle stime a causa dell'elevata complessità del procedimento di calcolo. Questo è possibile solo attraverso la procedura di tipo \emph{bootstrap} \autocite{henderson2005bootstrap}, molto onerosa in termini computazionalmente, soprattutto con un numero elevato di covariate.\\
-Nelle Tabella \ref{tab:BTCL}, \ref{tab:BTCL2} e \ref{tab:BTCL3} vengono riportate le stime dei parametri delle abilità e delle covariate per ogni singola squadra. Si noti che non tutte le covariate hanno un’unica stima per tutte le squadre, ma in alcuni casi ci sono più stime per alcune covariate. Perciò, per ogni stima del parametro di una covariata verrà indicata quale squadra ha tale valore stimato. Nell'analisi dei risultati spesso si farà un confronto con i risultati ottenuti con il modello della sezione precedente.\\
-
+\begin{comment}
 \begin{table}[!htb]%
 	
 	\renewcommand{\arraystretch}{1.7}
 	\centering
-	\begin{tabular}{c c c }
+	\begin{tabular}{c c c c c c}
 		\hline	
 		
-		\textbf{Squadra} & \textbf{Abilità} & \textbf{Rank}   \\	
+		\textbf{Squadra} & \textbf{Abilità} & \textbf{SE} & \textbf{QSE} & \textbf{QV} & \textbf{Rank}   \\	
 		\hline			
-		Milan & 1.673 & 1\\
-		Inter & 1.443 &  2\\
-		Napoli & 1.436 & 3 \\		
-		Juventus & 1.003 & 4\\
-		Lazio & 0.641 & 5\\
-		*Atalanta & 0.594 & 8 \\
-		*Roma & 0.555 &  6\\
-		*Fiorentina & 0.227 &  7\\
-		Hellas Verona & 0.126 & 9 \\
-		Torino & -0.042 & 10 \\	
-		Sassuolo & -0.171 & 11\\
-		Udinese & -0.262 & 12\\
-		Bologna & -0.292 &  13\\
-		Empoli & -0.386 & 14\\
-		*Spezia & -0.869 &  16\\
-		*Salernitana & -0.876 & 17\\
-		*Sampdoria & -1.095 &  15\\
-		Cagliari & -1.136 &  18\\
-		Genoa & -1.231 & 19 \\
-		Venezia & -1.338 &  20\\
+		Milan & 1.406 & 0.644 & 0.455 & 0.239 & 1\\
+		Inter & 1.097 & 0.685 & 0.433 & 0.286 & 2\\
+		Napoli & 1.067 & 0.595 & 0.423 & 0.236 & 3 \\		
+		Juventus & 0.892 & 0.623 & 0.417& 0.226& 4\\
+		Lazio & 0.399 & 0.645 & 0.467 & 0.276 & 5\\
+		Roma & 0.377 & 0.634 & 0.469 & 0.279 & 6\\
+		*Atalanta & 0.317 & 0.000 & 0.423& 0.238& 8 \\
+		*Fiorentina & 0.236 & 0.596 & 0.383 & 0.235& 7\\
+		*Torino & 0.092 & 0.591 & 0.427 & 0.165 & 10 \\
+		*Hellas Verona & 0.013 & 0.561 & 0.427& 0.164& 9\\
+		Sassuolo & -0.023 & 0.587 & 0.435 & 0.253& 11\\
+		*Bologna & -0.045 & 0.657& 0.459& 0.128& 13\\
+		*Empoli & -0.094 & 0.618& 0.432& 0.211 & 14\\
+		*Udinese & -0.178 & 0.642& 0.478 & 0.281& 12\\
+		Sampdoria & -0.426 & 0.600 & 0.453& 0.288& 15\\
+		*Salernitana & -0.854 & 0.544& 0.429& 0.219& 17\\
+		*Spezia & -0.922 & 0.587& 0.452 & 0.249 & 16\\
+		Cagliari & -1.01 & 0.612 & 0.498& 0.269 & 18\\
+		Genoa & -1.026 & 0.632 & 0.456 & 0.214& 19 \\
+		Venezia & -1.318 & 0.592 & 0.434 & 0.231 & 20\\
 		
 		\hline
-		& &  \\
+		& & & & & \\
 		
 	\end{tabular} \hbox{}
-	\caption{Stime delle abilità per ogni squadra stimate dal modello (\ref{for:4.9}). Nella tabella viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale.} \label{tab:BTCL}  
+	\caption{Stime delle abilità con relativi \emph{Standard 
+			Error} (SE), \emph{Quasi Standard Error} (QSE) e \emph{Quasi Variance} (QV). Nella tabella viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale.} \label{tab:BTC}  
 \end{table}
+\end{comment}
 
-\begin{table}[]%
+
+
+\section{Modello Bradley-Terry e LASSO}
+Nella sezione precedente si sono presentati i risultati ottenutiel modello Bradley-Terry con l'inserimento di covariate con effetto specifico dell'oggetto. È però di interesse per le nostre analisi capire come ogni singola covariata sia determinante per la vittoria a seconda della squadra in esame. Per esempio, è possibile che il possesso della palla possa essere determinante per una squadra mentre per un'altra no. A tale scopo si applicherà il modello (\ref{for:4.9}) utilizzando covariate specifiche del soggetto e dell'oggetto. Ovviamente con l'inserimento di questo tipo di covariate il modello sarà estremante complesso, essendo basato su 520 covariate. Di conseguenza sarà applicata una selezione delle covariate operata attraverso il metodo \emph{LASSO} illustrato nel Capitolo \ref{cap:BT}. Sempre attraverso il \emph{LASSO} sarà di interesse individuare clusters di squadre che per una certa covariata hanno un effetto simile. Allo stesso tempo si cercherà di individuare quali squadre invece si discostano maggiormente da questi clusters.\\
+Purtroppo, non è stato possibile riportare gli SE delle stime a causa dell'elevata complessità del procedimento di calcolo. Questo è possibile solo attraverso la procedura di tipo \emph{bootstrap} \autocite{henderson2005bootstrap}, molto onerosa in termini computazionalmente, soprattutto con un numero elevato di covariate.\\
+Nella Figura \ref{tab:BTCL} e nelle Tabelle \ref{tab:BTCL2} e \ref{tab:BTCL3} vengono riportate le stime dei parametri delle abilità e delle covariate per ogni singola squadra. Si noti che non tutte le covariate hanno un’unica stima per tutte le squadre, ma in alcuni casi ci sono più stime per alcune covariate. Perciò, per ogni stima del parametro di una covariata verrà indicata quale squadra ha tale valore stimato. Nell'analisi dei risultati spesso si farà un confronto con i risultati ottenuti con il modello della sezione precedente.\\%stacca
+Nella Figura \ref{tab:BTCL} si può notare che le abilità stimate tramite \emph{LASSO} sono quasi sempre  in linea con il piazzamento reale, migliorando perciò le prestazione del modello rispetto al modello con effetto specifico dell'oggetto stimato nella sezione precedente.\\
+Purtroppo, l'abilità dell'Atalanta viene sovrastimata nonostante al termine della stagione si sia classificata dietro a Roma e Fiorentina. Tale fenomeno può essere spiegato dal fatto che l'Atalanta per larga parte della stagione militava tra il terzo e il quarto posto, ma nell'ultima parte della stagione l'Atalanta è crollata di prestazione (vedi \textit{\cite{storyAta}}). Si nota che l'abilità della Sampdoria viene sottostimata, infatti in generale, non ha avuto un buon rendimento soprattutto verso la fine della stagione (vedi \textit{\cite{storySamp}}).\\
+Nella Tabella \ref{tab:BTCL2} e nella Tabella \ref{tab:BTCL3} alcune variabili esplicative sono state portate a zero, quindi eliminate per effetto della regolarizzazione tramite \emph{LASSO}, mentre altre hanno diversi valori a seconda della squadra in considerazione. \\
+Tra le covariate eliminate c'è il numero di passaggi tentati \texttt{PAtt} che nella Tabella \ref{tab:BTC2} del modello precedente aveva un valore stimato quasi nullo. Sorprendentemente anche la percentuale di passaggi tentati \texttt{PCmp\%} viene eliminata dal modello nonostante per il modello precedente avesse un valore stimato alto del parametro. Anche il numero di tocchi nella trequarti di difesa \texttt{ToDef3rd} viene tolta dal modello nonostante un valore stimato alto nella Tabella \ref{tab:BTC2}. Infine l'ultima variabile esplicativa eliminata interamente del modello è la distanza percorsa con la palla \texttt{TotDist} rimanendo in linea con quanto visto nella Tabella \ref{tab:BTC2}.
+Anche qui viene confermato che giocare la partita \texttt{Home} ha un effetto positivo stimato in 0.310. Per quanto riguarda invece il possesso della palla \texttt{Poss}, come visto dal precedente modello viene stimato con un peso nullo per la maggior parte delle squadre ad eccezione di Lazio e Torino, il quale ha una stima positiva positiva.
+
+\begin{sidewaysfigure} 
+	\centering
+	\begin{center}
+		\includegraphics[height=13cm, width=23cm]{rank3.png}
+		\caption{Barplot che indica per ogni squadra l'abilità stimata dal modello (\ref{for:4.9}). Viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale anche esso riportato a destra del grafico.} \label{tab:BTCL} 
+	\end{center}
+\end{sidewaysfigure}
+
+\begin{comment}
+	\begin{table}[!htb]%
+		
+		\renewcommand{\arraystretch}{1.7}
+		\centering
+		\begin{tabular}{c c c }
+			\hline	
+			
+			\textbf{Squadra} & \textbf{Abilità} & \textbf{Rank}   \\	
+			\hline			
+			Milan & 1.673 & 1\\
+			Inter & 1.443 &  2\\
+			Napoli & 1.436 & 3 \\		
+			Juventus & 1.003 & 4\\
+			Lazio & 0.641 & 5\\
+			*Atalanta & 0.594 & 8 \\
+			*Roma & 0.555 &  6\\
+			*Fiorentina & 0.227 &  7\\
+			Hellas Verona & 0.126 & 9 \\
+			Torino & -0.042 & 10 \\	
+			Sassuolo & -0.171 & 11\\
+			Udinese & -0.262 & 12\\
+			Bologna & -0.292 &  13\\
+			Empoli & -0.386 & 14\\
+			*Spezia & -0.869 &  16\\
+			*Salernitana & -0.876 & 17\\
+			*Sampdoria & -1.095 &  15\\
+			Cagliari & -1.136 &  18\\
+			Genoa & -1.231 & 19 \\
+			Venezia & -1.338 &  20\\
+			
+			\hline
+			& &  \\
+			
+		\end{tabular} \hbox{}
+		\caption{Stime delle abilità per ogni squadra stimate dal modello (\ref{for:4.9}). Nella tabella viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale.} \label{tab:BTCL}  
+	\end{table}	
+\end{comment}
+
+\begin{table}[!htbp]
 	
 	\renewcommand{\arraystretch}{1.7}
 	\centering
@@ -238,60 +298,61 @@ Nelle Tabella \ref{tab:BTCL}, \ref{tab:BTCL2} e \ref{tab:BTCL3} vengono riportat
 	\caption{Stime delle covariate stimate dal modello (\ref{for:4.9}).} \label{tab:BTCL2} 
 	
 \end{table}
-\begin{table}[]%
+\begin{table}[!htbp]%
 	
-\renewcommand{\arraystretch}{1.7}
-\centering
-\begin{tabular}{ccp{10cm}}
-	\hline			
-	\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
-	\hline
-	ToDefPen & 0.135 & Tutti \\      
-	ToDef3rd & 0.000 & Tutti \\
-	ToMid3rd & 0.147 &Tutti\\
-	ToAtt3rd & -0.154 & Tutti \\  
-	ToAttPen & 0.000 & Tutti tranne Atalanta \\    
-	ToAttPen & -0.311 & Atalanta \\ 	     	 
-	TotDist & 0.000 & Tutti \\	
-	Fls & 0.219 & Bologna  \\
-	Fls & 0.012 & Tutti tranne Bologna, Napoli, Genoa e Salernitana  \\ 		
-	Fls & -0.001 & Napoli  \\
-	Fls & -0.030 & Genoa, Salernitana  \\
-	Fld & 0.100 & Spezia \\
-	Fld & 0.015 & Tutti tranne Spezia e Udinese  \\
-	Fld & -0.005 & Udinese \\
-	Off & 0.055 & Hellas Verona\\
-	Off & 0.002 & Tutti tranne Verona, Inter, Juventus, Milan e Napoli\\
-	Off & -0.097 & Inter, Juventus, Milan e Napoli  \\
-	Crs & 0.000 & Torino\\
-	Crs & -0.180 & Tutti tranne Milan, Roma, Torino, Atalanta e Napoli\\
-	Crs & -0.391 & Milan e Roma\\
-	Crs & -0.671 & Atalanta e Napoli\\
-	Int & 0.012 & Tutti\\
-	TklWin &  0.225 & Empoli  \\
-	TklWin &  0.086 & Tutti tranne Empoli  \\ 
-	Recov &  -0.132& Tutti tranne Udinese \\ 
-	Recov &  -0.189& Udinese \\ 
-\hline
-& &  \\
-
-\end{tabular} \hbox{}
-\caption{Stime delle covariate stimate dal modello (\ref{for:4.9}).} \label{tab:BTCL3} 
+	\renewcommand{\arraystretch}{1.7}
+	\centering
+	\begin{tabular}{ccp{10cm}}
+		\hline			
+		\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
+		\hline
+		ToDefPen & 0.135 & Tutti \\      
+		ToDef3rd & 0.000 & Tutti \\
+		ToMid3rd & 0.147 &Tutti\\
+		ToAtt3rd & -0.154 & Tutti \\  
+		ToAttPen & 0.000 & Tutti tranne Atalanta \\    
+		ToAttPen & -0.311 & Atalanta \\ 	     	 
+		TotDist & 0.000 & Tutti \\	
+		Fls & 0.219 & Bologna  \\
+		Fls & 0.012 & Tutti tranne Bologna, Napoli, Genoa e Salernitana  \\ 		
+		Fls & -0.001 & Napoli  \\
+		Fls & -0.030 & Genoa, Salernitana  \\
+		Fld & 0.100 & Spezia \\
+		Fld & 0.015 & Tutti tranne Spezia e Udinese  \\
+		Fld & -0.005 & Udinese \\
+		Off & 0.055 & Hellas Verona\\
+		Off & 0.002 & Tutti tranne Verona, Inter, Juventus, Milan e Napoli\\
+		Off & -0.097 & Inter, Juventus, Milan e Napoli  \\
+		Crs & 0.000 & Torino\\
+		Crs & -0.180 & Tutti tranne Milan, Roma, Torino, Atalanta e Napoli\\
+		Crs & -0.391 & Milan e Roma\\
+		Crs & -0.671 & Atalanta e Napoli\\
+		Int & 0.012 & Tutti\\
+		TklWin &  0.225 & Empoli  \\
+		TklWin &  0.086 & Tutti tranne Empoli  \\ 
+		Recov &  -0.132& Tutti tranne Udinese \\ 
+		Recov &  -0.189& Udinese \\ 
+		\hline
+		& &  \\
+		
+	\end{tabular} \hbox{}
+	\caption{Stime delle covariate stimate dal modello (\ref{for:4.9}).} \label{tab:BTCL3} 
 \end{table}
-
-Nella Tabella \ref{tab:BTCL} si può notare che le abilità stimate tramite \emph{LASSO} sono quasi sempre  in linea con il piazzamento reale, migliorando perciò le prestazione del modello rispetto al modello con effetto specifico dell'oggetto stimato nella sezione precedente.\\
-Purtroppo l'abilità dell'Atalanta viene sovrastimata nonostante al termine della stagione si sia classificata dietro a Roma e Fiorentina. Tale fenomeno può essere spiegato dal fatto che l'Atalanta per larga parte della stagione militasse tra il terzo e il quarto posto, ma nell'ultima parte della stagione l'Atalanta è crollata di prestazione (vedi \textit{\cite{storyAta}}). Si nota che l'abilità della Sampdoria viene sottostimata, infatti in generale, non ha avuto un buon rendimento soprattutto verso la fine della stagione (vedi \textit{\cite{storySamp}}).\\
-Nella Tabella \ref{tab:BTCL2} e nella Tabella \ref{tab:BTCL3} alcune variabili esplicative sono state portate a zero, quindi eliminate per effetto della regolarizzazione tramite \emph{LASSO}, mentre altre hanno diversi valori a seconda della squadra in considerazione. \\
-Tra le covariate eliminate c'è il numero di passaggi tentati \texttt{PAtt} che nella Tabella \ref{tab:BTC2} del modello precedente aveva un valore stimato quasi nullo. Sorprendentemente anche la percentuale di passaggi tentati \texttt{PCmp\%} viene eliminata dal modello nonostante per il modello precedente avesse un valore stimato alto del parametro. Anche il numero di tocchi nella trequarti di difesa \texttt{ToDef3rd} viene tolta dal modello nonostante un valore stimato alto nella Tabella \ref{tab:BTC2}E. Infine l'ultima variabile esplicativa eliminata interamente del modello è la distanza percorsa con la palla \texttt{TotDist} rimanendo in linea con quanto visto nella Tabella \ref{tab:BTC2}.
-Anche qui viene confermato che giocare la partita \texttt{Home} ha un effetto positivo stimato in 0.310. Per quanto riguarda invece il possesso della palla \texttt{Poss}, come visto dal precedente modello viene stimato con un peso nullo per la maggior parte delle squadre ad eccezione di Lazio e Torino, il quale ha una stima positiva positiva. Il risultato della stima legata alla Lazio è un risultato in realtà non è sorprendente, infatti il \textit{\cite{sarrismotr}}, neologismo per indicare il gioco applicato dall'allenatore Maurizio Sarri, allenatore della Lazio nella stagione 2021/2022, ha tra le sue caratteristiche il mantenimento del possesso della palla, oltre a una propensione offensiva (vedi \textit{\cite{sarrismo}}). Analogamente anche il gioco del Torino si fonda sul possesso palla, ma con minor propensione offensiva (vedi \textit{\cite{torino}}).\\
+ 
+Il risultato della stima legata alla Lazio è un risultato in realtà non è sorprendente, infatti il \textit{\cite{sarrismotr}}, neologismo per indicare il gioco applicato dall'allenatore Maurizio Sarri, allenatore della Lazio nella stagione 2021/2022, ha tra le sue caratteristiche il mantenimento del possesso della palla, oltre a una propensione offensiva (vedi \textit{\cite{sarrismo}}). Analogamente anche il gioco del Torino si fonda sul possesso palla, ma con minor propensione offensiva (vedi \textit{\cite{torino}}).\\
 Come era atteso, il numero di tiri \texttt{Sh}, il numero di tiri in porta \texttt{SoT}, il rapporto tiri/gol \texttt{G/Sh} e il numero di parate \texttt{Saves} sono fortemente associate all'aumento della probabilità di vittoria. Si nota che per \texttt{SoT} ci sono ben cinque stime, ciò poteva essere atteso dato che nella Tabella \ref{tab:BTC2} era stato stimato un SE pari a 0.324 che giustifica la variazione di stima da squadra a squadra. \\
-Per quanto riguarda le variabili legate ai passaggi non ancora illustrate, abbiamo che,
-il numero di passaggi corti tentati \texttt{SPAtt} non risulta associato alla probabilità di vittoria per le squadre ad eccezione del Napoli, per la quale invece la stima risulta positiva. La percentuale di passaggi corti completati \texttt{SPCmp\%}, invece, presenta una stima del parametro molto bassa per tutte le squadre ad eccezione del Genoa, squadra per la quale il valore stimato è associato ad una diminuzione della probabilità di vittoria. Il numero di passaggi medi tentati \texttt{MPAtt} diminuisce le probabilità di vittoria per tutte le squadre. Analogamente anche per la percentuale di passaggi medi riusciti \texttt{MPCmp\%} ha il parametro stimato fortemente negativo. Si nota che il numero di passaggi lunghi tentati \texttt{LPAtt} ha la stessa stima calcolata con il modello precedente per tutte le squadre. È interessante notare come la percentuale di passaggi lunghi riusciti \texttt{LPCmp\%} per la maggior parte delle squadre non ha alcuna associazione con l'esito della partita. Per l'Hellas Verona è associato ad un aumento della probabilità di vittoria, al contrario al Bologna è associato ad un diminuzione delle probabilità di vittoria. Infine, si nota che al crescere del numero di cross \texttt{Crs} si ha una diminuzione della probabilità di vittoria, principalmente per Atalanta e Napoli. Resta escluso il Torino, con una stima pari a 0.\\
+Per quanto riguarda le variabili legate ai passaggi non ancora illustrate, abbiamo che, il numero di passaggi corti tentati \texttt{SPAtt} non risulta associato alla probabilità di vittoria per le squadre ad eccezione del Napoli, per la quale invece la stima risulta positiva. La percentuale di passaggi corti completati \texttt{SPCmp\%}, invece, presenta una stima del parametro molto bassa per tutte le squadre ad eccezione del Genoa, squadra per la quale il valore stimato è associato ad una diminuzione della probabilità di vittoria. Il numero di passaggi medi tentati \texttt{MPAtt} diminuisce le probabilità di vittoria per tutte le squadre. Analogamente anche per la percentuale di passaggi medi riusciti \texttt{MPCmp\%} ha il parametro stimato fortemente negativo.\\
+Si nota che il numero di passaggi lunghi tentati \texttt{LPAtt} ha la stessa stima calcolata con il modello precedente per tutte le squadre. È interessante notare come la percentuale di passaggi lunghi riusciti \texttt{LPCmp\%} per la maggior parte delle squadre non ha alcuna associazione con l'esito della partita. Per l'Hellas Verona è associato ad un aumento della probabilità di vittoria, al contrario al Bologna è associato ad una diminuzione delle probabilità di vittoria. Infine, si nota che al crescere del numero di cross \texttt{Crs} si ha una diminuzione della probabilità di vittoria, principalmente per Atalanta e Napoli. Resta escluso il Torino, con una stima pari a 0.\\
 Per quanto riguarda le variabili legate al possesso, al crescere del numero di tocchi in area di rigore \texttt{ToDefPen} e a centrocampo \texttt{ToMid3rd} si ha una crescita della probabilità di vittoria. Viceversa, il numero di tocchi fatti nella trequarti avversaria \texttt{ToAtt3rd} e nell'area di rigore avversaria \texttt{ToAttPen} è associato ad una riduzione della probabilità di vittoria.\\
-Al subire falli \texttt{Fls} viene associato ad un aumento della probabilità di vittoria per molte squadre, specialmente per il Bologna, mentre la relazione si inverte per Napoli, Genoa e Salernitana. Per quanto riguarda l'effettuare falli \texttt{Fld} si associa una leggera probabilità di vittoria per la maggior parte delle squadre, soprattutto per la Spezia. Trend inverso per l'Udinese.\\
+Al subire falli \texttt{Fls} viene associato ad un aumento della probabilità di vittoria per molte squadre, specialmente per il Bologna, mentre la relazione si inverte per Napoli, Genoa e Salernitana. Per quanto riguarda l'effettuare falli \texttt{Fld} si associa una leggera probabilità di vittoria per la maggior parte delle squadre, soprattutto per la Spezia. Tendenza inversa per l'Udinese.\\
 Il numero di fuorigioco \texttt{Off} in generale ha una associazione non rilevante con l'esito della partita. Curiosamente per le quattro squadre con la maggior abilità stimata, cioè Milan, Inter, Napoli e Juventus, \texttt{Off} ha un impatto negativo sull'esito della partita. Tale risultato può essere spiegato dal fatto che le squadre più forti ad esempio Milan, Inter ecc., creano più azioni d'attacco, mentre le squadre meno forti per difendersi da esse, utilizzano la trappola del fuorigioco per fermarle.\\
-Per quanto riguarda le variabili esplicative difensive, il numero di intercetti \texttt{Int} e il numero di contrasti vinti \texttt{TklWin} sono associati ad un aumento della probabilità di vittoria. Viceversa il numero di recuperi si associa ad una diminuzione della probabilità di vittoria a tutte le squadre. Anche qui rispetto al modello precedente è cambiato la stima delle soglie $\theta_1$ e $\theta_2$ che valgono rispettivamente -1.075 e 1.075.\\
-In alcuni casi nella stime dei parametri delle variabili esplicative c'è un alta variabilità delle stime tanto da essere negative per alcune squadre mentre per altre nulle o positive. Inoltre, in altri casi invece, si vengono a formare dei clusters per alcune covariate. Questo fenomeno lo si può osservare chiaramente dalla Figura \ref{fig:possL} alla Figura \ref{fig:recovL}. Nei grafici vengono mostrati come cambiano le stime dei parametri associati ad ogni covariata e per ogni squadra al variare del parametro di tuning espresso in scala logaritmica. Ovviamente con un valore alto di penalizzazione si vede all'inizio che tutte le stime sono spinte a zero, ma con il diminuire della penalizzazione si iniziano ad ottenere stime diverse per la stessa covariata. La linea rossa tratteggiata indica il parametro di tuning ottimo che è stato scelto per ottenere i risultati illustrati precedentemente. Si ricorda che il parametro di tuning ottimo è stato scelto attraverso la procedura di \emph{Cross Validation} spiegata nel Capitolo \ref{cap:BT}. In questo caso il parametro di tuning $\lambda$ scelto è pari a 2.307.\\
+
+
+
+
+
+Per quanto riguarda le variabili esplicative difensive, il numero di intercetti \texttt{Int} e il numero di contrasti vinti \texttt{TklWin} sono associati ad un aumento della probabilità di vittoria. Viceversa, il numero di recuperi si associa ad una diminuzione della probabilità di vittoria a tutte le squadre. Anche qui rispetto al modello precedente è cambiato la stima delle soglie $\theta_1$ e $\theta_2$ che valgono rispettivamente -1.075 e 1.075.\\
+In alcuni casi nelle stime dei parametri delle variabili esplicative c'è un alta variabilità delle stime tanto da essere negative per alcune squadre mentre per altre nulle o positive. Inoltre, in altri casi invece, si vengono a formare dei clusters per alcune covariate. Questo fenomeno lo si può osservare chiaramente dalla Figura \ref{fig:possL} alla Figura \ref{fig:recovL}. Nei grafici vengono mostrati come cambiano le stime dei parametri associati ad ogni covariata e per ogni squadra al variare del parametro di tuning espresso in scala logaritmica. Ovviamente con un valore alto di penalizzazione si vede all'inizio che tutte le stime sono spinte a zero, ma con il diminuire della penalizzazione si iniziano ad ottenere stime diverse per la stessa covariata. La linea rossa tratteggiata indica il parametro di tuning ottimo che è stato scelto per ottenere i risultati illustrati precedentemente. Si ricorda che il parametro di tuning ottimo è stato scelto attraverso la procedura di \emph{Cross Validation} spiegata nel Capitolo \ref{cap:BT}. In questo caso il parametro di tuning $\lambda$ scelto è pari a 2.307.\\
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -309,7 +370,7 @@ In Figura \ref{fig:possL} viene mostrato l'andamento relativo alla stima della c
 	\end{center}
 \end{figure}
 
-In Figura \ref{fig:sotL} viene mostrato l'andamento relativo alla stima della covariata del numero di tiri in porta \texttt{SoT}. Si notano cinque clusters con stima positiva. Il cluster con la stima più alta contiene la maggioranza delle squadre, seguito dal secondo cluster per stima contenente Inter e Roma. Il terzo cluster per stima contiene solo il Bologna, anche il quarto cluster per stima contiene solo una squadra, la Fiorentina. Infine il quinto cluster per stima contiene l'Udinese che ha un valore positivo prossimo a zero.
+In Figura \ref{fig:sotL} viene mostrato l'andamento relativo alla stima della covariata del numero di tiri in porta \texttt{SoT}. Si notano cinque clusters con stima positiva. Il cluster con la stima più alta contiene la maggioranza delle squadre, seguito dal secondo cluster per stima contenente Inter e Roma. Il terzo cluster per stima contiene solo il Bologna, anche il quarto cluster per stima contiene solo una squadra, la Fiorentina. Infine, il quinto cluster per stima contiene l'Udinese che ha un valore positivo prossimo a zero.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -336,7 +397,7 @@ In Figura \ref{fig:spcmpL} viene mostrato l'andamento relativo alla stima della 
 	\end{center}
 \end{figure}
 
-In Figura \ref{fig:mpcmpL} viene mostrato l'andamento relativo alla stima della covariata della percentuale di passaggi medi riusciti \texttt{MPCmp\%}. Si nota che il Genoa e il Bologna hanno un andamento leggermente più negativo rispetto all'andamento comunque negativo tenuto dalla maggior parte delle squadre.
+In Figura \ref{fig:mpcmpL} viene mostrato l'andamento relativo alla stima della covariata della percentuale di passaggi medi riusciti \texttt{MPCmp\%}. Si nota che il Genoa e il Bologna hanno un andamento leggermente più negativo rispetto all’andamento, comunque, negativo tenuto dalla maggior parte delle squadre.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -381,7 +442,7 @@ In Figura \ref{fig:fldL} viene mostrato l'andamento relativo alla stima della co
 	\end{center}
 \end{figure}
 
-In Figura \ref{fig:offL} viene mostrato l'andamento relativo alla stima della covariata del numero di fuorigioco fatti \texttt{Off}. Ci sono tre clusters. Il primo cluster contenente l'Hellas Verona ha un percorso positivo. Il cluster più grande  contiene quasi tutte le squadre ha un andamento leggermente positivo. Infine il cluster terzo che contiene Milan, Inter, Napoli e Juventus ha un andamento negativo.
+In Figura \ref{fig:offL} viene mostrato l'andamento relativo alla stima della covariata del numero di fuorigioco fatti \texttt{Off}. Ci sono tre clusters. Il primo cluster contenente l'Hellas Verona ha un percorso positivo. Il cluster più grande contiene quasi tutte le squadre ha un andamento leggermente positivo. Infine, il cluster terzo che contiene Milan, Inter, Napoli e Juventus ha un andamento negativo.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -416,7 +477,7 @@ Per riassumere quanto visto finora, la Figura \ref{fig:l2BTCL} mostra i percorsi
 		\caption{Grafico che riporta l'importanza delle covariate rispetto alle norme L2 al variare del parametro di tuning $\lambda$ secondo le stime del modello (\ref{for:4.9}). La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo che è stato scelto per ottenere i risultati finali.} \label{fig:l2BTCL}
 	\end{center}
 \end{figure}
-Dal grafico si nota che il rapporto tiri/gol \texttt{G/Sh} è la variabile che incide maggiormente nella determinazione dell'esito di una partita. Analogamente, il numero di tiri in porta \texttt{SoT} e il numero di parate \texttt{Saves} sono determinanti sull'esito di una partita, ma con un minor peso rispetto a \texttt{G/Sh}. Anche il numero di cross \texttt{Crs} è significativamente associato all'esito della partita, ma al contrario di \texttt{G/Sh} sappiamo che contribuisce a diminuire le probabilità di vittoria. Si nota anche qui che il possesso della palla ha un ruolo molto marginale nel determinare il risultato di una partita. Viene confermata la tendenza che mantenere il pallone in zone difensive con meno transizioni in zone d'attacco sembra che si associa maggior probabilità di vittoria. Si riconferma importante il numero di lanci lunghi tentati \texttt{LPAtt} per l'esito favorevole della partita. Dal grafico si nota che sia il numero di contrasti vinti \texttt{TklWin} e il numero di fuorigioco \texttt{Off} sono determinanti per l'ottenimento della vittoria. Diversamente, il numero di recuperi \texttt{Recov}, la distanza percorsa con la palla \texttt{TotDist} e il numero di intercetti \texttt{Int} sono poco significativi. Infine notiamo che il numero di falli fatti \texttt{fld} è più determinante di quelli subiti \texttt{fls}.\\
+Dal grafico si nota che il rapporto tiri/gol \texttt{G/Sh} è la variabile che incide maggiormente nella determinazione dell'esito di una partita. Analogamente, il numero di tiri in porta \texttt{SoT} e il numero di parate \texttt{Saves} sono determinanti sull'esito di una partita, ma con un minor peso rispetto a \texttt{G/Sh}. Anche il numero di cross \texttt{Crs} è significativamente associato all'esito della partita, ma al contrario di \texttt{G/Sh} sappiamo che contribuisce a diminuire le probabilità di vittoria. Si nota anche qui che il possesso della palla ha un ruolo molto marginale nel determinare il risultato di una partita. Viene confermata la tendenza che mantenere il pallone in zone difensive con meno transizioni in zone d'attacco sembra che si associ maggior probabilità di vittoria. Si riconferma importante il numero di lanci lunghi tentati \texttt{LPAtt} per l'esito favorevole della partita. Dal grafico si nota che sia il numero di contrasti vinti \texttt{TklWin} e il numero di fuorigioco \texttt{Off} sono determinanti per l'ottenimento della vittoria. Diversamente, il numero di recuperi \texttt{Recov}, la distanza percorsa con la palla \texttt{TotDist} e il numero di intercetti \texttt{Int} sono poco significativi. Infine, notiamo che il numero di falli fatti \texttt{fld} è più determinante di quelli subiti \texttt{fls}.\\
 Perciò, la maggior parte delle stime ottenute sembrano essere in linea con i risultati osservati nel precedente modello con covariate specifiche dell'oggetto senza l'applicazione del metodo \emph{LASSO}.
 
 \section{BTM senza l'intercetta e con LASSO}
@@ -502,9 +563,9 @@ Nella Tabella \ref{tab:BTCLI2} e nella Tabella \ref{tab:BTCLI3} vengono riportat
 	\caption{Stime delle covariate stimate dal modello (\ref{for:5.2}).} \label{tab:BTCLI3} 
 	
 \end{table}
-Anche in questa applicazione sono state eliminate alcune covariate. Come già visto nel modello precedente, vengono confermate l'eliminazione del numero di passaggi tentati \texttt{PAtt}, della percentuale dei passaggi completati \texttt{PCmp\%} e della distanza percorsa con la palla \texttt{TotDist}. Viene tolta dal modello la variabile esplicativa del numero di passaggi corti tentati \texttt{SPAtt} la quale nel modello precedente andava ad aumentare le probabilità di vittoria solo per il Napoli. Viene eliminata la covariata del numero di passaggi medi tentati \texttt{MPAtt} e quella del numero di intercettazioni \texttt{Int}. Infine si rivela l'eliminazione della variabile esplicativa che indica il numero di recuperi che nel precedente modello era valutata come una covariata che incideva negativamente sulla probabilità di vittoria.\\
+Anche in questa applicazione sono state eliminate alcune covariate. Come già visto nel modello precedente, vengono confermate l'eliminazione del numero di passaggi tentati \texttt{PAtt}, della percentuale dei passaggi completati \texttt{PCmp\%} e della distanza percorsa con la palla \texttt{TotDist}. Viene tolta dal modello la variabile esplicativa del numero di passaggi corti tentati \texttt{SPAtt} la quale nel modello precedente andava ad aumentare le probabilità di vittoria solo per il Napoli. Viene eliminata la covariata del numero di passaggi medi tentati \texttt{MPAtt} e quella del numero di intercettazioni \texttt{Int}. Infine, si rivela l'eliminazione della variabile esplicativa che indica il numero di recuperi che nel precedente modello era valutata come una covariata che incideva negativamente sulla probabilità di vittoria.\\
 
-In questa nuovo tipo di modello la stima del parametro del possesso palla \texttt{Poss} ha subito una piccola variazione. Infatti ora la stima non è più nulla per la maggior parte delle squadre ma e leggermente positiva. Ciononostante, la significatività si riconferma ancora bassa. Si riconferma però significativa solo per il gioco della Lazio, ma non più per il Torino come nello scorso modello. Tale risultato è visibile nella Figura \ref{fig:possLI}.\\
+In questa nuovo tipo di modello la stima del parametro del possesso palla \texttt{Poss} ha subito una piccola variazione. Infatti, ora la stima non è più nulla per la maggior parte delle squadre ma e leggermente positiva. Ciononostante, la significatività si riconferma ancora bassa. Si riconferma però significativa solo per il gioco della Lazio, ma non più per il Torino come nello scorso modello. Tale risultato è visibile nella Figura \ref{fig:possLI}.\\
 \begin{figure}[]
 	\begin{center}
 		\includegraphics[height=8cm, width=15cm]{possLI.png}
@@ -603,7 +664,9 @@ Per la Figura \ref{fig:effstar2} abbiamo due particolari grafici. Entrambi rappr
 		\caption{Grafico a effetto stella che riporta il contributo medio di una covariata sull'abilità di una singola squadra secondo il modello (\ref{for:5.2}).} \label{fig:effstar2}
 	\end{center}
 \end{figure}
-Infine, risultati più interessanti si hanno nella Figura \ref{fig:effstar3}. Innanzitutto si vede che con riferimento al numero di tiri \texttt{Sh} l'Inter ha un grosso beneficio. In minor misura ne beneficiano Milan, Roma, Atalanta, Napoli, Juventus e Sassuolo. Analoghi risultati sono visibili con il numero di tiri in porta \texttt{SoT}, con l'aggiunta della Lazio tra le squadre che ricevano più benefici. In generale, nel grafico relativo al numero di parate \texttt{Saves}, tutte le squadre ottengo benefici. Stesso risultato si rileva per il numero di passaggi lunghi tentati \texttt{LPAtt}. Nel grafico del numero di tocchi in area di rigore \texttt{ToDefPen} c'è un particolare beneficio ottenuto dal Venezia, cosi come Inter, Lazio, Empoli e Sassuolo. Analoghi risultati anche per il numero di tocchi nella trequarti difensiva \texttt{ToDef3rd}, ma con la differenza di minori benefici per il Venezia. Pertanto, si nota la tendenza delle squadre italiana ad attuare tattiche che prediligono di giocare nella propria metà campo. Il numero di tocchi a centrocampo \texttt{ToMid3rd} vengono in media effettuati molto dalle squadre, tranne Inter e Sampdoria per le quali l'effetto è nullo. Analogo effetto anche per il numero di tocchi fatti in area di rigore \texttt{ToAttPen}, con l'unica differenza si registra ora un effetto positivo per Inter e Sampdoria e un effetto negativo solo per Atalanta. In generali i falli subiti \texttt{Fls} portano benefici alle squadre, come si era notato dalle stime del modello. Per i falli fatti, invece abbiamo che l'Udinese ha minori benefici rispetto a tutte le altre squadre.\\
+Infine, risultati più interessanti si hanno nella Figura \ref{fig:effstar3}. Innanzitutto si vede che con riferimento al numero di tiri \texttt{Sh} l'Inter ha un grosso beneficio. In minor misura ne beneficiano Milan, Roma, Atalanta, Napoli, Juventus e Sassuolo. Analoghi risultati sono visibili con il numero di tiri in porta \texttt{SoT}, con l'aggiunta della Lazio tra le squadre che ricevano più benefici. In generale, nel grafico relativo al numero di parate \texttt{Saves}, tutte le squadre ottengo benefici. Stesso risultato si rileva per il numero di passaggi lunghi tentati \texttt{LPAtt}. Nel grafico del numero di tocchi in area di rigore \texttt{ToDefPen} c'è un particolare beneficio ottenuto dal Venezia, cosi come Inter, Lazio, Empoli e Sassuolo. Analoghi risultati anche per il numero di tocchi nella trequarti difensiva \texttt{ToDef3rd}, ma con la differenza di minori benefici per il Venezia. Pertanto, si nota la tendenza delle squadre italiana ad attuare tattiche che prediligono di giocare nella propria metà campo. Il numero di tocchi a centrocampo \texttt{ToMid3rd} vengono in media effettuati molto dalle squadre, tranne Inter e Sampdoria per le quali l'effetto è nullo. Analogo effetto anche per il numero di tocchi fatti in area di rigore \texttt{ToAttPen}, con l'unica differenza si registra ora un effetto positivo per Inter e Sampdoria e un effetto negativo solo per Atalanta. In generali i falli subiti \texttt{Fls} portano benefici alle squadre, come si era notato dalle stime del modello. Per i falli fatti, invece abbiamo che l'Udinese ha minori benefici rispetto a tutte le altre squadre. \\
+Dai grafici \emph{effetto stella} emerge la tendenza da parte delle squadre italiana a ricorrere alla cosiddetta \textit{\cite{costrdalbasso}}. Ossia la costruzione dell'azione partendo dal proprio portiere e l'utilizzo di lanci lunghi. Inoltre, sapendo che ai paramatri del numero di tocchi in area di rigore \texttt{ToDefPen}, del numero di tocchi nella trequarti difensiva \texttt{ToDef3rd}, del numero di tocchi a centrocampo \texttt{ToMid3rd} e del numero di passaggi lunghi tentati \texttt{LPAtt} sono associati degli aumenti della probabilità di vittoria, è possibile affermare che la costruzione dal basso offre maggiori probabilità di vittoria.
+\\
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[height=16cm, width=16cm]{estarL.png}
@@ -611,7 +674,7 @@ Infine, risultati più interessanti si hanno nella Figura \ref{fig:effstar3}. In
 	\end{center}
 \end{figure}
 
-Infine come fatto nella sezione precedente, si analizzano i percorsi delle norme L2 che rappresentano l'importanza complessiva dei singoli effetti delle covariate. Tali percorsi sono visibili nella Figura \ref{fig:IL2}.
+Infine, come fatto nella sezione precedente, si analizzano i percorsi delle norme L2 che rappresentano l'importanza complessiva dei singoli effetti delle covariate. Tali percorsi sono visibili nella Figura \ref{fig:IL2}.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -625,14 +688,15 @@ Gli andamenti ottenuti nella Figura \ref{fig:IL2} sono molto simili a quelli vis
 \section{Conclusione dei risultati ottenuti}(BOZZA)
 (*****Probabilmente da spostare nel capitolo delle conclusioni*****)\\
 
-Dai risultati ottenuti e dalle analisi condotte è possibile concludere quanto segue. Nel campionato italiano, ai fini della vittoria o, in generale, dell'ottenimento di buoni risultati è rilevante per una squadra adottare un comportamento tattico e giocare prevalentemente nella propria metà campo. Si intende quindi che la squadra debba adottare un comportamento meno propenso a controllare il pallone per lungo tempo perché sia il possesso della palla \texttt{Poss} e sia la distanza percorsa con la palla \texttt{TotDist} non sono significavi. Inoltre, la squadra deve essere più propensa a giocare maggiormente la palla nella propria area di difesa per evitare contropiedi perché sia le stime del numero di tocchi in area di rigore \texttt{ToDefPen}, sia il numero di tocchi nella trequarti difensiva \texttt{ToDef3rd} e sia il numero di tocchi a centrocampo \texttt{ToMid3rd} sono associati ad un aumento della probabilità di vittoria. Avere perciò una buona difesa è fondamentale. La fase offensiva non deve essere troppo lunga in termini di possesso della palla. Infatti, il numero di tocchi fatti nella trequarti offensiva \texttt{ToAtt3rd} porta ad avere una diminuzione delle probabilità di vittoria ma se si fanno i giusti passaggi per entrare nell'area di rigore avversaria mantenendo sempre un possesso palla breve si aumentano le probabilità di vittoria come visto nella stima del numero di tocchi in area di rigore avversaria \texttt{ToAttPen}. Dalle analisi emerge che uno sbilanciamento verso la fase offensiva porta una forte diminuzione alle probabilità di vittoria. Considerando i casi di Inter e Atalanta. La prima si dimostra essere una dalle squadre che più tira in generale (\texttt{Sh}) e in porta (\texttt{SoT}). Alti valori sono presenti anche per l'Atalanta. Entrambe però mantengono troppo il controllo del pallone nell'area avversaria. Infatti, per entrambe le squadre si riscontrano notevoli diminuzioni della probabilità di vittoria a causa della stima del parametro di \texttt{ToAtt3rd}. Peggio ancora per l'Atalanta, che ha un gioco particolarmente offensivo (vedi \textit{\cite{ataGioco}}), che le fa ottenere una diminuzione della probabilità della vittoria dalla stima del parametro \texttt{ToAttPen}. Questo perché il prolungato controllo del pallone la porta a esporsi e a subire contropiede. Si è parlato spesso di contropiedi nella nostra analisi. Quello che emerge sempre in tema di fase offensiva è che, il numero di tiri è relativamente basso, fatto dimostrato dal notevole aumento della probabilità di vittoria portato della stima del rapporto tiri/gol \texttt{G/Sh}. Di conseguenza le squadre attaccano poco e, quando lo fanno, cercano di massimizzare la loro fase offensiva. Infatti, le partite nel campionato italiano spesso finiscono con un massimo di due o tre gol segnati. Pertanto, l'efficacia di un azione offensiva che porta al gol e la carenza di azioni offensive portano \texttt{Sh}, \texttt{SoT} ma soprattutto \texttt{G/Sh} ad assumere un elevato contributo nel determinare la vittoria.\\
-Concludendo la trattazione sulla fase offensiva, si illustra quale sia il miglior modo di attaccare che emerge dai modelli. Si sa che il contropiede è efficace, ma allo stesso tempo difficile da attuare per via del comportamento delle squadre a non sbilanciarsi. Una valida alternativa che emerge è il lancio lungo che parte dall'area compressa tra l'area di rigore della squadra fino a centrocampo ed arriva nell'area avversaria. Infatti, la stima del parametro del numero di passaggi lunghi tentati \texttt{LPAtt} è associata ad una crescita della probabilità di vittoria. L'utilizzo di passaggi filtrati \texttt{MPCmp\%} non è una buona tattica. Analogamente anche i cross \texttt{Crs} non danno benefici. Anzi, causano svantaggi, e ancora una volta ne rimangono penalizzate Inter e soprattutto Atalanta che con il suo gioco sfrutta molto le fasce (vedi \textit{\cite{ataGioco}}). Concludendo, è importante sottolineare che un atteggiamento troppo speculativo o difensivo da parte della squadra non porta alla vittoria. Questo è il caso del Venezia, classificatosi come ultimo, e che ha ottenuto benefici dalle covariate \texttt{ToDefPen} e \texttt{ToDef3rd} ma non dalle variabili esplicative offensive.
+Dai risultati ottenuti e dalle analisi condotte è possibile concludere quanto segue. Nel campionato italiano, ai fini della vittoria o, in generale, dell'ottenimento di buoni risultati è rilevante per una squadra adottare un comportamento tattico, in particolare, dell'utilizzo della costruzione dal basso e giocare prevalentemente nella propria metà campo. 
+È importante che la squadra adotti un comportamento meno propenso a controllare il pallone per lungo tempo perché sia il possesso della palla \texttt{Poss} e sia la distanza percorsa con la palla \texttt{TotDist} non sono significavi. Inoltre, la squadra deve essere più propensa a giocare maggiormente la palla nella propria area di difesa per evitare contropiedi perché sia le stime del numero di tocchi in area di rigore \texttt{ToDefPen}, sia il numero di tocchi nella trequarti difensiva \texttt{ToDef3rd} e sia il numero di tocchi a centrocampo \texttt{ToMid3rd} sono associati ad un aumento della probabilità di vittoria. Avere perciò una buona difesa è fondamentale. La fase offensiva non deve essere troppo lunga in termini di possesso della palla. Infatti, il numero di tocchi fatti nella trequarti offensiva \texttt{ToAtt3rd} porta ad avere una diminuzione delle probabilità di vittoria ma se si fanno i giusti passaggi per entrare nell'area di rigore avversaria mantenendo sempre un possesso palla breve si aumentano le probabilità di vittoria come visto nella stima del numero di tocchi in area di rigore avversaria \texttt{ToAttPen}. Dalle analisi emerge che uno sbilanciamento verso la fase offensiva porta una forte diminuzione alle probabilità di vittoria. Considerando i casi di Inter e Atalanta. La prima si dimostra essere una dalle squadre che più tira in generale (\texttt{Sh}) e in porta (\texttt{SoT}). Alti valori sono presenti anche per l'Atalanta. Entrambe però mantengono troppo il controllo del pallone nell'area avversaria. Infatti, per entrambe le squadre si riscontrano notevoli diminuzioni della probabilità di vittoria a causa della stima del parametro di \texttt{ToAtt3rd}. Peggio ancora per l'Atalanta, che ha un gioco particolarmente offensivo (vedi \textit{\cite{ataGioco}}), che le fa ottenere una diminuzione della probabilità della vittoria dalla stima del parametro \texttt{ToAttPen}. Questo perché il prolungato controllo del pallone la porta a esporsi e a subire contropiede. Si è parlato spesso di contropiedi nella nostra analisi. Quello che emerge sempre in tema di fase offensiva è che, il numero di tiri è relativamente basso, fatto dimostrato dal notevole aumento della probabilità di vittoria portato della stima del rapporto tiri/gol \texttt{G/Sh}. Di conseguenza le squadre attaccano poco e, quando lo fanno, cercano di massimizzare la loro fase offensiva. Infatti, le partite nel campionato italiano spesso finiscono con un massimo di due o tre gol segnati. Pertanto, l'efficacia di un azione offensiva che porta al gol e la carenza di azioni offensive portano \texttt{Sh}, \texttt{SoT} ma soprattutto \texttt{G/Sh} ad assumere un elevato contributo nel determinare la vittoria.\\
+Concludendo la trattazione sulla fase offensiva, si illustra quale sia il miglior modo di attaccare che emerge dai modelli. Si sa che il contropiede è efficace, ma allo stesso tempo difficile da attuare per via del comportamento delle squadre a non sbilanciarsi. Una valida alternativa che emerge è il lancio lungo che parte dall'area compressa tra l'area di rigore della squadra fino a centrocampo ed arriva nell'area avversaria. Infatti, la stima del parametro del numero di passaggi lunghi tentati \texttt{LPAtt} è associata ad una crescita della probabilità di vittoria. L'utilizzo di passaggi filtrati \texttt{MPCmp\%} non è una buona tattica. Analogamente anche i cross \texttt{Crs} non danno benefici. Anzi, causano svantaggi, e ancora una volta ne rimangono penalizzate Inter e soprattutto Atalanta che con il suo gioco sfrutta molto le fasce (vedi \textit{\cite{ataGioco}}). In conclusione, è importante sottolineare che un atteggiamento troppo speculativo o difensivo da parte della squadra non porta alla vittoria. Questo è il caso del Venezia, classificatosi come ultimo, e che ha ottenuto benefici dalle covariate \texttt{ToDefPen} e \texttt{ToDef3rd} ma non dalle variabili esplicative offensive. In conclusione, dall'analisi emerge che per ottenere la vittoria una squadra debba mantenere un comportamento tattico e giocare prevalentemente nella propria metà campo.
 
 \section{Predizioni}
-In questa sezione si vuole valutare le prestazione dei quattro modelli presentati nelle precedenti sezioni. I modelli vengono valutati in base alle predizioni da loro prodotte. Per predizione si intende che il modello stabilisce l'esito di una partita senza conoscerne il risultato reale. Per rendere più interessante il confronto si aggiungere un quinto elemento nel confronto, ossia le predizioni fatte dai \emph{bookmakers}, ad esempio Bet365, William Hill ecc.. I dati dei \emph{bookmakers} sono stati presi da \textit{\cite{bet}}, il quale fornisce la media delle probabilità dei \emph{bookmakers} per ogni risultato, su un gran numero di campionati di calcio tra cui la Serie A italiana. Si è quindi preso come predizione il risultato più probabile secondo i \emph{bookmakers}.\\
-Le predizioni dei modelli sono state eseguite nel seguente modo: il \emph{dataset} è stato diviso in modo casuale in due parti chiamate solitamente \emph{training set} e \emph{test set}. Il \emph{training set} contiene quasi l'80\% delle 38 giornate, ossia 30 giornate per un totale di 300 partite. Invece il \emph{test set} contiene circa il restante 20\% ossia 8 giornate per un totale di 80 partite. Il \emph{training set} è utilizzato per stimare i parametri del modello mentre il \emph{test set} è utilizzato per fare predizione. Perciò una parte delle osservazione sono state utilizzate per allenare il modello, mentre la restante parte per predire l'esito delle restanti osservazioni. \\
-Prima di discutere delle misurazioni e delle predizioni ottenute, è importante tener presente che, i modelli (\ref{for:3.1}), (\ref{for:5.1}), (\ref{for:4.9}) e (\ref{for:5.2}), utilizzano informazioni e statistiche che sono disponibili solo dopo il termine delle partite, cioè non disponibili per i \emph{bookmakers}. Infatti i \emph{bookmakers} calcolano le loro predizioni prima che le partite comincino ma tenendo conto delle informazione delle partite precedentemente giocate. Certamente i quattro modelli non sono utilizzabili per poter fare predizioni, ma l'obbiettivo del confronto è quello di capire se le informazioni sono state impiegate in modo ragionevole per acquisire maggior conoscenza. Ciò è possibile notarlo se i modelli hanno prestazioni superiori alle predizioni dei \emph{bookmakers}.\\
-Le metriche che saranno usate per valutare le predizione calcolate sono le seguenti:
+In questa sezione si vuole valutare le prestazioni dei quattro modelli presentati nelle precedenti sezioni. I modelli vengono valutati in base alle loro capacità di predizioni dell'esito di una partita, sulla base delle informazioni (covariate) disponibili. Per predizione si intende che il modello stabilisce l'esito di una partita senza conoscerne il risultato reale. Per rendere più interessante il confronto si aggiungere un quinto elemento nel confronto, ossia le predizioni fatte dai \emph{bookmakers}, ad esempio Bet365, William Hill ecc... I dati dei \emph{bookmakers} sono stati presi da \textit{\cite{bet}}, il quale fornisce la media delle probabilità dei \emph{bookmakers} per ogni risultato, su un gran numero di campionati di calcio, tra cui la Serie A italiana. Si è quindi preso come predizione il risultato più probabile secondo i \emph{bookmakers}.\\
+Le predizioni dei modelli sono state eseguite nel seguente modo: il \emph{dataset} è stato diviso in modo casuale in due parti chiamate solitamente \emph{training set} e \emph{test set}. Il \emph{training set} contiene quasi l'80\% delle 38 giornate, ossia 30 giornate per un totale di 300 partite. Invece il \emph{test set} contiene circa il restante 20\% ossia 8 giornate per un totale di 80 partite. Il \emph{training set} è utilizzato per stimare i parametri del modello mentre il \emph{test set} è utilizzato per fare predizione. Perciò una parte delle osservazioni è stata utilizzata per allenare il modello, mentre la restante parte per predire l'esito delle restanti osservazioni. \\
+Prima di discutere delle misurazioni e delle predizioni ottenute, è importante tener presente che i modelli (\ref{for:3.1}), (\ref{for:5.1}), (\ref{for:4.9}) e (\ref{for:5.2}) utilizzano informazioni e statistiche che sono disponibili solo dopo il termine delle partite, cioè non disponibili per i \emph{bookmakers}. Infatti, i \emph{bookmakers} calcolano le loro predizioni prima che le partite comincino. Certamente i quattro modelli non sono utilizzabili per poter fare predizioni, ma l'obbiettivo del confronto è quello di capire se le informazioni sono state impiegate nel modo opportuno per acquisire maggior conoscenza. Ossia se i modelli ottengono delle prestazioni peggiori rispetto ai \emph{bookmakers}, nonostante abbiano più informazioni sulle partite allora, non sono state utilizzate nel modo corretto le informazioni, viceversa se le prestazioni dei modelli sono migliori rispetto ai \emph{bookmakers} allora le informazioni sono state utilizzate correttamente. \\
+La capacità predittiva di un modello sarà valutata come segue:
 \begin{itemize}
 	\item \texttt{Accuratezza}. Indica il rapporto tra il numero di predizioni classificate correttamente e il numero totale delle osservazioni in esame.
 	\item \texttt{Sensibilità}. Indica il rapporto tra il numero di predizioni identificate correttamente con la categoria \emph{k} e il numero totale delle osservazioni classificate con la categoria \emph{k} con \emph{k $\in$ \{1,....,K\}}.
@@ -646,8 +710,9 @@ Nella Figura \ref{fig:pre} sono mostrate le classificazione ottenute sulle 80 pa
 			\label{fig:pre}}
 	\end{center}
 \end{figure}
-Dai risultati ottenuti, l'accuratezza dei quattro modelli è rispettivamente 0.65, 0.6125, 0.6625 e 0.6375, mentre per i \emph{bookmakers} è di 0.55. Si può subito notare che tutti e quattro i modelli sono migliori delle predizioni dei \emph{bookmakers}. In particolare il modello (\ref{for:4.9}) risulta essere quello che produce più predizioni corrette. Sorprendentemente il modello (\ref{for:3.1}) che utilizza solo le abilità medie delle squadre e quindi senza l'utilizzo delle variabili esplicative risulta essere migliore di tutti eccetto del modello (\ref{for:4.9}). In particolare si conferma quanto enunciato nel Capitolo \ref{cap:BT} riguardo al ruolo dell'intercetta e delle covariate, infatti il modello senza intercetta (\ref{for:5.2}) risulta essere leggermente peggiore del modello con l'intercetta (\ref{for:4.9}). A tal proposito si può confermare l'esistenza di una differente relazione delle variabili esplicative da squadra a squadra. Infatti tra i quattro modelli confrontati, il modello (\ref{for:5.1}) ottiene le peggiori prestazioni dato che ha ignorato la diversa relazione delle variabili esplicative con ogni singola squadra.\\
-Nella Figura \ref{fig:recall} vengono mostrate le misurazioni della sensibilità per ognuna delle delle tre categorie per i quattro modelli e per i \emph{bookmakers}.
+Dai risultati ottenuti, l'accuratezza dei quattro modelli è rispettivamente 0.65, 0.6125, 0.6625 e 0.6375, mentre per i \emph{bookmakers} è di 0.55. Si può subito notare che tutti e quattro i modelli sono migliori delle predizioni dei \emph{bookmakers}. In particolare, il modello (\ref{for:4.9}) risulta essere quello che produce più predizioni corrette. Sorprendentemente il modello (\ref{for:3.1}) che utilizza solo le abilità medie delle squadre e quindi senza l'utilizzo delle variabili esplicative risulta essere migliore di tutti eccetto del modello (\ref{for:4.9}). In particolare, si conferma quanto enunciato nel Capitolo \ref{cap:BT} riguardo al ruolo dell'intercetta e delle covariate, infatti il modello senza intercetta (\ref{for:5.2}) risulta essere leggermente peggiore del modello con l'intercetta (\ref{for:4.9}). A tal proposito si può confermare l'esistenza di una differente relazione delle variabili esplicative da squadra a squadra. Infatti, tra i quattro modelli confrontati, il modello (\ref{for:5.1}) ottiene le peggiori prestazioni dato che ha ignorato la diversa relazione delle variabili esplicative con ogni singola squadra.\\
+Nella Figura \ref{fig:recall} vengono mostrate le misurazioni della sensibilità per ognuna delle tre categorie per i quattro modelli e per i \emph{bookmakers}.
+
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[scale = 0.60]{recall.png}
@@ -655,8 +720,9 @@ Nella Figura \ref{fig:recall} vengono mostrate le misurazioni della sensibilità
 			\label{fig:recall}}
 	\end{center}
 \end{figure}
-Come si può notare i \emph{bookmakers} hanno molti problemi a classificare correttamente l'esito di una partita quando questa termina con un pareggio. Infatti vediamo che la sensibilità è zero, questo perché ci sono zero partite classificate con il pareggio, ma dai dati osservati si sa che ci sono delle partite che terminano con un pareggio. Tuttavia sono molto affidabili nel predire la vittoria della squadra in casa contro la squadra ospite. I modelli (\ref{for:4.9}) e (\ref{for:5.2}) sanno classificare correttamente quando la squadra ospite batte la squadra in casa, infatti la sensibilità è a uno, il massimo. Infine notiamo che i modelli (\ref{for:3.1}) e (\ref{for:5.1}) sanno ben identificare una partita che termina con un pareggio.\\
-Nella Figura \ref{fig:speci} vengono mostrate le misurazioni della specificità per ognuna delle tre categorie per i quattro modelli e per i \emph{bookmakers}. 
+Come si può notare i \emph{bookmakers} hanno molti problemi a classificare correttamente l'esito di una partita quando questa termina con un pareggio. Infatti, vediamo che la sensibilità è pari a zero, questo perché ci sono zero partite classificate con il pareggio, ma dai dati osservati si sa che ci sono delle partite che terminano con un pareggio. Tuttavia, sono molto affidabili nel predire la vittoria della squadra in casa contro la squadra ospite. I modelli (\ref{for:4.9}) e (\ref{for:5.2}) sanno predire correttamente la vittoria della squadra ospite sulla squadra che gioca in casa. La sensibilità associata, infatti è pari a uno. Infine, notiamo che i modelli (\ref{for:3.1}) e (\ref{for:5.1}) riescono a identificare correttamente una partita che termina con un pareggio.\\
+Nella Figura \ref{fig:speci} vengono mostrate le misurazioni della specificità per ognuna delle tre categorie per i quattro modelli e per i \emph{bookmakers}.
+
 %\pagebreak
 \begin{figure}[htbp]
 	\begin{center}
@@ -665,6 +731,8 @@ Nella Figura \ref{fig:speci} vengono mostrate le misurazioni della specificità 
 			\label{fig:speci}}
 	\end{center}
 \end{figure}
-Ovviamente in questa misurazione i \emph{bookmakes} ottengono il miglior risultato per quanto riguarda l'identificare una partita che non termina in un pareggio. Si nota che tutti e quattro i modelli sanno ben identificare quando l'esito della partita non è la vittoria della squadra di casa, infatti la misurazione ottenuta è uno. Inoltre anche i modelli (\ref{for:4.9}) e (\ref{for:5.2}) sanno ben identificare quando una partita non termina in un pareggio. D'altra parte i modelli (\ref{for:3.1}) e (\ref{for:5.1}) ottengono le migliori misurazione nell'identificare quando una partita non termina con la vittoria della squadra ospite.\\
+Ovviamente in questa misurazione i \emph{bookmakes} ottengono il miglior risultato per quanto riguarda l'identificazione di una partita che non termina in un pareggio. Si nota che tutti e quattro i modelli riescono a predire quando l'esito della partita non è la vittoria della squadra di casa, infatti la misurazione ottenuta è uno. Inoltre, anche i modelli (\ref{for:4.9}) e (\ref{for:5.2}) riescono a predire quando una partita non termina in un pareggio. D’altra parte, i modelli (\ref{for:3.1}) e (\ref{for:5.1}) ottengono le migliori misurazione nell'identificare quando una partita non termina con la vittoria della squadra ospite.\\
 
-In conclusione, dai risultati ottenuti si può affermare di aver utilizzato correttamente le informazioni a disposizione dato che si ottengono in generale, prestazioni migliori rispetto alle predizioni dei \emph{bookmakers}.
+In conclusione, dai risultati ottenuti si evince che i modelli mostrano una maggiore accuratezza nelle previsioni rispetto a quanto fornito dai \emph{bookmakers}. Se ne deduce quindi un buon utilizzo delle informazioni a disposizione nei modelli.
+
+

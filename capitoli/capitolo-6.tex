@@ -3,188 +3,31 @@
 % !TEX root = ../tesi.tex
 
 %**************************************************************
-\chapter{Testing}
-\label{cap:test}
+\chapter{Metodi di Machine Learning}
+\label{cap:ML}
 %**************************************************************
-\intro{Nel seguente capitolo verranno descritte le tecnologie utilizzate per costruire una test-suite per l'applicazione \emph{mobile} e verrà esposto il piano di \emph{test} stabilito con il tutor aziendale ed i risultati ottenuti.}
-\section{Test End to End}
-Il \emph{test End-to-End} è una metodologia di \emph{testing} dell'interfaccia grafica che viene vista dagli utenti dell'applicazione. Ha lo scopo di testare in modo automatizzato, dall'inizio fino alla fine, se tutti flussi di esecuzione dell'applicazione si stanno comportando come progettato, senza che vengano rilevati degli errori che andrebbero a inficiare sulla qualità dell’applicazione stessa. Perciò il \emph{test} \gls{test e2e} consiste nel simulare degli scenari utente reali, ad esempio interazioni attraverso \emph{clic} sui bottoni da parte degli utenti, in modo da verificare che l'applicazione si comporti nel modo corretto garantendo che i requisiti di alto livello del prodotto siano soddisfatti. Il \emph{test} \gls{test e2e} verifica inoltre che l'intera applicazione, su tutte le possibili interazioni dell'utente, trasmetta le informazioni corrette tra le varie componenti garantendo che tutto funzioni come un unico sistema coerente. Un esempio di \emph{test} \gls{test e2e} è la simulazione dei passi che l'utente deve fare per autenticarsi nell'applicazione.\\
-Il \emph{test} quindi può essere così composto:
-\begin{enumerate}
-	\item Inserisci l'\emph{username} nella casella di testo;
-	\item Inserisci la \emph{password} nella casella di testo;
-	\item Clicca il bottone di \emph{login};
-	\item Verifica che ti trovi nella pagina principale dell'applicazione dopo l'autenticazione e non più nella pagina di \emph{login}.
-\end{enumerate}
-
-Come scritto, i \emph{test} \gls{test e2e} eseguono l'applicazione proprio come se fosse un utente in un ambiente il più vicino possibile alla realtà. Infatti i \emph{test} \gls{test e2e} dovrebbero avere una comprensione praticamente nulla dei componenti interni dell'applicazione al fine di evitare accoppiamenti non necessari. Ne consegue che i test di unità e di integrazione sono i luoghi in cui dovrebbe essere nota la composizione interna dell'applicazione e quindi dove i \g{mock} possono essere utilizzati per attivare particolari rami di codice che si ha l'esigenza di testare. Il fatto che i \emph{test} \gls{test e2e} non siano a conoscenza della struttura interna e del funzionamento dell'applicazione che stanno testando, li classifica come \emph{test} \emph{black-box}.
-\clearpage
-
-\begin{figure}[!h] 
-	\begin{center}
-		\includegraphics[scale=0.3]{piramideTest.png}
-		\caption{Piramide dei test}\label{fig:test}
-	\end{center}
-\end{figure}
-
-Come mostra la Figura~\ref{fig:test}, la piramide dei \emph{test} illustra il numero proporzionale di \emph{test} per ogni tipologia in relazione alla loro velocità di esecuzione e ai costi per implementarli. Sebbene i \emph{test} \gls{test e2e} forniscano un grande supporto per verificare la correttezza dell'applicazione, sono significativamente più lenti e più costosi rispetto ai test di unità a causa della loro elevata complessità computazionale. Perciò è fondamentale trovare il giusto equilibrio di \emph{test} \gls{test e2e} da implementare mantenendone i vantaggi e senza aumentare i costi per l'implementazione. Una buona applicazione di \emph{test} \gls{test e2e} può essere ad esempio il \emph{testing} di azioni ripetitive che grazie alla loro automatizzazione, risultano essere meno costosi e più efficaci rispetto ai \emph{test} manuali.
-
-\section{Tecnologie per il testing}
-Per implementare i \emph{test} \gls{test e2e} sia per la \emph{dashboard} di \gls{AWMS} sia per l'applicazione \emph{mobile} si sono usate diverse tecnologie tra loro.\\
-Per il \emph{testing} della \emph{dashboard} si sono usate le seguenti tecnologie:
-\begin{itemize}
-	\item \textbf{Selenium WebDrive};
-	\item \textbf{Protractor};
-	\item \textbf{Cucumber}.
-\end{itemize}
-Selenium è un \g{framework} che permette di automatizzare l'esecuzione dei \emph{test} all'interno dei \g{browser web}. Ciò è possibile grazie a un insieme di \g{api} detto \emph{API WebDriver}. Esse sono uno standard \gls{W3C} che rappresenta un'interfaccia di controllo remoto capace di manipolare elementi del \g{DOM} nelle pagine web e di comandare il comportamento dei programmi utente. Inoltre fornisce un protocollo, noto come JSON Wire Protocol, per il trasferimento dei dati alle varie piattaforme che permettono di automatizzare i \emph{test} sui \g{browser web} come:
-\begin{itemize}
-	\item GeckoDriver per Mozilla Firefox;
-	\item ChromeDriver per Google Chrome;
-	\item SafariDriver per Apple Safari;
-	\item InternetExplorerDriver per Microsoft Internet Explorer;
-	\item MicrosoftWebDriver o EdgeDriver per Microsoft Edge;
-	\item OperaChromiumDriver per Opera.
-\end{itemize}
-Selenium per eseguire i \emph{test} utilizza un’architettura client-server. Infatti, Selenium utilizza un \g{server} web in cui espone l'API WebDriver come \gls{api} \g{rest} e perciò rimane in ascolto per la ricezione dei comandi che compongono i \emph{test}, sotto forma di richieste \g{http}. Quando arrivano le richieste, le esegue su un \g{browser web} e fornisce una risposta \g{http} che rappresenta il risultato dell'esecuzione del comando. Grazie alla standardizzazione delle \g{api} e all'utilizzo di un architettura client-server, è possibile eseguire \emph{test} scritti in diversi linguaggi purché supportino l'invio di richieste \g{http}.\\
-
-Protractor è un \g{framework} di \emph{test} \gls{test e2e} per applicazioni Angular2+ e AngularJS. Offre un insieme di "localizzatori" cioè metodi che permettono di ricavare gli elementi o il valore degli attributi dall'applicazione web e di simulare dei \emph{click} come se fosse un utente umano. Protractor all'inizio richiede la presenza di un server Selenium in modo da mandare richieste \g{http} per eseguire i \emph{test} \gls{test e2e}.\\
-
-\begin{figure}[h] 
-	\begin{center}
-		\includegraphics[height=20cm, width=13cm]{report.png}
-		\caption{Una parte del report dei test per il mobile generato da Cucumber}\label{fig:testDoc}
-	\end{center}
-\end{figure}
-
-Infine, Cucumber permette di definire i vari passi che deve fare un \emph{test} automatizzato per simulare le azioni di un utente. Questi passi vengono dichiarati attraverso il linguaggio Gherkin.\\
-Quindi, grazie a Cucumber, vengono dichiarati i cosiddetti \emph{step} ovvero i passi che devono essere fatti all'interno del \emph{test}. L'insieme degli \emph{step} definisce lo scenario dei \emph{test}, ad esempio uno scenario di \emph{test} può essere il processo di autenticazioni e gli \emph{step} l'inserimento dei dati e l'invio. I vari \emph{step} vengono poi implementati in un linguaggio di programmazione, in questo caso TypeScript, utilizzando i metodi offerti da Protractor. Il fatto che vengano dichiarati i passi dei \emph{test} permette a Cucumber di supportare la \gls{BDD}: quando vengono eseguiti i \emph{test} Cucumber controlla se Selenium sta eseguendo le azioni specificate all’interno di un \g{browser web}. Al termine dell'esecuzione Cucumber stabilisce l'esito per ogni \emph{test} e produce dei \emph{report} sui \emph{test} appena eseguiti documentandone l'esito e la struttura come mostrato in Figura~\ref{fig:testDoc}.
-\clearpage
-Per l'applicazione \emph{mobile} si è continuato a utilizzare Protractor e Cucumber mentre al posto di Selenium si è utilizzato Appium perché offre l'automazione dei \emph{test} per \glslink{applicazione nativa}{applicazioni native}\textcolor{SchoolColor}{\ap{[g]}}, \glslink{applicazione web mobile}{applicazioni web mobile}\textcolor{SchoolColor}{\ap{[g]}} e \glslink{applicazione ibrida}{applicazioni ibride}\textcolor{SchoolColor}{\ap{[g]}}, con la particolarità di essere multi-piattaforma. Selenium invece permette l'esecuzione di \emph{test} solo su \g{browser web}. Appium utilizza la stessa architettura client-server di Selenium e da esso prende anche l'utilizzo dell'API WebDriver, in particolare utilizza una variante per il \emph{mobile} del protocollo JSON Wire Protocol noto con il nome di Mobile JSON Wire Protocol. 
-
-\begin{figure}[h] 
-	\begin{center}
-		\includegraphics[scale=0.5]{appiumServer.png}
-		\caption{Schermata del server Appium}\label{fig:appiumServer}
-	\end{center}
-\end{figure}
-
-Di conseguenza Appium permette di utilizzare qualsiasi linguaggio o \g{framework} che supporti l'invio di richieste \g{http} senza necessariamente compilare un codice o un \g{framework} specifico di Appium perché, grazie al Mobile JSON Wire Protocol, utilizza i \g{framework} per l'automazione dei \emph{test} come UIAutomator per\g{Android} e XCTest per \g{iOS}.
-
-
-\section{Convezione}
-Su suggerimento del tutor aziendale si è struttura la \emph{test-suite} da me implementata nel seguente modo:\\
+\intro{Questo capitolo illustrerà i metodi di \emph{Machine Learning} che sono stati utilizzati per la predizione degli esiti delle partite di calcio della Seria A italiana della stagione 2021/2022. Purtroppo, non è stato possibile applicare metodi di \emph{Machine learning} che corrispondessero al modello \emph{Bradley-Terry} perché, nonostante esistano metodi in \emph{Machine learning} che forniscono modelli basati sul modello \emph{Bradley-Terry}, essi non sono in grado di gestire l'esito del pareggio ma solo un esito binario. Ne consegue che tali metodi non sono adatti per contesti come il calcio ma ad altri tipi di sport dove il pareggio non è previsto come il \emph{baseball}. I metodi di \emph{Machine learning} considerati sono: il K-Nearest-Neighbors (KNN), la Support Vector Machine (SVM), gli alberi di decisione per la classificazione, la Random Forests e in fine l'Adaboost.
+}
+\section{Componenti essenziali}
+In questa sezione vengono definite alcune misure e tecniche che sono necessarie per il funzionamento dei metodi di \emph{Machine Learning} applicati.
+\subsection{Distanza di Minkowski}
+La \textit{\cite{minkdist}} è una misura utilizzata per la valutazione della distanza ovvero, nel nostro contesto della somiglianza tra due punti in spazio di \textit{n}-dimensioni. La distanza di Minkowski di ordine \emph{d} tra due punti A = (a$_1$,...a$_n$) e B = (b$_1$,...b$_n$) vale
 \begin{center}
-	\begin{forest}
-		for tree={font=\sffamily, grow'=0,
-			folder indent=.9em, folder icons,
-			edge=densely dotted}
-		[e2e
-		[test%, this folder size=20pt
-		[feature%, this folder size=20pt
-		[spec.feature, is file]
-		]
-		[step\_definition%, this folder size=20pt
-		[spec.e2e-spec.ts, is file]
-		]
-		[pages%, this folder size=20pt
-		[specs.po.ts, is file]
-		]
-		]
-		]
-	\end{forest}
+	$Dist(A,B) =  \left(\sum_{i = 1}^{n}|a_i-b_i|^d\right)^{1/d} $
 \end{center}
+
+Si sottolinea che quando l'ordine d = 1, la distanza utilizzata è la \textit{\cite{manhattan}} ovvero la distanza tra due punti è la somma del valore assoluto delle differenze delle loro coordinate. Quando l'ordine d = 2 è applicata la \textit{\cite{euclidea}} dove la distanza tra due punti è la lunghezza del segmento con agli estremi i due punti d'interesse.
+Tale misura sarà utilizzata nel metodo K-Nearest-Neighbors (KNN).
+\subsection{Funzione kernel}
+Nel contesto dell'apprendimento automatico, la \textit{\cite{kernel}} permette di trasformare uno spazio di input non linearmente separabile in uno nuovo spazio delle istanze di input detto \emph{feature space} di dimensione superiore rispetto a quello originale tale da diventare linearmente separabile. Per spazio linearmente separabile si intende che esiste un iperpiano in grado di separare correttamente i dati in due gruppi distinti. Perciò aumentando la dimensionalità dello spazio d'interesse è possibile trovare la dimensione opportuna che permetta di separare linearmente i dati. Tale applicazione è chiamata kernel trick. Perciò, una funzione kernel è una funzione \emph{K} che per ogni \emph{x}, \emph{y} $\in \chi$ dove $\chi$ è lo spazio di input di dimensione \emph{n}, vale 
+\begin{center}
+	$K(x,y) =  \langle\psi(x),\psi(y)\rangle $.
+\end{center}
+Dove $\psi$ è la funzione che mappa i punti di uno spazio di dimensione \emph{n} in uno spazio di dimensione \emph{m} con \emph{m>n}, invece, $\langle . \rangle$ indica il prodotto scalare.\\
+Nelle nostre predizioni saranno usati questi kernel:
 \begin{itemize}
-	\item \textbf{feature}: Contiene i file.feature dove vengono indicati gli scenari e gli \emph{step} dei \emph{test} scritti nell'linguaggio Gherkin. Ogni file.feature contiene \emph{test} di scenari affini;
-	\item \textbf{step\_definition}: Contiene i file.e2e-spec.ts dove vengono implementati gli \emph{step}, utilizzando i metodi dei file.po.ts. Esiste un file.e2e-spec.ts per ogni file.feature;
-	\item \textbf{pages}: Contiene le cosiddette PageObject, le PageObject sono un \g{design pattern} che permettono di scrivere \emph{test} più puliti. Infatti, queste PageObject contengono metodi che vengono spesso riutilizzati da più \emph{test} e inoltre, contiene metodi che estraggono gli elementi dalla vista. Adottando questo \g{design pattern} si ha i vantaggi che qualora il modello dell'applicazione cambiasse, sarà sufficiente aggiornare solo la PageObject e in generale non si genera duplicazione del codice.
+	\item Linear kernel: è la funzione precedentemente definita.
+	\item Polynomial kernel: $K(x,y) =  \left(1 + \sum_{i = 1}^{p}x_iy_i\right)^{d} $ dove \emph{p} è il numero di istanze di input presenti in $\chi$ mentre \emph{d} la dimensione del spazio (l'ordine).
+	\item Gaussian Radial Basis kernel (RBF): $K(x,y) = exp(-\gamma||x-y||^2) $ con $\gamma=\frac{1}{2\sigma^2}$ mentre $\sigma$ è un paramento libero. 
 \end{itemize}
-\section{Test eseguiti}
-In comune accordo con il tutor aziendale, sono stati individuati i seguenti \emph{test} \gls{test e2e} per verificare l'intera applicazione \emph{mobile} ovvero Azzurra e le due sezioni Questionario e Profilo. Inoltre sono stati testati anche alcuni aspetti della \emph{dashboard} di \gls{AWMS}. Per ogni \emph{test} viene assegnato un codice composto dalla lettera \textbf{T} e da una seconda lettera che può essere \textbf{M} nel caso in cui il \emph{test} sia per l'applicazione \emph{mobile} o la lettera \textbf{D} nel caso sia per la \emph{dashboard}. Infine il codice termina con un numero progressivo.\\
-Nella tabella sottostante per ogni \emph{test} viene riportato il suo codice, una descrizione e l'esito del \emph{test}.
-\begin{table}[h]%
-	\rowcolors{2}{grigetto}{white}
-	\renewcommand{\arraystretch}{1.4}
-	\centering
-	\begin{tabularx}{\textwidth}{c X c}
-		\hline	
-		\rowcolor{heavenly}
-		\intest{Codice} &  \intest{Descrizione} & \intest{Esito}\\	
-		\hline			
-		TM1 & Testare che l'utente possa inserire \emph{e-mail} e \emph{password} e cliccare il bottone invio per autenticarsi, nel caso i dati siano corretti l'utente deve essere renderizzato nella pagina Questionari. & Superato\\
-		TM2 & Testare che l'utente possa inserire\emph{e-mail}, \emph{password} e cliccare il bottone invio per autenticarsi, nel caso i dati siano uno o tutti errati l'utente deve essere rimanere nella pagina di autenticazione. & Superato\\
-		TM3 & Testare che nel caso in cui esista una versione più recente rispetto a quella in esecuzione, appaia all'apertura dell'applicazione un messaggio in primo piano che avvisi della nuova versione disponibile. & Superato\\
-		TM4 & Testare che il messaggio in primo piano che avvisa della nuova versione disponibile, sia interagitile, cioè che si possa cliccare i suoi bottoni. & Superato\\
-		TM5 & Testare che una volta che l'utente sia autenticato, se è il suo primo accesso, possa chiudere la finestra che contiene la guida per l'utilizzo dell'applicazione, la quale appare al primo accesso che si fa nell'applicazione. & Superato\\
-		TM6 & Testare nella sezione Questionari, se la prima finestra del Questionario della salute (vedi la prima immagine della Figura~\ref{fig:queSlide}) abbia i vari bottoni dei sintomi tutti cliccabili. & Superato\\
-		\hline
-	\end{tabularx} \hbox{}
-	\caption{Tabella del tracciamento dei test E2E}
-\end{table}%	
-	
-\begin{table}[h]%
-	\renewcommand{\arraystretch}{1.4}
-	\rowcolors{2}{grigetto}{white}
-	\centering
-	\begin{tabularx}{\textwidth}{c X c}
-		\hline	
-		\rowcolor{heavenly}
-		\intest{Codice} &  \intest{Descrizione} & \intest{Esito}\\	
-		\hline	
-		TM7 & Testare nella sezione Questionari, se la seconda finestra del Questionario della salute (vedi la seconda immagine della Figura~\ref{fig:queSlide}) abbia i vari bottoni sulla salute delle persone che vivono con te, siano tutti cliccabili. & Superato\\
-		TM8 & Testare nella sezione Questionari, se la terza finestra del Questionario della salute (vedi la terza immagine della Figura~\ref{fig:queSlide}) abbia i vari bottoni dei posti in cui sei stato, siano tutti cliccabili. & Superato\\
-		TM9 & Testare nella sezione Questionari, che venga visualizzato esito positivo(vedi prima immagine della Figura~\ref{fig:quefinal}) dalla compilazione del questionario se l'indice di contagiosità calcolato è basso. & Superato\\
-		TM10 & Testare nella sezione Questionari, che venga visualizzato esito negativo(vedi seconda immagine della Figura~\ref{fig:quefinal}) dalla compilazione del questionario se l'indice di contagiosità calcolato è alto. & Superato\\
-		TM11 & Testare nella sezione profilo che tutti i bottoni presenti siano cliccabili e che aprano la loro corrispondente finestra. & Superato\\
-		TM12 & Testare nella sezione profilo, nella finestra Informazioni personali, se la ricerca degli indirizzi, per poter cambiare indirizzo di domicilio, produca risultati coerenti con quello che si sta cercando. & Superato\\
-		TM13 & Testare nella sezione profilo, nella finestra Informazioni, si possa selezionare uno dei risultati della ricerca per il cambio dell'indirizzo di domicilio & Superato\\
-		TM14 & Testare nella sezione profilo, nella finestra Informazioni, che tutti i bottoni siano cliccabili & Superato\\
-		TM15 & Testare nella sezione profilo, nella finestra Informazioni, che le modifiche fatte a i dati una volta cliccato il bottone salva, rimangano salvate anche dopo la chiusura della finestra & Superato\\
-		TM16 & Testare nella sezione profilo, Gestione password, si possa cambiare la \emph{password} quindi che si possa inserire la \emph{password} attuale, inserire una nuova \emph{password}, la sua conferma e cliccare sul bottone salva. & Superato\\
-		TM17 & Testare nella sezione profilo, che tutte le finestre aperte dopo il \emph{click} sui bottoni, possano essere chiuse. & Superato\\
-		TM18 & Testare nella sezione Azzurra, nella funzionalità "Pianificazione" si possa visualizzare la pianificazione in uno specifico giorno. & Superato\\
-		TM19 & Testare nella sezione Azzurra, nella funzionalità "Pianificazione" si possa visualizzare la pianificazione della settimana corrente. & Superato\\
-		TM20 & Testare nella sezione Azzurra, nella funzionalità "Gestione assenze" si possa richiedere l'inserimento di una nuova assenza. & Superato\\
-		\hline
-	\end{tabularx} \hbox{}
-	\caption{Tabella del tracciamento dei test E2E}
-\end{table}%
-
-\begin{table}[h]%
-	\rowcolors{2}{grigetto}{white}
-	\renewcommand{\arraystretch}{1.6}
-	\centering
-	\begin{tabularx}{\textwidth}{c X c}
-		\hline	
-		\rowcolor{heavenly}
-		\intest{Codice} &  \intest{Descrizione} & \intest{Esito}\\	
-		\hline	
-		TM21 & Testare nella sezione Azzurra, nella funzionalità "Gestione assenze" si possa visualizzare la lista delle assenze fatte. & Superato\\
-		TM22 & Testare nella sezione Azzurra, nella funzionalità "Gestione assenze" si possa aprire il calendario dei giorni in cui si può prendere un permesso. & Superato\\
-		TM23 & Testare nella sezione Azzurra, nella funzionalità "Prenotazione posto" che, si possa visualizzare le prenotazioni dei posti a sedere fatte. & Superato\\
-		TM24 & Testare nella sezione Azzurra, nella funzionalità "Prenotazione posto" che, si possa inserire una nuova prenotazione di un posto a sedere. & Superato\\
-		TM25 & Testare nella sezione Azzurra, nella funzionalità "Prenotazione posto" che, si possa aprire lo scanner di \g{QR code}\. & Superato\\
-		TM26 & Testare nella sezione Azzurra, che si possa aprire il menu delle shortcuts. & Superato\\
-		TM27 & Testare che siano raggiungibili le sezioni Questionari, Azzurra, Profilo, dopo l'autenticazioni. & Superato \\
-		TD28 & Testare nella sezione Task che all'inizio non ci sia nessun \emph{task} selezionato. & Superato \\
-		TD29 & Testare nella sezione Task che tutti i \emph{task} siano selezionabili. & Superato \\
-		TD30 & Testare nella sezione Task che una volta selezionato un \emph{task}, appaia a lato un menu a tendina. & Superato \\
-		TD31 & Testare nella sezione Task che la funzionalità di ricerca produca risultati coerenti con quanto si sta cercando. & Superato \\
-		TD32 & Testare nella sezione Safety che tutti i bottoni siano cliccabili e nel caso in cui aprano delle nuove finestre, queste possano essere chiuse. & Superato \\
-		TD33 & Testare nella sezione Safety che la funzionalità di ricerca produca risultati coerenti con quanto si sta cercando. & Superato \\
-		\hline
-	\end{tabularx} \hbox{}
-	\caption{Tabella del tracciamento dei test E2E}
-\end{table}%
-\clearpage
-\section{Considerazioni}
-\label{cap:cons2}
-I \emph{test} prodotti sono stati in linea con quanto richiesto dal tutor aziendale. Dall'esperienza vissuta sull'implementazione dei \emph{test} \gls{test e2e} si sono fatte delle considerazioni interessanti. All'inizio è stata riscontrata una difficoltà dovuta alla natura asincrona dei \emph{test}: fallivano perché erano più veloci ad eseguirsi rispetto alla renderizzazione delle componenti grafiche che dovevano testare. Un esempio esplicativo è un \emph{test} che non trovava una componente grafica perché non aspettava la sua renderizzazione e falliva anche nonostante la componente grafica fosse correttamente creata. 
-% le quantità di bestemmie che ho tirato per fare questi test se la giocavano con quelle tirate durante swe
-Si è quindi capito quanto fosse oneroso in termini di tempo implementare i vari \emph{test} \gls{test e2e}. Ciononostante, grazie all'utilizzo delle PageObject e dei loro metodi, è stato risparmiato del tempo riutilizzandone alcuni implementati precedentemente.\\
-
-Da tutto ciò si è compresa la grande onerosità dei \emph{test} \gls{test e2e}, non solo per l'implementazione ma anche per eseguirli. Infatti per eseguire solo ventisette \emph{test} per il \emph{mobile} si è impiegato più di quindici minuti mentre con l'aggiunta dei \emph{test} per la \emph{dashboard} si è arrivati a più di venti minuti.\\
-
-Infine un aspetto critico rilevato è stato che alcuni rami d'esecuzione non possono essere testati o se ci si prova richiedono troppo tempo per essere testati, ad esempio non è stato possibile verificare in modo completamente automatizzato se lo \emph{scanner} di \g{QR code} fosse in grado di funzionare correttamente perché non si poteva generare un \g{mock} di \g{QR code} da mostrare. Si poteva comunque fare un \emph{test} semi-automatizzato, cioè quando il \emph{test} apriva la fotocamere per scannerizzare, si visualizza manualmente un \g{QR code} in modo che lo \emph{scanner} scansioni e verifichi il corretto funzionamento.\\
-
-Si considera perciò che i \emph{test} \gls{test e2e} diano un grande valore aggiunto nella qualità del prodotto purchè siano utilizzati per operazioni ripetitive e facilmente implementabili.
+La funzione kernel sarà utilizza nella Support Vector Machine (SVM).

@@ -31,3 +31,61 @@ Nelle nostre predizioni saranno usati questi kernel:
 	\item Gaussian Radial Basis kernel (RBF): $K(x,y) = exp(-\gamma||x-y||^2) $ con $\gamma=\frac{1}{2\sigma^2}$ mentre $\sigma$ è un paramento libero. 
 \end{itemize}
 La funzione kernel sarà utilizza nella Support Vector Machine (SVM).
+
+\subsection{Bootstrap}
+In statistica e nell'apprendimento automatico, per \textit{\cite{bootstrap}} si intende una tecnica di ricampionamento per la generazione di un insieme di campioni di \emph{m} osservazioni contenute da un dataset di dimensione \emph{n}. Ogni estrazione è casuale e con rimpiazzo, cioè un’osservazione può essere presente in più campioni. Tale tecnica è utilizzata per produrre un insieme di campioni che siano il più possibile rappresentativi e indipendenti tra di loro.\\
+
+Nella Figura \ref{fig:bootstrap} viene mostrato un esempio della procedura di \emph{Bootstrap}
+
+\begin{figure}[]
+	\begin{center}
+		\includegraphics[scale=0.60]{bootstrap1.png}
+		\caption{Esempio grafico della procedura di \emph{Bootstrap}.
+		} 
+		Source: \url{https://blog.paperspace.com/bagging-ensemble-methods/}\label{fig:bootstrap}
+	\end{center}
+\end{figure}
+
+\subsection{Bagging}
+Il Bagging \textit{\cite{breiman1996bagging}} detto anche \emph{Bootstrap Aggregation Approch}, è una tecnica \emph{ensemble learning} di tipo parallelo che dalla mediazione di più predizioni fatte da un insieme di classificatori deboli ottiene un'unica predizione finale. È di tipo parallelo perché va a sfruttare l'indipendenza dei classificatori. La procedura applicata è la seguente:
+\begin{itemize}
+	\item Creazione di k campioni utilizzando la tecnica di \emph{Bootstrap}.
+	\item Per ogni campione viene allenato un classificatore.
+	\item Viene prodotta una predizione per ogni classificatore allenato.
+	\item Le predizioni ottenute vengono mediate ottenendo un predizione finale.
+\end{itemize} 
+Una tecnica per mediare è ad esempio, il \emph{voting} dove la classe più predetta sarà il risultato dalla predizione finale.Inoltre, si utilizza il \emph{Bootstrap} per rendere i classificatori indipendenti tra di loro.
+Perciò l'obbiettivo del \emph{Bagging} è quello di creare un classificatore modello di gestire un'elevata varianza dei dati in modo efficiente grazie al parallelismo.\\
+Nella Figura \ref{fig:bagging} viene illustrato graficamente la procedura di \emph{Bagging}
+
+\begin{figure}[]
+	\begin{center}
+		\includegraphics[scale=0.50]{Ensemble_Bagging.png}
+		\caption{Esempio grafico della procedura di \emph{Bagging}.
+		} 
+		Source: \url{https://www.analyticsvidhya.com/blog/2020/02/what-is-bootstrap-sampling-in-statistics-and-machine-learning/}\label{fig:bagging}
+	\end{center}
+\end{figure}
+
+\subsection{Boosting}
+Il Boosting \textit{\cite{freund1996experiments}} è una tecnica \emph{ensemble learning} di tipo sequenziale che sfrutta la dipendenza tra i classificatori usati. Sostanzialmente l'algoritmo inizialmente allena un classificatore debole con tutto il \emph{dataset} a disposizione. Successivamente per raffinare la predizione vengono allenati in sequenza nuovi classificatori che apprendono da tutto ciò che è stato appreso dal classificatore precedente e dal l'intero \emph{dataset}.\\
+La procedura completa è la seguente:
+\begin{itemize}
+	\item Viene utilizzato l'intero \emph{dataset} per allenare un classificatore debole.
+	\item Vengono ripesati gli esempi di \emph{training} dando un peso maggiore a quei esempi a cui che è stata sbagliata la classificazione, viceversa per gli esempi classificati correttamente.
+	\item Ripetere per n volte i passi precedenti con un nuovo classificatore con i pesi aggiornati.
+	\item Combinare tutte le ipotesi semplici in un unico classificatore accurato per ottenerne il risultato finale.
+\end{itemize}
+Perciò con l'aggiornamento dei pesi si presuppone che i classificatori successivi non andranno a commettere gli stessi errori dei classificatori precedenti.\\
+L'obbiettivo del\emph{Boosting} è concentrare i propri sforzi nel creare un classificatore adatto a gestire un'elevata distorsione anziché un'elevata varianza dei dati. Infatti, partendo da un classificatore debole e migliorandolo in modo sequenziale, si consente ai classificatori successivi di imparare dagli errori precedentemente commessi, riducendo la distorsione dei dati. Inoltre, il \emph{Boosting} è la resistenza agli effetti dell'\emph{overfitting}.
+Purtroppo, il \emph{Boosting} risulta molto sensibile ai valori anomali e inoltre, dato che le operazioni di addestramento di ogni classificatore avvengo in modo sequenziale non sarà possibile utilizzare il parallelismo per risparmiare tempo di calcolo.\\
+Nella Figura \ref{fig:boosting} viene illustrato graficamente la procedura di \emph{Boosting}
+
+\begin{figure}[]
+	\begin{center}
+		\includegraphics[scale=0.60]{boosting.png}
+		\caption{Esempio grafico della procedura di \emph{Boosting}.
+		} 
+		Source: \url{https://www.section.io/engineering-education/boosting-algorithms-python/}\label{fig:boosting}
+	\end{center}
+\end{figure}

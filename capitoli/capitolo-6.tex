@@ -6,7 +6,7 @@
 \chapter{Metodi di Machine Learning}
 \label{cap:ML}
 %**************************************************************
-\intro{Questo capitolo illustrerà i metodi di \emph{Machine Learning} che sono stati utilizzati per la predizione degli esiti delle partite di calcio della Seria A italiana della stagione 2021/2022. Purtroppo, non è stato possibile applicare metodi di \emph{Machine learning} che corrispondessero al modello \emph{Bradley-Terry} perché, nonostante esistano metodi in \emph{Machine learning} che forniscono modelli basati sul modello \emph{Bradley-Terry}, essi non sono in grado di gestire l'esito del pareggio ma solo un esito binario. Ne consegue che tali metodi non sono adatti per contesti come il calcio ma ad altri tipi di sport dove il pareggio non è previsto come il \emph{baseball}. I metodi di \emph{Machine learning} considerati sono: il K-Nearest-Neighbors (KNN), la Support Vector Machine (SVM), gli alberi di decisione per la classificazione, la Random Forests e in fine l'Adaboost.
+\intro{Questo capitolo illustrerà i metodi di \emph{Machine Learning} che sono stati utilizzati per la predizione degli esiti delle partite di calcio della Seria A italiana della stagione 2021/2022. Purtroppo, non è stato possibile applicare metodi di \emph{Machine learning} che corrispondessero al modello \emph{Bradley-Terry} perché, nonostante esistano metodi in \emph{Machine learning} che forniscono modelli basati sul modello \emph{Bradley-Terry}, essi non sono in grado di gestire l'esito del pareggio ma solo un esito binario. Ne consegue che tali metodi non sono adatti per contesti come il calcio ma ad altri tipi di sport dove il pareggio non è previsto come il \emph{baseball}. I metodi di \emph{Machine learning} considerati sono: il K-Nearest-Neighbors (K-NN), la Support Vector Machine (SVM), gli alberi di decisione per la classificazione, la Random Forests e in fine l'Adaboost.
 }
 \section{Componenti essenziali}
 In questa sezione vengono definite alcune misure e tecniche che sono necessarie per il funzionamento dei metodi di \emph{Machine Learning} applicati.
@@ -17,7 +17,7 @@ La \textit{\cite{minkdist}} è una misura utilizzata per la valutazione della di
 \end{center}
 
 Si sottolinea che quando l'ordine d = 1, la distanza utilizzata è la \textit{\cite{manhattan}} ovvero la distanza tra due punti è la somma del valore assoluto delle differenze delle loro coordinate. Quando l'ordine d = 2 è applicata la \textit{\cite{euclidea}} dove la distanza tra due punti è la lunghezza del segmento con agli estremi i due punti d'interesse.
-Tale misura sarà utilizzata nel metodo K-Nearest-Neighbors (KNN).
+Tale misura sarà utilizzata nel metodo K-Nearest-Neighbors (K-NN).
 \subsection{Funzione kernel}
 Nel contesto dell'apprendimento automatico, la \textit{\cite{kernel}} permette di trasformare uno spazio di input non linearmente separabile in uno nuovo spazio delle istanze di input detto \emph{feature space} di dimensione superiore rispetto a quello originale tale da diventare linearmente separabile. Per spazio linearmente separabile si intende che esiste un iperpiano in grado di separare correttamente i dati in due gruppi distinti. Perciò aumentando la dimensionalità dello spazio d'interesse è possibile trovare la dimensione opportuna che permetta di separare linearmente i dati. Tale applicazione è chiamata kernel trick. Perciò, una funzione kernel è una funzione \emph{K} che per ogni \emph{x}, \emph{y} $\in \chi$ dove $\chi$ è lo spazio di input di dimensione \emph{n}, vale 
 \begin{center}
@@ -30,45 +30,57 @@ Nelle nostre predizioni saranno usati questi kernel:
 	\item Polynomial kernel: $K(x,y) =  \left(1 + \sum_{i = 1}^{p}x_iy_i\right)^{d} $ dove \emph{p} è il numero di istanze di input presenti in $\chi$ mentre \emph{d} la dimensione del spazio (l'ordine).
 	\item Gaussian Radial Basis kernel (RBF): $K(x,y) = exp(-\gamma||x-y||^2) $ con $\gamma=\frac{1}{2\sigma^2}$ mentre $\sigma$ è un paramento libero. 
 \end{itemize}
+
+Nella Figura \ref{fig:kernel} è mostrato un esempio di applicazione della funzione kernel.\\
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.50]{kernel.png}
+		\caption{Esempio grafico della funzione kernel $\gamma$ mappa i punti di uno spazio d'input in uno feature space di dimensione maggiore e linearmente separabile.
+		} 
+		Source: \url{https://towardsdatascience.com/the-kernel-trick-c98cdbcaeb3f}\label{fig:kernel}
+	\end{center}
+\end{figure}
+
 La funzione kernel sarà utilizza nella Support Vector Machine (SVM).
 
 \subsection{Bootstrap}
 In statistica e nell'apprendimento automatico, per \textit{\cite{bootstrap}} si intende una tecnica di ricampionamento per la generazione di un insieme di campioni di \emph{m} osservazioni contenute da un dataset di dimensione \emph{n}. Ogni estrazione è casuale e con rimpiazzo, cioè un’osservazione può essere presente in più campioni. Tale tecnica è utilizzata per produrre un insieme di campioni che siano il più possibile rappresentativi e indipendenti tra di loro.\\
 
-Nella Figura \ref{fig:bootstrap} viene mostrato un esempio della procedura di \emph{Bootstrap}
+Nella Figura \ref{fig:bootstrap} viene mostrato un esempio della procedura di Bootstrap
 
-\begin{figure}[]
+\begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.60]{bootstrap1.png}
-		\caption{Esempio grafico della procedura di \emph{Bootstrap}.
+		\caption{Esempio grafico della procedura di Bootstrap.
 		} 
 		Source: \url{https://blog.paperspace.com/bagging-ensemble-methods/}\label{fig:bootstrap}
 	\end{center}
 \end{figure}
 
 \subsection{Bagging}
-Il Bagging \textit{\cite{breiman1996bagging}} detto anche \emph{Bootstrap Aggregation Approch}, è una tecnica \emph{ensemble learning} di tipo parallelo che dalla mediazione di più predizioni fatte da un insieme di classificatori deboli ottiene un'unica predizione finale. È di tipo parallelo perché va a sfruttare l'indipendenza dei classificatori. La procedura applicata è la seguente:
+Il Bagging \autocite{breiman1996bagging} detto anche \emph{Bootstrap Aggregation Approch}, è una tecnica \emph{ensemble learning} di tipo parallelo che dalla mediazione di più predizioni fatte da un insieme di classificatori deboli ottiene un'unica predizione finale. È di tipo parallelo perché va a sfruttare l'indipendenza dei classificatori. La procedura applicata è la seguente:
 \begin{itemize}
-	\item Creazione di k campioni utilizzando la tecnica di \emph{Bootstrap}.
+	\item Creazione di k campioni utilizzando la tecnica di Bootstrap.
 	\item Per ogni campione viene allenato un classificatore.
 	\item Viene prodotta una predizione per ogni classificatore allenato.
 	\item Le predizioni ottenute vengono mediate ottenendo un predizione finale.
 \end{itemize} 
-Una tecnica per mediare è ad esempio, il \emph{voting} dove la classe più predetta sarà il risultato dalla predizione finale.Inoltre, si utilizza il \emph{Bootstrap} per rendere i classificatori indipendenti tra di loro.
-Perciò l'obbiettivo del \emph{Bagging} è quello di creare un classificatore modello di gestire un'elevata varianza dei dati in modo efficiente grazie al parallelismo.\\
-Nella Figura \ref{fig:bagging} viene illustrato graficamente la procedura di \emph{Bagging}
+Una tecnica per mediare è ad esempio, il \emph{voting} dove la classe più predetta sarà il risultato dalla predizione finale.Inoltre, si utilizza il Bootstrap per rendere i classificatori indipendenti tra di loro.
+Perciò l'obbiettivo del Bagging è quello di creare un classificatore modello di gestire un'elevata varianza dei dati in modo efficiente grazie al parallelismo.\\
+Nella Figura \ref{fig:bagging} viene illustrato graficamente la procedura di Bagging
 
-\begin{figure}[]
+\begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.50]{Ensemble_Bagging.png}
-		\caption{Esempio grafico della procedura di \emph{Bagging}.
+		\caption{Esempio grafico della procedura di Bagging.
 		} 
 		Source: \url{https://www.analyticsvidhya.com/blog/2020/02/what-is-bootstrap-sampling-in-statistics-and-machine-learning/}\label{fig:bagging}
 	\end{center}
 \end{figure}
 
 \subsection{Boosting}
-Il Boosting \textit{\cite{freund1996experiments}} è una tecnica \emph{ensemble learning} di tipo sequenziale che sfrutta la dipendenza tra i classificatori usati. Sostanzialmente l'algoritmo inizialmente allena un classificatore debole con tutto il \emph{dataset} a disposizione. Successivamente per raffinare la predizione vengono allenati in sequenza nuovi classificatori che apprendono da tutto ciò che è stato appreso dal classificatore precedente e dal l'intero \emph{dataset}.\\
+Il Boosting \autocite{freund1996experiments} è una tecnica \emph{ensemble learning} di tipo sequenziale che sfrutta la dipendenza tra i classificatori usati. Sostanzialmente l'algoritmo inizialmente allena un classificatore debole con tutto il \emph{dataset} a disposizione. Successivamente per raffinare la predizione vengono allenati in sequenza nuovi classificatori che apprendono da tutto ciò che è stato appreso dal classificatore precedente e dal l'intero \emph{dataset}.\\
 La procedura completa è la seguente:
 \begin{itemize}
 	\item Viene utilizzato l'intero \emph{dataset} per allenare un classificatore debole.
@@ -77,15 +89,82 @@ La procedura completa è la seguente:
 	\item Combinare tutte le ipotesi semplici in un unico classificatore accurato per ottenerne il risultato finale.
 \end{itemize}
 Perciò con l'aggiornamento dei pesi si presuppone che i classificatori successivi non andranno a commettere gli stessi errori dei classificatori precedenti.\\
-L'obbiettivo del\emph{Boosting} è concentrare i propri sforzi nel creare un classificatore adatto a gestire un'elevata distorsione anziché un'elevata varianza dei dati. Infatti, partendo da un classificatore debole e migliorandolo in modo sequenziale, si consente ai classificatori successivi di imparare dagli errori precedentemente commessi, riducendo la distorsione dei dati. Inoltre, il \emph{Boosting} è la resistenza agli effetti dell'\emph{overfitting}.
-Purtroppo, il \emph{Boosting} risulta molto sensibile ai valori anomali e inoltre, dato che le operazioni di addestramento di ogni classificatore avvengo in modo sequenziale non sarà possibile utilizzare il parallelismo per risparmiare tempo di calcolo.\\
-Nella Figura \ref{fig:boosting} viene illustrato graficamente la procedura di \emph{Boosting}
+L'obbiettivo del Boosting è concentrare i propri sforzi nel creare un classificatore adatto a gestire un'elevata distorsione anziché un'elevata varianza dei dati. Infatti, partendo da un classificatore debole e migliorandolo in modo sequenziale, si consente ai classificatori successivi di imparare dagli errori precedentemente commessi, riducendo la distorsione dei dati. Inoltre, il Boosting è la resistenza agli effetti dell'\emph{overfitting}.
+Purtroppo, il Boosting risulta molto sensibile ai valori anomali e inoltre, dato che le operazioni di addestramento di ogni classificatore avvengo in modo sequenziale non sarà possibile utilizzare il parallelismo per risparmiare tempo di calcolo.\\
+Nella Figura \ref{fig:boosting} viene illustrato graficamente la procedura di Boosting
 
-\begin{figure}[]
+\begin{figure}[h]
 	\begin{center}
-		\includegraphics[scale=0.60]{boosting.png}
-		\caption{Esempio grafico della procedura di \emph{Boosting}.
+		\includegraphics[scale=0.55]{boosting.png}
+		\caption{Esempio grafico della procedura di Boosting.
 		} 
 		Source: \url{https://www.section.io/engineering-education/boosting-algorithms-python/}\label{fig:boosting}
 	\end{center}
 \end{figure}
+
+\section{K-Nearest-Neighbors}
+Il \emph{K-Nearest-Neighbors} (K-NN) \autocite{dasarathy1991nearest} è un algoritmo di apprendimento automatico di tipo supervisionato che permette la classificazione delle istanza ricevute in input. Inoltre, ne esiste una sua versione per problemi di regressione. Il K-NN assume che tutte le istanze corrispondano a punti in uno spazio di dimensionalità \emph{n} e utilizza la prossimità tra i vari punti per classificarli, ossia classifica l'istanza da classificare con la classe maggiormente presente tra i punti attorno all'istanza da classificare. I punti attorno all'istanza da classificare sono detti vicini. Fondamentale, perciò, è l'utilizzo di una qualche tecnica di misurazione della distanza per individuare chi sono i vicini dell'istanza da classificare, ossia di calcolare la distanza tra il nostro punto d'interesse con tutti gli altri punti. La misura di distanza utilizza è la distanza di Minkowski definita nella sezione precedente. Misurati tutti i punti, occorre stabile poi quanti dei punti presenti devono essere considerati vicini, ovvero il cosiddetto parametro \emph{k}. Il valore di \emph{k} è un iperparametro dell'algoritmo che stabilisce di considerare solo i \emph{k} punti più vicini all'istanza da classificare. Per esempio, se \emph{k = 3}, si considerano i tre punti più vicini e si classifica l'istanza con la classe più frequente tra i tre punti considerati. È importante scegliere il corretto valore di \emph{k} poiché valori diversi possono portare a \emph{overfitting} nel caso si considerino troppi vicini, o \emph{underfitting} nel caso si considerino pochi vicini. Infatti, con valori più bassi di \emph{k} può verificarsi un'elevata varianza e una distorsione bassa, mentre con valori più grandi di \emph{k} può verificarsi un'elevata distorsione e una varianza bassa. È importante analizzare la composizione del \emph{dataset} per scegliere il corretto valore di \emph{k} questo perché, ad esempio, se ci sono tante istanze con valori anomali o rumore è probabile che funzioneranno meglio con valori più alti di \emph{k}. Una buona soluzione per la scelta dell'iperparametro \emph{k} ma anche del tipo di ordine \emph{p} della distanza da utilizzare è la \emph{Cross Validation}.\\
+Nella Figura \ref{fig:knn} è mostrato un esempio di applicazione dell'algoritmo K-NN.\\
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.40]{knn.png}
+		\caption{Esempio grafico dell'algoritmo \emph{K-Nearest-Neighbors}.
+			L'istanza da classificare è indicata con il punto interrogativo (?).
+			Il primo passo dell'algoritmo è quello di calcolare tutte le distanze. Dopo di che, considera solo i \emph{k = 3} punti più vicini all'istanza (?). Infine l'algoritmo classifica con la classe B l'istanza (?).
+		} 
+		Source: \url{https://www.ibm.com/topics/knn#:~:text=The%20k%2Dnearest%20neighbors%20algorithm%2C%20also%20known%20as%20KNN%20or,of%20an%20individual%20data%20point.}\label{fig:knn}
+	\end{center}
+\end{figure}
+
+Il K-NN è un algoritmo di classificazione non parametrico, ovvero non fa alcuna assunzione sulla forma della distribuzione dei dati. Inoltre, dato che è un algoritmo di apprendimento supervisionato le istanze d'input sono nella forma $(x, f(x))$. Nella fase di 
+addestramento si limita soltanto a memorizzare i dati di \emph{training}, dato che li utilizza direttamente per fare predizione. Purtroppo, però la fase di predizione può essere lenta poiché è necessario calcolare la distanza di ogni osservazione dall'istanza da classificare, il che può essere computazionalmente costoso se si hanno molti dati.
+
+\section{Support Vector Machine}
+La \emph{Support Vector Machine} (SVM) \autocite{GHOLAMI2017515} è un algoritmo di apprendimento automatico di tipo supervisionato applicabile in contesti di classificazione. La SVM considera le istanze del \emph{dataset} come punti in uno spazio di dimensionalità \emph{n} è il suo obbiettivo è quello di costruire l'iperpiano ottimo che separi in due classi le osservazioni. L'iperpiano ottimo viene scelto in modo tale da ottenere il maggior margine possibile tra le due classi, ovvero il maggior spazio possibile tra le osservazioni di ciascuna classe e l'iperpiano. Dal nome di quest'algoritmo deriva dall'utilizzo dei vettori detti vettori di supporto. Questi vettori sono le istanze che si trovano più vicino all'iperpiano ovvero quelli più difficili da classificare e quindi danno un grosso contributo alla costruzione dell'iperpiano rispetto alle altre osservazioni. Perciò per massimizzare la distanza tra l'iperpiano e i punti di entrambe le classi, occorre risolvere un problema di ottimizzazione vincolata, ovvero minimizzare la funzione di perdita secondo certe condizioni. Perciò, vale 
+\begin{align*}
+	\text{min} & \frac{1}{2} \|\mathbf{w}\|^2 + C \, \sum_{i=1}^{n} (\xi_i) \\
+	\text{tale che} & 
+	\begin{cases}
+		y_i(\mathbf{w \cdot x}_i - b) \geq  1 - \xi_i \\
+		\xi_i \geq 0, i=\{1,...,n\}
+	\end{cases} \, .
+\end{align*}
+Dove $\|\mathbf{w}\|$ è il vettore direzione, l'iperparametro \emph{C} è un parametro di regolarizzazione, il quale permette di gestire il \emph{trade-off} tra massimizzazione del margine e perdita, consentendo di controllare la complessità del modello e quindi a prevenire l'\emph{overfitting}. La variabile $\xi_i$ è l'errore commesso. La formula $\mathbf{w \cdot x}_i - b$ è la distanza algebrica tra l'iperpiano scelto e il punto più vicino.\\
+Nella Figura \ref{fig:svm} è mostrato un esempio di applicazione dell'algoritmo SVM.\\
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.80]{svm.jpg}
+		\caption{Esempio grafico dell'algoritmo \emph{Support Vector Machine}. I punti sulle linee trattegiate indicano i vettori di supporto, mentre la retta al centro indica l'iperpiano ottimo di separazione.
+		} 
+		Source: \url{https://www.sciencedirect.com/science/article/pii/B9780128113189000272}\label{fig:svm}
+	\end{center}
+\end{figure}
+L'algoritmo SVM è grado di gestire anche spazi d'input non linearmente separabili, grazie all'utilizzo della funzione kernel definita nella sezione precedente.\\
+Tramite la \emph{Cross Validation} si sceglierà il valore più opportuno per l'iperparametro \emph{C} e il tipo di kernel da applicare.
+
+\section{Decision Tree}
+Un Decision Tree \autocite{} è un algoritmo di apprendimento automatico di tipo supervisionato e non parametrico che utilizza una struttura ad albero per produrre le proprie predizioni. Tale albero contiene un insieme di nodi in cui per ogni nodo vi è un test su un'attributo dell'osservazione da classificare; perciò, ad ogni nodo ci sarà una scelta da compiere in base al valore contenuto dell'attributo, che porterà verso un nuovo ramo oppure a una foglia. Le foglie contengono i risultati della classificazione. L'approccio utilizzato per la costruzione dell'albero di decisione è di tipo \emph{greedy} cioè, ogni scelta effettuata su un nodo è l'opzione più conveniente in quel momento. L'albero viene costruito in modalità \emph{top-down} e i passi sono i seguenti
+\begin{itemize}
+	\item viene creata la radice \emph{T} dell'albero,
+	\item se le osservazioni dell'insieme \emph{D} sono tutte della stessa classe \emph{k}, allora viene ritornata la radice \emph{T} classificata con la classe \emph{k},
+	\item se le osservazioni non hanno attributi che li descrivono, allora viene ritornata la radice \emph{T} classificata con la classe di maggior presenza tra le osservazioni,
+	\item viene scelto un'attributo \emph{a}, in base a una specifica regola, 
+	\item viene partizionato \emph{D} a seconda dei \emph{m} valori che può assumere l'attributo \emph{a} 
+	\item vengono creati ricorsivamente i sotto-alberi dall'albero con radice \emph{T} senza l'attributo \emph{a} ripetendo i passi appena descritti.
+\end{itemize} 
+Un iperparametro di quest'algoritmo è la regola per la decisione di quale attributo testare in un nodo. Ne esistono alcune ma in questa applicazione useremo le seguenti due regole.
+\begin{itemize}
+	\item Cross Entropy: \begin{align*}
+		I_E =	- \sum_{k=1}^{m} p_k log(p_k).
+		\end{align*} 
+	\item Gini Index: \begin{align*}
+			I_G = 1 - \sum_{k=1}^{m} p_{k}^2.
+		\end{align*} 
+\end{itemize}
+
+\begin{align*}
+	G(D,a) = I_x - \sum_{v\in V(a)} \frac{|D_a = v|}{D}I_x(D_a=v)
+\end{align*} 
+
+
+

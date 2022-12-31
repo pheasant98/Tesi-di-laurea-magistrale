@@ -19,10 +19,10 @@ La capacità predittiva di un modello sarà valutata con le metriche illustrate 
 \end{itemize}
 
 \section{K-Nearest-Neighbors}
-L'algoritmo K-Nearest-Neighbors è risultato essere semplice da applicare ottenendo complessivamente discreti risultati in fase di predizione. Per la scelta dei valori migliori per gli iperparametri si è applicato la K-Fold Cross Validation con \emph{k = 10}.\\
+L'algoritmo K-Nearest-Neighbors è risultato essere semplice da applicare ottenendo complessivamente discreti risultati in fase di predizione. Per scegliere i valori migliori per gli iperparametri si è applicato la K-Fold Cross Validation con \emph{k = 10}.\\
 Gli iperparametri valutati sono stati i seguenti:
 \begin{itemize}
-	\item \textsf{n\_neighbors}. Il numero di vicini e si sono verificati i valori da tre fino a 163 vicini.
+	\item \textsf{n\_neighbors}. Indica il numero di vicini. Si sono verificati i valori da tre fino a 163 vicini, con un aumento unitario di 1.
 	\item \textsf{p} indica il parametro potenza della distanza di Minkowski. Si sono verificati i valori \emph{p=1} (Manhattan distance) e \emph{p=2} (Euclidean distance).
 \end{itemize}
 
@@ -37,7 +37,7 @@ Nella Figura \ref{fig:knnCV} viene mostrato l'andamento della Cross Validation p
 \end{figure}
 
 Quello che si può notare dalla figura è che inizialmente con pochi vicini la distanza euclidea risulta essere migliore nella fase di training nel \emph{validation} \emph{set} ma con l'aumentare del numero dei vicini la distanza di Manhattan ottiene risultati migliori. Secondo la Cross Validation i parametri migliori sono stati 30 come numero di vicini e la distanza euclidea come metrica della distanza da utilizzare. L'accuratezza ottenuta nel \emph{validation} \emph{set} è stata di 0.582.
-Nella fase di predizione si sono ottenuti le predizioni mostrate nella Figura \ref{fig:knnpre} con le relative metriche presentate nella Figura \ref{fig:knnmetrics}
+Nella fase di predizione si sono ottenute le predizioni mostrate nella Figura \ref{fig:knnpre} con le relative metriche presentate nella Figura \ref{fig:knnmetrics}
 
 \begin{figure}[h]
 	\begin{center}
@@ -48,7 +48,7 @@ Nella fase di predizione si sono ottenuti le predizioni mostrate nella Figura \r
 	\end{center}
 \end{figure}
 
-Quello che possiamo notare è che i risultati sono discreti. Infatti, l'accuratezza è di 0.58, ciononostante, il modello ha molta difficoltà a riconoscere quando un’osservazione ha come esito il pareggio; infatti, sia la precisione sia la sensibilità sono molto bassi. Ovviamente dato che il modello molto spesso sbaglia a identificare un pareggio la specificità è molto alta. Discreti i risultati ottenuti per gli altri due esiti in termini di precision. Si nota comunque che riesce ad individuare quasi tutte le osservazioni che hanno l'esito vittoria della squadra in casa o vittoria della squadra ospite.
+Quello che possiamo notare è che i risultati sono discreti. Infatti, l'accuratezza è di 0.58. Il modello ha molta difficoltà a riconoscere quando un’osservazione ha come esito il pareggio. Infatti, sia la precisione e sia la sensibilità sono molto bassi. Notiamo che molto spesso le osservazioni non vengono etichettate con il pareggio, perché il recall è pari 0.16, mentre quando le osservazioni vengono etichettate con il pareggio, molte spesso viene commesso un errore di classificazione, infatti, la precisione è pari a 0.33. Ovviamente, il modello commentando relativamente un numero di errori basso, perché per l'appunto poche volte il modello etichetta con la classe pareggio ha una specificità molto alta ovvero, pari a 0.89. Discreti i risultati ottenuti per gli altri due esiti in termini di precisione. Si nota comunque che riesce ad individuare quasi tutte le osservazioni che hanno l'esito vittoria della squadra in casa o vittoria della squadra ospite, anche se ha una discreta precisione dato che molte istanze di classe pareggio vengono etichettate o con la classe vittoria della squadra in casa o con la classe vittoria della squadra ospite, abbassando così i valori della precisione delle due classi.
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.60]{metricknn.png}
@@ -59,3 +59,47 @@ Quello che possiamo notare è che i risultati sono discreti. Infatti, l'accurate
 \end{figure}
 
 Risulta perciò non particolarmente adatto l'algoritmo K-Nearest-Neighbors per quest'analisi a causa della grande diversità tra partita e partita. Ciononostante, si ottengono discreti risultati tenendo conto del fatto delle poche osservazioni messe disposizione, ovvero 380 partite.
+
+\section{Support Vector Machine}
+L'algoritmo Support Vector Machine ha ottenuto dei buoni risultati durante la fase di predizione. Analogamente K-Nearest-Neighbors si è applicato la K-Fold Cross Validation con \emph{k = 10} per individuare i valori migliori per gli iperparametri.
+Gli iperparametri valutati sono stati i seguenti:
+\begin{itemize}
+	\item \textsf{C}. Indica la forza applicata della penalità L2. Si sono verificati valori che vanno da 0.1 a 1.5 con un aumento unitario di 0.1.
+	\item \textsf{kernel}. Indica quale funzione di kernel utilizzare. Si sono verificati i valori kernel = linear ovvero il linear kernel, kernel = rbf ovvero Gaussian Radial Basis kernel (RBF) e kernel = poly ovvero il polynomial kernel.
+\end{itemize}
+
+Nella Figura \ref{fig:svcCV} viene mostrato l'andamento della Cross Validation per ogni valore dei iperparametri.
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.35]{svcCV.png}
+		\caption{Grafico dell'andamento della media dell'accuratezza per ogni valore dell'iperparametro C e per ogni funzione kernel utilizzata durante l'applicazione della Cross Validation con 10 fold per il modello Support Vector Machine. Ogni punto è un classificatore con un certo valore di vicini. La linea blu indica l'andamento con la funzione linear kernel mentre la linea verde l'andamento con la funzione RBF e	la linea arancione l'andamento con la funzione polynomial kernel.
+		} 
+		\label{fig:svcCV}
+	\end{center}
+\end{figure}
+
+Dal grafico si nota che dal punto di vista dell'accuratezza registrata nel \emph{validation} \emph{set}, il kernel tipo lineare ottiene le prestazioni migliori. Infatti, vediamo che la linea blu costantemente al di sopra rispetto alle due restanti kernel a parità del valore in C. Invece, il polynomial kernel non ha buone prestazioni; infatti, si registra che la linea arancione è costantemente al di sotto delle altre due linee perché ha valori molto più bassi di accuratezza.
+Secondo la Cross Validation i parametri migliori sono stati 1.4 per il parametro C e il Linear kernel come funzione kernel da utilizzare.
+L'accuratezza ottenuta nel \emph{validation} \emph{set} è stata di 0.803. Nella fase di predizione si sono ottenute le predizioni mostrate nella Figura \ref{fig:tabsvc} con le relative metriche presentate nella Figura \ref{fig:svcmetrics}.
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.60]{tabsvc.png}
+		\caption{Tabella di confusione del modello Support Vector Machine con C = 1.4 e kernel = linear. La classe 0.0 indica la vittoria della squadra in casa, la classe 1.0 indica il pareggio tra le due squadre, la classe 2.0 indica la vittoria della squadra ospite.
+		} 
+		\label{fig:tabsvc}
+	\end{center}
+\end{figure}
+
+
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale=0.60]{metricsvc.png}
+		\caption{Grafico delle misurazione durante la fase di predizione del modello Support Vector Machine con C = 1.4 e kernel = linear.
+		} 
+		\label{fig:svcmetrics}
+	\end{center}
+\end{figure}
+Nonostante le poche osservazioni disponibili e l'elevato numero di \emph{features} utilizzate, i risultati ottenuti sono buoni. Infatti, l'accuratezza è di 0.78. Il modello riesce a riconoscere buona parte delle osservazioni di classe pareggio. Infatti, è stata registrata una sensibilità pari a 0.68 per la classe pareggio. Per quanto riguarda la precisione però, il valore scende fino a 0.59, segno che alcune volte c'è stata qualche istanza etichettata con l'esito del pareggio erroneamente. Ciononostante, quest'errore non è molto grande dato che la specificità è pari a 0.84. Risultati migliori si ottengono invece per gli altri due esiti. Si segnala una ottima precisione per la classe della vittoria della squadra in casa, dato che tutte le classificazioni fatte con questa classe si sono rivelate quasi tutte corrette, e di conseguenza anche la specificità ha un valore molto alto. Ciononostante, alcune osservazioni della classe vittoria della squadra di casa non sono state identificate correttamente dato la sensibilità ha un valore pari a 0.77. Risultati leggermente peggiori per la classe vittoria della squadra ospite in termini di precisione e specificità ma migliori in termini di sensibilità.\\
+Risulta perciò adatto l'algoritmo Support Vector Machine per quest'analisi nonostante la grande diversità da partita a partita e le poche osservazioni messe disposizione, ovvero 380 partite.
+
+\section{Decision Tree}

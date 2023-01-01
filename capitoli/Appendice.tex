@@ -237,9 +237,9 @@ extractAll <- function(covs, row, teams, n = 20, m = 38){
 
 \section{colLabel}
 \label{sez:Z1.3}
-Codice della funzione per creare le etichette delle colonne.
+Codice della funzione per la creazione delle etichette delle colonne.
 
-\begin{lstlisting}[language=R, caption={Codice  per creare le etichette delle colonne.}, captionpos=b, label=code:a7]
+\begin{lstlisting}[language=R, caption={Codice per la creazione delle etichette delle colonne.}, captionpos=b, label=code:a7]
 colLabel <- function(teams, cov){
 	nameCov <- c()
 	z <- 1
@@ -256,9 +256,9 @@ colLabel <- function(teams, cov){
 
 \section{rowLabel}
 \label{sez:Z1.4}
-Codice della funzione  per creare le etichette delle righe.
+Codice della funzione per la creazione delle etichette delle righe.
 
-\begin{lstlisting}[language=R, caption={Codice per creare le etichette delle righe.}, captionpos=b, label=code:a8]
+\begin{lstlisting}[language=R, caption={Codice per la creazione delle etichette delle righe.}, captionpos=b, label=code:a8]
 rowLabel <- function(str, n){
 	nameRows <- c()
 	for(i in 1:n){
@@ -267,4 +267,77 @@ rowLabel <- function(str, n){
 	return(nameRows)
 }
 
+\end{lstlisting}
+
+\section{createTable}
+Codice per la creazione del dataset utilizzabile con i metodi di machine learning.
+\begin{lstlisting}[language=Python, caption={Codice per la creazione del dataset utilizabile con i metodi di machine learning.}, captionpos=b, label=code:a9]
+def createTable(df, dfM): 
+	for i in range(0, df.shape[0], 1):
+		if df.AtHome[i] == True: 
+			for j in range(0, df.shape[0], 1): 
+				if df.Team[j] == df.Vs[i] and df.Team[i] == df.Vs[j] and df.AtHome[j] == False:
+					dfM2 = pd.DataFrame({'Date': [df.Date[i]],
+										'Round': [df.Round[i]],
+										'AtHome': [df.AtHome[i]],
+										'Result': [df.Res[i]],
+										'G_Home': [df.GF[i]],
+										'G_Away': [df.GA[i]],
+										'Home_Team': [df.Team[i]],
+										'Away_Team': [df.Vs[i]],
+										'Home_Poss': [df.Poss[i]],
+										'Home_Sh': [df.Sh[i]],
+										'Home_SoT': [df.SoT[i]],
+										'Home_G/Sh': [df['G/Sh'][i]],
+										'Home_Saves': [df.Saves[i]],
+										'Home_PAtt': [df.PAtt[i]],
+										'Home_PCmp%': [df['PCmp%'][i]],
+										'Home_SPAtt': [df.SPAtt[i]],
+										'Home_SPCmp%': [df['SPCmp%'][i]],
+										'Home_MPAtt': [df.MPAtt[i]],
+										'Home_MPCmp%': [df['MPCmp%'][i]],
+										'Home_LPAtt': [df.LPAtt[i]],
+										'Home_LPCmp%': [df['LPCmp%'][i]],
+										'Home_ToDefPen': [df.ToDefPen[i]],
+										'Home_ToDef3rd': [df.ToDef3rd[i]],
+										'Home_ToMid3rd': [df.ToMid3rd[i]],
+										'Home_ToAtt3rd': [df.ToAtt3rd[i]],
+										'Home_ToAttPen': [df.ToAttPen[i]],
+										'Home_TotDist': [df.TotDist[i]],
+										'Home_Fls': [df.Fls[j]],
+										'Home_Fld': [df.Fld[i]],
+										'Home_Off': [df.Off[i]],
+										'Home_Crs': [df.Crs[j]],
+										'Home_Int': [df.Int[j]],
+										'Home_TklWin': [df.TklWin[i]],
+										'Home_Recov': [df.Recov[i]],
+										'Away_Poss': [df.Poss[j]],
+										'Away_Sh': [df.Sh[j]],
+										'Away_SoT': [df.SoT[j]],
+										'Away_G/Sh': [df['G/Sh'][j]],
+										'Away_Saves': [df.Saves[j]],
+										'Away_PAtt': [df.PAtt[j]],
+										'Away_PCmp%': [df['PCmp%'][j]],
+										'Away_SPAtt': [df.SPAtt[j]],
+										'Away_SPCmp%': [df['SPCmp%'][j]],
+										'Away_MPAtt': [df.MPAtt[j]],
+										'Away_MPCmp%': [df['MPCmp%'][j]],
+										'Away_LPAtt': [df.LPAtt[j]],
+										'Away_LPCmp%': [df['LPCmp%'][j]],
+										'Away_ToDefPen': [df.ToDefPen[j]],
+										'Away_ToDef3rd': [df.ToDef3rd[j]],
+										'Away_ToMid3rd': [df.ToMid3rd[j]],
+										'Away_ToAtt3rd': [df.ToAtt3rd[j]],
+										'Away_ToAttPen': [df.ToAttPen[j]],
+										'Away_TotDist': [df.TotDist[j]],
+										'Away_Fls': [df.Fls[j]],
+										'Away_Fld': [df.Fld[j]],
+										'Away_Off': [df.Off[j]],
+										'Away_Crs': [df.Crs[j]],
+										'Away_Int': [df.Int[j]],
+										'Away_TklWin': [df.TklWin[j]],
+										'Away_Recov': [df.Recov[j]]})
+					dfM = dfM.append(dfM2, ignore_index=True) 
+	return dfM
+	
 \end{lstlisting}

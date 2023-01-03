@@ -6,20 +6,29 @@
 \chapter{Introduzione}
 \label{cap:introduzione}
 %**************************************************************
-MEMO: Spiegazione del problema affrontato (il suo dominio) alcune applicazioni fatte nell'ambito delle comparazioni sportive, con maggior attenzione a qui studi con approccio statistico, esporre tecnologie usate e tools (Packages R ecc), motivazione scelta argomento della tesi e esposizione struttura della tesi(capitoli) TO DO
-
-%\begin{itemize}
-
-%\end{itemize}
+%MEMO: Spiegazione del problema affrontato (il suo dominio) alcune applicazioni fatte nell'ambito delle comparazioni sportive, con maggior attenzione a qui studi con approccio statistico, esporre tecnologie usate e tools (Packages R ecc), motivazione scelta argomento della tesi e esposizione struttura della tesi(capitoli) TO DO
+\intro{Il seguente capitolo descrive il problema scientifico affrontato in questa tesi riportando le maggiori applicazioni di ricerca svolte nell'ambito del problema affrontato. Inoltre, il capitolo illustra quali tecnologie sono state utilizzate, le motivazioni personali per cui è stata redatta la seguente tesi e infine la struttura che compone la tesi. } 
 
 %**************************************************************
 \section{Dominio del problema}
 
+Negli ultimi anni lo sport del calcio è stato oggetto di un grande processo di rinnovamento tecnologico. Infatti, su spinta dell'evoluzione dei sistemi di comunicazioni, ora da una singola partita è possibile ottenere un grande quantità di dati, oltretutto, in modo semplice grazie all'evoluzione delle piattaforme di \emph{streaming} che permettono di usufruire di contenuti calcistici in ogni momento a livello globale. Questo rinnovamento tecnologico del calcio con la conseguente disponibilità di dati di partite e di giocatori non è dovuto solo all'evoluzione dei sistemi di comunicazione, ma anche all'introduzione di sensori e sistemi di tracciamento sofisticati all'interno del campo da calcio, come ad esempio la \emph{Goal-Line Technology} (vedi \textit{\cite{glt}}), oppure la Video Assistant Referee (VAR) (vedi \textit{\cite{var}}). Inoltre, recentemente durante la World Cup Qatar 2022 è stato introdotto il fuorigioco semi-automatico (vedi \textit{\cite{offside}}) composto da una grande quantità di sensori e telecamere per il tracciamento. \\
+Perciò, con un'incredibile quantità di dati e informazioni disponibili relative alle partite e ai giocatori, nuovi casi di studio sono nati. Solo per citare alcuni casi di studio nel calcio, vi è lo \textit{scouting} di giocatori emergenti, oppure la scelta del ruolo più adatto per il giocatore in base alle sue caratteristiche, oppure quanto un giocatore è soggetto ad infortuni. Ovviamente, non esistono analisi che comprendo solo lo studio di statistiche relative al singolo giocatore ma esistono ambiti di analisi che analizzano informazioni relative alle squadre e alle partite nel loro complesso. Proprio sull'analisi delle partite il lavoro di questa tesi si concentrerà, ossia l'interesse di questa tesi è quello di identificazione quali fattori possono influenzare l'esito della partita e comprendere in che misura essi lo fanno. Infatti, molto spesso ci si pone l'interrogativo se una statistica come il possesso della palla o il numero di falli fatti o il numero di tiri fatti ecc., sia rilevante per l'esito della partita, e se sì, con quale peso determina la vittoria o il pareggio o la sconfitta.\\
+Fondamentale è la scelta delle metodologie da utilizzare per le analisi. Infatti si è scelto un'approccio statistico, ossia l'utilizzo di un modello matematico di \emph{Data Mining} ovvero il modello Bradley-Terry \autocite{bradley1952rank} per l'interpretazione dei dati, l'individuare di possibili legami tra le statistiche registrate durante una partita e l'esito della partita e infine attività di predizione per valutare le prestazioni. Successivamente si impiegheranno modelli di \emph{Machine Learning} per implementare modelli matematici più complessi in grado di ottenere previsioni più accurate. 
 \section{Applicazione}
 
 \section{Tecnologie e Tools usati}
-
+Nella seguente sezione saranno illustrate le tecnologie e i strumenti utilizzati nel lavoro svolto nella tesi. 
 \subsection{Tecnologie}
+Le tecnologie utilizzate in questa tesi sono descritte di seguito.
+\begin{itemize}
+	\item \textbf{R} \autocite{R-language} è un linguaggio di programmazione per il calcolo statistico e l'analisi grafica. È stato sviluppato nel 1993 da Ross Ihaka e Robert Gentleman ed è diventato uno strumento molto popolare per l'analisi dei dati in molti campi, inclusa la scienza dei dati, l'economia, la genetica e la biologia computazionale. R offre un'ampia gamma di funzionalità per il trattamento dei dati, l'analisi statistica e la creazione di grafici e altre rappresentazioni visuali dei dati. Ad oggi è supportato dalla R Core Team e dalla R Foundation for Statistical Computing. È distribuito come software \emph{open source} e può essere facilmente esteso attraverso il \emph{download} di pacchetti di funzionalità aggiuntive sviluppati da una vasta comunità di utenti.\\
+	Le funzioni utilizzate sono indicate nella Appendice \ref{app:R}.
+	\item \textbf{Python} \autocite{van2003introduction} è un linguaggio di programmazione general-purpose, interpretato e ad alto livello. È stato sviluppato da Guido van Rossum negli anni '90 ed è mantenuto dalla Python Software Foundation. Il linguaggio Python è utilizzato in molti ambiti, come il web development, la scienza dei dati, il\emph{ machine learning} e l'automazione. È distribuito come software \emph{open source} e viene fornito con una grande quantità di librerie standard che espandono le sue funzionalità base.\\
+	Le funzioni utilizzate sono indicate nella Appendice \ref{app:Py}.
+\end{itemize}
+
+
 \begin{comment}
 library(ggmosaic)
 library(ggplot2)
@@ -27,6 +36,11 @@ library(gridExtra)
 \end{comment}
 
 \subsection{Tools}
+Gli strumenti utilizzati in questa tesi sono descritti di seguito.
+\begin{itemize}
+	\item \textbf{RStudio}(vedi \textit{\cite{rstudio}}) è un ambiente di sviluppo integrato (IDE) per il linguaggio di programmazione R. Fornisce un insieme di strumenti per facilitare la scrittura, il debugging e il \emph{testing} del codice R. RStudio include anche funzionalità per la visualizzazione e l'analisi dei dati, come il supporto per i grafici interattivi e la possibilità di eseguire il codice R direttamente nell'editor di testo. RStudio è distribuito come \emph{software} \emph{open source}. In questa tesi è stato utilizzato per implementare il modello Bradley-Terry in R.
+	\item \textbf{PyCharm}(vedi \textit{\cite{pycharm}}) è un ambiente di sviluppo integrato (IDE) per il linguaggio di programmazione Python. Offre una serie di strumenti per facilitare la scrittura, il debugging e il \emph{testing} del codice Python. PyCharm include anche funzionalità per l'integrazione con altri strumenti e servizi comuni nello sviluppo web, come il supporto per il versionamento del codice con Git e il supporto per i \emph{framework} di sviluppo web come Django. PyCharm  è sviluppato da JetBrains. In questa tesi è stato utilizzato per implementare i modelli di \emph{machine learning} in Python.
+\end{itemize}
 
 \section{Motivazioni personali}
 

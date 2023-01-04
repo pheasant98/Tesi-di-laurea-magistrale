@@ -7,7 +7,7 @@
 \label{cap:risultatiDM}
 %**************************************************************
 
-\intro{In questo capitolo vengono presentate le stime e i risultati ottenuti dai modelli Bradley-Terry (BTM) descritti nel Capitolo \ref{cap:BT}. Inoltre, sarà riportata l'applicazione del metodo \emph{LASSO} con relativi risultati. Infine si riporteranno le predizioni sugli esiti delle partite prodotte dai modelli per essere poi confrontate con le predizioni dei \emph{bookmakes}}\\
+\intro{In questo capitolo vengono presentate le stime e i risultati ottenuti dai modelli Bradley-Terry (BTM) descritti nel Capitolo \ref{cap:BT}. Inoltre, sarà riportata l'applicazione del metodo \emph{LASSO} con relativi risultati. Infine si riporteranno le predizioni sugli esiti delle partite prodotte dai modelli per essere poi confrontate con le predizioni dei \emph{bookmakers}}\\
 %Seguirà poi un’analisi conclusiva sulle variabili esplicative alla luce dei risultati ottenuti.
 \section {Premesse}
 I risultati che verranno esposti non tengono in considerazione le variabili esplicative del numero di gol fatti \texttt {GF} e dei gol subiti \texttt{GA}. Questo perché provocano la non convergenza del modello. Infatti, le librerie usate non sono in grado di interpretare correttamente i dati. Una possibile soluzione è allargare il numero di categoria \emph{K} inserendo per ogni possibile risultato finale una categoria. Ovviamente questa soluzione rende troppo complesso il modello, perciò si è deciso di lasciare K = 3. Inoltre, data l'elevata complessità che raggiunge il modello esteso Bradley-Terry, non sono state inserite le interazioni illustrate nel Capitolo \ref{cap:Analisi}.
@@ -731,7 +731,7 @@ Nella Figura \ref{fig:speci} vengono mostrate le misurazioni della specificità 
 			\label{fig:speci}}
 	\end{center}
 \end{figure}
-Ovviamente in questa misurazione i \emph{bookmakes} ottengono il miglior risultato per quanto riguarda l'identificazione di una partita che non termina in un pareggio. Si nota che tutti e quattro i modelli riescono a predire quando l'esito della partita non è la vittoria della squadra di casa, infatti la misurazione ottenuta è uno. Inoltre, anche i modelli (\ref{for:4.9}) e (\ref{for:5.2}) riescono a predire quando una partita non termina in un pareggio. D’altra parte, i modelli (\ref{for:3.1}) e (\ref{for:5.1}) ottengono le migliori misurazione nell'identificare quando una partita non termina con la vittoria della squadra ospite.\\
+Ovviamente in questa misurazione i \emph{bookmakers} ottengono il miglior risultato per quanto riguarda l'identificazione di una partita che non termina in un pareggio. Si nota che tutti e quattro i modelli riescono a predire quando l'esito della partita non è la vittoria della squadra di casa, infatti la misurazione ottenuta è uno. Inoltre, anche i modelli (\ref{for:4.9}) e (\ref{for:5.2}) riescono a predire quando una partita non termina in un pareggio. D’altra parte, i modelli (\ref{for:3.1}) e (\ref{for:5.1}) ottengono le migliori misurazione nell'identificare quando una partita non termina con la vittoria della squadra ospite.\\
 
 In conclusione, dai risultati ottenuti si evince che i modelli mostrano una maggiore accuratezza nelle previsioni rispetto a quanto fornito dai \emph{bookmakers}. Se ne deduce quindi un buon utilizzo delle informazioni a disposizione nei modelli.
 

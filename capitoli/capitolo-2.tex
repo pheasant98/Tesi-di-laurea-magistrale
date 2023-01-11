@@ -18,9 +18,17 @@ Il torneo della stagione 2021/2022 è iniziato il 22 Agosto con Inter - Genoa e 
 
 \subsection{Ranking}
 Le squadre di calcio sono classificate in base all'ordine dei punti che hanno totalizzato al termine della stagione. In un torneo calcistico, per ogni partita, la squadra vincitrice guadagna tre punti, la squadra sconfitta guadagna nessun punto, mentre, in caso di pareggio, entrambe le squadre guadagnano un punto. Nel torneo della Serie A chi guadagna più punti vince il campionato, mentre chi si classifica tra le ultime tre retrocede alla lega inferiore, la Serie B. Il posto delle tre squadre retrocesse verrà preso da tre squadre della Serie B che hanno guadagnato la promozione alla Serie A.\\ 
-La classifica della stagione 2021/2022 è riportata nella Tabella \ref{tab:ranking}.
+La classifica della stagione 2021/2022 è riportata nella Figura \ref{fig:ranking}.
 
-\begin{table}[!htb]%
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[height = 10cm, width = 16cm]{ranking.png}
+		\caption{Grafico della classifica del campionato italiano della Serie A 2021/2022. Le barre di color azzurro indicano i punti che la squadra ha guadagnato in partite casalinghe. Le barre di color rosa indicano i punti che la squadra ha guadagnato in partite fuori casa.
+		} 
+		\label{fig:ranking}
+	\end{center}
+\end{figure}
+\begin{comment}[!htb]%
 	
 	\renewcommand{\arraystretch}{1.7}
 	\centering
@@ -55,17 +63,18 @@ La classifica della stagione 2021/2022 è riportata nella Tabella \ref{tab:ranki
 	\end{tabular} \hbox{}
 	
 	\caption{La tabella mostra i punti guadagnati da ogni squadra con il loro piazzamento. Inoltre viene mostrata la percentuale di punti guadagnati in casa.} \label{tab:ranking}
-\end{table}
+\end{comment}
 
 %**************************************************************
 \section{Costruzione del dataset}
 
 Al giorno d'oggi, nelle partite di calcio professionistico viene raccolta un'enorme quantità di variabili. Ad esempio, per ogni squadra è noto il tempo in percentuale del possesso della palla e il numero di tiri in porta in una determinata partita. L'obbiettivo principale di questo lavoro è determinare l'influenza che queste variabili hanno sull'esito della partita. \\
 A tale scopo, sono state raccolte un gran numero di variabili che si suppone essere associate all'esito della partita.\\
-Tali dati sono stati offerti dal sito web \textit{\cite{fbref}}, un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. \textit{\cite{fbref}} mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse.\\
+Tali dati sono stati offerti dal sito web \textit{\cite{fbref}}, un sito web dedicato al tracciamento delle statistiche relative ai calciatori e alle squadre di calcio di tutto il mondo. \\
+Il sito web \textit{\cite{fbref}} mette a disposizione i dati sotto forma di tabelle che possono essere modificate per mantenere solo i dati di nostro interesse.\\
 \begin{figure}[!htb]
 	\begin{center}
-		\includegraphics[scale=0.40]{logo.png}
+		\includegraphics[scale=0.30]{logo.png}
 		\caption{Logo di FBref.} 
 		Source: \url{https://fbref.com}
 		\label{fig:logo}
@@ -129,7 +138,7 @@ In questo gruppo sono presenti le variabili legate a statistiche che non fanno p
 Le possibili covariate sono le seguenti:
 \begin{itemize}
 	\item \textsf{AtHome}: indica se la squadra specificata della variabile \textsf{Team} gioca nel proprio stadio, quindi in casa oppure fuori casa. Per indicare se la squadra gioca in casa viene messo come valore \texttt{TRUE} altrimenti \texttt{FALSE}. \\
-	Come mostrato nella terza colonna della Tabella \ref{tab:ranking}, la quale indica in percentuale quante partite sono state vinte in casa per ogni singola squadra, ci sono 11 squadre che hanno avuto un leggero vantaggio nel giocare in casa le partite di calcio rispetto a altre sei squadre che hanno avuto l'effetto opposto, mentre le rimanti tre hanno avuto un effetto nullo.\\
+	Come mostrato dalla Figura \ref{fig:ranking}, la quale indica quanti punti sono stati vinti in casa per ogni squadra, ci sono 11 squadre che hanno avuto un leggero vantaggio nel giocare in casa le partite di calcio rispetto a altre sei squadre che hanno avuto l'effetto opposto, mentre le rimanti tre hanno avuto un effetto nullo.\\
 	\item \textsf{Res}: indica se la squadra specificata della variabile \textsf{Team} ha vinto, pareggiato o perso la partita. Per indicare se ha vinto viene inserito il valore 1, se ha pareggiato 0, altrimenti se ha perso -1. Res sarà la variabile risposta.
 	\item \textsf{GF}: indica il numero di gol fatti dalla squadra specificata della variabile \textsf{Team}. \\
 	È stata inserita perché può permettere di valutare la qualità della fase offensiva della squadra e quindi ci si aspetta che possa essere utile ai fini dell'analisi.

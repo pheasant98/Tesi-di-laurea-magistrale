@@ -3,13 +3,13 @@
 % !TEX root = ../tesi.tex
 
 %**************************************************************
-\chapter{Algoritmi di Machine Learning}
+\chapter{Algoritmi di machine learning}
 \label{cap:ML}
 %**************************************************************
-\intro{Questo capitolo illustrerà i metodi di \emph{machine Learning} che sono stati utilizzati per la predizione degli esiti delle partite di calcio della Seria A italiana della stagione 2021/2022. Purtroppo, non è stato possibile applicare metodi di \emph{machine learning} che corrispondessero al modello \emph{Bradley-Terry} perché, nonostante esistano metodi in \emph{machine learning} che forniscono modelli basati sul modello \emph{Bradley-Terry}, essi non sono in grado di gestire l'esito del pareggio ma solo un esito binario. Ne consegue che tali metodi non sono adatti per contesti come il calcio ma ad altri tipi di sport dove il pareggio non è previsto come il \emph{baseball}. I metodi di \emph{machine learning} considerati sono: il K-Nearest-Neighbors (K-NN), la Support Vector Machine (SVM), gli alberi di decisione per la classificazione, la Random Forest e infine l'AdaBoost.
+\intro{Questo capitolo illustrerà i metodi di \emph{machine learning} che sono stati utilizzati per la predizione degli esiti delle partite di calcio della Seria A italiana della stagione 2021/2022. Purtroppo, non è stato possibile applicare metodi di \emph{machine learning} che corrispondessero al modello \emph{Bradley-Terry} perché, nonostante esistano metodi in \emph{machine learning} che forniscono modelli basati sul modello \emph{Bradley-Terry}, essi non sono in grado di gestire l'esito del pareggio ma solo un esito binario. Ne consegue che tali metodi non sono adatti per contesti come il calcio ma ad altri tipi di sport dove il pareggio non è previsto come il \emph{baseball}. I metodi di \emph{machine learning} considerati sono: il K-Nearest-Neighbors (K-NN), la Support Vector Machine (SVM), gli alberi di decisione per la classificazione, la Random Forest e infine l'AdaBoost.
 }
 \section{Componenti essenziali}
-In questa sezione vengono definite alcune misure e tecniche che sono necessarie l'applicazione dei metodi di \emph{machine Learning} applicati.
+In questa sezione vengono definite alcune misure e tecniche che sono necessarie l'applicazione dei metodi di \emph{machine learning} applicati.
 \subsection{Distanza di Minkowski}
 La distanza di Minkowski (vedi \textit{\cite{minkdist}}) è una misura utilizzata per la valutazione della distanza ovvero, nel nostro contesto, della somiglianza tra due punti in uno spazio di \textit{n}-dimensioni. La distanza di Minkowski di ordine \emph{d} tra due punti A = (a$_1$,...a$_n$) e B = (b$_1$,...b$_n$) è definita come
 \begin{center}

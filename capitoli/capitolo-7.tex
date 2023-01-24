@@ -50,7 +50,7 @@ Nella fase di predizione si sono ottenute le predizioni mostrate nella Figura \r
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.60]{metricknn.png}
-		\caption{Grafico delle misurazione durante la fase di predizione del modello K-Nearest-Neighbors con\textsf{ n\_neighbors} = 30 e \textsf{p} = 2.
+		\caption{Grafico delle misurazione registrate durante la fase di predizione del modello K-Nearest-Neighbors con\textsf{ n\_neighbors} = 30 e \textsf{p} = 2.
 		} 
 		\label{fig:knnmetrics}
 	\end{center}
@@ -87,7 +87,7 @@ Dal grafico si nota che, dal punto di vista dell'accuratezza registrata nel \emp
 \begin{figure}[]
 	\begin{center}
 		\includegraphics[scale=0.60]{metricsvc.png}
-		\caption{Grafico delle misurazione durante la fase di predizione del modello Support Vector Machine con \textsf{C} = 1.4 e \textsf{kernel} = linear.
+		\caption{Grafico delle misurazione registrate durante la fase di predizione del modello Support Vector Machine con \textsf{C} = 1.4 e \textsf{kernel} = linear.
 		} 
 		\label{fig:svcmetrics}
 	\end{center}
@@ -128,7 +128,7 @@ Nella fase di predizione si sono ottenute le predizioni mostrate nella Figura \r
 \begin{figure}[]
 	\begin{center}
 		\includegraphics[scale=0.60]{metricdt.png}
-		\caption{Grafico delle misurazione durante la fase di predizione del modello Decision Tree con \textsf{max\_depth} = 3, \textsf{min\_samples\_split} = 3 e \textsf{criterion} = entropy.
+		\caption{Grafico delle misurazione registrate durante la fase di predizione del modello Decision Tree con \textsf{max\_depth} = 3, \textsf{min\_samples\_split} = 3 e \textsf{criterion} = entropy.
 		} 
 		\label{fig:dtmetrics}
 	\end{center}
@@ -181,7 +181,7 @@ Nella fase di predizione si sono ottenute le predizioni mostrate nella Figura \r
 \begin{figure}[]
 	\begin{center}
 		\includegraphics[scale=0.60]{metricrf.png}
-		\caption{Grafico delle misurazione durante la fase di predizione del modello Random Forest con \textsf{criterion} = gini, \textsf{max\_depth} = 5, \textsf{n\_estimators} = 102 e \textsf{min\_samples\_split} = 9.
+		\caption{Grafico delle misurazione registrate durante la fase di predizione del modello Random Forest con \textsf{criterion} = gini, \textsf{max\_depth} = 5, \textsf{n\_estimators} = 102 e \textsf{min\_samples\_split} = 9.
 		} 
 		\label{fig:rfmetrics}
 	\end{center}
@@ -230,26 +230,28 @@ Nella fase di predizione si sono ottenute le predizioni mostrate nella Figura \r
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.60]{metricada.png}
-		\caption{Grafico delle misurazione durante la fase di predizione del modello AdaBoost con \textsf{n\_estimators} = 19 e \textsf{learning\_rate} = 0.5.
+		\caption{Grafico delle misurazione registrate durante la fase di predizione del modello AdaBoost con \textsf{n\_estimators} = 19 e \textsf{learning\_rate} = 0.5.
 		} 
 		\label{fig:adametrics}
 	\end{center}
 \end{figure}
 Nonostante le poche osservazioni disponibili i risultati ottenuti sono buoni. Infatti, l'accuratezza delle predizioni è di 0.72. Anche questo modello ha delle difficoltà a identificare le istanze di classe pareggio. La sensibilità del modello sulla classe pareggio è pari a 0.58 ovvero, undici osservazioni su 19 di classe pareggio sono state identificate come tali. Purtroppo, il modello non è abbastanza soddisfacente nell’etichettare le istanze con la classe pareggio perché la precisione è pari a 0.46. Di conseguenza anche la specificità ne risente, con un valore pari a 0.77. Tuttavia, le prestazioni sono decisamente migliori con le classi vittoria della squadra in casa e vittoria della squadra ospite. Infatti, per la classe vittoria della squadra in casa la sensibilità è pari a 0.83, cioè solo cinque osservazioni su 30 non sono state riconosciute di classe vittoria della squadra. Analogamente, la specificità della classe vittoria della squadra in casa ha un valore molto alto ovvero, 0.93. Inoltre, il modello risulta essere molto preciso nel classificare correttamente le istanze con la classe vittoria della squadra in casa. Infatti, il modello ha commesso solo tre errori ottenendo una precisione pari a 0.89. Buone prestazioni si sono registrate anche nell'identificare le istanze di classe vittoria della squadra ospite da parte del modello. La sensibilità è pari a 0.70, mentre la precisione è pari a 0.79, con solo cinque osservazioni classificate erroneamente con la classe vittoria della squadra ospite. Buona anche la specificità del modello sulla classe vittoria della squadra ospite che risulta essere pari a 0.89.\\
 In conclusione, nonostante le poche osservazioni messe a disposizione, l'algoritmo AdaBoost ottiene nel complesso delle buone prestazioni nonostante qualche difficoltà nell’identificazione dei pareggi.
+\begin{comment}
+	\section{Comparazione dei algoritmi}
+	Grazie alla metrica AUC è possibile confrontare le performance degli algoritmi utilizzati. 
+	Nella Figura \ref{fig:auc} vengono riportate le AUC che sono state misurate durante la fase di predizione di ogni algoritmo utilizzato.
+	
+	\begin{figure}[h]
+		\begin{center}
+			\includegraphics[scale=0.30]{auc.png}
+			\caption{Grafico a barre in cui viene riportata la Area Under the Curve (AUC) registrata durante la fase di predizione dei algoritmi K-Nearest-Neighbors (K-NN),  Support Vector Machine (SVM), Decision Tree, Random Forest e AdaBoost.  
+			} 
+			\label{fig:auc}
+		\end{center}
+	\end{figure}
+	Dalle misurazioni ottenute si evince che l'AUC più alta è stata registrata nell'algoritmo SVM con un valore pari a 0.82. Infatti, la SVM ha una buona accuratezza perché è l'algoritmo che riesce a identificare con maggior precisione la classe pareggio, la quale è risultata molto ostica da identificare per gli algoritmi trattati. Con una AUC leggermente inferiore, l'algoritmo AdaBoost si classifica come secondo con un valore pari a 0.78. Analogamente alla SVM, l'AdaBoost si distingue dai algoritmi con prestazioni inferiori grazie alle discrete prestazioni nell'identificazione della classe pareggio. L'algoritmo con la terza AUC più alta è stato il Random Forest con una AUC pari a 0.77 e con prestazioni simili all'algoritmo AdaBoost.
+	In quarta posizione si piazza l'algoritmo Decision Tree con una AUC pari a 0.75. Nonostante le buone prestazioni registrate nell'identificazione delle classi vittoria della squadra in casa e vittoria della squadra ospite, l'algoritmo Decision Tree paga una minor AUC a causa delle brutte prestazioni registrate nell'identificazione della classe pareggio. Infine, l'algoritmo con la più bassa AUC misurata è il K-NN con una AUC pari a 0.65. Infatti, l'algoritmo K-NN ha registrato delle pessime prestazioni nell'identificare le istanze di classe pareggio e delle discrete prestazioni nell'identificare le istanze delle altre due classi.\\
+	In conclusione, il problema presentato risulta essere troppo complesso per l'algoritmo K-NN: la strategia di classificare una nuova istanza con la classe di maggioranza dei k-vicini, seppur semplice, non è risultata efficace. Viceversa, la SVM, grazie all'utilizzo della funzione kernel, riesce a gestire la complessità dei dati ottenendo delle buone prestazioni in fase di predizione.
+\end{comment}
 
-\section{Comparazione dei algoritmi}
-Grazie alla metrica AUC è possibile confrontare le performance degli algoritmi utilizzati. 
-Nella Figura \ref{fig:auc} vengono riportate le AUC che sono state misurate durante la fase di predizione di ogni algoritmo utilizzato.
-
-\begin{figure}[h]
-	\begin{center}
-		\includegraphics[scale=0.30]{auc.png}
-		\caption{Grafico a barre in cui viene riportata la Area Under the Curve (AUC) registrata durante la fase di predizione dei algoritmi K-Nearest-Neighbors (K-NN),  Support Vector Machine (SVM), Decision Tree, Random Forest e AdaBoost.  
-		} 
-		\label{fig:auc}
-	\end{center}
-\end{figure}
-Dalle misurazioni ottenute si evince che l'AUC più alta è stata registrata nell'algoritmo SVM con un valore pari a 0.82. Infatti, la SVM ha una buona accuratezza perché è l'algoritmo che riesce a identificare con maggior precisione la classe pareggio, la quale è risultata molto ostica da identificare per gli algoritmi trattati. Con una AUC leggermente inferiore, l'algoritmo AdaBoost si classifica come secondo con un valore pari a 0.78. Analogamente alla SVM, l'AdaBoost si distingue dai algoritmi con prestazioni inferiori grazie alle discrete prestazioni nell'identificazione della classe pareggio. L'algoritmo con la terza AUC più alta è stato il Random Forest con una AUC pari a 0.77 e con prestazioni simili all'algoritmo AdaBoost.
-In quarta posizione si piazza l'algoritmo Decision Tree con una AUC pari a 0.75. Nonostante le buone prestazioni registrate nell'identificazione delle classi vittoria della squadra in casa e vittoria della squadra ospite, l'algoritmo Decision Tree paga una minor AUC a causa delle brutte prestazioni registrate nell'identificazione della classe pareggio. Infine, l'algoritmo con la più bassa AUC misurata è il K-NN con una AUC pari a 0.65. Infatti, l'algoritmo K-NN ha registrato delle pessime prestazioni nell'identificare le istanze di classe pareggio e delle discrete prestazioni nell'identificare le istanze delle altre due classi.\\
-In conclusione, il problema presentato risulta essere troppo complesso per l'algoritmo K-NN: la strategia di classificare una nuova istanza con la classe di maggioranza dei k-vicini, seppur semplice, non è risultata efficace. Viceversa, la SVM, grazie all'utilizzo della funzione kernel, riesce a gestire la complessità dei dati ottenendo delle buone prestazioni in fase di predizione.

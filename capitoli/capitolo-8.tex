@@ -4,20 +4,20 @@
 
 %**************************************************************
 \chapter{Modello Bradley-Terry e i numeri di gol }
-\label{cap:risFin}
+\label{cap:extraDM}
 %**************************************************************
 \intro{In questo capitolo si illustreranno i risultati ottenuti con il modello Bradley-Terry (\ref{for:4.9}) con una variabile risposta a cinque categorie legate al numero di gol segnati dalle squadre durante le partite.
 }
 %**************************************************************
 \section{Premessa}
-Nel Capitolo \ref{cap:risultatiDM} si era sottolineato che i risultati ottenuti non tenevano in considerazione le variabili esplicative gol fatti \textsf{GF} e gol subiti \textsf{GA}, a causa della non convergenza del modello. Per poter utilizzare queste due variabili esplicative, su ispirazione del lavoro di ricerca di \textcite{schauberger2017}, si è deciso di cambiare il numero di categorie della variabile risposta \emph{Y} ovvero, di utilizzare cinque categoria al posto di tre, in base al numero di gol segnati e subiti, nello specifico:
+Nel Capitolo \ref{cap:risultatiDM} si era sottolineato che i risultati ottenuti non tenevano in considerazione le variabili esplicative gol fatti \textsf{GF} e gol subiti \textsf{GA}, a causa della non convergenza del modello. Per poter utilizzare queste due variabili esplicative, su ispirazione del lavoro di ricerca di \textcite{schauberger2017}, si è deciso di cambiare il numero di categorie della variabile risposta \emph{Y} ovvero, di utilizzare cinque categoria invece di tre, in base al numero di gol segnati e subiti, nello specifico:
 \begin{equation}
 	Res =
 	\begin{cases}
 		1 & \text{se la squadra in casa batte la squadra ospite con due gol di scarto,}\\
 		2 & \text{se la squadra in casa batte la squadra ospite con un gol di scarto,}\\
 		3 & \text{se la partita termina con un pareggio,}\\
-		4 & \text{se la squadra ospite batte la squadra in casa con un gol di scarto. }\\
+		4 & \text{se la squadra ospite batte la squadra in casa con un gol di scarto, }\\
 		5 & \text{se la squadra ospite batte la squadra in casa con due gol di scarto.}
 	\end{cases}       
 \end{equation}
@@ -31,7 +31,7 @@ I risultati ottenuti dal modello (\ref{for:4.9}) con \emph{Y = 5} sono presentan
 		\caption{Barplot che indica per ogni squadra l'abilità stimata dal modello (\ref{for:4.9}) con \emph{Y = 5}. Viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale anche esso riportato a destra del grafico.} \label{tab:BTCL5} 
 	\end{center}
 \end{sidewaysfigure}
-Nella Figura \ref{tab:BTCL5} si può notare che le stime dell'abilità delle squadre è molto simile a quelle riportate nella Figura \ref{tab:BTCL}. Infatti, nelle prime e nelle ultime quattro posizioni la stima e il piazzamento rimangono invariati. Cambiano le stime di Atalanta, Lazio e Roma infatti, abbiamo che: l'Atalanta aumenta la propria stima e quindi viene ancora più sovrastimata, mentre per Lazio e Roma l'abilità stimata cala. Anche Fiorentina e Hellas Verona hanno un aumento dell'abilità stimata, anche se l'Hellas Verona viene sovrastimata rispetto alla Fiorentina. Infine, anche l'Empoli aumenta la propria abilità stimata tanto da essere stimato più forte del Bologna e quindi sovrastimato.\\
+Nella Figura \ref{tab:BTCL5} si può notare che le stime dell'abilità delle squadre è molto simile a quelle riportate nella Figura \ref{tab:BTCL}. Infatti, nelle prime e nelle ultime quattro posizioni la stima e il piazzamento rimangono invariati. Cambiano le stime di Atalanta, Lazio e Roma infatti, abbiamo che: l'Atalanta aumenta la propria stima e quindi viene ancora più sovrastimata, mentre per Lazio e Roma l'abilità stimata cala. Anche Fiorentina e Hellas Verona hanno un aumento dell'abilità stimata, anche se l'Hellas Verona viene sovrastimata rispetto alla Fiorentina. Infine, anche l'Empoli aumenta la propria abilità stimata tanto da essere stimato più forte del Bologna.\\
 \begin{table}[!htbp]
 	
 	\renewcommand{\arraystretch}{1.7}
@@ -116,16 +116,16 @@ Nella Figura \ref{tab:BTCL5} si può notare che le stime dell'abilità delle squ
 \end{table}
 Le stime dei parametri ottenute sono molto simili alle stime presentate dalle Tabelle \ref{tab:BTCL2} e \ref{tab:BTCL3}. Infatti viene confermata la poca importanza della percentuale dei passaggi completi \texttt{PCmp\%}, del numero di passaggi tentati \texttt{PAtt}, del numero di tocchi nella trequarti di difesa \texttt{ToDefPen} e la distanza percorsa con la palla \texttt{TotDist}.
 Anche qui viene confermato, seppur con una leggera diminuzione, il vantaggio nel giocare in casa \texttt{Home} che è pari a 0.272.
-Per quanto riguarda il possesso palla \texttt{Poss} viene confermata che per la maggior parte delle squadre non ha alcuna influenza nell'esito della partita ma a differenza del modello (\ref{for:4.9}) con \emph{Y = 3} Lazio e Torino non hanno alcun beneficio.\\
-Viene confermata l'associazione positiva con la probabilità di vittoria sia tra il numero di tiri \texttt{Sh} e sia con il numero di parate \texttt{Saves}. Analogamente anche il numero di tiri in porta \texttt{SoT} è fortemente associata all'aumento della probabilità di vittoria. Si segnalano delle variazioni delle stime del parametro \texttt{SoT} infatti, ora maggior parte delle squadre ha una stima del parametro pari a 0.779 ad eccezione di tre squadre che si discostano da questa stima. Infatti dalla Figura \ref{fig:sotL5} è possibile individuare tre clusters ovvero, il più grande che contiene la maggioranza delle squadre, il cluster contenente solo la Fiorentina e con un percorso leggermente più basso il cluster con Bologna e Udinese.
+Per quanto riguarda il possesso palla \texttt{Poss} viene confermata che per la maggior parte delle squadre non ha alcuna influenza nell'esito della partita ma a differenza del modello (\ref{for:4.9}) con \emph{Y = 3}, Lazio e Torino non hanno alcun beneficio.\\
+Viene confermata l'associazione positiva con la probabilità di vittoria sia tra il numero di tiri \texttt{Sh} e sia con il numero di parate \texttt{Saves}. Analogamente, anche la stima per il numero di tiri in porta \texttt{SoT} è fortemente associata all'aumento della probabilità di vittoria. Si segnalano delle variazioni delle stime del parametro \texttt{SoT} infatti, ora maggior parte delle squadre ha una stima del parametro pari a 0.779 ad eccezione di tre squadre che si discostano da questa stima. Infatti dalla Figura \ref{fig:sotL5} è possibile individuare tre clusters ovvero, il più grande che contiene la maggioranza delle squadre, il cluster contenente solo la Fiorentina e con un percorso leggermente più basso e il cluster con Bologna e Udinese.
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[height=8cm, width=15cm]{sotL5.png}
-		\caption{Grafico che riporta l'andamento stimato dal modello (\ref{for:4.9}) con \emph{Y = 5} della stima del numero di tiri in porta per ogni squadra al variare del parametro di tuning $\lambda$. La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo che è stato scelto per ottenere i risultati finali.} \label{fig:sotL5}
+		\caption{Grafico che riporta l'andamento stimato dal modello (\ref{for:4.9}) con \emph{Y = 5} della stima del numero di tiri in ù+porta per ogni squadra al variare del parametro di tuning $\lambda$. La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo che è stato scelto per ottenere i risultati finali.} \label{fig:sotL5}
 	\end{center}
 \end{figure}
 Si riconferma la variabile esplicativa \texttt{G/Sh} la più influente nell'esito della partita.\\
-Per quanto riguarda le variabili legate ai passaggi non ancora illustrate, viene riconfermato che, il numero di passaggi corti tentati \texttt{SPAtt} non risulta essere associato alla probabilità di vittoria per tutte le squadre ad eccezione di Napoli e ora anche la Juventus. Infatti nella Figura \ref{fig:spattL5} è possibile notare il cluster con andamento nullo, contenente quasi tutte le squadre e più in su i clusters contenenti rispettivamente Juventus e Napoli.
+Per quanto riguarda le variabili legate ai passaggi non ancora illustrate, viene riconfermato che, il numero di passaggi corti tentati \texttt{SPAtt} non risulta essere associato alla probabilità di vittoria per tutte le squadre ad eccezione di Napoli e ora anche la Juventus. Infatti, nella Figura \ref{fig:spattL5} è possibile notare il cluster con andamento nullo contenente quasi tutte le squadre e più in su i clusters contenenti rispettivamente Juventus e Napoli.
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[height=8cm, width=15cm]{spattL5.png}
@@ -147,9 +147,9 @@ Il numero di passaggi medi tentati \texttt{MPAtt} ora non ha alcuna associazione
 		\caption{Grafico che riporta l'andamento stimato dal modello (\ref{for:4.9}) con \emph{Y = 5} della stima della percentuale di passaggi medi riusciti per ogni squadra al variare del parametro di tuning $\lambda$. La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo che è stato scelto per ottenere i risultati finali.} \label{fig:mpcmpL5}
 	\end{center}
 \end{figure}
-Per il numero passaggi lunghi tentati \texttt{LPAtt} c'è una aumento della stima per tutte le squadre in particolare per la Lazio. Unica variazione che segnala per la percentuale di passaggi lunghi riusciti \texttt{LPCmp\%} è che il Bologna non è più associato con una diminuzione delle probabilità di vittoria.\\
+Per il numero di passaggi lunghi tentati \texttt{LPAtt} c'è un aumento della stima per tutte le squadre in particolare per la Lazio. Unica variazione che si segnala riguarda la percentuale di passaggi lunghi riusciti \texttt{LPCmp\%} che per il Bologna non è più associata con una diminuzione delle probabilità di vittoria.\\
 Per quanto riguarda le variabili legate al possesso non ci sono rilevanti differenze rispetto alle stime ottenute con il modello (\ref{for:4.9}) con \emph{Y = 3}.\\
-Si hanno delle differenze con la stima del numero di falli subiti \texttt{Fls} e fatti \texttt{Fld} rispetto alle stime del modello (\ref{for:4.9}) con \emph{Y = 3}. Infatti, ora solo per Bologna e Sampdoria \texttt{Fls} è associato a un aumento della probabilità di vittoria mentre per le restanti squadre non vi è alcuna associazione. Nella Figura \ref{fig:flsL5} è possibile visualizzare l'andamento dei due clusters che contengono rispettivamente Bologna e Sampdoria, entrambi con percorsi positivi. È rappresentato anche il cluster contenente quasi tutte le classi e con un percorso nullo.
+Si hanno delle differenze con la stima del numero di falli subiti \texttt{Fls} e fatti \texttt{Fld} rispetto alle stime del modello (\ref{for:4.9}) con \emph{Y = 3}. Infatti, ora solo per Bologna e Sampdoria \texttt{Fls} è associato a un aumento della probabilità di vittoria mentre per le restanti squadre non vi è alcuna associazione. Nella Figura \ref{fig:flsL5} è possibile visualizzare l'andamento dei due clusters che contengono rispettivamente Bologna e Sampdoria, entrambi con percorsi positivi. È rappresentato anche il cluster contenente quasi tutte le classi ma con un percorso nullo.
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[height=8cm, width=15cm]{flsL5.png}
@@ -157,15 +157,15 @@ Si hanno delle differenze con la stima del numero di falli subiti \texttt{Fls} e
 	\end{center}
 \end{figure}
 Analogamente, anche per \texttt{Fld} vi è lo stesso esito con la differenza che, al posto di Bologna e Sampdoria c'è l'Udinese.\\
-Per quanto riguarda il fuorigioco \texttt{Off} ora solo per l'Hellas Verona vi è una stima positiva. Per tutte le altre le squadre la stima è negativa in particolare per Inter e Juventus.\\
-Ancora una volta il numero di cross \texttt{Crs} si conferma associato a una diminuzione della probabilità di vittoria. In questo caso abbiamo una maggior diminuzione per quasi tutte le squadre. Nella Figura \ref{fig:crsL5} è possibile notare il cluster con andamento positivo, il quale contiene il Torino. Sotto al cluster del Torino ci sono quattro cluster tutti associati a percorsi negativi. Il cluster con il percorso meno negativo contiene quasi tutte le squadre. Subito sotto c'è il cluster che contiene Milan e Roma, con un percorso leggermente più negativo il cluster contenente il Napoli e infine, con il percorso più negativo, il cluster contenete l'Atalanta.
+Per quanto riguarda il fuorigioco \texttt{Off} ora solo per l'Hellas Verona vi è una stima positiva. Per tutte le altre squadre la stima è negativa in particolare per Inter e Juventus.\\
+Ancora una volta il numero di cross \texttt{Crs} si conferma associato a una diminuzione della probabilità di vittoria. In questo caso abbiamo una maggior diminuzione per quasi tutte le squadre. Nella Figura \ref{fig:crsL5} è possibile notare il cluster con andamento positivo, il quale contiene il Torino. Sotto al cluster del Torino ci sono quattro cluster tutti associati a percorsi negativi. Il cluster con il percorso meno negativo contiene quasi tutte le squadre. Subito sotto c'è il cluster che contiene Milan e Roma, mentre con un percorso leggermente più negativo il cluster contenente il Napoli e infine, con il percorso più negativo, il cluster contenete l'Atalanta.
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[height=8cm, width=15cm]{crsL5.png}
 		\caption{Grafico che riporta l'andamento stimato dal modello (\ref{for:4.9}) con \emph{Y = 5} della stima del numero di cross fatti per ogni squadra al variare del parametro di tuning $\lambda$. La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo che è stato scelto per ottenere i risultati finali.} \label{fig:crsL5}
 	\end{center}
 \end{figure}
-Per quanto riguarda le variabili esplicative difensive, il numero di intercetti \texttt{Int} e il numero di contrasti vinti \texttt{TklWin} sono ancora associati ad un aumento della probabilità di vittoria. Viceversa, il numero di recuperi \texttt{Recov} si associa ad una diminuzione della probabilità di vittoria a tutte le squadre eccetto per Venezia e Genoa dove non vi è alcuna associazione con l'esito della partita. Tale comportamento è mostrato nella Figura \ref{fig:recovL5}.
+Per quanto riguarda le variabili esplicative difensive, il numero di intercetti \texttt{Int} e il numero di contrasti vinti \texttt{TklWin} sono ancora associati ad un aumento della probabilità di vittoria. Viceversa, il numero di recuperi \texttt{Recov} si associa ad una diminuzione della probabilità di vittoria per tutte le squadre eccetto per Venezia e Genoa dove non vi è alcuna associazione con l'esito della partita. Tale comportamento è mostrato nella Figura \ref{fig:recovL5}.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -181,9 +181,24 @@ Per riassumere, si analizzano i percorsi delle norme L2 che rappresentano l'impo
 		\caption{Grafico che riporta l'importanza delle covariate rispetto alle norme L2 al variare del parametro di tuning $\lambda$} \label{fig:IL52}
 	\end{center}
 \end{figure}
-Gli andamenti ottenuti nella Figura \ref{fig:IL52} sono molto simili a quelli visti nella Figura \ref{fig:l2BTCL}. Infatti \texttt{G/Sh}, \texttt{SoT} e \texttt{Sh} si confermano ancora fortemente associati all'esito della partita. Analogamente anche per \texttt{Home}. Si segnala un aumento di importanza per le covariate \texttt{ToAttPen} e \texttt{Recov}, in termini di diminuzione della probabilità di vittoria. Viceversa, invece, una diminuzione d'importanza per \texttt{Saves}, \texttt{Crs}, \texttt{TklWin} e \texttt{Off}. Si riconfermano ancora poco significative le variabili riguardanti i passaggi fatta eccezione anche questa volta di \texttt{LPAtt}. Anche \texttt{Int} si conferma poco significato, analogamente anche \texttt{Poss}.
+Gli andamenti ottenuti nella Figura \ref{fig:IL52} sono molto simili a quelli visti nella Figura \ref{fig:l2BTCL}. Infatti \texttt{G/Sh}, \texttt{SoT} e \texttt{Sh} si confermano ancora fortemente associati all'esito della partita. Analogamente anche per \texttt{Home}. Si segnala un aumento di importanza per le covariate \texttt{ToAttPen} e \texttt{Recov}, in termini di diminuzione della probabilità di vittoria. Viceversa, invece, un si ha un calo d'importanza per \texttt{Saves}, \texttt{Crs}, \texttt{TklWin} e \texttt{Off}. Si riconfermano ancora poco significative le variabili riguardanti i passaggi fatta eccezione anche questa volta di \texttt{LPAtt}. Anche \texttt{Int} si conferma poco significato, analogamente anche \texttt{Poss}.
 Pertanto, nel complesso, quanto ricavato del modello (\ref{for:4.9}) con \emph{Y = 3} ora trova conferma anche con la variante \emph{Y = 5}.
 \section{Predizioni}
-Come fatto nel Capitolo \ref{cap:risultatiDM}, in questa sezione si vuole valutare le prestazioni nella fase di predizione del modello (\ref{for:4.9}) con \emph{Y = 5}. L'accuratezza registrata è pari a
+Come fatto nel Capitolo \ref{cap:risultatiDM}, in questa sezione si vuole valutare le prestazioni nella fase di predizione del modello (\ref{for:4.9}) con \emph{Y = 5}.\\
+Nella Figura \ref{fig:pre2} sono mostrate le classificazione ottenute sulle 80 partite del \emph{test set}.
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale = 1]{tabpre2.png}
+		\caption{Tabella di confusione che indica le predizioni su 80 partite, fatte dal modello (\ref{for:4.9}) con \emph{Y = 5}. La classe 1 indica la vittoria della squadra in casa con due gol di scarto, la classe 2 indica la vittoria della squadra in casa con un gol di scarto, la classe 3 indica il pareggio tra le due squadre, la classe 4 indica la vittoria della squadra ospite con un gol di scarto e la classe 5 indica la vittoria della squadra ospite con due gol di scarto. Con \textsf{True} si indicano le classificazioni effettive mentre con \textsf{Predicted} le predizioni effettuate.}\label{fig:pre2}
+	\end{center}
+\end{figure}
+Le predizioni ottenute sono buone infatti, l'accuratezza registrata è pari a 0.675. Nella Figura \ref{fig:metrics} vengono mostrate le misurazioni della precisione, della sensibilità e della specificità, per ognuna delle cinque categorie registrate sulle predizioni fatte dal modello (\ref{for:4.9}) con \emph{Y = 5}.
+\begin{figure}[h]
+	\begin{center}
+		\includegraphics[scale = 0.80]{metrics2.png}
+		\caption{Grafico delle misurazioni riguardanti le predizioni fatte dal modello (\ref{for:4.9}) con \emph{Y = 5} su 80 partite. La classe 1 indica la vittoria della squadra in casa con due gol di scarto, la classe 2 indica la vittoria della squadra in casa con un gol di scarto, la classe 3 indica il pareggio tra le due squadre, la classe 4 indica la vittoria della squadra ospite con un gol di scarto e la classe 5 indica la vittoria della squadra ospite con due gol di scarto. Con \textsf{precision} si indicano le misurazioni della precisione per ogni categoria. Con \textsf{recall} si indicano le misurazioni della sensibilità per ogni categoria. Con \textsf{specificity} si indicano le misurazioni della specificità per ogni categoria.}\label{fig:metrics}
+	\end{center}
+\end{figure}
+Le misurazioni ottenute sono buone, infatti, in molti casi si registra il miglior risultato possibile, ovvero 1. Nello specifico analizzando la precisione, si nota che il modello non sbaglia mai nell’etichettare correttamente tutti le osservazioni eccetto per il pareggio dove il modello va in difficoltà registrando una precisione pari a 0.47 ovvero delle 49 osservazioni classificate con la classe pareggio solo 23 sono effettivamente della classe pareggio. Tuttavia, analizzando la sensibilità si scopre che, nonostante vengono etichettate erroneamente molte osservazioni con la classe pareggio, sono state identificate tutte le osservazioni di classe pareggio. Ovviamente questo però va a scapito delle prestazioni della sensibilità sulle altre classi, infatti, la sensibilità nella classe vittoria della squadra in casa con un gol di scarto è pari a 0.38 ovvero, solo cinque su otto osservazioni vengono identificate correttamente appartenenti a questa classe. Analogamente anche per le altre classi si ha un calo nella sensibilità. Tuttavia, le misurazioni ottenute sono discrete. Per quanto riguarda la specificità, analogamente alla precisione, per tutte le classi si registra il miglior risultato possibili eccetto per la classe pareggio dove la specificità è pari a 0.54 poiché, 26 osservazioni vengono erroneamente classificate con la classe pareggio.
 
 

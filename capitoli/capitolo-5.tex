@@ -201,7 +201,7 @@ Confrontando ancora le prime due squadre cioè Milan e Inter, la loro differenza
 
 
 \section{Modello Bradley-Terry e LASSO}
-Nella sezione precedente si sono presentati i risultati ottenutiel modello Bradley-Terry con l'inserimento di covariate con effetto specifico dell'oggetto. È però di interesse per le nostre analisi capire in che modo ogni singola covariata sia determinante nell'esito della partita a seconda della squadra in esame. Per esempio, è possibile che il possesso della palla possa essere determinante per una squadra mentre per un'altra no. A tale scopo si applicherà il modello (\ref{for:4.9}) utilizzando covariate specifiche del soggetto e dell'oggetto. Ovviamente con l'inserimento di questo tipo di covariate il modello sarà estremante complesso, essendo basato su 520 covariate. Di conseguenza sarà applicata una selezione delle covariate operata attraverso il metodo \emph{LASSO} illustrato nel Capitolo \ref{cap:BT}. Sempre attraverso il \emph{LASSO} sarà di interesse individuare clusters di squadre che per una certa covariata hanno un effetto simile. Allo stesso tempo si cercherà di individuare quali squadre invece si discostano maggiormente da questi clusters.\\
+Nella sezione precedente si sono presentati i risultati ottenuti nel modello Bradley-Terry con l'inserimento di covariate con effetto specifico dell'oggetto. È però di interesse per le nostre analisi capire in che modo ogni singola covariata sia determinante nell'esito della partita a seconda della squadra in esame. Per esempio, è possibile che il possesso della palla possa essere determinante per una squadra mentre per un'altra no. A tale scopo si applicherà il modello (\ref{for:4.9}) utilizzando covariate specifiche del soggetto e dell'oggetto. Ovviamente con l'inserimento di questo tipo di covariate il modello sarà estremante complesso, essendo basato su 520 covariate. Di conseguenza sarà applicata una selezione delle covariate operata attraverso il metodo \emph{LASSO} illustrato nel Capitolo \ref{cap:BT}. Sempre attraverso il \emph{LASSO} sarà di interesse individuare clusters di squadre che per una certa covariata hanno un effetto simile. Allo stesso tempo si cercherà di individuare quali squadre invece si discostano maggiormente da questi clusters.\\
 Purtroppo, non è stato possibile riportare gli SE delle stime a causa dell'elevata complessità del procedimento di calcolo. Questo è possibile solo attraverso la procedura di tipo \emph{bootstrap} \autocite{henderson2005bootstrap}, molto onerosa in termini computazionali, soprattutto con un numero elevato di covariate.\\
 Nella Figura \ref{tab:BTCL} e nelle Tabelle \ref{tab:BTCL2} e \ref{tab:BTCL3} vengono riportate le stime dei parametri delle abilità e delle covariate per ogni singola squadra. Si noti che non tutte le covariate hanno un’unica stima per tutte le squadre, ma in alcuni casi ci sono più stime per alcune covariate. Perciò, per ogni stima del parametro di una covariata verrà indicata quale squadra ha tale valore stimato. Nell'analisi dei risultati spesso si farà un confronto con i risultati ottenuti con il modello della sezione precedente.\\%stacca
 Nella Figura \ref{tab:BTCL} si può notare che le abilità stimate tramite \emph{LASSO} sono quasi sempre  in linea con il piazzamento reale, migliorando perciò le prestazione del modello rispetto al modello con effetto specifico dell'oggetto stimato nella sezione precedente.\\
@@ -513,7 +513,7 @@ Nella Tabella \ref{tab:BTCLI2} e nella Tabella \ref{tab:BTCLI3} vengono riportat
 		MPCmp\% & -0.236 & Tutti tranne Udinese \\		
 		LPAtt & 0.178 & Tutti \\
 		LPCmp\% & 0.016 & Hellas Verona \\
-		LPCmp\% & 0.000 & Tutti tranne Verona \\
+		LPCmp\% & 0.000 & Tutti tranne Hellas Verona \\
 		ToDefPen & 0.080 & Tutti \\      
 		ToDef3rd & 0.024 & Tutti \\
 		
@@ -692,7 +692,7 @@ La capacità predittiva di un modello sarà valutata come segue:
 	\item \texttt{Specificità}. Indica il rapporto tra il numero di predizioni identificate correttamente con una categoria diversa dalla categoria \emph{k} e il numero totale delle osservazioni classificate con una categoria diversa dalla categoria \emph{k} con \emph{k $\in$ \{1,....,K\}}.
 \end{itemize}
 Nella Figura \ref{fig:pre} sono mostrate le classificazione ottenute sulle 80 partite del \emph{test set} per ogni modello e per la predizione dei \emph{bookmakers}.
-\begin{figure}[]
+\begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale = 0.60]{tabpre.png}
 		\caption{La prima tabella indica le predizioni di 80 partite fatte dal modello (\ref{for:3.1}), la seconda dal modello (\ref{for:5.1}), la terza dal modello (\ref{for:4.9}), la quarta dal modello (\ref{for:5.2}) e la quinta dai \emph{bookmakers}. La classe 1 indica la vittoria della squadra in casa, la classe 2 indica il pareggio tra le due squadre, la classe 3 indica la vittoria della squadra ospite. Con \textsf{ResOss} si indicano le classificazioni effettive mentre con \textsf{ResPre} le classificazioni effettuate.}\label{fig:pre}

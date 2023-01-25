@@ -11,7 +11,7 @@
 %*************************************************************
 
 \section{Preprocessing dei dati}
-Dopo aver importato il \emph{dataset}, il primo step da effettuare durante il prepocessing è individuare e risolvere possibili anomalie nei dati.\\
+Dopo aver importato il \emph{dataset}, il primo step da effettuare durante il \emph{prepocessing} è individuare e risolvere possibili anomalie nei dati.\\
 Il dataset non ha valori mancanti. Questo è stato possibile grazie a \texttt{\cite{fbref}} che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\ 
 Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
 Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. Infatti, \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Perciò, \texttt{Team} e \texttt{Vs} devono essere interpretate come un fattore cioè come un valore non numerico espresso in termini verbali, ad esempio una categoria; quindi nel nostro contesto ogni squadra sarà un livello del fattore. Analogamente, \texttt{AtHome} è stata trasformata in un fattore a due livelli. Invece, \texttt{Res} è stato trasformato in un fattore ordinato con i livelli: -1 = sconfitta <  0 = pareggio < 1 = vittoria, dove la vittoria ha la massima preferenza.

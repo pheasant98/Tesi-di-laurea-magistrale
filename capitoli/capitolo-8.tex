@@ -3,7 +3,7 @@
 % !TEX root = ../tesi.tex
 
 %**************************************************************
-\chapter{Modello Bradley-Terry e i numeri di gol }
+\chapter{Modello Bradley-Terry e il numero di gol }
 \label{cap:extraDM}
 %**************************************************************
 \intro{In questo capitolo si illustreranno i risultati ottenuti con il modello Bradley-Terry (\ref{for:4.9}) con una variabile risposta a cinque categorie legate al numero di gol segnati dalle squadre durante le partite.
@@ -23,7 +23,7 @@ Nel Capitolo \ref{cap:risultatiDM} si era sottolineato che i risultati ottenuti 
 \end{equation}
 
 \section{Modello Bradley-Terry con Y=5 e Lasso}
-I risultati ottenuti dal modello (\ref{for:4.9}) con \emph{Y = 5} sono presentanti nella Figura \ref{tab:BTCL5} e nelle Tabelle \ref{tab:BTCL25} e \ref{tab:BTCL35}. Inoltre, i risultati ottenuti sono frutto di un parametro di tuning $\lambda$ pari a 1.308 scelto attraverso la Cross Validation.
+I risultati ottenuti dal modello (\ref{for:4.9}) con \emph{Y = 5} sono presentanti nella Figura \ref{tab:BTCL5} e nelle Tabelle \ref{tab:BTCL25} e \ref{tab:BTCL35}.
 \begin{sidewaysfigure} 
 	\centering
 	\begin{center}
@@ -174,6 +174,14 @@ Per quanto riguarda le variabili esplicative difensive, il numero di intercetti 
 	\end{center}
 \end{figure}
 Ora che \emph{Y = 5} ci sono due soglie in più, per cui la stima delle soglie $\theta_1$, $\theta_2$, $\theta_3$ e $\theta_4$ valgono rispettivamente -3.114, 3.114, -1.094 e 1.094.\\
+Inoltre, i risultati ottenuti sono frutto di un parametro di tuning $\lambda$ pari a 1.308 scelto attraverso la  K-Fold Cross Validation. Nella Figura \ref{fig:lambda3} è mostrato l'andamento delle prestazioni del modello su tutti i valori assunti dal parametro di tuning $lambda$ durante l'operazione di K-Fold Cross Validation.
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[height=8cm, width=13cm]{CVBTL5.png}
+		\caption{Grafico dell'andamento delle prestazioni del modello (\ref{for:4.9}) con \emph{Y = 5}, su tutti i trenta valori assunti dal parametro di tuning, indicato con il simbolo $\lambda$, durante l'applicazione di K-Fold Cross Validation. L'andamento viene valutato in termini di Ranked Probability Score (RPS). La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo da utilizzare.} \label{fig:lambda3}
+	\end{center}
+\end{figure}
+La K-Fold Cross Validation utilizzata prevedeva l'uso di 10 gruppi (k = 10) e di trenta valori diversi per $lambda$. Successivamente, i risultati ottenuti dal modello applicando i trenta diversi valori del parametro di tuning, sono stati confrontati in termini di RPS. Si nota che con il diminuire della penalizzazione il modello registra una RPS che migliora fino a quando la penalizzazione diventa troppo debole, causando un peggioramento delle prestazioni. Si è scelto perciò, il $lambda$ indicato dalla linea rossa tratteggiata.\\
 Per riassumere, si analizzano i percorsi delle norme L2 che rappresentano l'importanza complessiva dei singoli effetti delle covariate. Tali percorsi sono visibili nella Figura \ref{fig:IL52}.
 \begin{figure}[]
 	\begin{center}
@@ -183,6 +191,8 @@ Per riassumere, si analizzano i percorsi delle norme L2 che rappresentano l'impo
 \end{figure}
 Gli andamenti ottenuti nella Figura \ref{fig:IL52} sono molto simili a quelli visti nella Figura \ref{fig:l2BTCL}. Infatti \texttt{G/Sh}, \texttt{SoT} e \texttt{Sh} si confermano ancora fortemente associati all'esito della partita. Analogamente anche per \texttt{Home}. Si segnala un aumento di importanza per le covariate \texttt{ToAttPen} e \texttt{Recov}, in termini di diminuzione della probabilità di vittoria. Viceversa, invece, un si ha un calo d'importanza per \texttt{Saves}, \texttt{Crs}, \texttt{TklWin} e \texttt{Off}. Si riconfermano ancora poco significative le variabili riguardanti i passaggi fatta eccezione anche questa volta di \texttt{LPAtt}. Anche \texttt{Int} si conferma poco significato, analogamente anche \texttt{Poss}.
 Pertanto, nel complesso, quanto ricavato del modello (\ref{for:4.9}) con \emph{Y = 3} ora trova conferma anche con la variante \emph{Y = 5}.
+
+
 \section{Predizioni}
 Come fatto nel Capitolo \ref{cap:risultatiDM}, in questa sezione si vuole valutare le prestazioni nella fase di predizione del modello (\ref{for:4.9}) con \emph{Y = 5}.\\
 Nella Figura \ref{fig:pre2} sono mostrate le classificazione ottenute sulle 80 partite del \emph{test set}.

@@ -80,7 +80,7 @@ Il sito web \textit{\cite{fbref}} mette a disposizione i dati sotto forma di tab
 		\label{fig:logo}
 	\end{center}
 \end{figure}
-Dunque, per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A, sono state esportate le variabili di interesse per ogni partita giocata, selezionando le macroaree opportune e adattando le tabelle per ottenere solo i dati utili. Le varie tabelle hanno composto un file Excel divenuto il \emph{dataset} per le analisi svolte nelle tesi.
+Dunque, per ogni squadra che ha partecipato alla stagione 2021/2022 di Serie A, sono state esportate le variabili di interesse per ogni partita giocata, selezionando le macro-aree opportune e adattando le tabelle per ottenere solo i dati utili. Le varie tabelle hanno composto un file Excel divenuto il \emph{dataset} per le analisi svolte nelle tesi.
 
 \section{Struttura del dataset}
 Il \emph{dataset} risultante dalla raccolta dati è composto da 760 righe e 35 colonne. Ogni riga riguarda una specifica partita di calcio giocata dalla squadra indicata nella colonna \textsf{Team} contro la squadra indicata nella colonna \textsf{Vs}. Ogni riga contiene informazioni riguardati solo la squadra indicata in \textsf{Team} fatta eccezione per la data della partita (\textsf{Date}), il turno (\textsf{Round}) e gli spettatori (\textsf{Spec}). Quindi, per ogni partita esistono due righe, una per ciascuna squadra coinvolta. Come risultato finale, ogni squadra appare nella colonna \textsf{Team} 38 volte e, siccome il numero totale di squadre è 20, si ottengono 760 righe. %Per quanto riguarda le colonne se ne discuterà nella prossima sottosezione. \\
@@ -136,7 +136,7 @@ Le possibili covariate sono le seguenti:
 \begin{itemize}
 	\item \textsf{AtHome}: indica se la squadra specificata della variabile \textsf{Team} gioca nel proprio stadio, quindi in casa oppure fuori casa. Per indicare se la squadra gioca in casa viene messo come valore \texttt{TRUE} altrimenti \texttt{FALSE}. \\
 	Come mostrato dalla Figura \ref{fig:ranking}, la quale indica quanti punti sono stati vinti in casa per ogni squadra, ci sono 11 squadre che hanno avuto un leggero vantaggio nel giocare in casa le partite di calcio rispetto a altre sei squadre che hanno avuto l'effetto opposto, mentre le rimanti tre hanno avuto un effetto nullo.\\
-	\item \textsf{Res}: indica se la squadra specificata della variabile \textsf{Team} ha vinto, pareggiato o perso la partita. Per indicare se ha vinto viene inserito il valore 1, se ha pareggiato 0, altrimenti se ha perso -1. Res sarà la variabile risposta.
+	\item \textsf{Res}: indica se la squadra specificata della variabile \textsf{Team} ha vinto, pareggiato o perso la partita. Per indicare se ha vinto viene inserito il valore 1, se ha pareggiato 0, altrimenti se ha perso -1. \textsf{Res} sarà la variabile risposta.
 	\item \textsf{GF}: indica il numero di gol fatti dalla squadra specificata della variabile \textsf{Team}. \\
 	È stata inserita perché può permettere di valutare la qualità della fase offensiva della squadra e quindi ci si aspetta che possa essere utile ai fini dell'analisi.
 	\item \textsf{GA}: Indica il numero di gol subiti dalla squadra specificata della variabile \textsf{Team} e quindi fatti dalla squadra indicata nella variabile \textsf{Vs}. \\
@@ -180,7 +180,7 @@ In questo gruppo sono presenti le variabili collegata alla fase offensiva della 
 
 \subsection{Dati relati al possesso}
 
-In questo gruppo sono contenute le variabili collegate al possesso della palla 
+In questo gruppo sono contenute le variabili collegate al possesso della palla. 
 
 \begin{itemize}
 	
@@ -242,8 +242,7 @@ In questo gruppo sono contenute le variabili collegate al possesso della palla
 	\end{figure}
 	
 	\item \textsf{ToAttPen}: indica il numero di tocchi fatti dai giocatori della squadra specificata della variabile \textsf{Team} a nell'area di rigore dell'avversario. \\
-	Questa variabile è stata inserita perché può essere utile per capire come venga gestito il possesso della palla. Se vi è un alto numero di tocchi, vuol dire che la squadra cerca di mantenere il possesso palla applicando un'alta pressione sulla squadra avversaria affinché si possano creare molte occasioni da gol in area, viceversa o la squadra subisce troppo la pressione dell'avversario oppure tende ad avere un gioco molto difensivo. Questa variabile, in combinazione con le variabili \textsf{ToDefPen}, \textsf{ToDef3rd}, \textsf{ToMid3rd} e \textsf{ToAtt3rd} permette di capire se il possesso della palla fatto della squadra sia utile e porti benefici ai fini del risultato oppure sia sterile. Inoltre, si vuole capire in che misura\textsf{ToAttPen} influenza il risultato della partita con un alto o un basso valore di numero di tocchi nell'area di rigore dell'avversario.
-	
+	Questa variabile è stata inserita perché può essere utile per capire come venga gestito il possesso della palla. Se vi è un alto numero di tocchi, vuol dire che la squadra cerca di mantenere il possesso palla applicando un'alta pressione sulla squadra avversaria affinché si possano creare molte occasioni da gol in area, viceversa o la squadra subisce troppo la pressione dell'avversario oppure tende ad avere un gioco molto difensivo. Questa variabile, in combinazione con le variabili \textsf{ToDefPen}, \textsf{ToDef3rd}, \textsf{ToMid3rd} e \textsf{ToAtt3rd} permette di capire se il possesso della palla fatto della squadra sia utile e porti benefici ai fini del risultato oppure sia sterile. Inoltre, si vuole capire in che misura \textsf{ToAttPen} influenza il risultato della partita con un alto o un basso valore di numero di tocchi nell'area di rigore dell'avversario.
 	\item \textsf{ToDist}: Indica la distanza totale, espressa in metri, in cui un giocatore della squadra specificata della variabile \textsf{Team} si è mosso con la palla in qualsiasi direzione, controllandola con i piedi.\\
 	Questa variabile è stata inserita perché permette di comprendere se il possesso della palla sia stato statico, ovvero i giocatori si sono mossi poco senza avanzare, oppure no. Sarà di interesse analizzare se un alto valore di metri percorsi con palla al piede possa essere utile ad ottenere la vittoria.
 	

@@ -14,7 +14,7 @@
 Dopo aver importato il \emph{dataset}, il primo step da effettuare durante il \emph{prepocessing} è individuare e risolvere possibili anomalie nei dati.\\
 Il dataset non ha valori mancanti. Questo è stato possibile grazie a \texttt{\cite{fbref}} che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\ 
 Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
-Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. Infatti, \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Perciò, \texttt{Team} e \texttt{Vs} devono essere interpretate come un fattore cioè come un valore non numerico espresso in termini verbali, ad esempio una categoria; quindi nel nostro contesto ogni squadra sarà un livello del fattore. Analogamente, \texttt{AtHome} è stata trasformata in un fattore a due livelli. Invece, \texttt{Res} è stato trasformato in un fattore ordinato con i livelli: -1 = sconfitta <  0 = pareggio < 1 = vittoria, dove la vittoria ha la massima preferenza.
+Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. Infatti, \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Perciò, \texttt{Team} e \texttt{Vs} devono essere interpretate come un fattore cioè come un valore non numerico espresso in termini verbali, ad esempio una categoria. Quindi, nel nostro contesto ogni squadra sarà un livello del fattore. Analogamente, \texttt{AtHome} è stata trasformata in un fattore a due livelli. Invece, \texttt{Res} è stato trasformato in un fattore ordinato con i livelli: -1 = sconfitta <  0 = pareggio < 1 = vittoria, dove la vittoria ha la massima preferenza.
 
 
 \section{Analisi grafica dei dati}
@@ -28,7 +28,7 @@ Come primo passo, è stata valutata la distribuzione della variabile risposta \t
 	\end{center}
 \end{figure}
 Si può notare come le classi sembrino ben distribuite, dato che abbiamo 196 pareggi e 282 vittorie e altrettante sconfitte. Si ha quindi un campione abbastanza ampio, distribuito e privo di classi povere.\\
-La Figura \ref{fig:team} mostra la distribuzione delle vittorie, dei pareggi e delle sconfitte per ogni squadra.
+La Figura \ref{fig:team} mostra la distribuzione delle vittorie, dei pareggi e delle sconfitte per ogni squadra. 
 
 \begin{sidewaysfigure} 
 	\centering
@@ -38,7 +38,14 @@ La Figura \ref{fig:team} mostra la distribuzione delle vittorie, dei pareggi e d
 	\end{center}
 \end{sidewaysfigure} 
 
-
+Successivamente si è valutata la distribuzione dei gol ovvero, la frequenza del numero di gol a partita distinguendo i gol per la squadra in casa e per quella ospite. La Figura \ref{fig:goal} mostra la distribuzione del numero di gol.
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[scale=0.40]{goal.png}
+		\caption{Barplot della distribuzione del numero di gol a partita. In azzurro vengono indicati i gol per la squadra in casa mentre in rosa i gol per la squadra ospite} \label{fig:goal}
+	\end{center}
+\end{figure}
+Il grafico \ref{fig:goal} riporta che la squadra in casa ha segnato in più partite un gol e due gol rispetto alla squadra ospite. Inoltre, l'evento in cui la squadra in casa non segna nessun gol ha una frequenza nettamente inferiore a quella della squadra ospite. Tuttavia, si nota una certa tendenza delle partite a finire con pochi gol, al massimo due gol per squadra.
 \subsection{Relazione tra la variabile risposta e le covariate}
 
 La prima relazione che si analizza riguarda la variabile categorica \texttt{AtHome}. Nella Figura \ref{fig:AtHome} viene riportato il mosaicplot tra la variabile risposta \texttt{Res} e \texttt{AtHome}. Tale grafico è un particolare tipo di diagramma a barre impilate che mostra la relazione che c'è tra due fattori. Il numero di colonne è uguale al numero livelli della variabile inserita sull'asse orizzontale. L'altezza delle barre in verticale, invece, è proporzionale al numero di osservazioni della variabile inserita sull'asse verticale per ciascun livello della variabile nell'asse orizzontale.
@@ -146,7 +153,7 @@ Infine nella Figura \ref{fig:recov} viene riportato il boxplot della distribuzio
 
 \subsection{Analisi possibili interazioni} 
 Per concludere l'attività di preprossening, non resta che analizzare le relazioni tra le covariate per individuare possibili interazioni tra di loro che possono influenzare la variabile risposta. Chiaramente dato che ci sono più di trenta variabili e dunque, un grandissimo numero di combinazioni, non si sono esaminate tutte le relazioni ma sono state selezionate solo alcune per l'analisi, basandosi su teorie calcistiche esaminate durante la fase di studio del problema.\\
-Per l'analisi delle interazioni si sono utilizzati i grafici di dispersione. Un grafico di dispersione mostra la relazione tra due variabili continue. A tali grafici si è inserito una terza variabile, la variabile risposta \texttt{Res}, dove ogni punto è colorato in tre possibili colori che rappresentano una delle tre categorie di \texttt{Res}. Di conseguenza il grafico permette di visualizzare se le categorie sono ben separati e quindi se un'interazione può spiegare l'andamento dei punti della variabile risposta.\\
+Per l'analisi delle interazioni si sono utilizzati i grafici di dispersione. Un grafico di dispersione mostra la relazione tra due variabili continue. A tali grafici si è inserito una terza variabile, la variabile risposta \texttt{Res}, dove ogni punto è colorato in tre possibili colori che rappresentano una delle tre categorie di \texttt{Res}. Di conseguenza il grafico permette di visualizzare se le categorie sono ben separate e quindi se un'interazione può spiegare l'andamento dei punti della variabile risposta.\\
 Inoltre, è stato utilizzato l'indice di correlazione, che indica la forza dell'associazione lineare espressa in valori compresi tra -1 e 1. Tale misura permette di escludere da subito alcune relazioni tra variabili se l'indice è troppo alto o basso, infatti, le relazioni troppo forti vanno escluse perché possono generare il fenomeno della collinearità. La collinearità è quel fenomeno che va a nasconde il legame tra le variabili e la variabile risposta, a causa di un legame troppo forte tra le covariate.\\
 Nella Figura \ref{fig:cor} viene mostrato il valore della correlazione per ogni possibile relazione tra variabili numeriche. Si nota che ci sono molte relazioni che hanno un valore di correlazione molto vicino a 1, in basso a sinistra del grafico. Ad esempio notiamo che la variabile \texttt{SPCmp\%} ha una relazione molto forte con la variabile \texttt{PCmp\%} (correlazione = 0.82), ciò è coerente perché, la variabile \texttt{SPCmp\%} contiene solo i passaggi corti completati mentre \texttt{PCmp\%} contiene tutti i tipi di passaggi completati, ne consegue che la ridondanza dei dati causa questa alta correlazione. Analogamente la stessa motivazione la si può applicare tra la variabile \texttt{PAtt} e la variabile \texttt{SPAtt} (correlazione = 0.91). Perciò tale motivazione è applicabile a tutte le variabili relative ai passaggi completati o relative ai passaggi tentati.
 \begin{figure}[htbp]
@@ -286,7 +293,7 @@ Infine sono state individuate le seguenti interazioni:
 \section{Ulteriori modifiche del dataset}
 
 Nelle sezioni precedenti si è descritto come si è costruito il \emph{dataset} e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il \emph{dataset} di facile interpretazione, ma deve essere riadattato per poter utilizzare le funzioni del pacchetto \textit{\cite{bt2}} e del pacchetto \textit{\cite{btl}}.\\ 
-Innanzitutto la variabile risposta \texttt{Res} viene modificata in modo tale che valga le seguenti condizioni
+Innanzitutto la variabile risposta \texttt{Res} viene modificata in modo tale che valgano le seguenti condizioni
 \begin{equation}
 	Res =
 	\begin{cases}
@@ -299,7 +306,7 @@ La variabile risposta \texttt{Res} rimane ancora un fattore ordinato.\\
 Di seguito vengono presentate le modifiche effettuate specifiche per i due pacchetti.
 \subsection{Modifiche per il pacchetto BradleyTerry2}
 Innanzitutto il modello richiede che le due variabili \texttt{Team} e \texttt{Vs} siano di tipo fattore oppure che costituiscano un \textsf{data.frame}. Un \textsf{data.frame} è una raccolta di vettori di osservazioni che devono avere tutti la stessa lunghezza ma possono essere di tipo diverso: variabili nominali (fattori) o variabili numeriche.
-Le variabili \textsf{Team} e \textsf{Vs} sono state trasformate in \texttt{data.frame} in modo da poter inserire al loro interno tutte le variabili descritte nella sezione precedente.Inoltre, i valori della variabile \texttt{AtHome} sono stati converti in 1 se \texttt{TRUE} mentre in 0 se \texttt{FALSE}.\\
+Le variabili \textsf{Team} e \textsf{Vs} sono state trasformate in \texttt{data.frame} in modo da poter inserire al loro interno tutte le variabili descritte nella sezione precedente. Inoltre, i valori della variabile \texttt{AtHome} sono stati converti in 1 se \texttt{TRUE} mentre in 0 se \texttt{FALSE}.\\
 Per poter creare i due \texttt{data.frame} occorre raccogliere le informazioni sulle partite giocate fuori casa dalle squadre indicate nella variabile \texttt{Team}. Con la funzione \ref{code:a1} viene implementato ciò in R. La definizione è la seguente.\\
 Innanzitutto viene creato un vettore vuoto per ogni variabile presente nel \emph{dataset}, ad eccezione di \textsf{AtHome} che verrà gestita in un modo diverso. Viene creato il vettore \texttt{del} che tiene traccia di quali osservazioni saranno da eliminare. Si eliminano le osservazioni delle partite giocate fuori casa dalle squadre indicate nella variabile \texttt{Team} perché dopo le modifiche saranno ridondanti. La variabile \texttt{k} è l'indice usato per scorre il \emph{dataset} per trovare i dati dell'avversario. La variabile \texttt{z} è l'indice usato per inserire un nuovo elemento nel vettore \texttt{del}. Il funzionamento è il seguente.\\
 Il primo ciclo \texttt{for} scorre tutto il \emph{dataset} alla ricerca delle righe con i dati delle partite giocate in casa dalla squadra indicata in \texttt{Team} infatti, al suo interno il primo costrutto \texttt{if} controlla se la partita è in casa per \texttt{Team} se sì, parte un secondo ciclo \texttt{for} che anche esso scorre tutto il \emph{dataset} per cercare la riga con la partita giocata della squadra indicata in \texttt{Vs}. All'interno del secondo ciclo \texttt{for} c'è un costrutto \texttt{if} che controlla se la j-esima riga si riferisce alla stessa partita indicata nella i-esima riga, se sì allora si salvano tutti i dati nei vettori e si incrementa l'indice \texttt{k}. Se il primo \texttt{if} da esito negativo allora si andrà a inserire l'indice dell'i-esima riga nel vettore \texttt{del} perché contiene informazioni di una partita giocata fuori casa dalla squadra indicata in \textsf{Team} e viene incrementato l'indice di uno \texttt{z}.\\

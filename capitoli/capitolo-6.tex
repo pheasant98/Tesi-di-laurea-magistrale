@@ -9,17 +9,17 @@
 \intro{Questo capitolo illustrerà i metodi di \emph{machine learning} che sono stati utilizzati per la predizione degli esiti delle partite di calcio della Seria A italiana della stagione 2021/2022. Purtroppo, non è stato possibile applicare metodi di \emph{machine learning} che corrispondessero al modello \emph{Bradley-Terry} perché, nonostante esistano metodi in \emph{machine learning} che forniscono modelli basati sul modello \emph{Bradley-Terry}, essi non sono in grado di gestire l'esito del pareggio ma solo un esito binario. Ne consegue che tali metodi non sono adatti per contesti come il calcio ma ad altri tipi di sport dove il pareggio non è previsto come il \emph{baseball}. I metodi di \emph{machine learning} considerati sono: il K-Nearest-Neighbors (K-NN), la Support Vector Machine (SVM), gli alberi di decisione per la classificazione, la Random Forest e infine l'AdaBoost.
 }
 \section{Componenti essenziali}
-In questa sezione vengono definite alcune misure e tecniche che sono necessarie l'applicazione dei metodi di \emph{machine learning} applicati.
+In questa sezione vengono definite alcune misure e tecniche che sono necessarie per l'applicazione dei metodi di \emph{machine learning} applicati.
 \subsection{Distanza di Minkowski}
 La distanza di Minkowski (vedi \textit{\cite{minkdist}}) è una misura utilizzata per la valutazione della distanza ovvero, nel nostro contesto, della somiglianza tra due punti in uno spazio di \textit{n}-dimensioni. La distanza di Minkowski di ordine \emph{d} tra due punti A = (a$_1$,...a$_n$) e B = (b$_1$,...b$_n$) è definita come
 \begin{center}
 	$Dist(A,B) =  \left(\sum_{i = 1}^{n}|a_i-b_i|^d\right)^{1/d} $.
 \end{center}
 
-Si sottolinea che per d = 1, la distanza utilizzata è la distanza di Manhattan (vedi\textit{\cite{manhattan}}), ovvero la distanza tra due punti è la somma del valore assoluto delle differenze delle loro coordinate. Quando d = 2, è applicata la distanza Euclidea (vedi \textit{\cite{euclidea}}), secondo la quale la distanza tra due punti è la lunghezza del segmento con agli estremi i due punti d'interesse.
+Si sottolinea che per d = 1, la distanza utilizzata è la distanza di Manhattan (vedi \textit{\cite{manhattan}}), ovvero la distanza tra due punti è la somma del valore assoluto delle differenze delle loro coordinate. Quando d = 2, è applicata la distanza Euclidea (vedi \textit{\cite{euclidea}}), secondo la quale la distanza tra due punti è la lunghezza del segmento con agli estremi i due punti d'interesse.
 Tale misura sarà utilizzata nel metodo K-Nearest-Neighbors (K-NN).
 \subsection{Funzione kernel}
-Nel contesto dell'apprendimento automatico, la \textit{\cite{kernel}} permette di trasformare uno spazio di input non linearmente separabile in un nuovo spazio delle istanze di input detto \emph{feature space} di dimensione superiore rispetto a quello originale e tale da diventare linearmente separabile. Per spazio linearmente separabile si intende un iperpiano in grado di separare correttamente i dati in due gruppi distinti. Perciò, aumentando la dimensionalità dello spazio d'interesse è possibile trovare la dimensione opportuna che permetta di separare linearmente i dati. Tale applicazione è chiamata \emph{kernel trick}. Una funzione kernel è una funzione \emph{K} che per ogni \emph{x}, \emph{y} $\in \chi$, dove $\chi$ è lo spazio di input di dimensione \emph{n}, vale 
+Nel contesto dell'apprendimento automatico, la funzione kernel (vedi \textit{\cite{kernel}}) permette di trasformare uno spazio di input non linearmente separabile in un nuovo spazio delle istanze di input detto \emph{feature space} di dimensione superiore rispetto a quello originale e tale da diventare linearmente separabile. Per spazio linearmente separabile si intende che esiste un iperpiano in grado di separare correttamente i dati in due gruppi distinti. Perciò, aumentando la dimensionalità dello spazio d'interesse è possibile trovare la dimensione opportuna che permetta di separare linearmente i dati. Tale applicazione è chiamata \emph{kernel trick}. Una funzione kernel è una funzione \emph{K} che per ogni \emph{x}, \emph{y} $\in \chi$, dove $\chi$ è lo spazio di input di dimensione \emph{n}, vale 
 \begin{center}
 	$K(x,y) =  \langle\psi(x),\psi(y)\rangle $,
 \end{center}
@@ -46,7 +46,7 @@ La funzione kernel sarà utilizza nella Support Vector Machine (SVM).
 
 \subsection{Bootstrap}
 In statistica e nell'apprendimento automatico, per Bootstrap (vedi \textit{\cite{bootstrap}}) si intende una tecnica di ricampionamento per la generazione di un insieme di campioni di \emph{m} osservazioni contenute in un dataset di dimensione \emph{n}. Ogni estrazione è casuale e con reinserimento, cioè un’osservazione può essere presente in più campioni. Tale tecnica è utilizzata per produrre un insieme di campioni che siano il più possibile rappresentativi e indipendenti tra di loro.\\
-Nella Figura \ref{fig:bootstrap} viene mostrato un esempio della procedura di Bootstrap
+Nella Figura \ref{fig:bootstrap} viene mostrato un esempio della procedura di Bootstrap.
 
 \begin{figure}[h]
 	\begin{center}
@@ -60,9 +60,9 @@ Nella Figura \ref{fig:bootstrap} viene mostrato un esempio della procedura di Bo
 \subsection{Bagging}
 Il Bagging \autocite{breiman1996bagging} detto anche \emph{Bootstrap Aggregation Approach}, è una tecnica di \emph{ensemble learning} di tipo parallelo che dalla mediazione di più predizioni fatte da un insieme di classificatori deboli ottiene un'unica predizione finale. È di tipo parallelo perché va a sfruttare l'indipendenza dei classificatori. La procedura applicata è la seguente:
 \begin{itemize}
-	\item creazione di \emph{k} campioni utilizzando la tecnica di Bootstrap,
-	\item per ogni campione, allenare un classificatore,
-	\item produrre una predizione per ogni classificatore allenato,
+	\item creazione di \emph{k} campioni utilizzando la tecnica di Bootstrap;
+	\item per ogni campione, allenare un classificatore;
+	\item produrre una predizione per ogni classificatore allenato;
 	\item ottenere una media delle predizioni per avere una predizione finale.
 \end{itemize} 
 Una tecnica per ottenere una media è, ad esempio, il \emph{voting} secondo il quale la classe più predetta sarà il risultato dalla predizione finale. Inoltre, si utilizza il Bootstrap per rendere i classificatori indipendenti tra di loro.
@@ -83,7 +83,7 @@ Il Boosting \autocite{freund1996experiments} è una tecnica di \emph{ensemble le
 La procedura completa è la seguente:
 \begin{itemize}
 	\item viene utilizzato l'intero \emph{dataset} per allenare un classificatore debole;
-	\item vengono ripesati gli esempi di \emph{training} dando un peso maggiore a quei esempi classificati erroneamente, viceversa per gli esempi classificati correttamente,
+	\item vengono ripesati gli esempi di \emph{training} dando un peso maggiore a quei esempi classificati erroneamente, viceversa per gli esempi classificati correttamente;
 	\item ripetere per \emph{n} volte i passi precedenti con un nuovo classificatore con i pesi aggiornati;
 	\item combinare tutte le ipotesi semplici in un unico classificatore accurato per ottenerne il risultato finale.
 \end{itemize}
@@ -102,7 +102,7 @@ Nella Figura \ref{fig:boosting} viene illustrata la procedura di Boosting.
 \end{figure}
 
 \section{K-Nearest-Neighbors}
-Il K-Nearest-Neighbors (K-NN) \autocite{dasarathy1991nearest} è un algoritmo di apprendimento automatico di tipo supervisionato che permette la classificazione delle istanze ricevute in input. Inoltre, ne esiste una versione per problemi di regressione. Il K-NN assume che tutte le istanze corrispondano a punti in uno spazio di dimensionalità \emph{n} e utilizza la prossimità tra i vari punti per classificarli, ossia classifica l'istanza con la classe maggiormente presente tra i punti attorno all'istanza stessa, detti punti vicini. Fondamentale, perciò, è l'utilizzo di una qualche tecnica di misurazione della distanza per individuare chi sono i vicini dell'istanza da classificare, ossia la distanza tra il nostro punto d'interesse rispetto a tutti gli altri punti. La misura di distanza maggiormente utilizzata è la distanza di Minkowski definita nella sezione precedente. Misurati tutti i punti, occorre stabilire poi quanti dei punti presenti devono essere considerati vicini. A questo scopo, va fissato il valore di \emph{k}, iperparametro dell'algoritmo che stabilisce di considerare solo i \emph{k} punti più vicini all'istanza da classificare. Per esempio, se \emph{k = 3}, si considerano i tre punti più vicini e si classifica l'istanza con la classe più frequente tra i tre punti considerati. È importante scegliere il corretto valore di \emph{k}, dato il rischio di \emph{overfitting}, nel caso si considerino punti troppi vicini, o \emph{underfitting}, nel caso si considerino pochi punti vicini. Infatti, con valori più bassi di \emph{k} può verificarsi un'elevata varianza e una distorsione bassa, mentre con valori più grandi di \emph{k} può verificarsi un'elevata distorsione e una varianza bassa delle predizioni. Una buona soluzione per la scelta dell'iperparametro \emph{k}, così come dell'ordine \emph{p} della distanza da utilizzare, è la Cross Validation.\\
+Il K-Nearest-Neighbors (K-NN) \autocite{dasarathy1991nearest} è un algoritmo di apprendimento automatico di tipo supervisionato che permette la classificazione delle istanze ricevute in input. Inoltre, ne esiste una versione per problemi di regressione. Il K-NN assume che tutte le istanze corrispondano a punti in uno spazio di dimensionalità \emph{n} e utilizza la prossimità tra i vari punti per classificarli, ossia classifica l'istanza con la classe maggiormente presente tra i punti attorno all'istanza stessa, detti punti vicini. Fondamentale, perciò, è l'utilizzo di una qualche tecnica di misurazione della distanza per individuare chi sono i vicini dell'istanza da classificare, ossia la distanza tra il nostro punto d'interesse rispetto a tutti gli altri punti. La misura di distanza maggiormente utilizzata è la distanza di Minkowski definita nella sezione precedente. Misurati tutti i punti, occorre stabilire poi quanti dei punti presenti devono essere considerati vicini. A questo scopo, va fissato il valore di \emph{k}, iperparametro dell'algoritmo che stabilisce di considerare solo i \emph{k} punti più vicini all'istanza da classificare. Per esempio, se \emph{k = 3}, si considerano i tre punti più vicini e si classifica l'istanza con la classe più frequente tra i tre punti considerati. È importante scegliere il corretto valore di \emph{k}, dato il rischio di \emph{overfitting}, nel caso si considerino troppi punti vicini, o \emph{underfitting}, nel caso si considerino pochi punti vicini. Infatti, con valori più bassi di \emph{k} può verificarsi un'elevata varianza e una distorsione bassa, mentre con valori più grandi di \emph{k} può verificarsi un'elevata distorsione e una varianza bassa delle predizioni. Una buona soluzione per la scelta dell'iperparametro \emph{k}, così come dell'ordine \emph{p} della distanza da utilizzare, è la Cross Validation.\\
 Nella Figura \ref{fig:knn} è mostrato un esempio di applicazione dell'algoritmo K-NN.\\
 \begin{figure}[h]
 	\begin{center}
@@ -119,7 +119,7 @@ Il K-NN è un algoritmo di classificazione non parametrico, ovvero non fa alcuna
 addestramento si limita soltanto a memorizzare i dati di \emph{training}, dato che li utilizza direttamente per fare predizione. Purtroppo, però, la fase di predizione può essere lenta, poiché è necessario calcolare la distanza di ogni osservazione dall'istanza da classificare, con un costo computazionale crescente se vi sono molti dati.
 
 \section{Support Vector Machine}
-La Support Vector Machine (SVM) \autocite{GHOLAMI2017515} è un algoritmo di apprendimento automatico di tipo supervisionato applicabile in contesti di classificazione. La SVM considera le istanze del \emph{dataset} come punti in uno spazio di dimensionalità \emph{n} è il suo obbiettivo è quello di costruire l'iperpiano ottimo che separi in due classi le osservazioni. L'iperpiano ottimo viene scelto in modo tale da ottenere il maggior margine possibile tra le due classi, ovvero il maggior spazio possibile tra le osservazioni di ciascuna classe e l'iperpiano. Il nome di quest'algoritmo deriva dall'utilizzo dei vettori detti vettori di supporto. Questi vettori sono le istanze che si trovano più vicino all'iperpiano ovvero quelli più difficili da classificare e quindi danno un grosso contributo alla costruzione dell'iperpiano rispetto alle altre osservazioni. Perciò per massimizzare la distanza tra l'iperpiano e i punti di entrambe le classi, occorre risolvere il seguente problema di ottimizzazione vincolata, 
+La Support Vector Machine (SVM) \autocite{GHOLAMI2017515} è un algoritmo di apprendimento automatico di tipo supervisionato applicabile in contesti di classificazione. La SVM considera le istanze del \emph{dataset} come punti in uno spazio di dimensionalità \emph{n} è il suo obbiettivo è quello di costruire l'iperpiano ottimo che separi in due classi le osservazioni. L'iperpiano ottimo viene scelto in modo tale da ottenere il maggior margine possibile tra le due classi, ovvero il maggior spazio possibile tra le osservazioni di ciascuna classe e l'iperpiano. Il nome di quest'algoritmo deriva dall'utilizzo dei vettori detti vettori di supporto. Questi vettori sono le istanze che si trovano più vicino all'iperpiano ovvero quelli più difficili da classificare e quindi che danno un grosso contributo alla costruzione dell'iperpiano rispetto alle altre osservazioni. Perciò per massimizzare la distanza tra l'iperpiano e i punti di entrambe le classi, occorre risolvere il seguente problema di ottimizzazione vincolata, 
 \begin{align}
 	\text{min} & \frac{1}{2} \|\mathbf{w}\|^2 + C \, \sum_{i=1}^{n} (\xi_i) \label{for:6.3}
 \end{align}
@@ -139,7 +139,7 @@ Nella Figura \ref{fig:svm} è mostrato un esempio di applicazione dell'algoritmo
 		Source: \url{https://www.sciencedirect.com/science/article/pii/B9780128113189000272}\label{fig:svm}
 	\end{center}
 \end{figure}
-L'algoritmo SVM è grado di gestire anche spazi d'input non linearmente separabili, grazie all'utilizzo della funzione kernel definita nella sezione precedente. Tramite la Cross Validation si sceglierà il valore più opportuno per l'iperparametro \emph{C} e il tipo di kernel da applicare.
+L'algoritmo SVM è in grado di gestire anche spazi d'input non linearmente separabili, grazie all'utilizzo della funzione kernel definita nella sezione precedente. Tramite la Cross Validation si sceglierà il valore più opportuno per l'iperparametro \emph{C} e il tipo di kernel da applicare.
 
 \section{Decision Tree}
 Un Decision Tree \autocite{charbuty2021classification} è un algoritmo di apprendimento automatico di tipo supervisionato e non parametrico che utilizza una struttura ad albero per produrre le proprie predizioni. Tale albero contiene un insieme di nodi in cui, per ogni nodo, vi è un test su un attributo dell'osservazione da classificare. Perciò, ad ogni nodo, ci sarà una scelta da compiere in base al valore contenuto dell'attributo, che porterà verso un nuovo ramo oppure a una foglia. Le foglie contengono i risultati della classificazione. L'approccio utilizzato per la costruzione dell'albero di decisione è di tipo \emph{greedy}, cioè ogni scelta effettuata su un nodo è l'opzione più conveniente in quel momento. L'albero viene costruito in modalità \emph{top-down} secondo i seguenti passi:
@@ -170,9 +170,9 @@ Per scegliere l'attributo da valutare ad ogni nodo, si fa riferimento all'\emph{
 \end{align*} 
 dove $I_x$ è la regola scelta e $D_a=v$ è l'insieme delle istanze con valore \emph{v} nell'attributo \emph{a}.
 L'attributo che viene scelto per il test nel nodo è quello con il maggior valore nell'\emph{information gain}.\\
-Il Decision Tree è un modello facile da interpretare e utilizzare, tuttavia, può essere suscettibile all'\emph{overfitting}. È opportuno, perciò, attraverso la Cross Validation, scegliere il valore da assegnare all'iperparametro del limite della massima profondità dell'albero per limitarne la complessità.
+Il Decision Tree è un modello facile da interpretare e utilizzare, tuttavia, può essere suscettibile all'\emph{overfitting}. È opportuno, perciò, attraverso la Cross Validation, scegliere il valore da assegnare all'iperparametro del limite della massima profondità dell'albero per limitarne la complessità, oltre a scegliere quale regola di decisione utilizzare.
 \section{Random Forest}
-Il Random Forest \autocite{ho1995random} è un algoritmo di apprendimento automatico basato sull'utilizzo della tecnica di Bagging applicato ad un insieme di Decision Tree utilizzati per la classificazione. L'obbiettivo dell'algoritmo è ottenere una bassa correlazione tra gli alberi e quindi ridurre la varianza. Per tale motivo viene utilizzato il Bagging per addestrare gli alberi di decisione. Tramite con il Bootstrap viene quindi creata una serie di campioni di esempi di training, in cui ogni campione ha un sottoinsieme di attributi e viene utilizzato per addestrare un'albero di decisione. Una volta che sono stati costruiti gli alberi, viene fatta la predizione per ogni modello e, attraverso un algoritmo di mediazione, ad esempio il \emph{voting}, viene prodotta la predizione finale.\\
+Il Random Forest \autocite{ho1995random} è un algoritmo di apprendimento automatico basato sull'utilizzo della tecnica di Bagging applicato ad un insieme di Decision Tree utilizzati per la classificazione. L'obbiettivo dell'algoritmo è ottenere una bassa correlazione tra gli alberi e quindi ridurre la varianza. Per tale motivo viene utilizzato il Bagging per addestrare gli alberi di decisione. Tramite il Bootstrap viene quindi creata una serie di campioni di esempi di training, in cui ogni campione ha un sottoinsieme di attributi e viene utilizzato per addestrare un'albero di decisione. Una volta che sono stati costruiti gli alberi, viene fatta la predizione per ogni modello e, attraverso un algoritmo di mediazione, ad esempio il \emph{voting}, viene prodotta la predizione finale.\\
 La Random Forest è in grado di ridurre l'\emph{overfitting} che può verificarsi con l'utilizzo di un singolo albero di decisione. Tuttavia, richiede una quantità significativa di risorse computazionali per la costruzione dei singoli alberi di decisione e può essere meno interpretabile rispetto a un singolo albero di decisione.\\
 Nella Figura \ref{fig:forest} è mostrato un esempio di applicazione dell'algoritmo Random Forest.
 \begin{figure}[h]
@@ -203,6 +203,6 @@ Nella Figura \ref{fig:ada} è mostrato un esempio di applicazione dell'algoritmo
 		Source: \url{https://www.section.io/engineering-education/boosting-algorithms-python/}\label{fig:ada}
 	\end{center}
 \end{figure}
-L'iperparametro da gestire in questo algoritmo è il numero di classificatori deboli da utilizzare, che verrà scelto attraverso la Cross Validation.\\
+Gli iperparametri da gestire in questo algoritmo sono: il numero di classificatori deboli e il \emph{learning rate}. Il \emph{learning rate} indica quanto velocemente procederà l'addestramento. Per regolare la velocità, attraverso il \emph{learning rate} viene indicata quanta porzione dell'aggiornamento dei pesi verrà applicata sui pesi per la prossima iterazione. Ovviamente, questi iperparametri sono scelti attraverso la Cross Validation.\\
 L'algoritmo AdaBoost risulta essere robusto contro l'\emph{overfitting}.
 	

@@ -36,7 +36,7 @@ Nella Figura \ref{fig:kernel} è mostrato un esempio di applicazione della funzi
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.50]{kernel.png}
-		\caption{Esempio grafico della funzione kernel $\gamma$ mappa i punti di uno spazio d'input in uno feature space di dimensione maggiore e linearmente separabile.
+		\caption{Esempio grafico della funzione kernel $\gamma$ che mappa i punti di uno spazio d'input in uno \emph{feature space} di dimensione maggiore e linearmente separabile rispetto a quello originale.
 		} 
 		Source: \url{https://towardsdatascience.com/the-kernel-trick-c98cdbcaeb3f}\label{fig:kernel}
 	\end{center}
@@ -51,7 +51,7 @@ Nella Figura \ref{fig:bootstrap} viene mostrato un esempio della procedura di Bo
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.60]{bootstrap1.png}
-		\caption{Esempio grafico della procedura di Bootstrap.
+		\caption{Esempio grafico della procedura di Bootstrap. Da un \emph{dataset} di dati iniziale vengono estratti, con reinserimento, gli elementi del \emph{dataset} per formare k campioni avventi tutti lo stesso numero di elementi.
 		} 
 		Source: \url{https://blog.paperspace.com/bagging-ensemble-methods/}\label{fig:bootstrap}
 	\end{center}
@@ -72,7 +72,7 @@ Nella Figura \ref{fig:bagging} viene illustrato graficamente la procedura di Bag
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.50]{Ensemble_Bagging.png}
-		\caption{Esempio grafico della procedura di Bagging.
+		\caption{Esempio grafico della procedura di Bagging. L'algoritmo inizia generando k campioni avventi tutti lo stesso numero di elementi, attraverso il Bootstrapping, a partire dai dati originali ricevuti in input. Successivamente ogni campione viene assegnato a un solo classificatore per effettuare il \textsf{training} del classificatore. Infine le predizioni dei classificatori istruirti vengono tutte aggregate per formare un unica predizione finale. 
 		} 
 		Source: \url{https://www.analyticsvidhya.com/blog/2020/02/what-is-bootstrap-sampling-in-statistics-and-machine-learning/}\label{fig:bagging}
 	\end{center}
@@ -95,7 +95,7 @@ Nella Figura \ref{fig:boosting} viene illustrata la procedura di Boosting.
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.55]{boosting.png}
-		\caption{Esempio grafico della procedura di Boosting.
+		\caption{Esempio grafico della procedura di Boosting. L'algoritmo parte da un classificatore debole iniziale il quale viene addestrato su tutti i dati. Successivamente, dopo che il classificatore debole ha effettuato delle predizioni, vengono aggiornati i pesi di quei esempi che sono stati erroneamente classificati. Viene allenato un nuovo modello debole sulla base di quanto fatto dal classificatore precedente, ripetendo la procedura di allenamento e aggiornamento dei pesi.
 		} 
 		Source: \url{https://www.section.io/engineering-education/boosting-algorithms-python/}\label{fig:boosting}
 	\end{center}
@@ -178,7 +178,7 @@ Nella Figura \ref{fig:forest} è mostrato un esempio di applicazione dell'algori
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.35]{forest.png}
-		\caption{Esempio grafico dell'algoritmo Random Forest.
+		\caption{Esempio grafico dell'algoritmo Random Forest. L'algoritmo partendo dai dati iniziali, tramite il Bootstrap, crea una serie di campioni di esempi di training, in cui ogni campione ha un sottoinsieme di attributi. Ogni campione viene utilizzato per addestrare un'albero di decisione. Una volta che sono stati costruiti gli alberi, viene fatta la predizione per ogni modello e, attraverso un algoritmo di mediazione, ad esempio il \emph{voting}, viene prodotta la predizione finale.
 		} 
 		Source: \url{https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205}\label{fig:forest}
 	\end{center}
@@ -198,7 +198,7 @@ Nella Figura \ref{fig:ada} è mostrato un esempio di applicazione dell'algoritmo
 \begin{figure}[h]
 	\begin{center}
 		\includegraphics[scale=0.35]{ada.png}
-		\caption{Esempio grafico dell'algoritmo AdaBoost.
+		\caption{Esempio grafico dell'algoritmo AdaBoost. Quest'algoritmo utilizza la tecnica di Boosting per creare un modello di classificazione accurato a partire da un insieme di classificatori deboli. Ad ogni iterazione, i pesi assegnati alle osservazioni vengono modificati dando maggior peso alle istanze che sono state classificate erroneamente per procedere con l'addestramento di un nuovo classificatore debole.
 		} 
 		Source: \url{https://www.section.io/engineering-education/boosting-algorithms-python/}\label{fig:ada}
 	\end{center}

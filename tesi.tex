@@ -101,6 +101,7 @@ english,
 \usepackage{dsfont}
 \usepackage{amsmath}
 \usepackage{pdflscape}
+\usepackage{ragged2e}
 
 %\usepackage[square,sort,comma,numbers]{natbib}
 %*******************Per gestire un'immagine in backgorund*********************************
@@ -173,6 +174,12 @@ english,
 \def\Hy@colorlink#1{\begingroup\fontshape{it}\selectfont}%
 \makeatother
 
+% Tables	
+\usepackage{color, colortbl}
+\definecolor{Green}{rgb}{0.56, 0.93, 0.56}
+\definecolor{Gray}{gray}{0.9}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}} % Center text inside each cell
+\setlength\arrayrulewidth{0.5pt} % Increasing table linewidth
 \begin{document}
 	%**************************************************************
 	% Materiale iniziale

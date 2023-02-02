@@ -16,37 +16,39 @@ I risultati che verranno esposti non tengono in considerazione le variabili espl
 Le analisi dello studio iniziano con l'applicazione del modello (\hyperref[for:3.9]{4.9}). Tale modello presenta una struttura abbastanza semplice, in cui la stima dell'abilità delle squadre tiene conto solo degli esiti osservati delle varie partite e del vantaggio di giocare in casa. 
 La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari rispettivamente, a -0.669 e 0.669 mentre il parametro $\delta$ globale per tutte le squadre è di 0.099 con uno \emph{standard error} (SE) di 0.126. Si nota che la possibilità di giocare in casa è effettivamente un vantaggio in quanto la stima del parametro è positiva. Nella Figura \ref{tab:BTH} vengono riportati i risultati ottenuti in ordine dell'abilità stimata. Inoltre viene riportato lo \emph{Standard Error} (SE) il \emph{Quasi Standard Error} (QSE) \autocite{firth2004quasi} e il \emph{Quasi Variance} (QV)\autocite{firth2004quasi} per ogni squadra.\\
 Nonostante, la semplicità del modello, viene offerta una stima delle abilità delle squadre che rispecchia molto il piazzamento mostrato nella Figura \ref{fig:ranking}. Infatti, solo quattro squadre hanno un piazzamento diverso da quello reale. L'Udinese e il Sassuolo hanno il piazzamento invertito con una stima dell'abilità che è molto simile. Ciononostante, il risultato è comunque soddisfacente dato che nella stagione in esame il distacco tra Udinese e Sassuolo è stato solo di tre punti. Anche Genoa e Salernitana hanno un piazzamento differente da quello reale.
-\newpage
-\paperwidth=\pdfpageheight
-\paperheight=\pdfpagewidth
-\pdfpageheight=\paperheight
-\pdfpagewidth=\paperwidth
-\headwidth=\textheight
 
-\begingroup 
-\vsize=\textwidth
-\hsize=\textheight
-
-
-\pagestyle{empty}
-\begin{figure}[htbp]
+\begin{sidewaysfigure} 
 	\begin{center}
 		\includegraphics[height = 13cm, width = 23cm]{rank.png}
 		\caption{Barplot che indica per ogni squadra l'abilità stimata dal modello (\hyperref[for:3.9]{4.9}). A fianco al grafico viene riportato lo \emph{Standard Error} (SE), il \emph{Quasi Standard Error} (QSE) e il \emph{Quasi Variance} (QV). Nel grafico viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale, anche esso riportato a destra del grafico.} \label{tab:BTH}
 	\end{center}
-\end{figure}
+\end{sidewaysfigure} 
 
-\textwidth=\hsize
-\textheight=\vsize
 
-\endgroup
-\newpage
-\paperwidth=\pdfpageheight
-\paperheight=\pdfpagewidth
-\pdfpageheight=\paperheight
-\pdfpagewidth=\paperwidth
-\headwidth=\textwidth
 \begin{comment}
+	\newpage
+	\paperwidth=\pdfpageheight
+	\paperheight=\pdfpagewidth
+	\pdfpageheight=\paperheight
+	\pdfpagewidth=\paperwidth
+	\headwidth=\textheight
+	
+	\begingroup 
+	\vsize=\textwidth
+	\hsize=\textheight
+	
+	
+	\pagestyle{empty}
+	\textwidth=\hsize
+	\textheight=\vsize
+	
+	\endgroup
+	\newpage
+	\paperwidth=\pdfpageheight
+	\paperheight=\pdfpagewidth
+	\pdfpageheight=\paperheight
+	\pdfpagewidth=\paperwidth
+	\headwidth=\textwidth
 	\begin{table}[!htb]%
 		
 		\renewcommand{\arraystretch}{1.7}
@@ -707,7 +709,7 @@ La capacità predittiva di un modello sarà valutata come segue:
 Nella Figura \ref{fig:pre} sono mostrate le classificazione ottenute sulle 80 partite del \emph{test set} per ogni modello e per la predizione dei \emph{bookmakers}.
 \begin{figure}[h]
 	\begin{center}
-		\includegraphics[scale = 0.60]{tabpre.png}
+		\includegraphics[scale = 0.28]{tabpre.png}
 		\caption{La prima tabella indica le predizioni di 80 partite fatte dal modello (\ref{for:3.1}), la seconda dal modello (\ref{for:5.1}), la terza dal modello (\ref{for:4.9}), la quarta dal modello (\ref{for:5.2}) e la quinta dai \emph{bookmakers}. La classe 1 indica la vittoria della squadra in casa, la classe 2 indica il pareggio tra le due squadre, la classe 3 indica la vittoria della squadra ospite. Con \textsf{True} si indicano le classificazioni effettive mentre con \textsf{Predicted} le classificazioni effettuate.}\label{fig:pre}
 	\end{center}
 \end{figure}

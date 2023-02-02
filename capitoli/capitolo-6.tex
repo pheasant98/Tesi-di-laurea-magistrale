@@ -26,7 +26,7 @@ Nel contesto dell'apprendimento automatico, la funzione kernel (vedi \textit{\ci
 con $\psi$ funzione che mappa i punti di uno spazio di dimensione \emph{n} in uno spazio di dimensione \emph{m} con \emph{m>n}, e $\langle . \rangle$ prodotto scalare.\\
 Nelle nostre predizioni saranno usati i seguenti kernel:
 \begin{itemize}
-	\item linear kernel, è la funzione precedentemente definita;
+	\item linear kernel, $K(x,y) =  \left(\sum_{i = 1}^{p}x_iy_i\right)^{d} $, dove \emph{p} è il numero di istanze di input presenti in $\chi$;
 	\item polynomial kernel, $K(x,y) =  \left(1 + \sum_{i = 1}^{p}x_iy_i\right)^{d} $, dove \emph{p} è il numero di istanze di input presenti in $\chi$ e \emph{d} la dimensione del spazio (l'ordine);
 	\item Gaussian Radial Basis kernel (RBF), $K(x,y) = exp(-\gamma||x-y||^2) $, con $\gamma=\frac{1}{2\sigma^2}$ e $\sigma$ paramento libero. 
 \end{itemize}

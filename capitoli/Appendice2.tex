@@ -1,7 +1,7 @@
 \chapter{Codice in Python}
 \section{createTable}
-Codice per la creazione del dataset utilizzabile con i metodi di machine learning.
-\begin{lstlisting}[language=Python, caption={Codice per la creazione del dataset utilizabile con i metodi di machine learning.}, captionpos=b, label=code:a9]
+Codice per la creazione del \emph{dataset} utilizzabile con i metodi di \emph{Machine Learning}.
+\begin{lstlisting}[language=Python, caption={Codice per la creazione del dataset utilizabile con i metodi di Machine Learning.}, captionpos=b, label=code:a9]
 	def createTable(df, dfM): 
 		for i in range(0, df.shape[0], 1):
 			if df.AtHome[i] == True: 
@@ -74,7 +74,7 @@ Codice per la creazione del dataset utilizzabile con i metodi di machine learnin
 
 \section{Librerie}\label{cap:importPy}
 \begin{itemize}
-	\item \textbf{Sklearn} (\textit{\cite{sklearn}}) è una libreria \emph{open source} di machine learning per il linguaggio di programmazione Python. La libreria Sklearn fornisce una serie di algoritmi di machine learning per l'analisi dei dati, ovvero modelli di classificazione, regressione, clustering ma anche algoritmi di model selection, di dimensionality reduction e funzionalità di preprocessing dei dati. È progettato per lavorare con le librerie NumPy, pandas e matplotlib.
+	\item \textbf{Sklearn} (\textit{\cite{sklearn}}) è una libreria \emph{open source} di \emph{Machine Learning} per il linguaggio di programmazione Python. La libreria Sklearn fornisce una serie di algoritmi di \emph{Machine Learning} per l'analisi dei dati, ovvero modelli di classificazione, regressione, clustering ma anche algoritmi di model selection, di dimensionality reduction e funzionalità di preprocessing dei dati. È progettato per lavorare con le librerie NumPy, pandas e matplotlib.
 	\item \textbf{Matplotlib} (\textit{\cite{matplotlib}}) è una libreria \emph{open source} per la visualizzazione dei dati per il linguaggio di programmazione Python. La libreria Matplotlib fornisce una vasta gamma di opzioni per la creazione di grafici e figure. È particolarmente utile per la visualizzazione di dati multidimensionali e per la creazione di grafici di grandi dimensioni e complessi. 
 	\item \textbf{NumPy} (\textit{\cite{numPy}}) è una libreria \emph{open source} per il linguaggio di programmazione Python. La libreria NumPy fornisce metodi per l'elaborazione di vettori multidimensionali e matrici. Offre una serie di funzionalità avanzate per l'elaborazione di dati, come ad esempio il calcolo di statistiche, l'algebra lineare e la generazione di numeri casuali. 
 	\item \textbf{Pandas} (\textit{\cite{pandas}}) è una libreria \emph{open source} per il linguaggio di programmazione Python. La libreria Pandas fornisce funzionalità di manipolazione e analisi di dati di diverse forme e fonti.

@@ -14,7 +14,17 @@
 Dopo aver importato il \emph{dataset}, il primo step da effettuare durante il \emph{prepocessing} è individuare e risolvere possibili anomalie nei dati.\\
 Il dataset non ha valori mancanti. Questo è stato possibile grazie a \texttt{\cite{fbref}} che ha messo a disposizione dati quasi sempre completi; in quei rari casi di mancanza di dati sono stati reperiti manualmente da altre fonti altrettanto attendibili.\\ 
 Sono state inoltre tolte le variabili \texttt{Date} e \texttt{Round}.\\
-Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. Infatti, \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Perciò, \texttt{Team} e \texttt{Vs} devono essere interpretate come un fattore cioè come un valore non numerico espresso in termini verbali, ad esempio una categoria. Quindi, nel nostro contesto ogni squadra sarà un livello del fattore. Analogamente, \texttt{AtHome} è stata trasformata in un fattore a due livelli. Invece, \texttt{Res} è stato trasformato in un fattore ordinato con i livelli: -1 = sconfitta <  0 = pareggio < 1 = vittoria, dove la vittoria ha la massima preferenza.
+Il passo successivo è stato controllare che le variabili fossero interpretate correttamente. Infatti, \texttt{Team} e \texttt{Vs} vengono interpretate erroneamente come tipo \texttt{character}. Perciò, \texttt{Team} e \texttt{Vs} devono essere interpretate come un fattore cioè come un valore non numerico espresso in termini verbali, ad esempio una categoria. Quindi, nel nostro contesto ogni squadra sarà un livello del fattore. Analogamente, \texttt{AtHome} è stata trasformata in un fattore a due livelli. Invece, \texttt{Res} è stato trasformato in un fattore ordinato con i seguenti livelli.
+
+\begin{equation}
+	Res =
+	\begin{cases}
+		1 & \text{se la squadra in casa batte la squadra ospite,}\\
+		2 & \text{se la partita termina con un pareggio,}\\
+		3 & \text{se la squadra ospite batte la squadra in casa. }
+	\end{cases}       
+\end{equation}
+
 
 
 \section{Analisi grafica dei dati}
@@ -93,8 +103,7 @@ Per la relazione tra la variabile risposta e la variabile \texttt{SPAtt}, si ha 
 Per la relazione tra la variabile risposta e la variabile \texttt{SPCmp\%}, si ha un grafico molto simile al grafico a destra della Figura \ref{fig:pass}. Nel grafico di \texttt{SPCmp\%} rispetto al grafico di \texttt{PCmp\%}, il boxplot della sconfitta ha una maggior varianza, viceversa per la vittoria, che ha una minor varianza.\\
 Per la relazione tra la variabile risposta \texttt{Res} e la variabile \texttt{MPAtt}, si ha un grafico molto simile al grafico a sinistra della Figura \ref{fig:pass}. Nel grafico di \texttt{MPAtt} rispetto al grafico di \texttt{PAtt}, il boxplot della sconfitta ha una maggior varianza. In generale i valori sono più bassi rispetto al grafico di \texttt{PAtt} ma questo è naturale perché \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli medi.\\
 Per la relazione tra la variabile risposta e la variabile \texttt{MPCmp\%}, si ha un grafico molto simile al grafico a destra della Figura \ref{fig:pass}. Il grafico di \texttt{MPCmp\%} rispetto al grafico di \texttt{PCmp\%} ha valori più alti e molti più outliers inoltre, i baffi inferiore dei boxplot della sconfitta e della vittoria sono più corti.\\
-Per la relazione tra la variabile risposta e la variabile \texttt{LPAtt}, si ha un grafico molto simile al grafico a sinistra della Figura \ref{fig:pass}. Nel grafico di \texttt{LPAtt} rispetto al grafico di \texttt{PAtt}, il boxplot della sconfitta ha valori più bassi rispetto agli boxplot del pareggio e della vittoria inoltre, il boxplot del pareggio ha una maggior varianza dei valori mentre il boxplot della vittoria ha una minor varianza.\\
-In generale i valori sono più bassi rispetto al grafico di \texttt{PAtt} ma questo è naturale perché \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli lunghi.\\
+Per la relazione tra la variabile risposta e la variabile \texttt{LPAtt}, si ha un grafico molto simile al grafico a sinistra della Figura \ref{fig:pass}. Nel grafico di \texttt{LPAtt} rispetto al grafico di \texttt{PAtt}, il boxplot della sconfitta ha valori più bassi rispetto agli boxplot del pareggio e della vittoria inoltre, il boxplot del pareggio ha una maggior varianza dei valori mentre il boxplot della vittoria ha una minor varianza. In generale i valori sono più bassi rispetto al grafico di \texttt{PAtt} ma questo è naturale perché \texttt{PAtt} contiene tutti i passaggi tentati e non solo quelli lunghi.\\
 Per la relazione tra la variabile risposta e la variabile \texttt{LPCmp\%}, si ha un grafico molto simile al grafico a destra della Figura \ref{fig:pass}. Il grafico di \texttt{LPCmp\%} rispetto al grafico di \texttt{PCmp\%} ha valori più bassi, la distribuzione dei valori per il boxplot della sconfitta è ben equilibrata perché i baffi sono della stessa lunghezza e in più la mediana è equidistante dai due quantili. Analogamente anche il boxplot del pareggio ha una distribuzione equilibrata ma con più varianza e con una mediana equidistante dai quantili.\\
 \begin{figure}[htbp]
 	\begin{center}
@@ -293,16 +302,6 @@ Infine sono state individuate le seguenti interazioni:
 \section{Ulteriori modifiche del dataset}
 
 Nelle sezioni precedenti si è descritto come si è costruito il \emph{dataset} e come esso è stato strutturato. Tale struttura ha il vantaggio di rendere il \emph{dataset} di facile interpretazione, ma deve essere riadattato per poter utilizzare le funzioni del pacchetto \textit{\cite{bt2}} e del pacchetto \textit{\cite{btl}}.\\ 
-Innanzitutto la variabile risposta \texttt{Res} viene modificata in modo tale che valgano le seguenti condizioni
-\begin{equation}
-	Res =
-	\begin{cases}
-		1 & \text{se la squadra in casa batte la squadra ospite,}\\
-		2 & \text{se la partita termina con un pareggio,}\\
-		3 & \text{se la squadra ospite batte la squadra in casa. }
-	\end{cases}       
-\end{equation}
-La variabile risposta \texttt{Res} rimane ancora un fattore ordinato.\\
 Di seguito vengono presentate le modifiche effettuate specifiche per i due pacchetti.
 \subsection{Modifiche per il pacchetto BradleyTerry2}
 Innanzitutto il modello richiede che le due variabili \texttt{Team} e \texttt{Vs} siano di tipo fattore oppure che costituiscano un \textsf{data.frame}. Un \textsf{data.frame} è una raccolta di vettori di osservazioni che devono avere tutti la stessa lunghezza ma possono essere di tipo diverso: variabili nominali (fattori) o variabili numeriche.

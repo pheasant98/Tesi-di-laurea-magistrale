@@ -141,24 +141,24 @@ Come si può vedere, il parametro abilità $\gamma_{i}$ è stato sostituito da $
 	
 	\renewcommand{\arraystretch}{1.7}
 	\centering
-	\begin{tabular}{c c c c c}
+	\begin{tabular}{|c| c| c |c |c|}
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Tipo di covariate} & \textbf{Tipo di effetto} & \textbf{$\gamma_{pi}$ =}& \textbf{$\gamma_{pj}$ =} & \textbf{$\gamma_{p(ij)}$ = $\gamma_{pi}$ $-$ $\gamma_{pj}$} \\	
 		\hline			
 		Intercetta & Spec. dell'oggetto & $\beta_{i0}$ & $\beta_{j0}$ & $\beta_{i0} - \beta_{j0}$\\
 		Effetto dell'ordine & Globale & + $\delta$ &  & + $\delta$ \\
 		Effetto dell'ordine & Spec. dell'oggetto &  + $\delta_i$ &  &  + $\delta_i$\\
 		Spec. del soggetto $x_p$ & Spec. dell'oggetto & + $x^T_p\beta_i$ & + $x^T_p\beta_j$ & + $x^T_p(\beta_i - \beta_j)$\\
-		Spec.dell'oggetto  $z_i$ & Globale & + $z^T_{i}\tau$ & + $z^T_{si}\tau$ & + ($z_{i} - z_{j})^T\tau$\\
+		Spec.dell'oggetto  $z_i$ & Globale & + $z^T_{i}\tau$ & + $z^T_{j}\tau$ & + ($z_{i} - z_{j})^T\tau$\\
 		Spec. del sogg. e dell'ogg. $z_{pi}$ & Globale & + $z^T_{pi}\tau$ & + $z^T_{pj}\tau$ & + ($z_{pi} - z_{pj})^T\tau$\\
-		Spec. del sogg. e dell'ogg. $z_{pi}$ & Spec. dell'oggetto & + $x^T_{pi}\eta_i$ & + $x^T_{pj}\eta_i$& + $x^T_{pi}\eta_i$ $-$ $x^T_{pj}\eta_j$\\
+		Spec. del sogg. e dell'ogg. $z_{pi}$ & Spec. dell'oggetto & + $x^T_{pi}\eta_i$ & + $x^T_{pj}\eta_i$& + $x^T_{pj}\eta_i$ $-$ $x^T_{pj}\eta_j$\\
 		\hline
 		
 		
 	\end{tabular} \hbox{}
 	
-	\caption{Tipi di covariate e possibili parametrizzazioni applicabili al parametro abilità $\gamma$.} \label{tab:type}
+	\caption{Tipi di covariate e le parametrizzazioni applicabili al parametro abilità $\gamma$.} \label{tab:type}
 \end{table}
 
 \section{Stima e penalizzazione}

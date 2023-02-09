@@ -22,7 +22,7 @@ La classifica della stagione 2021/2022 è riportata nella Figura \ref{fig:rankin
 
 \begin{figure}[h]
 	\begin{center}
-		\includegraphics[height = 10cm, width = 14cm]{ranking.png}
+		\includegraphics[height = 8cm, width = 15cm]{ranking.png}
 		\caption{Grafico della classifica del campionato italiano della Serie A 2021/2022. Le barre di color azzurro indicano i punti che la squadra ha guadagnato in partite casalinghe. Le barre di color rosa indicano i punti che la squadra ha guadagnato in partite fuori casa.
 		} 
 		\label{fig:ranking}
@@ -91,7 +91,7 @@ La Tabella \ref{tab:db} mostra un breve estratto dei dati riguardanti le prime t
 	\centering
 	\begin{tabular}{c c c c c c c c c  }
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Date} & \textbf{AtHome} & \textbf{Res} & \textbf{GF} & \textbf{GA} & \textbf{Team} & \textbf{Vs} & \textbf{Poss} & \textbf{...}   \\	
 		\hline	
 		21/08/2021 & TRUE & 1 & 4 & 0 & Inter & Genoa & 0,59 & ... \\
@@ -199,7 +199,7 @@ In questo gruppo sono contenute le variabili collegate al possesso della palla.
 	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.58]{rigore.jpg}
-			\caption{In rosso l'area di rigore in un campo da calcio.}
+			\caption{Figura che indica in rosso l'area di rigore in un campo da calcio.}
 			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
 			\label{fig:penalty}
 		\end{center}
@@ -212,7 +212,7 @@ In questo gruppo sono contenute le variabili collegate al possesso della palla.
 	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.58]{mid.jpg}
-			\caption{In rosso la mediana nel campo da calcio.} 
+			\caption{Figura che indica in rosso la mediana nel campo da calcio.} 
 			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
 			\label{fig:def}
 		\end{center}
@@ -223,7 +223,7 @@ In questo gruppo sono contenute le variabili collegate al possesso della palla.
 	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.58]{cen.jpg}
-			\caption{In rosso il centrocampo nel campo da calcio.}
+			\caption{Figura che indica in rosso il centrocampo nel campo da calcio.}
 			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio}  
 			\label{fig:cen}
 		\end{center}
@@ -235,7 +235,7 @@ In questo gruppo sono contenute le variabili collegate al possesso della palla.
 	\begin{figure}[!ht]
 		\begin{center}
 			\includegraphics[scale=0.58]{treq.jpg}
-			\caption{In rosso la trequarti dell'avversario nel campo da calcio.} 
+			\caption{Figura che indica in rosso la trequarti dell'avversario nel campo da calcio.} 
 			Source: \url{https://it.freepik.com/foto-vettori-gratuito/campo-da-calcio} 
 			\label{fig:treq}
 		\end{center}
@@ -261,13 +261,13 @@ In questo gruppo vi sono raggruppate le variabili collegate ai passaggi della pa
 	
 	\item\textsf{PCmp\%}: Indica la percentuale di passaggi riusciti ai giocatori della squadra specificata della variabile \textsf{Team}.\\ 
 	È stata inserita perché permette di capire quanti passaggi siano andati a buon fine tra tutti quelli tentati e quindi ricavare la precisione dei giocatori della squadra.
-	\item \textsf{SPAtt}: Indica il numero di passaggi corti tentati dai giocatori della squadra specificata della variabile \textsf{Team}. Per passaggi corti si intendono tutti quelli effettuati all'interno di una lunghezza tra i tre e quattordici metri.\\
+	\item \textsf{SPAtt}: Indica il numero di passaggi corti tentati dai giocatori della squadra specificata della variabile \textsf{Team}. Per passaggi corti si intendono tutti quelli effettuati all'interno di una lunghezza tra i tre e tredici metri.\\
 	È stata inserita per capire se un alto numero di passaggi corti possa essere determinanti ai fini dell'esito della partita. 
 	
 	\item \textsf{SPCmp\%}: Indica la percentuale di passaggi corti riusciti ai giocatori della squadra specificata della variabile \textsf{Team}. \\
 	È stata inserita perché permette di capire quanti passaggi andati a buon fine tra tutti quelli tentati e quindi ricavare la precisione dei giocatori della squadra.
 	
-	\item \textsf{MPAtt}: Indica il numero di passaggi medi tentati dai giocatori della squadra specificata della variabile \textsf{Team}. Per passaggi medi si intendono tutti quelli effettuati all'interno di una lunghezza tra i tredici e ventisette metri. Questi passaggi possono essere considerati come passaggi filtranti, cioè non diretti al proprio compagno di squadra ma verso un’area del campo dove il compagno di squadra deve andare a prendere la palla. Spesso questi passaggi vengono fatti per sorprendere la difesa avversaria ed evitare che la palla venga intercettata. Nella Figura \ref{fig:filt} viene mostrato l'esecuzione di un passaggio filtrante.\\
+	\item \textsf{MPAtt}: Indica il numero di passaggi medi tentati dai giocatori della squadra specificata della variabile \textsf{Team}. Per passaggi medi si intendono tutti quelli effettuati all'interno di una lunghezza tra i quattordici e ventisette metri. Questi passaggi possono essere considerati come passaggi filtranti, cioè non diretti al proprio compagno di squadra ma verso un’area del campo dove il compagno di squadra deve andare a prendere la palla. Spesso questi passaggi vengono fatti per sorprendere la difesa avversaria ed evitare che la palla venga intercettata. Nella Figura \ref{fig:filt} viene mostrato l'esecuzione di un passaggio filtrante.\\
 	\begin{figure}[ht]
 		\begin{center}
 			\includegraphics[scale=0.45]{filtrante2.jpg}
@@ -340,7 +340,7 @@ Nella Tabella \ref{tab:summary} è riassunto l'insieme delle variabili presenti 
 	\centering
 	\begin{tabular}{c c c c c}
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Statistiche generali} & \textbf{Tiri} & \textbf{Possesso} & \textbf{Passaggi} & \textbf{Difensive} \\	
 		\hline			
 		AtHome & Sh & Poss & PAtt & Saves\\
@@ -348,7 +348,7 @@ Nella Tabella \ref{tab:summary} è riassunto l'insieme delle variabili presenti 
 		GF & G/Sh & ToDef3rd & SPAtt & TklWin\\
 		GA &  & ToMid3rd & SPCmp\% & Recov\\
 		Team &  & ToAtt3rd & MPAtt&\\
-		VS &  & ToAttPen & MPCmp\% &\\
+		Vs &  & ToAttPen & MPCmp\% &\\
 		Fls &  & ToDist & LPAtt &\\
 		Fld &  &  & LPCmp\% &\\
 		Off &  &  & Crs \\
@@ -369,7 +369,7 @@ Di seguito nella Tabella \ref{tab:summary2} è mostrato per ogni variabile il no
 	\centering
 	\begin{tabular}{c c }
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Originale} & \textbf{Rinominate} \\	
 		\hline			
 		AtHome & AtHome \\

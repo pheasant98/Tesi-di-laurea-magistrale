@@ -93,12 +93,12 @@ Il \emph{Quasi Variance} (QV)\autocite{firth2004quasi} è un metodo che fornisce
 Perciò, confrontiamo le stime dei valori delle abilità delle squadre classificatesi nelle prime due posizioni, rispettivamente il Milan e Inter. Il QSE per Milan è di 0.359, mentre per l'Inter è di 0.400. La differenza assoluta tra le loro abilità è pari a |1.492 - 1.4| = 0.092. Applicando il calcolo pitagorico è possibile calcolare lo QSE, cioè un SE approssimato, relativo alla differenza tra abilità. Questo risulta essere ($0.359^2 + 0.400^2)^\frac{1}{2}=0.537 > 0.092$. Perciò, la differenza in termini di abilità tra le due squadre non è significativa da un punto di vista statistico. Infatti, le due squadre hanno una differenza di soli due punti.
 %**************************************************************
 
-\section{BTM con covariate specifiche dell'oggetto}
-Si consideri l'estensione del modello Bradley-Terry con covariate specifiche dell'oggetto. Il modello applicato è il seguente
+\section{BTM con covariate con effetto globale}
+Si consideri l'estensione del modello Bradley-Terry con covariate specifiche del soggetto e dell'oggetto. Il modello applicato è il seguente
 \begin{align}
 	P(Y_{p(i,j)}\leq k) =  \frac{exp(\delta + \theta_{k} + \beta_{i0} - \beta_{j0} + x^T_{pi}\tau - x^T_{pj}\tau)}{1 + exp(\delta + \theta_{k} + \beta_{i0} - \beta_{j0} + x^T_{pi}\tau - x^T_{pj}\tau)}, \label{for:5.1}
 \end{align}
-dove l'effetto dell'ordine $\delta$, cioè il vantaggio di giocare la partita in casa, ha ancora un effetto globale per tutte le squadre, mentre $x^T_{pi}$ è il vettore con tutti i valori delle ventisei covariate per l'i-esima squadra e per la p-esima partita. Il parametro $\tau$ è il peso medio stimato di ogni covariata. Le covariate, perciò, sono specifiche del soggetto e dell'oggetto ma con un effetto specifico dell'oggetto.\\
+dove l'effetto dell'ordine $\delta$, cioè il vantaggio di giocare la partita in casa, ha ancora un effetto globale per tutte le squadre, mentre $x^T_{pi}$ è il vettore con tutti i valori delle ventisei covariate per l'i-esima squadra e per la p-esima partita. Il parametro $\tau$ è il peso medio stimato di ogni covariata. Le covariate, perciò, sono specifiche del soggetto e dell'oggetto ma con un effetto globale.\\
 La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari, rispettivamente a -1.113 e 1.113, mentre il parametro $\delta$ globale per tutte le squadre è salito a 0.27, con uno SE di 0.142. Nella Figura \ref{tab:BTC} e nella Tabella \ref{tab:BTC2} vengono riportate le stime delle abilità delle squadre con i relativi SE, QSE e QV, e le stime di ogni covariata sul modello con relativo SE.
 	\begin{sidewaysfigure} 
 	\centering
@@ -115,7 +115,7 @@ La stima dei parametri soglia $\theta_1$ e $\theta_2$ è pari, rispettivamente a
 	\centering
 	\begin{tabular}{c c c }
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Covariata} & \textbf{Stima} & \textbf{SE} \\	
 		\hline
 		ToMid3rd & 1.57 & 0.025\\
@@ -203,10 +203,10 @@ Confrontando ancora le prime due squadre cioè Milan e Inter, la loro differenza
 
 
 \section{Modello Bradley-Terry e LASSO}
-Nella sezione precedente si sono presentati i risultati ottenuti nel modello Bradley-Terry con l'inserimento di covariate con effetto specifico dell'oggetto. È però di interesse per le nostre analisi capire in che modo ogni singola covariata sia determinante nell'esito della partita a seconda della squadra in esame. Per esempio, è possibile che il possesso della palla possa essere determinante per una squadra mentre per un'altra no. A tale scopo si applicherà il modello (\ref{for:4.9}) utilizzando covariate specifiche del soggetto e dell'oggetto. Ovviamente con l'inserimento di questo tipo di covariate il modello sarà estremante complesso, essendo basato su 520 covariate. Di conseguenza sarà applicata una selezione delle covariate operata attraverso il metodo \emph{LASSO} illustrato nel Capitolo \ref{cap:BT}. Sempre attraverso il \emph{LASSO} sarà di interesse individuare clusters di squadre che per una certa covariata hanno un effetto simile. Allo stesso tempo si cercherà di individuare quali squadre invece si discostano maggiormente da questi clusters.\\
+Nella sezione precedente si sono presentati i risultati ottenuti nel modello Bradley-Terry con l'inserimento di covariate specifiche del soggetto e dell'oggetto con effetto globale. È però di interesse per le nostre analisi capire in che modo ogni singola covariata sia determinante nell'esito della partita a seconda della squadra in esame. Per esempio, è possibile che il possesso della palla possa essere determinante per una squadra mentre per un'altra no. A tale scopo si applicherà il modello (\ref{for:4.9}) utilizzando covariate specifiche del soggetto e dell'oggetto ma con effetto specifico dell'oggetto. Ovviamente con l'inserimento di questo tipo di covariate il modello sarà estremante complesso, essendo basato su 520 covariate. Di conseguenza sarà applicata una selezione delle covariate operata attraverso il metodo \emph{LASSO} illustrato nel Capitolo \ref{cap:BT}. Sempre attraverso il \emph{LASSO} sarà di interesse individuare clusters di squadre che per una certa covariata hanno un effetto simile. Allo stesso tempo si cercherà di individuare quali squadre invece si discostano maggiormente da questi clusters.\\
 Purtroppo, non è stato possibile riportare gli SE delle stime a causa dell'elevata complessità del procedimento di calcolo. Questo è possibile solo attraverso la procedura di tipo \emph{bootstrap} \autocite{henderson2005bootstrap}, molto onerosa in termini computazionali, soprattutto con un numero elevato di covariate.\\
 Nella Figura \ref{tab:BTCL} e nelle Tabelle \ref{tab:BTCL2} e \ref{tab:BTCL3} vengono riportate le stime dei parametri delle abilità e delle covariate per ogni singola squadra. Si noti che non tutte le covariate hanno un’unica stima per tutte le squadre, ma in alcuni casi ci sono più stime per alcune covariate. Perciò, per ogni stima del parametro di una covariata verrà indicata quale squadra ha tale valore stimato. Nell'analisi dei risultati spesso si farà un confronto con i risultati ottenuti con il modello della sezione precedente.\\%stacca
-Nella Figura \ref{tab:BTCL} si può notare che le abilità stimate tramite \emph{LASSO} sono quasi sempre  in linea con il piazzamento reale, migliorando perciò le prestazione del modello rispetto al modello con effetto specifico dell'oggetto stimato nella sezione precedente.\\
+Nella Figura \ref{tab:BTCL} si può notare che le abilità stimate tramite \emph{LASSO} sono quasi sempre in linea con il piazzamento reale, migliorando perciò le prestazione del modello rispetto al modello con effetto globale. stimato nella sezione precedente.\\
 Purtroppo, l'abilità dell'Atalanta viene sovrastimata nonostante al termine della stagione si sia classificata dietro a Roma e Fiorentina. Tale fenomeno può essere spiegato dal fatto che l'Atalanta per larga parte della stagione militava tra il terzo e il quarto posto, ma nell'ultima parte della stagione l'Atalanta è crollata di prestazione (vedi \textit{\cite{storyAta}}). Si nota che l'abilità della Sampdoria viene sottostimata, infatti in generale, non ha avuto un buon rendimento soprattutto verso la fine della stagione (vedi \textit{\cite{storySamp}}).\\
 Nella Tabella \ref{tab:BTCL2} e nella Tabella \ref{tab:BTCL3} alcune variabili esplicative sono state portate a zero, quindi eliminate per effetto della regolarizzazione tramite \emph{LASSO}, mentre altre hanno diversi valori a seconda della squadra in considerazione. \\
 Tra le covariate eliminate c'è il numero di passaggi tentati \texttt{PAtt} che nella Tabella \ref{tab:BTC2} del modello precedente aveva un valore stimato quasi nullo. Sorprendentemente anche la percentuale di passaggi tentati \texttt{PCmp\%} viene eliminata dal modello nonostante per il modello precedente avesse un valore stimato alto del parametro. Anche il numero di tocchi nella trequarti di difesa \texttt{ToDef3rd} viene tolta dal modello nonostante un valore stimato alto nella Tabella \ref{tab:BTC2}. Infine l'ultima variabile esplicativa eliminata interamente del modello è la distanza percorsa con la palla \texttt{TotDist} rimanendo in linea con quanto visto nella Tabella \ref{tab:BTC2}.
@@ -265,7 +265,7 @@ Anche qui viene confermato che giocare le partite in casa \texttt{Home} ha un ef
 	\centering
 	\begin{tabular}{ccp{10cm}}
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
 		\hline
 		Home & 0.310 & Tutti\\
@@ -305,7 +305,8 @@ Anche qui viene confermato che giocare le partite in casa \texttt{Home} ha un ef
 	\renewcommand{\arraystretch}{1.7}
 	\centering
 	\begin{tabular}{ccp{10cm}}
-		\hline			
+		\hline	
+		\rowcolor{SchoolColor2}		
 		\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
 		\hline
 		ToDefPen & 0.135 & Tutti \\      
@@ -486,7 +487,7 @@ Per riassumere quanto visto finora, la Figura \ref{fig:l2BTCL} mostra i percorsi
 	\end{center}
 \end{figure}
 Dal grafico si nota che il rapporto gol/tiri \texttt{G/Sh} è la variabile che incide maggiormente nella determinazione dell'esito di una partita. Analogamente, il numero di tiri in porta \texttt{SoT} e il numero di parate \texttt{Saves} sono determinanti sull'esito di una partita, ma con un minor peso rispetto a \texttt{G/Sh}. Anche il numero di cross \texttt{Crs} è significativamente associato all'esito della partita, ma al contrario di \texttt{G/Sh} sappiamo che contribuisce a diminuire le probabilità di vittoria. Si nota anche qui che il possesso della palla ha un ruolo molto marginale nel determinare il risultato di una partita. Viene confermata la tendenza che mantenere il pallone in zone difensive con meno transizioni in zone d'attacco sembra che si associ maggior probabilità di vittoria. Si riconferma importante il numero di lanci lunghi tentati \texttt{LPAtt} per l'esito favorevole della partita. Dal grafico si nota che sia il numero di contrasti vinti \texttt{TklWin} e il numero di fuorigioco \texttt{Off} sono determinanti per l'ottenimento della vittoria. Diversamente, il numero di recuperi \texttt{Recov}, la distanza percorsa con la palla \texttt{TotDist} e il numero di intercetti \texttt{Int} sono poco significativi. Infine, notiamo che il numero di falli fatti \texttt{fld} è più determinante di quelli subiti \texttt{fls}.\\
-Perciò, la maggior parte delle stime ottenute sembrano essere in linea con i risultati osservati nel precedente modello con covariate specifiche dell'oggetto senza l'applicazione del metodo \emph{LASSO}.
+Perciò, la maggior parte delle stime ottenute sembrano essere in linea con i risultati osservati nel precedente modello con covariate specifiche del soggetto e dell'oggetto con effetto globale senza l'applicazione del metodo \emph{LASSO}.
 
 \section{BTM senza l'intercetta e con LASSO}
 Come era stato accennato nel Capitolo \ref{cap:BT}, l'intercetta spiega la maggior parte dell'abilità relativa alla squadra. Per cui le covariate possono essere viste come estensioni contenenti effetti aggiuntivi dell'abilità della squadra che non sono spiegati dall'intercetta. In tal senso, gli effetti della covariata possono aiutare a spiegare i risultati imprevisti di una partita. Nelle tre precedenti applicazione del modello Bradley-Terry è sempre stata inserita un intercetta per ogni squadra. Perciò, di seguito verranno mostrati i risultati relativi a un modello Bradley-Terry della stessa forma del modello \hyperref[for:4.9]{(4.12)} ma senza le intercette, con lo scopo di capire quale sia l'effetto che ogni variabile esplicativa sull'abilità della squadra senza l'interferenza dell'intercetta. Ovviamente dato il numero elevato di covariate è stata applicata una selezione attraverso il metodo \emph{LASSO}. Il modello applicato è il seguente
@@ -501,7 +502,7 @@ Nella Tabella \ref{tab:BTCLI2} e nella Tabella \ref{tab:BTCLI3} vengono riportat
 	\centering
 	\begin{tabular}{ccp{10cm}}
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
 		\hline
 		Home & 0.270 & Tutti\\
@@ -542,7 +543,7 @@ Nella Tabella \ref{tab:BTCLI2} e nella Tabella \ref{tab:BTCLI3} vengono riportat
 	\centering
 	\begin{tabular}{ccp{10cm}}
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
 		\hline
 		ToMid3rd & 0.002 & Tutti tranne Inter e Sampdoria\\

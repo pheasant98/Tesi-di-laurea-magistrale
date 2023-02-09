@@ -38,7 +38,7 @@ Nella Figura \ref{tab:BTCL5} si può notare che le stime dell'abilità delle squ
 	\centering
 	\begin{tabular}{ccp{10cm}}
 		\hline	
-		
+		\rowcolor{SchoolColor2}
 		\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
 		\hline
 		Home & 0.272 & Tutti\\
@@ -78,7 +78,8 @@ Nella Figura \ref{tab:BTCL5} si può notare che le stime dell'abilità delle squ
 	\renewcommand{\arraystretch}{1.7}
 	\centering
 	\begin{tabular}{ccp{10cm}}
-		\hline			
+		\hline		
+		\rowcolor{SchoolColor2}	
 		\textbf{Covariata} & \textbf{Stima} & \textbf{Squadra} \\	
 		\hline
 		ToDefPen & 0.128 & Tutti \\      
@@ -204,7 +205,7 @@ Nella Figura \ref{fig:pre2} viene mostrata la classificazione ottenuta perle 80 
 Le predizioni ottenute sono buone, con un'accuratezza registrata pari a 0.675. Nella Figura \ref{fig:metrics} vengono mostrate le misurazioni della precisione, della sensibilità e della specificità per ognuna delle cinque categorie registrate sulle predizioni fatte dal modello (\ref{for:4.9}) con \emph{Y = 5}.
 \begin{figure}[]
 	\begin{center}
-		\includegraphics[scale = 0.70]{metrics2.png}
+		\includegraphics[scale = 0.65]{metrics2.png}
 		\caption{Grafico delle misurazioni riguardanti le predizioni fatte dal modello (\ref{for:4.9}) con \emph{Y = 5} su 80 partite. La classe 1 indica la vittoria della squadra in casa con due gol di scarto, la classe 2 indica la vittoria della squadra in casa con un gol di scarto, la classe 3 indica il pareggio tra le due squadre, la classe 4 indica la vittoria della squadra ospite con un gol di scarto e la classe 5 indica la vittoria della squadra ospite con due gol di scarto. Con \textsf{precision} si indicano le misurazioni della precisione per ogni categoria. Con \textsf{recall} si indicano le misurazioni della sensibilità per ogni categoria. Con \textsf{specificity} si indicano le misurazioni della specificità per ogni categoria.}\label{fig:metrics}
 	\end{center}
 \end{figure}

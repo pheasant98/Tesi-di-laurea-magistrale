@@ -10,15 +10,15 @@
 }
 %**************************************************************
 \section{Premessa}
-Nel Capitolo \ref{cap:risultatiDM} si è sottolineato che i risultati ottenuti non tengono in considerazione le variabili esplicative gol fatti \textsf{GF} e gol subiti \textsf{GA}, a causa della non convergenza del modello. Per poter utilizzare queste due variabili esplicative, su ispirazione del lavoro di ricerca di \textcite{schauberger2017}, si è deciso di cambiare il numero di categorie della variabile risposta \emph{Y} ovvero, di utilizzare cinque categorie invece di tre, in base al numero di gol segnati e subiti, nello specifico:
+Nel Capitolo \ref{cap:risultatiDM} si è sottolineato che i risultati ottenuti non tengono in considerazione le variabili esplicative gol fatti \textsf{GF} e gol subiti \textsf{GA}, a causa della non convergenza del modello. Per poter utilizzare queste due variabili esplicative, su ispirazione del lavoro di ricerca di \textcite{schauberger2017}, si è deciso di cambiare il numero di categorie della variabile risposta \emph{Y} ovvero, di utilizzare cinque categorie invece di tre, in base al numero di gol di scarto, nello specifico:
 \begin{equation}
 	Res =
 	\begin{cases}
-		1 & \text{se la squadra in casa batte la squadra ospite con due gol di scarto,}\\
+		1 & \text{se la squadra in casa batte la squadra ospite con due o più gol di scarto,}\\
 		2 & \text{se la squadra in casa batte la squadra ospite con un gol di scarto,}\\
 		3 & \text{se la partita termina con un pareggio,}\\
 		4 & \text{se la squadra ospite batte la squadra in casa con un gol di scarto, }\\
-		5 & \text{se la squadra ospite batte la squadra in casa con due gol di scarto.}
+		5 & \text{se la squadra ospite batte la squadra in casa con due o più gol di scarto.}
 	\end{cases}       
 \end{equation}
 
@@ -27,7 +27,7 @@ I risultati ottenuti dal modello (\ref{for:4.9}) con \emph{Y = 5} sono presentan
 \begin{sidewaysfigure} 
 	\centering
 	\begin{center}
-		\includegraphics[height=13cm, width=23cm]{rank3.png}
+		\includegraphics[height=13cm, width=23cm]{rank4.png}
 		\caption{Barplot che indica per ogni squadra l'abilità stimata dal modello (\ref{for:4.9}) con \emph{Y = 5}. Viene indicato con un asterisco le squadre con un piazzamento stimato diverso da quello reale anche esso riportato a destra del grafico.} \label{tab:BTCL5} 
 	\end{center}
 \end{sidewaysfigure}
@@ -115,7 +115,7 @@ Nella Figura \ref{tab:BTCL5} si può notare che le stime dell'abilità delle squ
 	\end{tabular} \hbox{}
 	\caption{Stime delle covariate stimate dal modello (\ref{for:4.9}) con \emph{Y = 5}.} \label{tab:BTCL35} 
 \end{table}
-Le stime dei parametri ottenute sono molto simili alle stime presentate nelle Tabelle \ref{tab:BTCL2} e \ref{tab:BTCL3}. Viene confermata la poca importanza della percentuale dei passaggi completi \texttt{PCmp\%}, del numero di passaggi tentati \texttt{PAtt}, del numero di tocchi nella trequarti di difesa \texttt{ToDefPen} e della distanza percorsa con la palla \texttt{TotDist}.
+Le stime dei parametri ottenute sono molto simili alle stime presentate nelle Tabelle \ref{tab:BTCL2} e \ref{tab:BTCL3}. Viene confermata la poca importanza della percentuale dei passaggi completi \texttt{PCmp\%}, del numero di passaggi tentati \texttt{PAtt}, del numero di tocchi nella trequarti di difesa \texttt{ToDef3rd} e della distanza percorsa con la palla \texttt{TotDist}.
 Anche qui viene confermato, seppur con una leggera diminuzione, il vantaggio nel giocare in casa \texttt{Home} che è pari a 0.272.
 Per quanto riguarda il possesso palla \texttt{Poss} viene confermato che per la maggior parte delle squadre non ha alcuna influenza sull'esito della partita. A differenza del modello (\ref{for:4.9}) con \emph{Y = 3}, però, Lazio e Torino non ricevono alcun beneficio.\\
 Viene confermata l'associazione positiva con la probabilità di vittoria sia del il numero di tiri \texttt{Sh}, sia del numero di parate \texttt{Saves}. Analogamente, anche la stima per il numero di tiri in porta \texttt{SoT} è fortemente associata all'aumento della probabilità di vittoria. Si segnalano delle variazioni delle stime del parametro \texttt{SoT}. Ora, la maggior parte delle squadre ha una stima del parametro pari a 0.779, ad eccezione di tre squadre. Dalla Figura \ref{fig:sotL5} è possibile individuare tre clusters: il più grande contiene la maggioranza delle squadre, un cluster contiene solo la Fiorentina con un percorso leggermente più basso, un intero cluster contiene Bologna e Udinese.
@@ -181,7 +181,7 @@ Inoltre, i risultati ottenuti sono frutto di un parametro di tuning $\lambda$ pa
 		\caption{Grafico dell'andamento delle prestazioni del modello (\ref{for:4.9}) con \emph{Y = 5}, su tutti i trenta valori assunti dal parametro di tuning, indicato con il simbolo $\lambda$, durante l'applicazione di K-Fold Cross Validation. L'andamento viene valutato in termini di Ranked Probability Score (RPS). La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo da utilizzare.} \label{fig:lambda3}
 	\end{center}
 \end{figure}
-La K-Fold Cross Validation utilizza 10 gruppi (k = 10) e trenta valori diversi per $lambda$. Successivamente, i risultati ottenuti dal modello applicando i trenta diversi valori del parametro di tuning, sono stati confrontati in termini di RPS. Si nota che con il diminuire della penalizzazione il modello registra una RPS che migliora fino a quando la penalizzazione diventa troppo debole, causando un peggioramento delle prestazioni. Si è scelto perciò, il $\lambda$ indicato dalla linea rossa tratteggiata.\\
+La K-Fold Cross Validation utilizza 10 gruppi (k = 10) e trenta valori diversi per $\lambda$. Successivamente, i risultati ottenuti dal modello applicando i trenta diversi valori del parametro di tuning, sono stati confrontati in termini di RPS. Si nota che con il diminuire della penalizzazione il modello registra una RPS che migliora fino a quando la penalizzazione diventa troppo debole, causando un peggioramento delle prestazioni. Si è scelto perciò, il $\lambda$ indicato dalla linea rossa tratteggiata.\\
 Per riassumere, si analizzano i percorsi delle norme L2 che rappresentano l'importanza complessiva dei singoli effetti delle covariate. Tali percorsi sono visibili nella Figura \ref{fig:IL52}.
 \begin{figure}[]
 	\begin{center}

@@ -42,11 +42,11 @@ Come riportato riportato dalla Tabella \ref{tab:acc} in cui vengono riportate le
 		\hline	
 		BTMG & 0.65 & 0.61\\
 		\hline	
-		BTM3O + LASSO & 0.68 & 0.66 \\
+		BTMO3 + LASSO & 0.68 & 0.66 \\
 		\hline	
-		BTM5O + LASSO & 0.69 & 0.68 \\
+		BTMO5 + LASSO & 0.69 & 0.68 \\
 		\hline	
-		BTMNI3O + LASSO & 0.65 & 0.63 \\
+		BTMNIO3 + LASSO & 0.65 & 0.63 \\
 		\hline	
 		K-NN & 0.58 & 0.58\\
 		\hline	
@@ -61,7 +61,7 @@ Come riportato riportato dalla Tabella \ref{tab:acc} in cui vengono riportate le
 	\end{longtable}	
 	\vspace*{5mm}
 	
-	\caption{La tabella riporta l'accuratezza registrata nel \emph{validation set} durante la fase di training e nel \emph{test set} durante la fase di predizione. BTM = modello Bradley-Terry standard con effetto d'ordine. BTMG = modello BT con covariate specifiche del soggetto e dell'oggetto con effetto globale. BTM3O + LASSO = modello BT con variabile risposta \emph{Y} a tre categorie, covariate specifiche del soggetto dell'oggetto con effetto specifico dell'oggetto, con LASSO. Con BTMNI3O + LASSO = modello BT senza intercette, con variabile risposta \emph{Y} a tre categorie, covariate specifiche del soggetto dell'oggetto con effetto specifico dell'oggetto, con LASSO. K-NN = K-Nearest-Neighbors. SVM = Support Vector Machine.} \label{tab:acc}
+	\caption{La tabella riporta l'accuratezza registrata nel \emph{validation set} durante la fase di training e nel \emph{test set} durante la fase di predizione. BTM = modello Bradley-Terry standard con effetto d'ordine. BTMG = modello BT con covariate specifiche del soggetto e dell'oggetto con effetto globale. BTMO3 + LASSO = modello BT con variabile risposta \emph{Y} a tre categorie, covariate specifiche del soggetto dell'oggetto con effetto specifico dell'oggetto, con LASSO. Con BTMNIO3 + LASSO = modello BT senza intercette, con variabile risposta \emph{Y} a tre categorie, covariate specifiche del soggetto dell'oggetto con effetto specifico dell'oggetto, con LASSO. K-NN = K-Nearest-Neighbors. SVM = Support Vector Machine.} \label{tab:acc}
 \end{table}
 I modelli di \emph{Data Mining} sono utili per interpretare le relazioni tra le variabili, meno in termini di predizioni. Ciononostante, grazie all'interpretabilità dei modelli è possibile individuare quali variabili siano associate all'esito della partita e in che misura. Viceversa, i modelli di \emph{Machine Learning} in genere, si focalizzano su caratteristiche troppo complesse e difficili da interpretare. Grazie agli algoritmi Decision Tree e Random Forest è comunque possibile fare un confronto con i modelli Bradley-Terry riguardo a quali variabili siano associate all'esito della partita.
 Notiamo che le variabili legate ai tiri sono le più importanti per entrambi i modelli. Nei due modelli di \emph{Machine Learning} viene data molta importanza sia ai passaggi lunghi tentati, come per i modelli BT, sia alla percentuale di passaggi lunghi completati in contrasto con i modelli BT. 

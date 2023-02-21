@@ -103,7 +103,7 @@ Gli iperparametri valutati sono stati i seguenti:
 \begin{itemize}
 	\item \textsf{max\_depth}. Indica la profondità massima dell'albero di decisione. Si sono verificati valori che vanno da 3 fino a 52 con un aumento unitario di 1. Si sottolinea che 52 è il numero di \emph{feature} che sono presenti nel \emph{dataset}. Inoltre, questo parametro permette di controllare l'\emph{overfitting} ovvero, se le prestazioni peggiorano durante il training, i rami più profondi dell'albero vengono tagliati.
 	\item \textsf{criterion}. Indica la regola di decisione utilizzata per la creazione dell'albero di decisione. Si sono verificate le regole Gini Index e Cross Entropy.
-	\item \textsf{min\_samples\_split}. Indica il numero minimo di istanze richieste per dividere un nodo interno. Se la condizione non viene rispettata allora il nodo sarà una foglia attuando una potatura dell'albero di decisione.
+	\item \textsf{min\_samples\_split}. Indica il numero minimo di istanze richieste per dividere un nodo interno. Se la condizione non viene rispettata allora il nodo sarà una foglia attuando una potatura dell'albero di decisione. Si sono verificati valori che vanno da 2 fino a 10 con un aumento unitario di 1.
 \end{itemize}
 Nella Figura \ref{fig:dtCV}  viene mostrato l'andamento della Cross Validation per ogni valore degli iperparametri.
 \begin{figure}[h]
@@ -154,7 +154,7 @@ Gli iperparametri valutati sono stati i seguenti:
 	\item \textsf{criterion}. Indica la regola di decisione utilizzata per la creazione degli alberi di decisione. Si sono verificate le regole Gini Index e Cross Entropy.
 	\item \textsf{max\_depth}. Indica la profondità massima degli alberi di decisione utilizzati. Si sono verificati valori che vanno da 3 fino a 52 con un aumento unitario di 1. Si sottolinea che 52 è il numero di \emph{feature} che sono presenti nel \emph{dataset}. Inoltre, questo parametro permette di controllare l'\emph{overfitting} ovvero, se le prestazioni peggiorano durante il training, i rami più profondi dell'albero vengono tagliati.
 	\item \textsf{n\_estimators}. Indica il numero massimo di classificatori impiegati per il Bagging. Si sono verificati valori che vanno da 3 fino a 126 classificatori con un aumento unitario di 1.
-	\item \textsf{min\_samples\_split}. Indica il numero minimo di istanze richieste per dividere un nodo interno. Se la condizione non viene rispettata allora il nodo sarà una foglia attuando una potatura dell'albero di decisione.
+	\item \textsf{min\_samples\_split}. Indica il numero minimo di istanze richieste per dividere un nodo interno. Se la condizione non viene rispettata allora il nodo sarà una foglia attuando una potatura dell'albero di decisione. Si sono verificati valori che vanno da 2 fino a 10 con un aumento unitario di 1.
 \end{itemize}
 Nella Figura \ref{fig:rfCV} viene mostrato l'andamento della Cross Validation per ogni valore degli iperparametri.
 \begin{figure}[]

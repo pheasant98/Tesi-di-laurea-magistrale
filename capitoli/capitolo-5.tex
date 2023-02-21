@@ -354,8 +354,7 @@ Al subire falli \texttt{Fls} viene associato ad un aumento della probabilità di
 Il numero di fuorigioco \texttt{Off} in generale ha una associazione non rilevante con l'esito della partita. Curiosamente per le quattro squadre con la maggior abilità stimata, cioè Milan, Inter, Napoli e Juventus, \texttt{Off} ha un impatto negativo sull'esito della partita. Tale risultato può essere spiegato dal fatto che le squadre più forti ad esempio Milan, Inter ecc., creano più azioni d'attacco, mentre le squadre meno forti per difendersi da esse, utilizzano la trappola del fuorigioco per fermarle.\\
 Per quanto riguarda le variabili esplicative difensive, il numero di intercetti \texttt{Int} e il numero di contrasti vinti \texttt{TklWin} sono associati ad un aumento della probabilità di vittoria. Viceversa, il numero di recuperi \texttt{Recov} si associa ad una diminuzione della probabilità di vittoria a tutte le squadre. Anche qui rispetto al modello precedente è cambiato la stima delle soglie $\theta_1$ e $\theta_2$ che valgono rispettivamente -1.075 e 1.075.\\
 Si ricorda scelto per ottenere i risultati illustrati precedentemente si è scelto il parametro di tuning ottimo, indicato con il simbolo $\lambda$, attraverso la procedura di K-Fold Cross Validation spiegata nel Capitolo \ref{cap:BT}. Nella Figura \ref{fig:lambda1} è mostrato l'andamento delle prestazioni del modello su tutti i valori assunti dal parametro di tuning $\lambda$ durante l'operazione di K-Fold Cross Validation.
-
-\begin{figure}[htbp]
+\begin{figure}[h]
 	\begin{center}
 		\includegraphics[height=8cm, width=13cm]{CVBTL.png}
 		\caption{Grafico dell'andamento delle prestazioni del modello (\ref{for:4.9}) su tutti i trenta valori assunti dal parametro di tuning, indicato con il simbolo $\lambda$, durante l'applicazione di K-Fold Cross Validation. L'andamento viene valutato in termini di Ranked Probability Score (RPS). La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo da utilizzare.} \label{fig:lambda1}
@@ -479,7 +478,6 @@ In Figura \ref{fig:tklwinL} viene mostrato l'andamento relativo alla stima della
 In Figura \ref{fig:recovL} viene mostrato l'andamento relativo alla stima della covariata del numero di recuperi \texttt{Recov}. Si nota che l'Udinese ha un percorso leggermente più negativo rispetto all'andamento negativo tenuto dalla maggior parte delle squadre. Viceversa, Genoa che ha un andamento meno negativo rispetto a tutte le altre squadre.\\
 
 Per riassumere quanto visto finora, la Figura \ref{fig:l2BTCL} mostra i percorsi delle norme L2 che rappresentano l'importanza complessiva dei singoli effetti delle covariate.
-
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[height=8cm, width=15cm]{L2.png}
@@ -652,7 +650,7 @@ Si nota che nella stima della covariata che indica il numero di contrasti vinti 
 \end{figure}
 Infine, viene confermato che giocare le partite in casa \texttt{Home} ha un effetto positivo stimato in 0.270, mentre è cambiata la stima delle soglie $\theta_1$ e $\theta_2$ che valgono rispettivamente -0.803  e 0.803 .\\
 Nella Figura \ref{fig:lambda2} viene mostrato l'andamento delle prestazioni del modello su tutti i valori assunti dal parametro di tuning $\lambda$ durante l'operazione di K-Fold Cross Validation.
-\begin{figure}[]
+\begin{figure}[h]
 	\begin{center}
 		\includegraphics[height=8cm, width=13cm]{CVBTLI.png}
 		\caption{Grafico dell'andamento delle prestazioni del modello (\ref{for:5.2}) su tutti i trenta valori assunti dal parametro di tuning, indicato con il simbolo $\lambda$, durante l'applicazione di K-Fold Cross Validation. L'andamento viene valutato in termini di Ranked Probability Score (RPS). La linea rossa tratteggiata indica il parametro di tuning $\lambda$ ottimo da utilizzare.} \label{fig:lambda2}
